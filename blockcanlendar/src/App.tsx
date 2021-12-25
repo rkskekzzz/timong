@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import moment, { Moment as MomentTypes } from 'moment';
+import './Main.css'
+const StyledBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: white;
+`;
 
-function Calendar() {
+const Calendar = () => {
   const [date, setdate] = useState<moment.Moment>(() => moment());
 
   // func
@@ -61,9 +67,9 @@ function Calendar() {
 
   return (
     // <S.Wrapper>
-      <div>
+    <div>
       {/* <S.CalendarHead> */}
-        <div>
+      <div>
         <div className="head">
           <span className="title">{date.format('MMMM YYYY')}</span>
           <div className="util-button">
@@ -79,7 +85,7 @@ function Calendar() {
       {/* </S.CalendarHead> */}
       </div>
       {/* <S.CalendarBody> */}
-        <div>
+      <StyledBody>
         <div className="row">
           {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((el) => (
             <div className="box" key={el}>
@@ -89,7 +95,7 @@ function Calendar() {
         </div>
         {generate()}
       {/* </S.CalendarBody> */}
-      </div>
+      </StyledBody>
     {/* </S.Wrapper> */}
     </div>
   );
