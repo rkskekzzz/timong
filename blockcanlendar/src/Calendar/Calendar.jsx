@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
+import { Typography } from '@mui/material';
 
 const users = [
   { name: 'ycha', color: 'red', avail: [1, 2, 3] },
@@ -15,22 +16,21 @@ const color = ['red', 'blue', 'black'];
 
 const Calendar = () => {
   const [getMoment, setMoment] = useState(moment());
-
   const today = getMoment;
   let i = 0;
-  const firstWeek = today.clone().startOf('month').week();
-  const lastWeek =
-    today.clone().endOf('month').week() === 1
-      ? 53
-      : today.clone().endOf('month').week();
 
   const handleClick = (days) => {
     console.log(today);
     console.log(`오늘은 ? ${days._d}`);
   };
 
-  const calendarArr = () => {
+  const calendarArr = (day) => {
     let result = [];
+    const firstWeek = day.clone().startOf('month').week();
+    const lastWeek =
+      day.clone().endOf('month').week() === 1
+        ? 53
+        : day.clone().endOf('month').week();
     let week = firstWeek;
 
     for (week; week <= lastWeek; week++) {
@@ -40,13 +40,13 @@ const Calendar = () => {
             .fill(0)
             // eslint-disable-next-line no-loop-func
             .map((data, index) => {
-              let days = today
+              let days = day
                 .clone()
                 .startOf('year')
                 .week(week)
                 .startOf('week')
                 .add(index, 'day'); //d로해도되지만 직관성
-              let isThisMonth = days.month() !== today.month() ? false : true;
+              let isThisMonth = days.month() !== day.month() ? false : true;
               return (
                 <CalendarBox
                   key={index}
@@ -71,14 +71,17 @@ const Calendar = () => {
         </HFlexBox>
       );
     }
-    return result;
+    return (
+      <>
+        <CalendarTitle>{day.format('MMMM')}</CalendarTitle>
+        {result}
+      </>
+    );
   };
 
   return (
     <>
-      <TitleComponent>
-        <div>TitleLabel</div>
-      </TitleComponent>
+      <TitleComponent>Title</TitleComponent>
       <MainComponent>
         <BottomShadowBox>
           <HScrollBox>
@@ -93,8 +96,12 @@ const Calendar = () => {
           </HScrollBox>
         </BottomShadowBox>
         <CalendarPaddingBox>
-          <VFlexBox>{calendarArr()}</VFlexBox>
-          <VFlexBox>{calendarArr()}</VFlexBox>
+          {Array(12)
+            .fill(0)
+            .map((data, index) => {
+              let day = getMoment.clone().add(index, 'month');
+              return <VFlexBox>{calendarArr(day)}</VFlexBox>;
+            })}
         </CalendarPaddingBox>
       </MainComponent>
     </>
@@ -128,9 +135,13 @@ const MainComponent = styled.div`
 `;
 const BottomShadowBox = styled.div`
   background: white;
-  box-shadow: 0px 3px 2px 1px #dadada;
+  box-shadow: 0px 2px 2px 1px #dadada;
   position: sticky;
   top: 0;
+`;
+
+const CalendarTitle = styled.span`
+  text-align: center;
 `;
 
 const TitleComponent = styled.div`
@@ -140,7 +151,10 @@ const TitleComponent = styled.div`
 `;
 
 const CalendarPaddingBox = styled.div`
-  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+
+  padding: 0 10px;
 `;
 
 const HScrollBox = styled.div`
@@ -158,6 +172,8 @@ const HScrollBox = styled.div`
 const VFlexBox = styled.div`
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid #dfdfdf;
+  padding: 10px;
   gap: 10px;
 `;
 
