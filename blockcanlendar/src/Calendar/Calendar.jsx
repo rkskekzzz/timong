@@ -15,8 +15,8 @@ const users = [
 const color = ['red', 'blue', 'black'];
 
 const Calendar = () => {
-  const [getMoment, setMoment] = useState(moment());
-  const today = getMoment;
+  // const [getMoment, setMoment] = useState(moment());
+  const today = moment();
   let i = 0;
 
   const handleClick = (days) => {
@@ -81,7 +81,7 @@ const Calendar = () => {
 
   return (
     <>
-      <TitleComponent>Title</TitleComponent>
+      <TitleComponent>{/* <Typography>Title</Typography> */}</TitleComponent>
       <MainComponent>
         <BottomShadowBox>
           <HScrollBox>
@@ -99,7 +99,7 @@ const Calendar = () => {
           {Array(12)
             .fill(0)
             .map((data, index) => {
-              let day = getMoment.clone().add(index, 'month');
+              let day = today.clone().add(index, 'month');
               return <VFlexBox>{calendarArr(day)}</VFlexBox>;
             })}
         </CalendarPaddingBox>
