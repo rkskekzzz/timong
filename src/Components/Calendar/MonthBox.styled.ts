@@ -5,17 +5,19 @@ const HFlexBox = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: stretch;
+  gap: 1%;
 `;
 
 const VFlexBox = styled.div`
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #dfdfdf;
   padding: 10px;
   gap: 10px;
 `;
 
 const CalendarTitle = styled.span`
+  display: flex;
+  align-items: center;
   text-align: center;
 `;
 

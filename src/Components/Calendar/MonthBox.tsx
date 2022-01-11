@@ -7,7 +7,7 @@ const MonthBox: React.FC<{ month: Month }> = ({ month }) => {
   return (
     <div>
       <Styled.CalendarTitle>
-        {month.monthMoment.format('MM')}
+        {month.monthMoment.format('MMM')}
       </Styled.CalendarTitle>
       {month.week.map((week, index) => {
         return (
