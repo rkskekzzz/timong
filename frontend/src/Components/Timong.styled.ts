@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 
+const Body = styled.div`
+height: 100vh;
+max-width: 400px;
+overflow: scroll;
+display: flex;
+flex-direction: column;
+margin: 0 auto;
+gap: 20px;
+`;
+
 const MainComponent = styled.div`
-  height: 100vh;
-  max-width: 400px;
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  gap: 20px;
+  padding: 60px 0;
 `;
 
 const VFlexBox = styled.div`
@@ -25,4 +29,5 @@ const HFlexBox = styled.div`
   justify-content: stretch;
 `;
 
-export { MainComponent, VFlexBox, HFlexBox };
+
+export { MainComponent, Body,VFlexBox, HFlexBox };

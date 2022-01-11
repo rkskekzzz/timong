@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { User } from '../../Entities/User';
-import Styled from './Users.styled';
-import UserBox from './UserBox';
+
 import moment from 'moment';
-import { Button } from '@mui/material';
+import * as Styled from './Users.styled';
 import { globalSelectedUser } from '../../Entities/User';
+
+import Backdrop from '@mui/material/Backdrop';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 function makeDate(year: number, month: number, day: number): moment.Moment {
   return moment(`${year}-${month}-${day}`);
@@ -29,34 +31,111 @@ const data: User[] = [
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>(data);
+  const [isHidden, setIsHidden] = useState(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [isShow, setIsShow] = useState(false);
 
-  function handleAddUserButton() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleClickAway = () => setIsShow(false);
+  const handleButton = () => {
+    setIsShow(!isShow);
+    setIsHidden(false);
+    setTimeout(() => {
+      if (isShow && scrollRef && scrollRef.current) {
+        scrollRef.current.scrollTop = 0;
+        setIsHidden(true);
+      }
+    }, 500);
+  };
+  const handleClick = (user: User) => setSelectedUser(user);
+  const handleAddUserButton = () => {
     setUsers([...users, new User('asdf', 'blue', [])]);
-  }
+    resetScrollEffect(scrollRef);
+  };
+
+  const resetScrollEffect = (element: React.RefObject<HTMLDivElement>) => {
+    setTimeout(() => {
+      if (element && element.current) {
+        element.current.scrollTo(0, element.current.scrollTop - 56);
+      }
+    }, 50);
+  };
 
   useEffect(() => {
     globalSelectedUser.user = selectedUser;
   }, [selectedUser]);
 
   return (
-    <div>
-      <Styled.BottomShadowBox>
-        <Styled.HScrollBox>
-          {users.map((user, index) => (
-            <UserBox
-              key={user.name + index.toString()}
-              user={user}
-              selectedUser={selectedUser}
-              setSelectedUser={setSelectedUser}
-            />
-          ))}
-        </Styled.HScrollBox>
-        <Button onClick={handleAddUserButton} size="large">
-          +
-        </Button>
-      </Styled.BottomShadowBox>
-    </div>
+    <>
+      <Backdrop open={isShow} />
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <div>
+          <Styled.CloneButton onClick={handleButton}>hi</Styled.CloneButton>
+          <Styled.Temp
+            isShow={isShow}
+            style={isHidden ? { zIndex: '-100' } : {}}
+          >
+            <Styled.CloneItemBox ref={scrollRef} isShow={isShow}>
+              {users.map((user, index) => {
+                return (
+                  <Styled.CloneSpan key={user.name + index}>
+                    <Styled.CloneNameSpan
+                      isShow={isShow}
+                      style={{
+                        transitionDelay: `${
+                          (isShow ? index : users.length - index) *
+                          (200 / users.length)
+                        }ms`,
+                      }}
+                    >
+                      {user.name}
+                    </Styled.CloneNameSpan>
+                    <Styled.CloneItem
+                      style={{
+                        transitionDelay: `${
+                          (isShow ? index : users.length - index) *
+                          (200 / users.length)
+                        }ms`,
+                      }}
+                      isShow={isShow}
+                      color={user.color}
+                      onClick={() => {
+                        handleClick(user);
+                      }}
+                    ></Styled.CloneItem>
+                  </Styled.CloneSpan>
+                );
+              })}
+              <Styled.CloneSpan>
+                <Styled.CloneNameSpan
+                  isShow={isShow}
+                  style={{
+                    transitionDelay: `${
+                      (isShow ? users.length : 0) * (200 / users.length)
+                    }ms`,
+                  }}
+                >
+                  Add
+                </Styled.CloneNameSpan>
+                <Styled.CloneItem
+                  style={{
+                    transitionDelay: `${
+                      (isShow ? users.length : 0) * (200 / users.length)
+                    }ms`,
+                  }}
+                  isShow={isShow}
+                  color="black"
+                  onClick={() => {
+                    handleAddUserButton();
+                  }}
+                ></Styled.CloneItem>
+              </Styled.CloneSpan>
+            </Styled.CloneItemBox>
+          </Styled.Temp>
+        </div>
+      </ClickAwayListener>
+    </>
   );
 };
 

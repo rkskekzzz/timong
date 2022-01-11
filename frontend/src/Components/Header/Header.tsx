@@ -5,7 +5,9 @@ import Styled from './Header.styled';
 const Header = () => {
   return (
     <Styled.TitleComponent>
-      <Typography>Title</Typography>
+      <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        Timong
+      </Typography>
     </Styled.TitleComponent>
   );
 };

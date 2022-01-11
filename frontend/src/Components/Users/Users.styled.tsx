@@ -1,41 +1,102 @@
 import styled from 'styled-components';
-// import styled from 'styled-components';
 
-const UserNameLabel = styled.span`
-  font-size: 1.2rem;
-`;
-const HFlexUserBox = styled.div`
+const Temp = styled.div<{ isShow: boolean }>`
+  position: absolute;
+  bottom: 72px;
+  right: 16px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 5px;
-  padding: 2px 5px;
-  border-radius: 12px;
-  background: #f0f0f0;
+  align-items: end;
+  flex-direction: column-reverse;
 `;
 
-// export default { UserNameLabel, HFlexUserBox };
-
-const BottomShadowBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background: white;
-  box-shadow: 0px 2px 2px 1px #dadada;
-  position: sticky;
-  top: 0;
+const CloneButton = styled.button`
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 56px;
+  height: 56px;
+  background: red;
+  border-radius: 50%;
+  border: 0px solid black;
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%),
+    0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
 `;
 
-const HScrollBox = styled.div`
+const CloneItemBox = styled.div<{ isShow: boolean }>`
+  position: relative;
   display: flex;
-  flex-direction: row;
-  gap: 10px;
+  align-items: end;
+  transition: top 0s linear 0.2s;
+  flex-direction: column-reverse;
+  margin-bottom: 16px;
   overflow: scroll;
-  padding: 10px;
-  &::-webkit-scrollbar {
+  scroll-behavior: smooth;
+  max-height: 504px;
+  ::-webkit-scrollbar {
     display: none;
   }
-  // background: #25a5b3;
 `;
 
-export default { BottomShadowBox, HScrollBox, UserNameLabel, HFlexUserBox };
+const CloneSpan = styled.span`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+const CloneNameSpan = styled.span<{ isShow: boolean }>`
+  position: relative;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  color: rgba(0, 0, 0, 0.6);
+  padding: 4px 16px;
+  word-break: keep-all;
+  transform-origin: 100% 50%;
+  ${(props) => {
+    if (props.isShow)
+      return `
+      transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      opacity: 1;
+      transform-origin: 100% 50%;
+      margin-right: 8px;
+    `;
+    else
+      return `
+      transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      transform: scale(0.5);
+      transform-origin: 100% 50%;
+      margin-right: 8px;
+      opacity: 0;`;
+  }};
+`;
+
+const CloneItem = styled.button<{ isShow: boolean }>`
+  width: 40px;
+  height: 40px;
+  margin: 8px;
+  border-radius: 4px;
+  border: 0;
+  background: ${(props) => props.color || 'white'};
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%),
+    0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
+  ${(props) => {
+    if (props.isShow)
+      return `
+      transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,opacity 0.8s;
+      opacity: 1;
+    `;
+    else
+      return `
+      transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,opacity 0.8s;
+      transform: scale(0);
+      opacity: 0;`;
+  }};
+`;
+
+export { Temp, CloneButton, CloneNameSpan, CloneSpan, CloneItemBox, CloneItem };

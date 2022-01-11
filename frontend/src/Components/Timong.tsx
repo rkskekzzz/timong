@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 
-import { User } from '../Entities/User';
 import { Year } from '../Entities/Date';
 import buildYear from '../Utils/buildDate';
-
+import Box from '@mui/material/Box';
 import * as Styled from './Timong.styled';
 
 import { Calendar } from './Calendar';
 import Header from './Header';
 import Users from './Users';
-import UserDial from './UserDial';
 
 const year: Year = buildYear(moment());
 
 const Timong = () => {
   return (
     <>
-      <Header />
-      <Styled.MainComponent>
-        <Users />
-        <Calendar year={year} />
-        <UserDial />
-      </Styled.MainComponent>
+      <Box sx={{ flexGrow: 1 }}>
+        <Header />
+        <Styled.Body>
+          <Styled.MainComponent>
+            <Calendar year={year} />
+          </Styled.MainComponent>
+          <Users />
+        </Styled.Body>
+      </Box>
     </>
   );
 };
