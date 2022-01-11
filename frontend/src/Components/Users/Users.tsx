@@ -39,6 +39,7 @@ const Users = () => {
 
   const handleClickAway = () => setIsShow(false);
   const handleButton = () => {
+    if (!isShow && !isHidden) return;
     setIsShow(!isShow);
     setIsHidden(false);
     setTimeout(() => {
