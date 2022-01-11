@@ -10,6 +10,7 @@ import * as Styled from './Timong.styled';
 import { Calendar } from './Calendar';
 import Header from './Header';
 import Users from './Users';
+import UserDial from './UserDial';
 
 const year: Year = buildYear(moment());
 
@@ -20,6 +21,7 @@ const Timong = () => {
       <Styled.MainComponent>
         <Users />
         <Calendar year={year} />
+        <UserDial />
       </Styled.MainComponent>
     </>
   );

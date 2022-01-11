@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 const MainComponent = styled.div`
+  height: 100vh;
   max-width: 400px;
+  overflow: scroll;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
