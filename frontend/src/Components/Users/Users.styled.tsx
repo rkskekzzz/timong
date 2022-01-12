@@ -9,7 +9,7 @@ const Temp = styled.div<{ isShow: boolean }>`
   flex-direction: column-reverse;
 `;
 
-const CloneButton = styled.button`
+const DialButton = styled.button`
   position: absolute;
   bottom: 16px;
   right: 16px;
@@ -22,28 +22,46 @@ const CloneButton = styled.button`
     0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
 `;
 
-const CloneItemBox = styled.div<{ isShow: boolean }>`
+const DialBox = styled.div<{ isShow: boolean }>`
   position: relative;
   display: flex;
   align-items: end;
   transition: top 0s linear 0.2s;
   flex-direction: column-reverse;
   margin-bottom: 16px;
-  overflow: scroll;
+  overflow: hidden scroll;
   scroll-behavior: smooth;
   max-height: 504px;
+  width: 90vw;
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const CloneSpan = styled.span`
+const DialRowDelButton = styled.button`
+  position: absolute;
+  left: 100%;
+`;
+
+const DialRow = styled.span<{ isSwipe: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
+  overflow: visible;
+  ${(props) => {
+    if (props.isSwipe)
+      return `
+      transition: transform 300ms ease-in-out 0ms;
+      transform: translateX(-40px);
+    `;
+    else
+      return `
+      transition: transform 200ms ease-in-out 0ms;
+      `;
+  }};
 `;
 
-const CloneNameSpan = styled.span<{ isShow: boolean }>`
+const DialRowName = styled.span<{ isShow: boolean }>`
   position: relative;
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-weight: 400;
@@ -58,6 +76,7 @@ const CloneNameSpan = styled.span<{ isShow: boolean }>`
   padding: 4px 16px;
   word-break: keep-all;
   transform-origin: 100% 50%;
+  overflow: visible;
   ${(props) => {
     if (props.isShow)
       return `
@@ -76,7 +95,7 @@ const CloneNameSpan = styled.span<{ isShow: boolean }>`
   }};
 `;
 
-const CloneItem = styled.button<{ isShow: boolean }>`
+const DialRowProfile = styled.button<{ isShow: boolean }>`
   width: 40px;
   height: 40px;
   margin: 8px;
@@ -99,4 +118,12 @@ const CloneItem = styled.button<{ isShow: boolean }>`
   }};
 `;
 
-export { Temp, CloneButton, CloneNameSpan, CloneSpan, CloneItemBox, CloneItem };
+export {
+  Temp,
+  DialBox,
+  DialRow,
+  DialButton,
+  DialRowName,
+  DialRowDelButton,
+  DialRowProfile,
+};

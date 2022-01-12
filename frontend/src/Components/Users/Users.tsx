@@ -41,6 +41,7 @@ const Users = () => {
   const handleDial = () => {
     if (!isShow && !isAnimationDone) return;
     setIsShow(!isShow);
+    setIsTouch(-1);
     setIsAnimationDone(false);
     setTimeout(() => {
       if (isShow && scrollRef && scrollRef.current) {
@@ -53,6 +54,15 @@ const Users = () => {
   const handleUserTabbed = (user: User) => {
     handleDial();
     setSelectedUser(user);
+  };
+
+  const handleRowDelButton = (delIndex: number) => {
+    setIsTouch(-1);
+    setUsers(
+      users.filter((_, index) => {
+        return index !== delIndex;
+      })
+    );
   };
 
   const handleAddUserButton = () => {
@@ -72,21 +82,56 @@ const Users = () => {
     globalSelectedUser.user = selectedUser;
   }, [selectedUser]);
 
+  /**
+   *  TODO: 컴포넌트 분리
+   */
+
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [isTouch, setIsTouch] = useState<number>(-1);
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) =>
+    setTouchStart(e.targetTouches[0].clientX);
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLButtonElement>) =>
+    setTouchEnd(e.targetTouches[0].clientX);
+
+  const handleTouchEnd = (index: number) => {
+    if (touchStart - touchEnd > 80) {
+      console.log('left swipe');
+      setIsTouch(index);
+      console.log(`setIsTouch : ${index}`);
+      console.log(`isTouch : ${isTouch}`);
+    }
+
+    if (touchStart - touchEnd < -120) {
+      console.log('right swipe');
+    }
+  };
+
   return (
     <>
       <Backdrop open={isShow} />
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
-          <Styled.CloneButton onClick={handleDial}>hi</Styled.CloneButton>
+          <Styled.DialButton onClick={handleDial}>hi</Styled.DialButton>
           <Styled.Temp
             isShow={isShow}
             style={isAnimationDone ? { zIndex: '-100' } : {}}
           >
-            <Styled.CloneItemBox ref={scrollRef} isShow={isShow}>
+            <Styled.DialBox ref={scrollRef} isShow={isShow}>
               {users.map((user, index) => {
                 return (
-                  <Styled.CloneSpan key={user.name + index}>
-                    <Styled.CloneNameSpan
+                  <Styled.DialRow
+                    key={user.name + index}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={() => {
+                      handleTouchEnd(index);
+                    }}
+                    isSwipe={isTouch === index ? true : false}
+                  >
+                    <Styled.DialRowName
                       isShow={isShow}
                       style={{
                         transitionDelay: `${
@@ -96,8 +141,8 @@ const Users = () => {
                       }}
                     >
                       {user.name}
-                    </Styled.CloneNameSpan>
-                    <Styled.CloneItem
+                    </Styled.DialRowName>
+                    <Styled.DialRowProfile
                       style={{
                         transitionDelay: `${
                           (isShow ? index : users.length - index) *
@@ -109,12 +154,19 @@ const Users = () => {
                       onClick={() => {
                         handleUserTabbed(user);
                       }}
-                    ></Styled.CloneItem>
-                  </Styled.CloneSpan>
+                    />
+                    <Styled.DialRowDelButton
+                      onClick={() => {
+                        handleRowDelButton(index);
+                      }}
+                    >
+                      hi{' '}
+                    </Styled.DialRowDelButton>
+                  </Styled.DialRow>
                 );
               })}
-              <Styled.CloneSpan>
-                <Styled.CloneNameSpan
+              <Styled.DialRow isSwipe={false}>
+                <Styled.DialRowName
                   isShow={isShow}
                   style={{
                     transitionDelay: `${
@@ -123,8 +175,8 @@ const Users = () => {
                   }}
                 >
                   Add
-                </Styled.CloneNameSpan>
-                <Styled.CloneItem
+                </Styled.DialRowName>
+                <Styled.DialRowProfile
                   style={{
                     transitionDelay: `${
                       (isShow ? users.length : 0) * (200 / users.length)
@@ -135,9 +187,9 @@ const Users = () => {
                   onClick={() => {
                     handleAddUserButton();
                   }}
-                ></Styled.CloneItem>
-              </Styled.CloneSpan>
-            </Styled.CloneItemBox>
+                ></Styled.DialRowProfile>
+              </Styled.DialRow>
+            </Styled.DialBox>
           </Styled.Temp>
         </div>
       </ClickAwayListener>
