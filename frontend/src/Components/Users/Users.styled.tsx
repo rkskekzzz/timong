@@ -38,7 +38,7 @@ const DialBox = styled.div<{ isShow: boolean }>`
   }
 `;
 
-const DialRowDelButton = styled.button`
+const DialRowDelButton = styled.div`
   position: absolute;
   left: 100%;
 `;

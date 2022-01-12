@@ -7,6 +7,7 @@ import { globalSelectedUser } from '../../Entities/User';
 
 import Backdrop from '@mui/material/Backdrop';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
 function makeDate(year: number, month: number, day: number): moment.Moment {
   return moment(`${year}-${month}-${day}`);
@@ -78,6 +79,7 @@ const Users = () => {
 
   const handleAddUserButton = () => {
     setUsers([...users, new User('asdf', 'black', [])]);
+    setIsSwipe(-1);
     resetScrollEffect(scrollRef);
   };
 
@@ -175,12 +177,13 @@ const Users = () => {
                         handleUserTabbed(index);
                       }}
                     />
-                    <Styled.DialRowDelButton
-                      onClick={() => {
-                        handleRowDelButton(index);
-                      }}
-                    >
-                      hi{' '}
+                    <Styled.DialRowDelButton>
+                      <DeleteForeverRoundedIcon
+                        onClick={() => {
+                          handleRowDelButton(index);
+                        }}
+                        sx={{ color: 'red' }}
+                      />
                     </Styled.DialRowDelButton>
                   </Styled.DialRow>
                 );
