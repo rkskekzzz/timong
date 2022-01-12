@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Styled from './DayBox.styled';
 import GlobalStyled from '../Styled/global.styled';
 import { Day } from '../../Entities/Date';
@@ -7,10 +7,13 @@ import moment from 'moment';
 
 const DayBox: React.FC<{ day: Day }> = ({ day }) => {
   const [users, setUsers] = useState<User[]>([]);
+  const [isTouch, setIsTouch] = useState<boolean>(false);
   const [startDate, setStartDate] = useState<Day>();
   const [endDate, setEndDate] = useState<Day>();
 
   const handleClick = () => {
+    console.log('here');
+
     if (!day.isThisMonth) return;
     if (globalSelectedUser.user) {
       day.updateUser(globalSelectedUser.user);
@@ -18,9 +21,13 @@ const DayBox: React.FC<{ day: Day }> = ({ day }) => {
     }
   };
 
-  // const handleTouchStart = () => {
-  //   setStartDate(day);
-  // };
+  // useEffect(() => {
+  //   document.getElementById('test').addEventListener('touchmove', handleClick);
+  //   return () =>
+  //     document
+  //       .getElementById('test')!
+  //       .removeEventListener('touchmove', handleClick);
+  // }, []);
 
   // const handleTouchEnd = () => {
   //   setEndDate(day);
@@ -43,7 +50,7 @@ const DayBox: React.FC<{ day: Day }> = ({ day }) => {
   // };
 
   return (
-    <Styled.CalendarBox onClick={handleClick}>
+    <Styled.CalendarBox onClick={handleClick} id="test">
       <Styled.CalendarDateLabel isThisMonth={day.isThisMonth}>
         {day.moment.format('D')}
       </Styled.CalendarDateLabel>
