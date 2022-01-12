@@ -37,7 +37,7 @@ const Users = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleClickAway = () => setIsShow(false);
+  const handleClickAway = () => handleDial();
   const handleDial = () => {
     if (!isShow && !isAnimationDone) return;
     setIsShow(!isShow);

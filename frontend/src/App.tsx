@@ -8,6 +8,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Timong />} />
+        <Route path="/:id" element={<Timong />} />
       </Routes>
     </BrowserRouter>
   );
