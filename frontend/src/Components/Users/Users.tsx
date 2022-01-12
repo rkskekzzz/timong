@@ -43,6 +43,7 @@ const Users = () => {
       setIsAnimationDone(true);
     }, 500);
   };
+
   const handleDial = () => {
     if (!isShow && !isAnimationDone) return;
     setIsShow(!isShow);
