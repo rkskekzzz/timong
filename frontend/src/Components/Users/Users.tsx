@@ -37,7 +37,7 @@ const Users = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleClickAway = () => handleDial();
+  const handleClickAway = () => setIsShow(false);
   const handleDial = () => {
     if (!isShow && !isAnimationDone) return;
     setIsShow(!isShow);
@@ -51,9 +51,9 @@ const Users = () => {
     }, 500);
   };
 
-  const handleUserTabbed = (user: User) => {
+  const handleUserTabbed = (index: number) => {
+    setSelectedUser(users[index]);
     handleDial();
-    setSelectedUser(user);
   };
 
   const handleRowDelButton = (delIndex: number) => {
@@ -71,7 +71,7 @@ const Users = () => {
   };
 
   const handleAddUserButton = () => {
-    setUsers([...users, new User('asdf', 'blue', [])]);
+    setUsers([...users, new User('asdf', 'black', [])]);
     resetScrollEffect(scrollRef);
   };
 
@@ -166,7 +166,7 @@ const Users = () => {
                       isShow={isShow}
                       color={user.color}
                       onClick={() => {
-                        handleUserTabbed(user);
+                        handleUserTabbed(index);
                       }}
                     />
                     <Styled.DialRowDelButton
