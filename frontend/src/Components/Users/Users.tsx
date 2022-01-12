@@ -31,25 +31,30 @@ const data: User[] = [
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>(data);
-  const [isHidden, setIsHidden] = useState(true);
+  const [isAnimationDone, setIsAnimationDone] = useState(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isShow, setIsShow] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleClickAway = () => setIsShow(false);
-  const handleButton = () => {
-    if (!isShow && !isHidden) return;
+  const handleDial = () => {
+    if (!isShow && !isAnimationDone) return;
     setIsShow(!isShow);
-    setIsHidden(false);
+    setIsAnimationDone(false);
     setTimeout(() => {
       if (isShow && scrollRef && scrollRef.current) {
         scrollRef.current.scrollTop = 0;
-        setIsHidden(true);
+        setIsAnimationDone(true);
       }
     }, 500);
   };
-  const handleClick = (user: User) => setSelectedUser(user);
+
+  const handleUserTabbed = (user: User) => {
+    handleDial();
+    setSelectedUser(user);
+  };
+
   const handleAddUserButton = () => {
     setUsers([...users, new User('asdf', 'blue', [])]);
     resetScrollEffect(scrollRef);
@@ -72,10 +77,10 @@ const Users = () => {
       <Backdrop open={isShow} />
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
-          <Styled.CloneButton onClick={handleButton}>hi</Styled.CloneButton>
+          <Styled.CloneButton onClick={handleDial}>hi</Styled.CloneButton>
           <Styled.Temp
             isShow={isShow}
-            style={isHidden ? { zIndex: '-100' } : {}}
+            style={isAnimationDone ? { zIndex: '-100' } : {}}
           >
             <Styled.CloneItemBox ref={scrollRef} isShow={isShow}>
               {users.map((user, index) => {
@@ -102,7 +107,7 @@ const Users = () => {
                       isShow={isShow}
                       color={user.color}
                       onClick={() => {
-                        handleClick(user);
+                        handleUserTabbed(user);
                       }}
                     ></Styled.CloneItem>
                   </Styled.CloneSpan>
