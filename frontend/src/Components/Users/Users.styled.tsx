@@ -43,7 +43,7 @@ const DialRowDelButton = styled.button`
   left: 100%;
 `;
 
-const DialRow = styled.span<{ isSwipe: boolean }>`
+const DialRow = styled.span<{ isSwipe: boolean; isDelete: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
@@ -58,6 +58,17 @@ const DialRow = styled.span<{ isSwipe: boolean }>`
       return `
       transition: transform 200ms ease-in-out 0ms;
       `;
+  }};
+  ${(props) => {
+    if (props.isDelete) {
+      return `
+      transition: transform 300ms ease-in 0ms;
+      transform: scaleY(0.000001);
+      `;
+    } else {
+      return `
+      `;
+    }
   }};
 `;
 

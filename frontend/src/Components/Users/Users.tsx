@@ -57,12 +57,17 @@ const Users = () => {
   };
 
   const handleRowDelButton = (delIndex: number) => {
+    if (!isShow && !isAnimationDone) return;
     setIsTouch(-1);
-    setUsers(
-      users.filter((_, index) => {
-        return index !== delIndex;
-      })
-    );
+    setIsDelete(delIndex);
+    setTimeout(() => {
+      setUsers(
+        users.filter((_, index) => {
+          return index !== delIndex;
+        })
+      );
+      setIsDelete(-1);
+    }, 500);
   };
 
   const handleAddUserButton = () => {
@@ -85,10 +90,10 @@ const Users = () => {
   /**
    *  TODO: 컴포넌트 분리
    */
-
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const [isTouch, setIsTouch] = useState<number>(-1);
+  const [isDelete, setIsDelete] = useState<number>(-1);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) =>
     setTouchStart(e.targetTouches[0].clientX);
@@ -103,7 +108,6 @@ const Users = () => {
       console.log(`setIsTouch : ${index}`);
       console.log(`isTouch : ${isTouch}`);
     }
-
     if (touchStart - touchEnd < -120) {
       console.log('right swipe');
     }
@@ -129,6 +133,7 @@ const Users = () => {
                     onTouchEnd={() => {
                       handleTouchEnd(index);
                     }}
+                    isDelete={isDelete === index ? true : false}
                     isSwipe={isTouch === index ? true : false}
                   >
                     <Styled.DialRowName
@@ -165,7 +170,7 @@ const Users = () => {
                   </Styled.DialRow>
                 );
               })}
-              <Styled.DialRow isSwipe={false}>
+              <Styled.DialRow isSwipe={false} isDelete={false}>
                 <Styled.DialRowName
                   isShow={isShow}
                   style={{
