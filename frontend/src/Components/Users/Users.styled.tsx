@@ -43,7 +43,7 @@ const DialRowDelButton = styled.button`
   left: 100%;
 `;
 
-const DialRow = styled.span<{ isSwipe: boolean; isDelete: boolean }>`
+const DialRow = styled.span<{ isSwipe: boolean; willDelete: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
@@ -60,10 +60,11 @@ const DialRow = styled.span<{ isSwipe: boolean; isDelete: boolean }>`
       `;
   }};
   ${(props) => {
-    if (props.isDelete) {
+    if (props.willDelete) {
       return `
-      transition: transform 300ms ease-in 0ms;
-      transform: scaleY(0.000001);
+      transition: transform 300ms ease-in 0ms, opacity 300ms ease-in 0ms;
+      transform: translateX(-56px);
+      opacity: 0;
       `;
     } else {
       return `

@@ -41,7 +41,7 @@ const Users = () => {
   const handleDial = () => {
     if (!isShow && !isAnimationDone) return;
     setIsShow(!isShow);
-    setIsTouch(-1);
+    setIsSwipe(-1);
     setIsAnimationDone(false);
     setTimeout(() => {
       if (isShow && scrollRef && scrollRef.current) {
@@ -58,15 +58,15 @@ const Users = () => {
 
   const handleRowDelButton = (delIndex: number) => {
     if (!isShow && !isAnimationDone) return;
-    setIsTouch(-1);
-    setIsDelete(delIndex);
+    setIsSwipe(-1);
+    setWillDelete(delIndex);
     setTimeout(() => {
       setUsers(
         users.filter((_, index) => {
           return index !== delIndex;
         })
       );
-      setIsDelete(-1);
+      setWillDelete(-1);
     }, 500);
   };
 
@@ -91,26 +91,33 @@ const Users = () => {
    *  TODO: 컴포넌트 분리
    */
   const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
-  const [isTouch, setIsTouch] = useState<number>(-1);
-  const [isDelete, setIsDelete] = useState<number>(-1);
+  const [isSwipe, setIsSwipe] = useState<number>(-1);
+  const [isSwipeMore, setIsSwipeMore] = useState<boolean>(false);
+  const [willDelete, setWillDelete] = useState<number>(-1);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) =>
     setTouchStart(e.targetTouches[0].clientX);
 
-  const handleTouchMove = (e: React.TouchEvent<HTMLButtonElement>) =>
-    setTouchEnd(e.targetTouches[0].clientX);
-
-  const handleTouchEnd = (index: number) => {
-    if (touchStart - touchEnd > 80) {
+  const handleTouchMove = (
+    e: React.TouchEvent<HTMLSpanElement>,
+    index: number
+  ) => {
+    if (touchStart - e.targetTouches[0].clientX > 50) {
       console.log('left swipe');
-      setIsTouch(index);
-      console.log(`setIsTouch : ${index}`);
-      console.log(`isTouch : ${isTouch}`);
+      setIsSwipe(index);
     }
-    if (touchStart - touchEnd < -120) {
+    if (touchStart - e.targetTouches[0].clientX > 250) {
+      setIsSwipeMore(true);
+      console.log('left swipe more');
+    }
+    if (touchStart - e.targetTouches[0].clientX < -120) {
       console.log('right swipe');
     }
+  };
+
+  const handleTouchEnd = (index: number) => {
+    isSwipeMore && handleRowDelButton(index);
+    setIsSwipeMore(false);
   };
 
   return (
@@ -129,12 +136,14 @@ const Users = () => {
                   <Styled.DialRow
                     key={user.name + index}
                     onTouchStart={handleTouchStart}
-                    onTouchMove={handleTouchMove}
+                    onTouchMove={(e) => {
+                      handleTouchMove(e, index);
+                    }}
                     onTouchEnd={() => {
                       handleTouchEnd(index);
                     }}
-                    isDelete={isDelete === index ? true : false}
-                    isSwipe={isTouch === index ? true : false}
+                    willDelete={willDelete === index ? true : false}
+                    isSwipe={isSwipe === index ? true : false}
                   >
                     <Styled.DialRowName
                       isShow={isShow}
@@ -170,7 +179,7 @@ const Users = () => {
                   </Styled.DialRow>
                 );
               })}
-              <Styled.DialRow isSwipe={false} isDelete={false}>
+              <Styled.DialRow isSwipe={false} willDelete={false}>
                 <Styled.DialRowName
                   isShow={isShow}
                   style={{
