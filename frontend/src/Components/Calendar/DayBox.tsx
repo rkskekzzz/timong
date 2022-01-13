@@ -12,8 +12,6 @@ const DayBox: React.FC<{ day: Day }> = ({ day }) => {
   const [endDate, setEndDate] = useState<Day>();
 
   const handleClick = () => {
-    console.log('here');
-
     if (!day.isThisMonth) return;
     if (globalSelectedUser.user) {
       day.updateUser(globalSelectedUser.user);

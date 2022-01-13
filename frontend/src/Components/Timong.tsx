@@ -17,7 +17,7 @@ const Timong = () => {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <Header />
-        <Styled.Body>
+        <Styled.Body id="body">
           <Styled.MainComponent>
             <Calendar year={year} />
           </Styled.MainComponent>

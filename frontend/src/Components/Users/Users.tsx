@@ -32,7 +32,7 @@ const data: User[] = [
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>(data);
-  const [isAnimationDone, setIsAnimationDone] = useState(true);
+  const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isShow, setIsShow] = useState(false);
 
