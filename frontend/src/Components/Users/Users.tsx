@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { User } from '../../Entities/User';
 
 import moment from 'moment';
-import * as Styled from './Users.styled';
+import Styled from './Users.styled';
 import { globalSelectedUser } from '../../Entities/User';
-
 import Backdrop from '@mui/material/Backdrop';
+
+import { Modal, Input, Button } from '@mui/material';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
@@ -78,6 +79,7 @@ const Users = () => {
   };
 
   const handleAddUserButton = () => {
+    handleModalOpen();
     setUsers([...users, new User('asdf', 'black', [])]);
     setIsSwipe(-1);
     resetScrollEffect(scrollRef);
@@ -128,9 +130,36 @@ const Users = () => {
     setIsSwipeMore(false);
   };
 
+  /**
+   *  컴포넌트 분리
+   */
+  const [open, setOpen] = React.useState(false);
+  const handleModalOpen = () => setOpen(true);
+  const handleModalClose = () => setOpen(false);
+
   return (
     <>
       <Backdrop open={isShow} />
+      <Modal
+        open={open}
+        onClose={handleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Styled.ModalBox>
+          <Styled.ModalBoxSpan>
+            <div></div>
+          </Styled.ModalBoxSpan>
+          <Input placeholder="닉네임을 입력하세요..." />
+          <Button
+            onClick={handleModalClose}
+            variant="contained"
+            sx={{ background: '#f995f0' }}
+          >
+            <Styled.ModalBoxSpan>확인</Styled.ModalBoxSpan>
+          </Button>
+        </Styled.ModalBox>
+      </Modal>
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
           <Styled.DialButton onClick={handleDial}>hi</Styled.DialButton>

@@ -130,8 +130,30 @@ const DialRowProfile = styled.button<{ isShow: boolean }>`
   }};
 `;
 
-export {
+const ModalBox = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 200px;
+  background: white;
+  border: '2px solid #000';
+  border-radius: 15px;
+  padding: 3%;
+`;
+
+const ModalBoxSpan = styled.span`
+  font-size: 1.1rem;
+`;
+
+const Styled = {
   Temp,
+  ModalBox,
+  ModalBoxSpan,
   DialBox,
   DialRow,
   DialButton,
@@ -139,3 +161,5 @@ export {
   DialRowDelButton,
   DialRowProfile,
 };
+
+export default Styled;

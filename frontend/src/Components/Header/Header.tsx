@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import Styled from './Header.styled';
 import AddLinkIcon from '@mui/icons-material/AddLink';
 import { throttle } from 'lodash';
