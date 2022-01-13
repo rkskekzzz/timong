@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Temp = styled.div<{ isShow: boolean }>`
-  position: absolute;
+  position: fixed;
   bottom: 72px;
   right: 16px;
   display: flex;
@@ -10,7 +10,7 @@ const Temp = styled.div<{ isShow: boolean }>`
 `;
 
 const DialButton = styled.button`
-  position: absolute;
+  position: fixed;
   bottom: 16px;
   right: 16px;
   width: 56px;
@@ -39,7 +39,7 @@ const DialBox = styled.div<{ isShow: boolean }>`
 `;
 
 const DialRowDelButton = styled.div`
-  position: absolute;
+  position: fixed;
   left: 100%;
 `;
 

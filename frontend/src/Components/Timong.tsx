@@ -15,15 +15,13 @@ const year: Year = buildYear(moment());
 const Timong = () => {
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <Header />
-        <Styled.Body id="body">
-          <Styled.MainComponent>
-            <Calendar year={year} />
-          </Styled.MainComponent>
-          <Users />
-        </Styled.Body>
-      </Box>
+      <Header />
+      <Styled.Body id="body">
+        <Styled.MainComponent>
+          <Calendar year={year} />
+        </Styled.MainComponent>
+      </Styled.Body>
+      <Users />
     </>
   );
 };
