@@ -81,12 +81,12 @@ const DialRowName = styled.span<{ isShow: boolean }>`
   font-size: 1rem;
   line-height: 1.5;
   letter-spacing: 0.00938em;
-  background-color: #fff;
-  border-radius: 4px;
+  background-color: #dadada;
+  border-radius: 9px;
   box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
     0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
   color: rgba(0, 0, 0, 0.6);
-  padding: 4px 16px;
+  padding: 3px 12px;
   word-break: keep-all;
   transform-origin: 100% 50%;
   overflow: visible;

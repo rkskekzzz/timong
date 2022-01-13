@@ -202,16 +202,6 @@ const Users = () => {
                 );
               })}
               <Styled.DialRow isSwipe={false} willDelete={false}>
-                <Styled.DialRowName
-                  isShow={isShow}
-                  style={{
-                    transitionDelay: `${
-                      (isShow ? users.length : 0) * (200 / users.length)
-                    }ms`,
-                  }}
-                >
-                  Add
-                </Styled.DialRowName>
                 <Styled.DialRowProfile
                   style={{
                     transitionDelay: `${

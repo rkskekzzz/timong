@@ -6,13 +6,11 @@ const Header = styled.div<{ isPinned: boolean }>`
   top: 0;
   left: auto;
   right: 0;
-  background-color: white;
   height: 53px;
   width: 100%;
   display: flex;
   box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px,
     rgb(0 0 0 / 14%) 0px 4px 5px 0px, rgb(0 0 0 / 12%) 0px 1px 10px 0px;
-
   ${(props) => {
     if (!props.isPinned)
       return `
@@ -26,7 +24,7 @@ const Header = styled.div<{ isPinned: boolean }>`
         transition: transform 500ms linear 0ms, border-radius 500ms, background 500ms;
         transform: scale(1);
         border-radius: 0px;
-        background: white;
+        background: #f2f2f2;
         `;
   }};
 `;
