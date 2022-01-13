@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { User } from '../../Entities/User';
-
+import AddModal from '../Modal';
 import moment from 'moment';
 import Styled from './Users.styled';
 import { globalSelectedUser } from '../../Entities/User';
 import Backdrop from '@mui/material/Backdrop';
 
-import { Modal, Input, Button } from '@mui/material';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
@@ -40,6 +39,7 @@ const Users = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleClickAway = () => {
+    if (isShowModal) return;
     setIsShow(false);
     setTimeout(() => {
       setIsAnimationDone(true);
@@ -80,9 +80,6 @@ const Users = () => {
 
   const handleAddUserButton = () => {
     handleModalOpen();
-    setUsers([...users, new User('asdf', 'black', [])]);
-    setIsSwipe(-1);
-    resetScrollEffect(scrollRef);
   };
 
   const resetScrollEffect = (element: React.RefObject<HTMLDivElement>) => {
@@ -133,33 +130,20 @@ const Users = () => {
   /**
    *  컴포넌트 분리
    */
-  const [open, setOpen] = React.useState(false);
-  const handleModalOpen = () => setOpen(true);
-  const handleModalClose = () => setOpen(false);
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const handleModalOpen = () => setIsShowModal(true);
+  const handleModalClose = () => setIsShowModal(false);
+  const handleSubmitButton = () => {
+    setUsers([...users, new User('asdf', 'black', [])]);
+    handleModalClose();
+    setIsSwipe(-1);
+    resetScrollEffect(scrollRef);
+  };
 
   return (
     <>
       <Backdrop open={isShow} />
-      <Modal
-        open={open}
-        onClose={handleModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Styled.ModalBox>
-          <Styled.ModalBoxSpan>
-            <div></div>
-          </Styled.ModalBoxSpan>
-          <Input placeholder="닉네임을 입력하세요..." />
-          <Button
-            onClick={handleModalClose}
-            variant="contained"
-            sx={{ background: '#f995f0' }}
-          >
-            <Styled.ModalBoxSpan>확인</Styled.ModalBoxSpan>
-          </Button>
-        </Styled.ModalBox>
-      </Modal>
+      <AddModal handleModalClose={handleModalClose} isShowModal={isShowModal} />
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
           <Styled.DialButton onClick={handleDial}>hi</Styled.DialButton>
