@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 
 import { Year } from '../Entities/Date';
 import buildYear from '../Utils/buildDate';
-import Box from '@mui/material/Box';
-import * as Styled from './Timong.styled';
+import Styled from './Timong.styled';
 
 import { Calendar } from './Calendar';
 import Header from './Header';
@@ -17,9 +16,7 @@ const Timong = () => {
     <>
       <Header />
       <Styled.Body id="body">
-        <Styled.MainComponent>
-          <Calendar year={year} />
-        </Styled.MainComponent>
+        <Calendar year={year} />
       </Styled.Body>
       <Users />
     </>

@@ -16,13 +16,17 @@ const Header = styled.div<{ isPinned: boolean }>`
   ${(props) => {
     if (!props.isPinned)
       return `
-        transition: transform 500ms ease-in-out 0ms, border-radius 500ms;
+        transition: transform 500ms linear 0ms, border-radius 500ms, background 500ms;
         transform: scale(0.7);
         border-radius: 30px;
+        background: #f995f0;
       `;
     else
       return `
-        transition: transform 500ms ease-in-out 0ms;
+        transition: transform 500ms linear 0ms, border-radius 500ms, background 500ms;
+        transform: scale(1);
+        border-radius: 0px;
+        background: white;
         `;
   }};
 `;
@@ -31,9 +35,54 @@ const HeaderFlexDiv = styled.div`
   display: flex;
   padding: 10px 20px;
   width: 100%;
-  justify-contents: space-between;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-const Styled = { Header, HeaderFlexDiv };
+const HeaderTimongTitle = styled.span<{ isPinned: boolean }>`
+  position: absolute;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff6ff2;
+  ${(props) => {
+    if (!props.isPinned)
+      return `
+        transition: transform 500ms linear 0ms, opacity 200ms;
+        transform: translateY(-30px);
+        opacity: 0;
+      `;
+    else
+      return `
+        transition: transform 500ms ease-out 0ms, opacity 200ms;
+        opacity: 1;
+        `;
+  }};
+`;
+const HeaderCalendarTitle = styled.span<{ isPinned: boolean }>`
+  font-size: 0.7rem;
+  position: relative;
+  font-weight: bold;
+  color: #bfbfbf;
+  ${(props) => {
+    if (!props.isPinned)
+      return `
+        transition: transform 500ms linear 0ms, color 500ms;
+        transform: scale(2) translateX(20px);
+        color: white;
+  `;
+    else
+      return `
+        transition: transform 500ms linear 0ms, color 500ms;
+        transform: translateY(15px) ;
+        `;
+  }};
+`;
+
+const Styled = {
+  Header,
+  HeaderFlexDiv,
+  HeaderCalendarTitle,
+  HeaderTimongTitle,
+};
 
 export default Styled;

@@ -12,23 +12,6 @@ const Body = styled.div`
   }
 `;
 
-const MainComponent = styled.div`
-  padding: 60px 0;
-`;
+const Styled = { Body };
 
-const VFlexBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px solid #dfdfdf;
-  padding: 10px;
-  gap: 10px;
-`;
-
-const HFlexBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: stretch;
-`;
-
-export { MainComponent, Body, VFlexBox, HFlexBox };
+export default Styled;

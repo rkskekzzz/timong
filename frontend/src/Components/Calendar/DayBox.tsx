@@ -7,9 +7,9 @@ import moment from 'moment';
 
 const DayBox: React.FC<{ day: Day }> = ({ day }) => {
   const [users, setUsers] = useState<User[]>([]);
-  const [isTouch, setIsTouch] = useState<boolean>(false);
-  const [startDate, setStartDate] = useState<Day>();
-  const [endDate, setEndDate] = useState<Day>();
+  // const [isTouch, setIsTouch] = useState<boolean>(false);
+  // const [startDate, setStartDate] = useState<Day>();
+  // const [endDate, setEndDate] = useState<Day>();
 
   const handleClick = () => {
     if (!day.isThisMonth) return;

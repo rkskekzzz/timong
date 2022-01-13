@@ -15,7 +15,7 @@ const DialButton = styled.button`
   right: 16px;
   width: 56px;
   height: 56px;
-  background: red;
+  background: #f995f0;
   border-radius: 50%;
   border: 0px solid black;
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%),

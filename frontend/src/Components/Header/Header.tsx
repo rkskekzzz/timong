@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography } from '@mui/material';
+
 import Styled from './Header.styled';
 import AddLinkIcon from '@mui/icons-material/AddLink';
 import { throttle } from 'lodash';
@@ -7,14 +7,12 @@ import { throttle } from 'lodash';
 let prev_windows_scrollY = 0;
 
 const Header = () => {
-  const [isTop, setIsTop] = useState<boolean>(false);
   const [isPinned, setIsPinned] = useState<boolean>(true);
-  // const [isScroll, setIsScroll] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = (_e: Event) => {
-      // if (window.scrollY < 64) setIsTop(true);
-      // else setIsTop(false);
+      // console.log(window.scrollY - prev_windows_scrollY);
+
       if (window.scrollY < prev_windows_scrollY) {
         prev_windows_scrollY = window.scrollY;
         setIsPinned(true);
@@ -23,19 +21,29 @@ const Header = () => {
         setIsPinned(false);
       }
     };
-    window.addEventListener('scroll', throttle(handleScroll, 200));
+    window.addEventListener('scroll', throttle(handleScroll, 300));
     return () => {
-      window.removeEventListener('scroll', throttle(handleScroll, 200));
+      window.removeEventListener('scroll', throttle(handleScroll, 300));
     };
   }, []);
 
   return (
     <Styled.Header isPinned={isPinned}>
       <Styled.HeaderFlexDiv>
-        <Typography variant="h6" component="span" sx={{ flexGrow: 1 }}>
+        <Styled.HeaderTimongTitle isPinned={isPinned}>
           Timong
-        </Typography>
-        <AddLinkIcon />
+        </Styled.HeaderTimongTitle>
+        <Styled.HeaderCalendarTitle isPinned={isPinned}>
+          42 Share House
+        </Styled.HeaderCalendarTitle>
+        <AddLinkIcon
+          sx={{
+            color: isPinned ? '#ff6ff2' : 'white',
+            transform: 'scale(1.2)',
+            transition: 'transform 500ms linear 0ms, color 500ms',
+          }}
+          fontSize="medium"
+        />
       </Styled.HeaderFlexDiv>
     </Styled.Header>
   );

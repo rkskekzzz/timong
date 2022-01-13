@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const CalendarDateLabel = styled.div<{ isThisMonth: boolean }>`
   width: 100%;
   font-size: 0.8rem;
-  //   color: ${(props) => (props.isThisMonth ? '' : 'black')};
+  padding-left: 3px;
   display: ${(props) => (props.isThisMonth ? '' : 'none')};
 `;
 
