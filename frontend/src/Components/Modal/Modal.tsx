@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Styled from './Modal.styled';
 import { useFormik } from 'formik';
 
-import { Modal, Input, Button } from '@mui/material';
-import { CirclePicker, CirclePickerProps } from 'react-color';
+import { Modal, Input } from '@mui/material';
+import { CirclePicker } from 'react-color';
 
 type Color = object & {
   hex: string;
@@ -18,6 +18,7 @@ const AddModal: React.FC<{
   handleModalClose: () => void;
   isShowModal: boolean;
 }> = ({ handleModalClose, isShowModal }) => {
+  const [isError, setIsError] = useState<boolean>(false);
   const formik = useFormik({
     initialValues: {
       userName: '',
@@ -33,6 +34,19 @@ const AddModal: React.FC<{
 
     formik.values.userColor = _e.hex;
   };
+  const handleSubmitButton = () => {
+    if (isError) return;
+    if (!formik.values.userColor || !formik.values.userName) {
+      setIsError(true);
+      setTimeout(() => {
+        setIsError(false);
+      }, 1000);
+      return;
+    } else {
+      formik.resetForm();
+      handleModalClose();
+    }
+  };
 
   return (
     <Modal
@@ -45,17 +59,22 @@ const AddModal: React.FC<{
         <Styled.ModalBoxForm>
           <CirclePicker width="" onChange={handleColorPick} />
           <Input
+            error={isError ? true : false}
+            autoComplete="false"
+            id="userName"
             placeholder="닉네임을 입력하세요..."
             value={formik.values.userName}
+            onChange={formik.handleChange}
           />
-          <Button
-            onClick={handleModalClose}
+
+          <Styled.ModalBoxButton
+            onClick={handleSubmitButton}
             variant="contained"
-            sx={{ background: '#f995f0' }}
-            type="submit"
+            color="primary"
+            sx={{ bgcolor: 'Background.paper' }}
           >
             <Styled.ModalBoxSpan>확인</Styled.ModalBoxSpan>
-          </Button>
+          </Styled.ModalBoxButton>
         </Styled.ModalBoxForm>
       </Styled.ModalBox>
     </Modal>

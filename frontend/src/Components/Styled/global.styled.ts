@@ -8,7 +8,7 @@ const Circle = styled.div<{ size?: CircleType }>`
   // height: ${(props) => (props.size === 'small' ? '9px' : '11px')};
   width: 100%;
   height: 100%;
-  border-radius: 4px;
+  border-radius: 30px;
   background: ${(props) => props.color || 'white'};
 `;
 

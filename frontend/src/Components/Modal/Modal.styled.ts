@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from '@mui/material';
 
 const ModalBox = styled.div`
   position: absolute;
@@ -24,6 +25,15 @@ const ModalBoxSpan = styled.span`
   font-size: 1.1rem;
 `;
 
-const Styled = { ModalBox, ModalBoxForm, ModalBoxSpan };
+const ModalBoxButton = styled(Button)`
+  && {
+    background: #f995f0;
+    :hover {
+      background: #f995f0;
+    }
+  }
+`;
+
+const Styled = { ModalBox, ModalBoxForm, ModalBoxButton, ModalBoxSpan };
 
 export default Styled;

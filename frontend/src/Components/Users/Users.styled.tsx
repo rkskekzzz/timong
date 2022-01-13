@@ -48,6 +48,7 @@ const DialRow = styled.span<{ isSwipe: boolean; willDelete: boolean }>`
   display: flex;
   align-items: center;
   overflow: visible;
+  margin-right: 4px;
   ${(props) => {
     if (props.isSwipe)
       return `
@@ -110,8 +111,8 @@ const DialRowName = styled.span<{ isShow: boolean }>`
 const DialRowProfile = styled.button<{ isShow: boolean }>`
   width: 40px;
   height: 40px;
-  margin: 8px;
-  border-radius: 4px;
+  margin: 4px;
+  border-radius: 30px;
   border: 0;
   background: ${(props) => props.color || 'white'};
   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%),
