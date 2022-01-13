@@ -41,6 +41,7 @@ const Users = () => {
   const handleClickAway = () => {
     if (isShowModal) return;
     setIsShow(false);
+    setIsSwipe(-1);
     setTimeout(() => {
       setIsAnimationDone(true);
     }, 500);
@@ -149,7 +150,7 @@ const Users = () => {
       />
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
-          <Styled.DialButton onClick={handleDial}>hi</Styled.DialButton>
+          <Styled.DialButton onClick={handleDial}></Styled.DialButton>
           <Styled.Temp
             isShow={isShow}
             style={isAnimationDone ? { zIndex: '-100' } : {}}
@@ -195,10 +196,11 @@ const Users = () => {
                     />
                     <Styled.DialRowDelButton>
                       <DeleteForeverRoundedIcon
+                        fontSize="medium"
                         onClick={() => {
                           handleRowDelButton(index);
                         }}
-                        sx={{ color: 'red' }}
+                        // sx={{ color: 'red' }}
                       />
                     </Styled.DialRowDelButton>
                   </Styled.DialRow>

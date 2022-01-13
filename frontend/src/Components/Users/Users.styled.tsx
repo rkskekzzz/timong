@@ -39,8 +39,15 @@ const DialBox = styled.div<{ isShow: boolean }>`
 `;
 
 const DialRowDelButton = styled.div`
+  width: 40px;
+  height: 40px;
+  margin: 4px;
   position: fixed;
   left: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transform: scale(1.1);
 `;
 
 const DialRow = styled.span<{ isSwipe: boolean; willDelete: boolean }>`
