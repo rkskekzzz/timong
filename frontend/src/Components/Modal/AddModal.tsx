@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Styled from './Modal.styled';
+import Styled from './AddModal.styled';
 import { useFormik } from 'formik';
+import { User } from 'src/Entities/User';
 
 import { Modal, Input } from '@mui/material';
 import { CirclePicker } from 'react-color';
@@ -17,12 +18,14 @@ type Color = object & {
 
 const AddModal: React.FC<{
   handleModalClose: () => void;
+  addUser: (user: User) => void;
   isShowModal: boolean;
-}> = ({ handleModalClose, isShowModal }) => {
+}> = ({ handleModalClose, addUser, isShowModal }) => {
   const [isError, setIsError] = useState<{ color: boolean; name: boolean }>({
     color: false,
     name: false,
   });
+  const [clr, setClr] = useState('#ffffff');
   const formik = useFormik({
     initialValues: {
       userName: '',
@@ -33,30 +36,42 @@ const AddModal: React.FC<{
     },
   });
   const toggleError = (error: string) => {
-    type NullableBoolean = 'TRUE' | 'FALSE' | 'NONE';
-    const _error = error as NullableBoolean;
     const initError = { color: false, name: false };
     const newError = { color: false, name: false };
 
-    // newError[<NullableBoolean>error] = true;
-
-    setTimeout(() => setIsError(initError), 2000);
+    if (error === 'color') {
+      newError.color = true;
+    } else {
+      newError.name = true;
+    }
+    setIsError(newError);
+    setTimeout(() => setIsError(initError), 1000);
   };
 
   const handleColorPick = (e: object) => {
     const _e = e as Color;
-    formik.values.userColor = _e.hex;
+    if (_e.hex !== clr) {
+      setClr(_e.hex);
+      formik.values.userColor = _e.hex;
+    }
   };
 
   const handleSubmitButton = () => {
-    if (isError) return;
+    if (isError.color || isError.name) return;
+
     try {
       validForm(formik.values);
     } catch (error) {
-      toggleError(error);
+      const _err = error as string;
+      return toggleError(_err);
     }
+    const user = new User(formik.values.userName, clr, []);
     formik.resetForm();
+    addUser(user);
     handleModalClose();
+  };
+  const test = () => {
+    console.log('this?');
   };
 
   return (
@@ -68,9 +83,14 @@ const AddModal: React.FC<{
     >
       <Styled.ModalBox>
         <Styled.ModalBoxForm>
-          <CirclePicker width="" onChange={handleColorPick} />
+          <CirclePicker
+            width=""
+            color={clr}
+            onChangeComplete={handleColorPick}
+            // onSwatchHover={handleColorPick}
+          />
           <Input
-            error={isError ? true : false}
+            error={isError.name ? true : false}
             autoComplete="false"
             id="userName"
             placeholder="닉네임을 입력하세요..."

@@ -1,11 +1,10 @@
 import moment from 'moment';
-import { Color } from './Color';
 type Moment = moment.Moment;
 
 export class User {
   constructor(
     public name: string,
-    public color: Color,
+    public color: string,
     public avail: Moment[]
   ) {}
 }

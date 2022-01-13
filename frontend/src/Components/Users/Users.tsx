@@ -133,9 +133,8 @@ const Users = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
-  const handleSubmitButton = () => {
-    setUsers([...users, new User('asdf', 'black', [])]);
-    handleModalClose();
+  const addUser = (user: User) => {
+    setUsers([...users, user]);
     setIsSwipe(-1);
     resetScrollEffect(scrollRef);
   };
@@ -143,7 +142,11 @@ const Users = () => {
   return (
     <>
       <Backdrop open={isShow} />
-      <AddModal handleModalClose={handleModalClose} isShowModal={isShowModal} />
+      <AddModal
+        handleModalClose={handleModalClose}
+        addUser={addUser}
+        isShowModal={isShowModal}
+      />
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
           <Styled.DialButton onClick={handleDial}>hi</Styled.DialButton>
