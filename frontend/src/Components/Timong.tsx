@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, Dispatch } from 'react';
+import React, { useReducer, Dispatch } from 'react';
 import moment from 'moment';
 import { User } from '../Entities/User';
 import { Year } from '../Entities/Date';
@@ -42,9 +42,6 @@ const initialState = {
   ],
 };
 
-// state.users.filter((_, index) => {
-//   return index !== action.index;
-// });}
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'ADD':
