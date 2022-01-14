@@ -33,7 +33,7 @@ const Header = () => {
           Timong
         </Styled.HeaderTimongTitle>
         <Styled.HeaderCalendarTitle isPinned={isPinned}>
-          42 Share House
+          init6 회식 일정!
         </Styled.HeaderCalendarTitle>
         <AddLinkIcon
           sx={{

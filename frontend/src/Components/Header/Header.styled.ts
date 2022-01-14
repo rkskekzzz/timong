@@ -60,7 +60,7 @@ const HeaderCalendarTitle = styled.span<{ isPinned: boolean }>`
   font-size: 0.7rem;
   position: relative;
   font-weight: bold;
-  color: #bfbfbf;
+  color: #6a6a6a;
   ${(props) => {
     if (!props.isPinned)
       return `
@@ -71,7 +71,7 @@ const HeaderCalendarTitle = styled.span<{ isPinned: boolean }>`
     else
       return `
         transition: transform 500ms linear 0ms, color 500ms;
-        transform: translateY(15px) ;
+        transform: translateY(17px) ;
         `;
   }};
 `;
