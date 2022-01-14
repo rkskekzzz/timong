@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
 
 import { Year } from '../Entities/Date';
@@ -12,6 +12,10 @@ import Users from './Users';
 const year: Year = buildYear(moment());
 
 const Timong = () => {
+  useEffect(() => {
+    console.log('timong here');
+  }, []);
+
   return (
     <>
       <Header />

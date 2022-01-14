@@ -3,7 +3,6 @@ import Styled from './DayBox.styled';
 import GlobalStyled from '../Styled/global.styled';
 import { Day } from '../../Entities/Date';
 import { User, globalSelectedUser } from '../../Entities/User';
-import moment from 'moment';
 
 const DayBox: React.FC<{ day: Day }> = ({ day }) => {
   const [users, setUsers] = useState<User[]>([]);
