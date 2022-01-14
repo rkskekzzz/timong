@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useReducer } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useReducer,
+  useContext,
+} from 'react';
 import { User } from '../../Entities/User';
 import AddModal from '../Modal';
 import moment from 'moment';
@@ -9,48 +15,52 @@ import Backdrop from '@mui/material/Backdrop';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
-function makeDate(year: number, month: number, day: number): moment.Moment {
-  return moment(`${year}-${month}-${day}`);
-}
+import { UserDispatch } from '../Timong';
 
-const data: User[] = [
-  {
-    name: 'ycha',
-    color: 'red',
-    avail: [
-      makeDate(2021, 1, 11),
-      makeDate(2021, 1, 12),
-      makeDate(2021, 1, 13),
-    ],
-  },
-  {
-    name: 'suhshin',
-    color: 'blue',
-    avail: [makeDate(2021, 1, 12), makeDate(2021, 1, 13)],
-  },
-];
+// function makeDate(year: number, month: number, day: number): moment.Moment {
+//   return moment(`${year}-${month}-${day}`);
+// }
 
-function reducer(
-  users: User[],
-  action: { type: string; user: User; index: number }
-) {
-  switch (action.type) {
-    case 'ADD':
-      return [...users, action.user];
-    case 'DELETE':
-      return users.filter((_, index) => {
-        return index !== action.index;
-      });
-    default:
-      return users;
-  }
-}
+// const data: User[] = [
+//   {
+//     name: 'ycha',
+//     color: 'red',
+//     avail: [
+//       makeDate(2021, 1, 11),
+//       makeDate(2021, 1, 12),
+//       makeDate(2021, 1, 13),
+//     ],
+//   },
+//   {
+//     name: 'suhshin',
+//     color: 'blue',
+//     avail: [makeDate(2021, 1, 12), makeDate(2021, 1, 13)],
+//   },
+// ];
 
-const Users = () => {
-  const [users, dispatch] = useReducer(reducer, data);
+// function reducer(
+//   users: User[],
+//   action: { type: string; user: User; index: number }
+// ) {
+//   switch (action.type) {
+//     case 'ADD':
+//       return [...users, action.user];
+//     case 'DELETE':
+//       return users.filter((_, index) => {
+//         return index !== action.index;
+//       });
+//     default:
+//       return users;
+//   }
+// }
+
+const Users: React.FC<{ users: User[] }> = ({ users }) => {
+  // const [users, dispatch] = useReducer(reducer, data);
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isShow, setIsShow] = useState(false);
+
+  const dispatch = useContext(UserDispatch);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -86,7 +96,8 @@ const Users = () => {
     setIsSwipe(-1);
     setWillDelete(delIndex);
     setTimeout(() => {
-      dispatch({ type: 'DELETE', user, index: delIndex });
+      if (!dispatch) throw new Error('no dispatch');
+      dispatch({ type: 'DELETE', index: delIndex });
       setWillDelete(-1);
     }, 500);
   };
@@ -147,7 +158,9 @@ const Users = () => {
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
   const addUser = (user: User) => {
-    dispatch({ type: 'ADD', user, index: 0 });
+    if (!dispatch) throw new Error('no dispatch');
+
+    dispatch({ type: 'ADD', user });
     setIsSwipe(-1);
     resetScrollEffect(scrollRef);
   };
