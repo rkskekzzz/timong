@@ -52,7 +52,7 @@ const Users: React.FC<{ users: User[] }> = ({ users }) => {
     setWillDelete(delIndex);
     setTimeout(() => {
       if (!dispatch) throw new Error('no dispatch');
-      dispatch({ type: 'DELETE', index: delIndex });
+      dispatch({ type: 'DELETE', index: delIndex, user });
       setWillDelete(-1);
     }, 500);
   };

@@ -12,10 +12,11 @@ import makeDate from '../Utils/makeDate';
 
 type State = {
   users: User[];
+  calendar: Year;
 };
 type Action =
   | { type: 'ADD'; user: User }
-  | { type: 'DELETE'; index: number }
+  | { type: 'DELETE'; index: number; user: User }
   | { type: 'DEFAULT' };
 type userDispatch = Dispatch<Action>;
 
@@ -40,12 +41,13 @@ const initialState = {
       avail: [makeDate(2021, 1, 12), makeDate(2021, 1, 13)],
     },
   ],
+  calendar: year,
 };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'ADD':
-      return { users: state.users.concat(action.user) };
+      return { ...state, users: state.users.concat(action.user) };
     case 'DELETE':
       return {
         ...state,
@@ -62,6 +64,8 @@ const Timong = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const { users } = state;
+
+  const { calendar } = state;
 
   return (
     <>
