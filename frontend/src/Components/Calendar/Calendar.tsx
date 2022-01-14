@@ -1,5 +1,4 @@
 import React from 'react';
-import { User } from '../../Entities/User';
 import Styled from './Calendar.styled';
 import MonthBox from './MonthBox';
 import { Year } from '../../Entities/Date';
@@ -14,4 +13,4 @@ const Calendar: React.FC<{ year: Year }> = ({ year }) => {
   );
 };
 
-export default Calendar;
+export default React.memo(Calendar);
