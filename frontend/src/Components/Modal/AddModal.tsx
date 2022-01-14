@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Styled from './AddModal.styled';
 import { useFormik } from 'formik';
 import { User } from 'src/Entities/User';
@@ -25,6 +25,7 @@ const AddModal: React.FC<{
     color: false,
     name: false,
   });
+
   const [clr, setClr] = useState('#ffffff');
   const formik = useFormik({
     initialValues: {
@@ -35,6 +36,7 @@ const AddModal: React.FC<{
       console.log('submit');
     },
   });
+
   const toggleError = (error: string) => {
     const initError = { color: false, name: false };
     const newError = { color: false, name: false };
@@ -65,14 +67,20 @@ const AddModal: React.FC<{
       const _err = error as string;
       return toggleError(_err);
     }
+
     const user = new User(formik.values.userName, clr, []);
-    formik.resetForm();
     addUser(user);
+
+    formik.resetForm();
     handleModalClose();
   };
-  const test = () => {
-    console.log('this?');
-  };
+
+  const colorPicker = useMemo(
+    () => (
+      <CirclePicker width="" color={clr} onChangeComplete={handleColorPick} />
+    ),
+    [clr]
+  );
 
   return (
     <Modal
@@ -83,12 +91,7 @@ const AddModal: React.FC<{
     >
       <Styled.ModalBox>
         <Styled.ModalBoxForm>
-          <CirclePicker
-            width=""
-            color={clr}
-            onChangeComplete={handleColorPick}
-            // onSwatchHover={handleColorPick}
-          />
+          {colorPicker}
           <Input
             error={isError.name ? true : false}
             autoComplete="false"
@@ -97,7 +100,6 @@ const AddModal: React.FC<{
             value={formik.values.userName}
             onChange={formik.handleChange}
           />
-
           <Styled.ModalBoxButton
             onClick={handleSubmitButton}
             variant="contained"

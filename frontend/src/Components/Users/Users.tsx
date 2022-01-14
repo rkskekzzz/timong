@@ -1,13 +1,6 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useReducer,
-  useContext,
-} from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { User } from '../../Entities/User';
 import AddModal from '../Modal';
-import moment from 'moment';
 import Styled from './Users.styled';
 import { globalSelectedUser } from '../../Entities/User';
 import Backdrop from '@mui/material/Backdrop';
@@ -17,45 +10,7 @@ import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
 import { UserDispatch } from '../Timong';
 
-// function makeDate(year: number, month: number, day: number): moment.Moment {
-//   return moment(`${year}-${month}-${day}`);
-// }
-
-// const data: User[] = [
-//   {
-//     name: 'ycha',
-//     color: 'red',
-//     avail: [
-//       makeDate(2021, 1, 11),
-//       makeDate(2021, 1, 12),
-//       makeDate(2021, 1, 13),
-//     ],
-//   },
-//   {
-//     name: 'suhshin',
-//     color: 'blue',
-//     avail: [makeDate(2021, 1, 12), makeDate(2021, 1, 13)],
-//   },
-// ];
-
-// function reducer(
-//   users: User[],
-//   action: { type: string; user: User; index: number }
-// ) {
-//   switch (action.type) {
-//     case 'ADD':
-//       return [...users, action.user];
-//     case 'DELETE':
-//       return users.filter((_, index) => {
-//         return index !== action.index;
-//       });
-//     default:
-//       return users;
-//   }
-// }
-
 const Users: React.FC<{ users: User[] }> = ({ users }) => {
-  // const [users, dispatch] = useReducer(reducer, data);
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isShow, setIsShow] = useState(false);
