@@ -4,7 +4,7 @@ import AddModal from '../Modal';
 import Styled from './Users.styled';
 import { globalSelectedUser } from '../../Entities/User';
 import Backdrop from '@mui/material/Backdrop';
-
+import { Modal } from '@mui/material';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
@@ -123,11 +123,17 @@ const Users: React.FC<{ users: User[] }> = ({ users }) => {
   return (
     <>
       <Backdrop open={isShow} />
-      <AddModal
-        handleModalClose={handleModalClose}
-        addUser={addUser}
-        isShowModal={isShowModal}
-      />
+      <Modal
+        open={isShowModal}
+        onClose={handleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <AddModal
+          handleModalClose={handleModalClose}
+          addUser={addUser}
+        ></AddModal>
+      </Modal>
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
           <Styled.DialButton onClick={handleDial}></Styled.DialButton>
