@@ -114,7 +114,7 @@ const Users = () => {
       console.log('left swipe');
       setIsSwipe(index);
     }
-    if (touchStart - e.targetTouches[0].clientX > 250) {
+    if (touchStart - e.targetTouches[0].clientX > 200) {
       setIsSwipeMore(true);
       console.log('left swipe more');
     }
