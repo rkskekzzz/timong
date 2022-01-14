@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useReducer } from 'react';
 import { User } from '../../Entities/User';
 import AddModal from '../Modal';
 import moment from 'moment';
@@ -30,8 +30,24 @@ const data: User[] = [
   },
 ];
 
+function reducer(
+  users: User[],
+  action: { type: string; user: User; index: number }
+) {
+  switch (action.type) {
+    case 'ADD':
+      return [...users, action.user];
+    case 'DELETE':
+      return users.filter((_, index) => {
+        return index !== action.index;
+      });
+    default:
+      return users;
+  }
+}
+
 const Users = () => {
-  const [users, setUsers] = useState<User[]>(data);
+  const [users, dispatch] = useReducer(reducer, data);
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isShow, setIsShow] = useState(false);
@@ -65,16 +81,12 @@ const Users = () => {
     handleDial();
   };
 
-  const handleRowDelButton = (delIndex: number) => {
+  const handleRowDelButton = (delIndex: number, user: User) => {
     if (!isShow && !isAnimationDone) return;
     setIsSwipe(-1);
     setWillDelete(delIndex);
     setTimeout(() => {
-      setUsers(
-        users.filter((_, index) => {
-          return index !== delIndex;
-        })
-      );
+      dispatch({ type: 'DELETE', user, index: delIndex });
       setWillDelete(-1);
     }, 500);
   };
@@ -123,8 +135,8 @@ const Users = () => {
     }
   };
 
-  const handleTouchEnd = (index: number) => {
-    isSwipeMore && handleRowDelButton(index);
+  const handleTouchEnd = (index: number, user: User) => {
+    isSwipeMore && handleRowDelButton(index, user);
     setIsSwipeMore(false);
   };
 
@@ -135,7 +147,7 @@ const Users = () => {
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
   const addUser = (user: User) => {
-    setUsers([...users, user]);
+    dispatch({ type: 'ADD', user, index: 0 });
     setIsSwipe(-1);
     resetScrollEffect(scrollRef);
   };
@@ -165,7 +177,7 @@ const Users = () => {
                       handleTouchMove(e, index);
                     }}
                     onTouchEnd={() => {
-                      handleTouchEnd(index);
+                      handleTouchEnd(index, user);
                     }}
                     willDelete={willDelete === index ? true : false}
                     isSwipe={isSwipe === index ? true : false}
@@ -198,7 +210,7 @@ const Users = () => {
                       <DeleteForeverRoundedIcon
                         fontSize="medium"
                         onClick={() => {
-                          handleRowDelButton(index);
+                          handleRowDelButton(index, user);
                         }}
                         // sx={{ color: 'red' }}
                       />
