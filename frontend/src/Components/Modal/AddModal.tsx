@@ -3,7 +3,7 @@ import Styled from './AddModal.styled';
 import { useFormik } from 'formik';
 import { User } from 'src/Entities/User';
 
-import { Input } from '@mui/material';
+import { Input, Modal } from '@mui/material';
 import { CirclePicker } from 'react-color';
 import { validForm } from '../../Utils/validForm';
 
@@ -19,17 +19,17 @@ type Color = object & {
 const AddModal: React.FC<{
   handleModalClose: () => void;
   addUser: (user: User) => void;
-}> = ({ handleModalClose, addUser }) => {
+  isShowModal: boolean;
+}> = ({ handleModalClose, addUser, isShowModal }) => {
   const [isError, setIsError] = useState<{ color: boolean; name: boolean }>({
     color: false,
     name: false,
   });
 
-  const [clr, setClr] = useState('#ffffff');
+  const [clr, setClr] = useState<string>('#ffffff');
   const formik = useFormik({
     initialValues: {
       userName: '',
-      userColor: '',
     },
     onSubmit: () => {
       console.log('submit');
@@ -53,7 +53,6 @@ const AddModal: React.FC<{
     const _e = e as Color;
     if (_e.hex !== clr) {
       setClr(_e.hex);
-      formik.values.userColor = _e.hex;
     }
   };
 
@@ -82,27 +81,34 @@ const AddModal: React.FC<{
   );
 
   return (
-    <Styled.ModalBox>
-      <Styled.ModalBoxForm>
-        {colorPicker}
-        <Input
-          error={isError.name ? true : false}
-          autoComplete="false"
-          id="userName"
-          placeholder="닉네임을 입력하세요..."
-          value={formik.values.userName}
-          onChange={formik.handleChange}
-        />
-        <Styled.ModalBoxButton
-          onClick={handleSubmitButton}
-          variant="contained"
-          color="primary"
-          sx={{ bgcolor: 'Background.paper' }}
-        >
-          <Styled.ModalBoxSpan>확인</Styled.ModalBoxSpan>
-        </Styled.ModalBoxButton>
-      </Styled.ModalBoxForm>
-    </Styled.ModalBox>
+    <Modal
+      open={isShowModal}
+      onClose={handleModalClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Styled.ModalBox>
+        <Styled.ModalBoxForm>
+          {colorPicker}
+          <Input
+            error={isError.name ? true : false}
+            autoComplete="false"
+            id="userName"
+            placeholder="닉네임을 입력하세요..."
+            value={formik.values.userName}
+            onChange={formik.handleChange}
+          />
+          <Styled.ModalBoxButton
+            onClick={handleSubmitButton}
+            variant="contained"
+            color="primary"
+            sx={{ bgcolor: 'Background.paper' }}
+          >
+            <Styled.ModalBoxSpan>확인</Styled.ModalBoxSpan>
+          </Styled.ModalBoxButton>
+        </Styled.ModalBoxForm>
+      </Styled.ModalBox>
+    </Modal>
   );
 };
 
