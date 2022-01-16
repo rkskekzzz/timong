@@ -4,18 +4,18 @@ import AddModal from '../Modal';
 import Styled from './Users.styled';
 import { globalSelectedUser } from '../../Entities/User';
 import Backdrop from '@mui/material/Backdrop';
-import { Modal } from '@mui/material';
+
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 
-import { UserDispatch } from '../Timong';
+import { UserContext } from '../Timong';
 
 const Users: React.FC<{ users: User[] }> = ({ users }) => {
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isShow, setIsShow] = useState(false);
 
-  const dispatch = useContext(UserDispatch);
+  const { dispatch } = useContext(UserContext);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -114,7 +114,6 @@ const Users: React.FC<{ users: User[] }> = ({ users }) => {
   const handleModalClose = () => setIsShowModal(false);
   const addUser = (user: User) => {
     if (!dispatch) throw new Error('no dispatch');
-
     dispatch({ type: 'ADD', user });
     setIsSwipe(-1);
     resetScrollEffect(scrollRef);
@@ -123,17 +122,11 @@ const Users: React.FC<{ users: User[] }> = ({ users }) => {
   return (
     <>
       <Backdrop open={isShow} />
-      <Modal
-        open={isShowModal}
-        onClose={handleModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <AddModal
-          handleModalClose={handleModalClose}
-          addUser={addUser}
-        ></AddModal>
-      </Modal>
+      <AddModal
+        isShowModal={isShowModal}
+        handleModalClose={handleModalClose}
+        addUser={addUser}
+      />
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
           <Styled.DialButton onClick={handleDial}></Styled.DialButton>

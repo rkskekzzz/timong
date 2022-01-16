@@ -52,6 +52,8 @@ const AddModal: React.FC<{
   const handleColorPick = (e: object) => {
     const _e = e as Color;
     if (_e.hex !== clr) {
+      console.log('not same');
+
       setClr(_e.hex);
     }
   };
@@ -89,7 +91,11 @@ const AddModal: React.FC<{
     >
       <Styled.ModalBox>
         <Styled.ModalBoxForm>
-          {colorPicker}
+          <CirclePicker
+            width=""
+            color={clr}
+            onChangeComplete={handleColorPick}
+          />
           <Input
             error={isError.name ? true : false}
             autoComplete="false"

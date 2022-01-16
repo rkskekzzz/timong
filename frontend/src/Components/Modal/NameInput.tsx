@@ -2,12 +2,12 @@
 // import { useFormik } from 'formik';
 // import { Input } from '@mui/material';
 // import { validForm } from '../../Utils/validForm';
-// import { UserDispatch } from '../Timong';
+// import { UserContext } from '../Timong';
 // import { User } from 'src/Entities/User';
 // import Styled from './NameInput.styled';
 
 // const NameInput: React.FC<{ color: string }> = ({ color }) => {
-//   const dispatch = useContext(UserDispatch);
+//   const dispatch = useContext(UserContext);
 //   const [isError, setIsError] = useState<{ color: boolean; name: boolean }>({
 //     color: false,
 //     name: false,

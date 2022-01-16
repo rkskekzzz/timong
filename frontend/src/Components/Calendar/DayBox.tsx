@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Styled from './DayBox.styled';
 import GlobalStyled from '../Styled/global.styled';
 import { Day } from '../../Entities/Date';
 import { User, globalSelectedUser } from '../../Entities/User';
+import { UserContext } from '../Timong';
 
-const DayBox: React.FC<{ day: Day }> = ({ day }) => {
-  const [users, setUsers] = useState<User[]>([]);
+const DayBox: React.FC<{ day: Day; users: User[] }> = ({ day, users }) => {
+  // const [users, setUsers] = useState<User[]>([]);
+
+  const { state, dispatch } = useContext(UserContext);
 
   const handleClick = () => {
-    if (!day.isThisMonth) return;
-    if (globalSelectedUser.user) {
-      day.updateUser(globalSelectedUser.user);
-      setUsers(day.getUsers());
-    }
+    // if (!day.isThisMonth) return;
+    // if (globalSelectedUser.user) {
+    //   day.updateUser(globalSelectedUser.user);
+    //   setUsers(day.getUsers());
+    // }
+    if (!globalSelectedUser.user) return;
+    dispatch({
+      type: 'UPDATEDATE',
+      user: globalSelectedUser.user,
+      day: day.moment,
+    });
   };
 
   return (
@@ -35,4 +44,4 @@ const DayBox: React.FC<{ day: Day }> = ({ day }) => {
   );
 };
 
-export default DayBox;
+export default React.memo(DayBox);
