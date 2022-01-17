@@ -16,9 +16,13 @@ const VFlexBox = styled.div`
 `;
 
 const CalendarTitle = styled.span`
+  font-size: 1.18rem;
+  font-weight: bold;
+  width: 100%;
+  height: 60px;
   display: flex;
   align-items: center;
-  text-align: center;
+  justify-content: center;
 `;
 
 const Styled = { VFlexBox, HFlexBox, CalendarTitle };
