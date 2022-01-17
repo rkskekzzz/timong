@@ -6,13 +6,16 @@ import { globalSelectedUser } from '../../Entities/User';
 import Backdrop from '@mui/material/Backdrop';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import FaceIcon from '@mui/icons-material/Face';
 import { UserContext } from 'src/App';
+import { ThemeContext } from '../Timong';
 
 const Users = () => {
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isShow, setIsShow] = useState(false);
 
+  const theme = useContext(ThemeContext);
   const { state, dispatch } = useContext(UserContext);
   const users = state.users;
 
@@ -128,7 +131,9 @@ const Users = () => {
       />
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
-          <Styled.DialButton onClick={handleDial}></Styled.DialButton>
+          <Styled.DialButton onClick={handleDial}>
+            <FaceIcon fontSize="large" sx={{ color: theme.icon }} />
+          </Styled.DialButton>
           <Styled.Temp
             isShow={isShow}
             style={isAnimationDone ? { zIndex: '-100' } : {}}

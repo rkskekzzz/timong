@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Header = styled.div<{ isPinned: boolean }>`
+const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
   position: fixed;
   z-index: 0;
   top: 0;
@@ -11,6 +11,7 @@ const Header = styled.div<{ isPinned: boolean }>`
   display: flex;
   box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px,
     rgb(0 0 0 / 14%) 0px 4px 5px 0px, rgb(0 0 0 / 12%) 0px 1px 10px 0px;
+  background: ${(props) => props.bgcolor || '#f2f2f2'};
   ${(props) => {
     if (!props.isPinned)
       return `
@@ -24,8 +25,7 @@ const Header = styled.div<{ isPinned: boolean }>`
         transition: transform 500ms linear 0ms, border-radius 500ms, background 500ms;
         transform: scale(1);
         border-radius: 0px;
-        background: #f2f2f2;
-        `;
+      `;
   }};
 `;
 
@@ -56,11 +56,11 @@ const HeaderTimongTitle = styled.span<{ isPinned: boolean }>`
         `;
   }};
 `;
-const HeaderCalendarTitle = styled.span<{ isPinned: boolean }>`
+const HeaderCalendarTitle = styled.span<{ isPinned: boolean; color: string }>`
   font-size: 0.7rem;
   position: relative;
   font-weight: bold;
-  color: #6a6a6a;
+  color: ${(props) => props.color || '#6a6a6a'};
   ${(props) => {
     if (!props.isPinned)
       return `

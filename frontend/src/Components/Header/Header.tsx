@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
+import { ThemeContext } from '../Timong';
 import Styled from './Header.styled';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { Backdrop } from '@mui/material';
@@ -9,7 +10,8 @@ let prev_windows_scrollY = 0;
 
 const Header = () => {
   const [isPinned, setIsPinned] = useState<boolean>(true);
-  const [isShowModal, setIsShowModal] = useState<boolean>(true);
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const theme = useContext(ThemeContext);
 
   const handleScroll = useCallback(() => {
     if (window.scrollY < prev_windows_scrollY) {
@@ -24,10 +26,6 @@ const Header = () => {
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
 
-  const handleClick = useCallback(() => {
-    setIsShowModal(!isShowModal);
-  }, [isShowModal, setIsShowModal]);
-
   useEffect(() => {
     window.addEventListener('scroll', throttle(handleScroll, 300));
     return () => {
@@ -37,17 +35,20 @@ const Header = () => {
 
   return (
     <>
-      <Backdrop open={isShowModal} />
+      <Backdrop open={isShowModal} sx={{ bgcolor: 'rgba(0,0,0,0.6)' }} />
       <HeaderModal
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
       />
-      <Styled.Header isPinned={isPinned}>
+      <Styled.Header isPinned={isPinned} bgcolor={theme.backgroundHeader}>
         <Styled.HeaderFlexDiv>
           <Styled.HeaderTimongTitle isPinned={isPinned}>
             Timong
           </Styled.HeaderTimongTitle>
-          <Styled.HeaderCalendarTitle isPinned={isPinned}>
+          <Styled.HeaderCalendarTitle
+            isPinned={isPinned}
+            color={theme.foregroundHeader}
+          >
             init6 회식 일정!
           </Styled.HeaderCalendarTitle>
           <MenuRoundedIcon
