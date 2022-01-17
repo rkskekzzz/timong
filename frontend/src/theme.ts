@@ -9,10 +9,10 @@ export const themes = {
   },
   dark: {
     foregroundHeader: '#f2f2f2',
-    backgroundHeader: '#212121',
+    backgroundHeader: '#1a1a1a',
     backDropHeader: '#000000dd',
     foreground: '#dadada',
-    icon: '#131313',
-    iconSmall: 'white',
+    icon: '#171717',
+    iconSmall: '#f2f2f2',
   },
 };

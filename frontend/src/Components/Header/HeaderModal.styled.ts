@@ -10,7 +10,7 @@ const ModalBox = styled.div`
   flex-direction: column;
   align-items: center;
   width: 300px;
-  gap: 30px;
+  gap: 50px;
   font-size: 1.6rem;
   color: white;
   border-radius: 15px;
@@ -29,9 +29,14 @@ const ColoredModal = styled(Modal)<{ color: string }>`
   }
 `;
 
+const ModalTextButton = styled.span`
+  font-weight: bold;
+`;
+
 const Styled = {
   ModalBox,
   ModalBoxButtons,
+  ModalTextButton,
   ColoredModal,
 };
 

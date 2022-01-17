@@ -36,11 +36,13 @@ function ModalBoxForm({
   return (
     <>
       <Styled.ModalBox>
-        <CloseIcon onClick={handleCloseButton} />
-        <div style={style}>새 링크 생성</div>
-        <div style={style} onClick={handleThemeChangeButton}>
+        <CloseIcon onClick={handleCloseButton} sx={style} />
+        <Styled.ModalTextButton style={style}>
+          새 링크 생성
+        </Styled.ModalTextButton>
+        <Styled.ModalTextButton style={style} onClick={handleThemeChangeButton}>
           테마 변경
-        </div>
+        </Styled.ModalTextButton>
         <Styled.ModalBoxButtons>
           <GitHubIcon onClick={() => handleClick(githubLink)} sx={style} />
           <EmailIcon onClick={() => handleClick(emailLink)} sx={style} />
