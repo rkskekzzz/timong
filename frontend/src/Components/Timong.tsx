@@ -5,21 +5,7 @@ import Styled from './Timong.styled';
 import { Calendar } from './Calendar';
 import Header from './Header';
 import Users from './Users';
-
-export const themes = {
-  light: {
-    foregroundHeader: '#6a6a6a',
-    backgroundHeader: '#f2f2f2',
-    foreground: '#000000',
-    icon: 'white',
-  },
-  dark: {
-    foregroundHeader: '#f2f2f2',
-    backgroundHeader: '#131313',
-    foreground: '#dadada',
-    icon: '#131313',
-  },
-};
+import { themes } from 'src/theme';
 
 export const ThemeContext = React.createContext(themes.light);
 
