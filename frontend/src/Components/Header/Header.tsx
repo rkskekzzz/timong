@@ -8,7 +8,7 @@ import HeaderModal from './HeaderModal';
 
 let prev_windows_scrollY = 0;
 
-const Header = () => {
+const Header: React.FC<{ toggleMode: () => void }> = ({ toggleMode }) => {
   const [isPinned, setIsPinned] = useState<boolean>(true);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const theme = useContext(ThemeContext);
@@ -35,10 +35,11 @@ const Header = () => {
 
   return (
     <>
-      <Backdrop open={isShowModal} sx={{ bgcolor: 'rgba(0,0,0,0.6)' }} />
+      <Backdrop open={isShowModal} sx={{ bgcolor: 'rgba(0,0,0,0.4)' }} />
       <HeaderModal
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
+        toggleMode={toggleMode}
       />
       <Styled.Header isPinned={isPinned} bgcolor={theme.backgroundHeader}>
         <Styled.HeaderFlexDiv>

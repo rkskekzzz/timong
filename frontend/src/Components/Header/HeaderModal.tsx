@@ -11,19 +11,27 @@ const githubLink = 'https://github.com/rkskekzzz/blockcalendar.git';
 const emailLink = 'mailto:wkdlfflxh@naver.com';
 const articleLink = 'https://80000coding.oopy.io';
 
-function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
+function ModalBoxForm({
+  handleModalClose,
+  toggleMode,
+}: {
+  handleModalClose: () => void;
+  toggleMode: () => void;
+}) {
   const handleClick = useCallback((link: string) => {
     window.open(link);
   }, []);
-  const handleClseButton = useCallback(() => {
+  const handleCloseButton = useCallback(() => {
     handleModalClose();
   }, []);
+  const handleThemeChangeButton = toggleMode;
+
   return (
     <>
       <Styled.ModalBox>
-        <CloseIcon onClick={handleClseButton} />
+        <CloseIcon onClick={handleCloseButton} />
         <div>새 링크 생성</div>
-        <div> 테마 변경</div>
+        <div onClick={handleThemeChangeButton}> 테마 변경</div>
         <Styled.ModalBoxButtons>
           <GitHubIcon onClick={() => handleClick(githubLink)} />
           <EmailIcon onClick={() => handleClick(emailLink)} />
@@ -37,7 +45,8 @@ function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
 const HeaderModal: React.FC<{
   isShowModal: boolean;
   handleModalClose: () => void;
-}> = ({ isShowModal, handleModalClose }) => {
+  toggleMode: () => void;
+}> = ({ isShowModal, handleModalClose, toggleMode }) => {
   return (
     <Modal
       open={isShowModal}
@@ -46,7 +55,10 @@ const HeaderModal: React.FC<{
       aria-describedby="modal-modal-description"
     >
       <>
-        <ModalBoxForm handleModalClose={handleModalClose} />
+        <ModalBoxForm
+          handleModalClose={handleModalClose}
+          toggleMode={toggleMode}
+        />
       </>
     </Modal>
   );
