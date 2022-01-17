@@ -17,15 +17,15 @@ const DayBox: React.FC<{
       <Styled.CalendarDateCircleBox isThisMonth={day.isThisMonth}>
         <Styled.GridWrap>
           {users.map((user, index) => (
-            // <GlobalStyled.Circle
-            //   key={user.name + index.toString()}
-            //   size="small"
-            //   color={user.color}
-            // />
-            <GlobalStyled.Xone
+            <GlobalStyled.Circle
               key={user.name + index.toString()}
+              size="small"
               color={user.color}
             />
+            // <GlobalStyled.Xone
+            //   key={user.name + index.toString()}
+            //   color={user.color}
+            // />
           ))}
         </Styled.GridWrap>
       </Styled.CalendarDateCircleBox>

@@ -1,6 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { Modal } from '@mui/material';
 import Styled from './HeaderModal.styled';
+import { ThemeContext } from '../Timong';
 
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
@@ -24,18 +25,26 @@ function ModalBoxForm({
   const handleCloseButton = useCallback(() => {
     handleModalClose();
   }, []);
+  const theme = useContext(ThemeContext);
   const handleThemeChangeButton = toggleMode;
+
+  const style = {
+    color: theme.iconSmall,
+    transition: 'color 500ms ease-in-out 0ms',
+  };
 
   return (
     <>
       <Styled.ModalBox>
         <CloseIcon onClick={handleCloseButton} />
-        <div>새 링크 생성</div>
-        <div onClick={handleThemeChangeButton}> 테마 변경</div>
+        <div style={style}>새 링크 생성</div>
+        <div style={style} onClick={handleThemeChangeButton}>
+          테마 변경
+        </div>
         <Styled.ModalBoxButtons>
-          <GitHubIcon onClick={() => handleClick(githubLink)} />
-          <EmailIcon onClick={() => handleClick(emailLink)} />
-          <ArticleIcon onClick={() => handleClick(articleLink)} />
+          <GitHubIcon onClick={() => handleClick(githubLink)} sx={style} />
+          <EmailIcon onClick={() => handleClick(emailLink)} sx={style} />
+          <ArticleIcon onClick={() => handleClick(articleLink)} sx={style} />
         </Styled.ModalBoxButtons>
       </Styled.ModalBox>
     </>
