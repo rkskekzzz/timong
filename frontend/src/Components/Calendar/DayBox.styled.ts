@@ -26,11 +26,11 @@ const GridWrap = styled.div`
   max-width: 40px;
   max-height: 40px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   grid-gap: 1px;
   align-items: center;
   justify-content: center;
-  grid-template-rows: repeat(3, 1fr);
 `;
 
 export default {
