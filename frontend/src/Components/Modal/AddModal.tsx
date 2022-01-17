@@ -5,7 +5,7 @@ import { User } from 'src/Interface/User';
 
 import { Input, Modal } from '@mui/material';
 import { CirclePicker } from 'react-color';
-import { validForm } from '../../Utils/validForm';
+import { validForm } from '../../Utils';
 
 type Color = object & {
   hex: string;
