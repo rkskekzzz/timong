@@ -16,7 +16,7 @@ export const themes = {
     iconSmall: '#f2f2f2',
   },
   main: {
-    background: '#ffc7fa',
+    background: '#ffd8fb',
     theme: '#f995f0',
   },
 };

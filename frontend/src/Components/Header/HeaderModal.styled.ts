@@ -10,7 +10,7 @@ const ModalBox = styled.div`
   flex-direction: column;
   align-items: center;
   width: 300px;
-  gap: 50px;
+  gap: 40px;
   font-size: 1.6rem;
   color: white;
   border-radius: 15px;

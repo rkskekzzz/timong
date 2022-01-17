@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from '@mui/material';
 import { useFormik } from 'formik';
 import Styled from './Starter.styled';
 import { themes } from 'src/theme';
 
 const StarterInputs = () => {
+  const [value, setValue] = useState<number>(4);
   const formik = useFormik({
     initialValues: {
       calendarName: '',
@@ -16,6 +17,7 @@ const StarterInputs = () => {
   const handleSubmitButton = () => {
     console.log('here');
   };
+  const handleValue = (e) => setValue(e.target.value);
 
   return (
     <Styled.StarterModalForm>
@@ -23,10 +25,18 @@ const StarterInputs = () => {
         // error={isError.name ? true : false}
         autoComplete="false"
         id="calendarName"
-        placeholder="닉네임을 입력하세요..."
+        placeholder="캘린더 이름을 입력하세요..."
         value={formik.values.calendarName}
         onChange={formik.handleChange}
       />
+      <div style={{ padding: '0 30%' }}>
+        <Styled.StaterModalSlider
+          value={value}
+          onChange={handleValue}
+          max={25}
+        />
+        <Styled.StarterModalNumber>{value}</Styled.StarterModalNumber>
+      </div>
       <Styled.StarterModalButton
         onClick={handleSubmitButton}
         variant="contained"
