@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import queryString from 'qs';
 import Styled from './Timong.styled';
 import { Calendar } from './Calendar';
@@ -11,13 +11,13 @@ export const themes = {
     foregroundHeader: '#6a6a6a',
     backgroundHeader: '#f2f2f2',
     foreground: '#000000',
-    icon: 'black',
+    icon: 'white',
   },
   dark: {
     foregroundHeader: '#f2f2f2',
-    backgroundHeader: '#2a2a2a',
+    backgroundHeader: '#131313',
     foreground: '#dadada',
-    icon: 'white',
+    icon: '#131313',
   },
 };
 
@@ -38,7 +38,7 @@ const Timong = () => {
   };
 
   useEffect(() => {
-    if (mode === 'dark') document.body.style.background = '#2f3336';
+    if (mode === 'dark') document.body.style.background = '#131313';
     else document.body.style.background = '#ffffff';
   }, [mode]);
 
