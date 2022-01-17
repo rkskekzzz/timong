@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
   position: fixed;
-  z-index: 0;
+  // z-index: 0;
   top: 0;
   left: auto;
   right: 0;

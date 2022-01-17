@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Modal } from '@mui/material';
 
 const ModalBox = styled.div`
   position: absolute;
@@ -22,9 +23,16 @@ const ModalBoxButtons = styled.div`
   gap: 10px;
 `;
 
+const ColoredModal = styled(Modal)<{ color: string }>`
+  .MuiBackdrop-root {
+    background: ${(props) => props.color || '#f2f2f2'};
+  }
+`;
+
 const Styled = {
   ModalBox,
   ModalBoxButtons,
+  ColoredModal,
 };
 
 export default Styled;

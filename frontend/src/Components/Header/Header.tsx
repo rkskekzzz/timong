@@ -35,7 +35,6 @@ const Header: React.FC<{ toggleMode: () => void }> = ({ toggleMode }) => {
 
   return (
     <>
-      <Backdrop open={isShowModal} sx={{ bgcolor: 'rgba(0,0,0,0.4)' }} />
       <HeaderModal
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}

@@ -56,12 +56,15 @@ const HeaderModal: React.FC<{
   handleModalClose: () => void;
   toggleMode: () => void;
 }> = ({ isShowModal, handleModalClose, toggleMode }) => {
+  const theme = useContext(ThemeContext);
+
   return (
-    <Modal
+    <Styled.ColoredModal
       open={isShowModal}
       onClose={handleModalClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      color={theme.backDropHeader}
     >
       <>
         <ModalBoxForm
@@ -69,7 +72,7 @@ const HeaderModal: React.FC<{
           toggleMode={toggleMode}
         />
       </>
-    </Modal>
+    </Styled.ColoredModal>
   );
 };
 
