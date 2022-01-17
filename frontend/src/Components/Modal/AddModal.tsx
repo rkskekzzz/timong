@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Styled from './AddModal.styled';
 import { useFormik } from 'formik';
-import { User } from 'src/Interface/User';
+import { User } from 'src/Interface/UserType';
 
 import { Input, Modal } from '@mui/material';
 import { CirclePicker } from 'react-color';

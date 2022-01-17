@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { User } from '../../Interface/User';
+import { User } from '../../Interface/UserType';
 import AddModal from '../Modal';
 import Styled from './Users.styled';
-import { globalSelectedUser } from '../../Interface/User';
+import { globalSelectedUser } from '../../Interface/UserType';
 import Backdrop from '@mui/material/Backdrop';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';

@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
-import { User } from './User';
-import { Year } from './Date';
+import { User } from './UserType';
+import { Year } from './DateType';
 
 export type State = {
   users: User[];

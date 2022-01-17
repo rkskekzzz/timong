@@ -1,4 +1,4 @@
-import { User } from './User';
+import { User } from './UserType';
 import moment from 'moment';
 
 export type Moment = moment.Moment;

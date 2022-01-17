@@ -1,5 +1,5 @@
-import { Month, Year, Week, Day } from '../Interface/Date';
-import { User } from '../Interface/User';
+import { Month, Year, Week, Day } from '../Interface/DateType';
+import { User } from '../Interface/UserType';
 
 type State = {
   users: User[];

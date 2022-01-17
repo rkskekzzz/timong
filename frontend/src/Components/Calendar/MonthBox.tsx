@@ -1,8 +1,8 @@
 import React, { useContext, useCallback } from 'react';
 import DayBox from './DayBox';
 import Styled from './MonthBox.styled';
-import { Month, Day } from '../../Interface/Date';
-import { globalSelectedUser } from 'src/Interface/User';
+import { Month, Day } from '../../Interface/DateType';
+import { globalSelectedUser } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 
 function DayBoxLogic({ day }: { day: Day }) {

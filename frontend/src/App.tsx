@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { useReducer, createContext, Dispatch } from 'react';
+import { useReducer, createContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Timong from './Components';
 import Starter from './Components/Starter';
-import moment from 'moment';
-import { Year } from './Interface/Date';
-import { buildDate, makeDate, reducer } from './Utils';
-import { State, userDispatch } from './Interface/Context';
+import { reducer } from './Utils';
+import { State, userDispatch } from './Interface/ContextType';
+import { initialState } from './Interface/initialState';
 
 export const UserContext = createContext<{
   state: State;
@@ -21,28 +20,6 @@ export const UserContext = createContext<{
     null;
   },
 });
-
-const year: Year = buildDate(moment());
-
-const initialState = {
-  users: [
-    {
-      name: 'ycha',
-      color: 'red',
-      avail: [
-        makeDate(2022, 1, 11),
-        makeDate(2022, 1, 12),
-        makeDate(2022, 1, 13),
-      ],
-    },
-    {
-      name: 'suhshin',
-      color: 'blue',
-      avail: [makeDate(2022, 1, 12), makeDate(2022, 1, 13)],
-    },
-  ],
-  calendar: year,
-};
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);

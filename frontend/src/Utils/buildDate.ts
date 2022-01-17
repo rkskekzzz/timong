@@ -1,4 +1,4 @@
-import { Day, Week, Month, Year } from '../Interface/Date';
+import { Day, Week, Month, Year } from '../Interface/DateType';
 
 const buildWeek = (monthMoment: moment.Moment, week: number): Week => {
   return Array(7)
