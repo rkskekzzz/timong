@@ -6,7 +6,7 @@ const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
   top: 0;
   left: auto;
   right: 0;
-  height: 53px;
+  height: 60px;
   width: 100%;
   display: flex;
   box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px,
