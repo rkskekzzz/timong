@@ -4,18 +4,17 @@ import AddModal from '../Modal';
 import Styled from './Users.styled';
 import { globalSelectedUser } from '../../Entities/User';
 import Backdrop from '@mui/material/Backdrop';
-
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import { UserContext } from 'src/App';
 
-import { UserContext } from '../Timong';
-
-const Users: React.FC<{ users: User[] }> = ({ users }) => {
+const Users = () => {
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isShow, setIsShow] = useState(false);
 
-  const { dispatch } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
+  const users = state.users;
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -207,4 +206,4 @@ const Users: React.FC<{ users: User[] }> = ({ users }) => {
   );
 };
 
-export default Users;
+export default React.memo(Users);

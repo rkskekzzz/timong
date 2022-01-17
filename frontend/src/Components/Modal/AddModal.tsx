@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import Styled from './AddModal.styled';
 import { useFormik } from 'formik';
 import { User } from 'src/Entities/User';
@@ -16,11 +16,13 @@ type Color = object & {
   source: string;
 };
 
-const AddModal: React.FC<{
+function ModalBoxFormLogic({
+  handleModalClose,
+  addUser,
+}: {
   handleModalClose: () => void;
   addUser: (user: User) => void;
-  isShowModal: boolean;
-}> = ({ handleModalClose, addUser, isShowModal }) => {
+}) {
   const [isError, setIsError] = useState<{ color: boolean; name: boolean }>({
     color: false,
     name: false,
@@ -35,7 +37,6 @@ const AddModal: React.FC<{
       console.log('submit');
     },
   });
-
   const toggleError = (error: string) => {
     const initError = { color: false, name: false };
     const newError = { color: false, name: false };
@@ -48,16 +49,6 @@ const AddModal: React.FC<{
     setIsError(newError);
     setTimeout(() => setIsError(initError), 1000);
   };
-
-  const handleColorPick = (e: object) => {
-    const _e = e as Color;
-    if (_e.hex !== clr) {
-      console.log('not same');
-
-      setClr(_e.hex);
-    }
-  };
-
   const handleSubmitButton = () => {
     if (isError.color || isError.name) return;
 
@@ -75,13 +66,43 @@ const AddModal: React.FC<{
     handleModalClose();
   };
 
-  const colorPicker = useMemo(
-    () => (
-      <CirclePicker width="" color={clr} onChangeComplete={handleColorPick} />
-    ),
-    [clr]
-  );
+  const handleColorPick = (e: object) => {
+    const _e = e as Color;
+    if (_e.hex !== clr) {
+      console.log('not same');
 
+      setClr(_e.hex);
+    }
+  };
+
+  return (
+    <Styled.ModalBoxForm>
+      <CirclePicker width="" color={clr} onChangeComplete={handleColorPick} />
+      <Input
+        error={isError.name ? true : false}
+        autoComplete="false"
+        id="userName"
+        placeholder="닉네임을 입력하세요..."
+        value={formik.values.userName}
+        onChange={formik.handleChange}
+      />
+      <Styled.ModalBoxButton
+        onClick={handleSubmitButton}
+        variant="contained"
+        color="primary"
+        sx={{ bgcolor: 'Background.paper' }}
+      >
+        <Styled.ModalBoxSpan>확인</Styled.ModalBoxSpan>
+      </Styled.ModalBoxButton>
+    </Styled.ModalBoxForm>
+  );
+}
+
+const AddModal: React.FC<{
+  handleModalClose: () => void;
+  addUser: (user: User) => void;
+  isShowModal: boolean;
+}> = ({ handleModalClose, addUser, isShowModal }) => {
   return (
     <Modal
       open={isShowModal}
@@ -90,29 +111,10 @@ const AddModal: React.FC<{
       aria-describedby="modal-modal-description"
     >
       <Styled.ModalBox>
-        <Styled.ModalBoxForm>
-          <CirclePicker
-            width=""
-            color={clr}
-            onChangeComplete={handleColorPick}
-          />
-          <Input
-            error={isError.name ? true : false}
-            autoComplete="false"
-            id="userName"
-            placeholder="닉네임을 입력하세요..."
-            value={formik.values.userName}
-            onChange={formik.handleChange}
-          />
-          <Styled.ModalBoxButton
-            onClick={handleSubmitButton}
-            variant="contained"
-            color="primary"
-            sx={{ bgcolor: 'Background.paper' }}
-          >
-            <Styled.ModalBoxSpan>확인</Styled.ModalBoxSpan>
-          </Styled.ModalBoxButton>
-        </Styled.ModalBoxForm>
+        <ModalBoxFormLogic
+          handleModalClose={handleModalClose}
+          addUser={addUser}
+        />
       </Styled.ModalBox>
     </Modal>
   );
