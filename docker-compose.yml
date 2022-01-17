@@ -1,14 +1,10 @@
-version: '3.0'
+version: "3"
 services:
   db:
-    image: mysql
-    restart: always
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: calendar
+      MONGO_INITDB_ROOT_PASSWORD: calendar
+      MONGO_INITDB_DATABASE: calendar
     ports:
-      - '3306:3306'
-    command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-    volumes:
-      - ./db/data_dev:/var/lib/mysql
-    env_file:
-      - ./db/env/.env.development
+      - "27017:27017"
