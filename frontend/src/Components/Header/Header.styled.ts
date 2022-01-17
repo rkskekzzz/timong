@@ -15,14 +15,14 @@ const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
   ${(props) => {
     if (!props.isPinned)
       return `
-        transition: transform 500ms linear 0ms, border-radius 500ms, background 500ms;
-        transform: scale(0.7);
+        transition: transform 250ms linear 0ms, border-radius 250ms, background 250ms;
+        transform: scale(0.6);
         border-radius: 30px;
         background: #f995f0;
       `;
     else
       return `
-        transition: transform 500ms linear 0ms, border-radius 500ms, background 500ms;
+        transition: transform 250ms linear 0ms, border-radius 250ms, background 250ms;
         transform: scale(1);
         border-radius: 0px;
       `;
@@ -45,13 +45,13 @@ const HeaderTimongTitle = styled.span<{ isPinned: boolean }>`
   ${(props) => {
     if (!props.isPinned)
       return `
-        transition: transform 500ms linear 0ms, opacity 200ms;
+        transition: transform 250ms linear 0ms, opacity 200ms;
         transform: translateY(-30px);
         opacity: 0;
       `;
     else
       return `
-        transition: transform 500ms ease-out 0ms, opacity 200ms;
+        transition: transform 250ms ease-out 0ms, opacity 200ms;
         opacity: 1;
         `;
   }};
@@ -64,13 +64,13 @@ const HeaderCalendarTitle = styled.span<{ isPinned: boolean; color: string }>`
   ${(props) => {
     if (!props.isPinned)
       return `
-        transition: transform 500ms linear 0ms, color 500ms;
+        transition: transform 250ms linear 0ms, color 250ms;
         transform: scale(2) translateX(20px);
         color: white;
   `;
     else
       return `
-        transition: transform 500ms linear 0ms, color 500ms;
+        transition: transform 250ms linear 0ms, color 250ms;
         transform: translateY(17px) ;
         `;
   }};

@@ -15,4 +15,8 @@ export const themes = {
     icon: '#171717',
     iconSmall: '#f2f2f2',
   },
+  main: {
+    background: '#ffc7fa',
+    theme: '#f995f0',
+  },
 };
