@@ -26,7 +26,8 @@
     "react-scripts": "5.0.0",
     "react-transition-group": "^4.4.2",
     "styled-components": "^5.3.3",
-    "web-vitals": "^2.1.2"
+    "web-vitals": "^2.1.2",
+    "follow-redirects": ">=1.14.7"
   },
   "scripts": {
     "start": "react-scripts start",
