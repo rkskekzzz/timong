@@ -1,8 +1,8 @@
 import React from 'react';
 import Styled from './DayBox.styled';
 import GlobalStyled from '../Styled/global.styled';
-import { Day } from '../../Entities/Date';
-import { User } from '../../Entities/User';
+import { Day } from '../../Interface/Date';
+import { User } from '../../Interface/User';
 
 const DayBox: React.FC<{
   day: Day;

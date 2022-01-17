@@ -1,4 +1,4 @@
-import { Day, Week, Month, Year } from '../Entities/Date';
+import { Day, Week, Month, Year } from '../Interface/Date';
 
 const buildWeek = (monthMoment: moment.Moment, week: number): Week => {
   return Array(7)
