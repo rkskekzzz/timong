@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Styled from './Calendar.styled';
 import MonthBox from './MonthBox';
-import { Year } from '../../Entities/Date';
+import { UserContext } from 'src/App';
 
-const Calendar: React.FC<{ year: Year }> = ({ year }) => {
+const Calendar = () => {
+  const { state } = useContext(UserContext);
+  const year = state.calendar;
+
   return (
     <Styled.CalendarPaddingBox>
       {year.map((month) => (

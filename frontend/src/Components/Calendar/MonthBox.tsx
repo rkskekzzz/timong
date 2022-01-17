@@ -1,14 +1,41 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import DayBox from './DayBox';
 import Styled from './MonthBox.styled';
-import { Month } from '../../Entities/Date';
-import { UserContext } from '../Timong';
-import { userInfo } from 'os';
-import moment from 'moment';
+import { Month, Day } from '../../Entities/Date';
+import { globalSelectedUser } from 'src/Entities/User';
+import { UserContext } from 'src/App';
+
+function DayBoxLogic({ day }: { day: Day }) {
+  const { state, dispatch } = useContext(UserContext);
+
+  const filteredUser = state.users.filter((user) => {
+    for (const _day of user.avail) {
+      if (day.moment.isSame(_day, 'day')) {
+        return true;
+      }
+    }
+    return false;
+  });
+  const handleClick = useCallback(() => {
+    if (!globalSelectedUser.user) return;
+    dispatch({
+      type: 'UPDATEDATE',
+      user: globalSelectedUser.user,
+      day: day.moment,
+    });
+  }, [day]);
+
+  return (
+    <DayBox
+      key={day.moment.format('X')}
+      day={day}
+      users={filteredUser}
+      handleClick={handleClick}
+    />
+  );
+}
 
 const MonthBox: React.FC<{ month: Month }> = ({ month }) => {
-  const { state } = useContext(UserContext);
-
   return (
     <div>
       <Styled.CalendarTitle>
@@ -19,23 +46,7 @@ const MonthBox: React.FC<{ month: Month }> = ({ month }) => {
           <Styled.VFlexBox key={month.monthMoment.format('X') + index}>
             <Styled.HFlexBox>
               {week.map((day) => {
-                const filteredUser = state.users.filter((user) => {
-                  for (const _day of user.avail) {
-                    if (day.moment.isSame(_day, 'day')) {
-                      return true;
-                    }
-                  }
-                  return false;
-                });
-                console.log(day.moment.format('MMDD'), filteredUser);
-
-                return (
-                  <DayBox
-                    key={day.moment.format('X')}
-                    day={day}
-                    users={filteredUser}
-                  />
-                );
+                return <DayBoxLogic key={day.moment.format('X')} day={day} />;
               })}
             </Styled.HFlexBox>
           </Styled.VFlexBox>
