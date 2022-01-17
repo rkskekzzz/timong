@@ -33,9 +33,11 @@ const GridWrap = styled.div`
   justify-content: center;
 `;
 
-export default {
+const Styled = {
   CalendarBox,
   GridWrap,
   CalendarDateLabel,
   CalendarDateCircleBox,
 };
+
+export default Styled;

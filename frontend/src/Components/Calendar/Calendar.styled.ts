@@ -9,6 +9,8 @@ const CalendarPaddingBox = styled.div<{ color: string }>`
   }
 `;
 
-export default {
+const Styled = {
   CalendarPaddingBox,
 };
+
+export default Styled;

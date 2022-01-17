@@ -21,4 +21,6 @@ const CalendarTitle = styled.span`
   text-align: center;
 `;
 
-export default { VFlexBox, HFlexBox, CalendarTitle };
+const Styled = { VFlexBox, HFlexBox, CalendarTitle };
+
+export default Styled;

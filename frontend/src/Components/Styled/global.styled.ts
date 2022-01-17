@@ -38,8 +38,9 @@ const Xone = styled.div<{ color?: string }>`
     transform: rotate(-45deg);
   }
 `;
-
-export default {
+const Styled = {
   Circle,
   Xone,
 };
+
+export default Styled;
