@@ -20,7 +20,7 @@ const ModalBox = styled.div`
 const ModalBoxButtons = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 17px;
 `;
 
 const ColoredModal = styled(Modal)<{ color: string }>`

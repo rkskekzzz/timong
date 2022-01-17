@@ -36,7 +36,7 @@ function ModalBoxForm({
   return (
     <>
       <Styled.ModalBox>
-        <CloseIcon onClick={handleCloseButton} sx={style} />
+        <CloseIcon onClick={handleCloseButton} fontSize="medium" sx={style} />
         <Styled.ModalTextButton style={style}>
           새 링크 생성
         </Styled.ModalTextButton>
