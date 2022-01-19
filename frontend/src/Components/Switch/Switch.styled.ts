@@ -37,8 +37,8 @@ const SwitchSelected = styled.div<{ isChecked: boolean }>`
   border-radius: 50px;
   position: absolute;
   background: #f995f0b8;
-  box-shadow: inset 0px 2px 1px -1px #f995f0b8, inset 0px 1px 1px 0px #f995f0a8,
-    inset 0px 1px 3px 0px #f995f098;
+  box-shadow: inset 1px 4px 10px -5px #ff5bf0b8,
+    inset -1px 3px 2px 0px #5c0e55a8;
   ${(props) => {
     if (!props.isChecked)
       return `

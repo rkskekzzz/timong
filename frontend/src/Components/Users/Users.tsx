@@ -6,6 +6,7 @@ import { globalSelectedUser } from '../../Interface/UserType';
 import Backdrop from '@mui/material/Backdrop';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import FaceIcon from '@mui/icons-material/Face';
 import { UserContext } from 'src/App';
@@ -125,13 +126,17 @@ const Users = () => {
   useEffect(() => {
     globalSelectedUser.user = selectedUser;
     globalSelectedUser.valid = isChecked;
-    console.log(globalSelectedUser.user, globalSelectedUser.valid);
   }, [selectedUser, isChecked]);
 
   return (
     <>
       {selectedUser && (
-        <Switch isChecked={isChecked} handleToggle={handleToggle} />
+        <>
+          <Styled.SelectedUserSpan bgcolor={selectedUser.color}>
+            {selectedUser.name}
+          </Styled.SelectedUserSpan>
+          <Switch isChecked={isChecked} handleToggle={handleToggle} />
+        </>
       )}
       <Backdrop open={isShow} />
       <AddModal
@@ -142,12 +147,21 @@ const Users = () => {
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
           {selectedUser && (
-            <Styled.DialButton onClick={handleSelectedUser}>
-              <CloseRoundedIcon fontSize="large" sx={{ color: theme.icon }} />
+            <Styled.DialButton
+              isShow={selectedUser ? true : false}
+              onClick={handleSelectedUser}
+            >
+              <FaceRetouchingOffIcon
+                fontSize="large"
+                sx={{ color: theme.icon }}
+              />
             </Styled.DialButton>
           )}
           {!selectedUser && (
-            <Styled.DialButton onClick={handleDial}>
+            <Styled.DialButton
+              isShow={selectedUser ? true : false}
+              onClick={handleDial}
+            >
               <FaceIcon fontSize="large" sx={{ color: theme.icon }} />
             </Styled.DialButton>
           )}

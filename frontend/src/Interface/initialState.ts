@@ -9,7 +9,7 @@ export const initialState: { users: User[]; calendar: Year } = {
   users: [
     {
       name: 'ycha',
-      color: 'red',
+      color: '#ff0000',
       schedule: [
         {
           valid: 'POSIBLE',
@@ -30,7 +30,7 @@ export const initialState: { users: User[]; calendar: Year } = {
     },
     {
       name: 'suhshin',
-      color: 'blue',
+      color: '#0000ff',
       schedule: [
         {
           valid: 'IMPOSIBLE',

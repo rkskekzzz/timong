@@ -9,7 +9,7 @@ const Temp = styled.div<{ isShow: boolean }>`
   flex-direction: column-reverse;
 `;
 
-const DialButton = styled.button`
+const DialButton = styled.button<{ isShow: boolean }>`
   position: fixed;
   bottom: 16px;
   right: 16px;
@@ -18,8 +18,20 @@ const DialButton = styled.button`
   background: #f995f0;
   border-radius: 50%;
   border: 0px solid black;
-  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%),
-    0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
+  ${(props) => {
+    if (!props.isShow)
+      return `
+      box-shadow: inset 1px -8px 10px -3px #ffb6f8b8,
+      inset -1px -4px 2px 0px #5c0e55a8;
+      transition: box-shadow 500ms ease-in-out 0ms;
+    `;
+    else
+      return `
+      box-shadow: inset 1px 8px 10px -5px #ffb6f8b8,
+      inset -1px 4px 2px 0px #5c0e55a8;
+      transition: box-shadow 500ms ease-in-out 0ms;
+      `;
+  }};
 `;
 
 const DialBox = styled.div<{ isShow: boolean }>`
@@ -138,8 +150,26 @@ const DialRowProfile = styled.button<{ isShow: boolean }>`
   }};
 `;
 
+const SelectedUserSpan = styled.span<{ bgcolor: string }>`
+  position: fixed;
+  height: calc(24px - 0.2rem);
+  margin: 16px 0;
+  bottom: 16px;
+  left: 16px;
+  background: ${(props) => `${props.bgcolor || '#000000'}bb`};
+  color: white;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  padding: 0.1rem 0.7rem;
+  box-shadow: ${(props) => `inset 1px 8px 10px -5px ${
+    props.bgcolor || '#000000'
+  }b8,
+    inset -1px 4px 2px 0px ${props.bgcolor || '#000000'}a8`};
+`;
+
 const Styled = {
   Temp,
+  SelectedUserSpan,
   DialBox,
   DialRow,
   DialButton,
