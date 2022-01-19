@@ -2,11 +2,15 @@ import React from 'react';
 import Styled from './DayBox.styled';
 import GlobalStyled from '../Styled/global.styled';
 import { Day } from '../../Interface/DateType';
-import { User } from '../../Interface/UserType';
+import { User, Valid } from '../../Interface/UserType';
 
 const DayBox: React.FC<{
   day: Day;
-  users: User[];
+  users: {
+    info: User;
+    valid: Valid;
+  }[];
+  // users: User[];
   handleClick: () => void;
 }> = ({ day, users, handleClick }) => {
   return (
@@ -16,17 +20,24 @@ const DayBox: React.FC<{
       </Styled.CalendarDateLabel>
       <Styled.CalendarDateCircleBox isThisMonth={day.isThisMonth}>
         <Styled.GridWrap>
-          {users.map((user, index) => (
-            <GlobalStyled.Circle
-              key={user.name + index.toString()}
-              size="small"
-              color={user.color}
-            />
-            // <GlobalStyled.Xone
-            //   key={user.name + index.toString()}
-            //   color={user.color}
-            // />
-          ))}
+          {users.map((user, index) => {
+            if (user.valid == 'POSIBLE') {
+              return (
+                <GlobalStyled.Circle
+                  key={user.info.name + index.toString()}
+                  size="small"
+                  color={user.info.color}
+                />
+              );
+            } else {
+              return (
+                <GlobalStyled.Xone
+                  key={user.info.name + index.toString()}
+                  color={user.info.color}
+                />
+              );
+            }
+          })}
         </Styled.GridWrap>
       </Styled.CalendarDateCircleBox>
     </Styled.CalendarBox>

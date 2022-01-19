@@ -4,18 +4,37 @@ import Styled from './MonthBox.styled';
 import { Month, Day } from '../../Interface/DateType';
 import { globalSelectedUser } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
+import { User, Valid } from 'src/Interface/UserType';
 
 function DayBoxLogic({ day }: { day: Day }) {
   const { state, dispatch } = useContext(UserContext);
 
   const filteredUser = state.users.filter((user) => {
-    for (const _day of user.avail) {
-      if (day.moment.isSame(_day, 'day')) {
+    for (const _schedule of user.schedule) {
+      if (day.moment.isSame(_schedule.start, 'day')) {
         return true;
       }
     }
     return false;
   });
+  const reducedUser = state.users.reduce(
+    (user: { info: User; valid: Valid }[], cur: User) => {
+      for (const _schedule of cur.schedule) {
+        if (day.moment.isSame(_schedule.start, 'day')) {
+          user = [
+            ...user,
+            {
+              info: cur,
+              valid: _schedule.valid,
+            },
+          ];
+        }
+      }
+      return user;
+    },
+    []
+  );
+  // console.log(reducedUser);
   const handleClick = useCallback(() => {
     if (!globalSelectedUser.user) return;
     dispatch({
@@ -29,7 +48,7 @@ function DayBoxLogic({ day }: { day: Day }) {
     <DayBox
       key={day.moment.format('X')}
       day={day}
-      users={filteredUser}
+      users={reducedUser}
       handleClick={handleClick}
     />
   );
