@@ -3,6 +3,7 @@ import { Input } from '@mui/material';
 import { useFormik } from 'formik';
 import Styled from './Starter.styled';
 import { themes } from 'src/theme';
+import { CalendarService } from 'src/Network/TimongService';
 
 // let prev_windows_scrollX = 0;
 
@@ -19,11 +20,21 @@ const StarterInputs = () => {
       console.log('submit');
     },
   });
-  const handleSubmitButton = () => {
-    console.log('here');
-  };
-  const handleValue = (e) =>
-    setValue(e.target.value > 25 ? 25 : e.target.value);
+
+  const handleSubmitButton = useCallback(() => {
+    console.log(`title ${formik.values.calendarName}`);
+
+    console.log(`value ${value}`);
+
+    CalendarService.create();
+  }, [formik, value]);
+
+  const handleValue = useCallback(
+    (e) => {
+      setValue(e.target.value > 25 ? 25 : e.target.value);
+    },
+    [setValue]
+  );
 
   const handleAddValue = useCallback(() => {
     setValue(value + 1 >= 25 ? 25 : value + 1);
