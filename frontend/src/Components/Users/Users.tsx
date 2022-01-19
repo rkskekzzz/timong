@@ -6,9 +6,11 @@ import { globalSelectedUser } from '../../Interface/UserType';
 import Backdrop from '@mui/material/Backdrop';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import FaceIcon from '@mui/icons-material/Face';
 import { UserContext } from 'src/App';
 import { ThemeContext } from '../Timong';
+import Switch from '../Switch/Switch';
 
 const Users = () => {
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
@@ -20,6 +22,10 @@ const Users = () => {
   const users = state.users;
 
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectedUser = () => {
+    setSelectedUser(null);
+  };
 
   const handleClickAway = () => {
     if (isShowModal) return;
@@ -123,6 +129,7 @@ const Users = () => {
 
   return (
     <>
+      <Switch />
       <Backdrop open={isShow} />
       <AddModal
         isShowModal={isShowModal}
@@ -131,9 +138,16 @@ const Users = () => {
       />
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
-          <Styled.DialButton onClick={handleDial}>
-            <FaceIcon fontSize="large" sx={{ color: theme.icon }} />
-          </Styled.DialButton>
+          {selectedUser && (
+            <Styled.DialButton onClick={handleSelectedUser}>
+              <CloseRoundedIcon fontSize="large" sx={{ color: theme.icon }} />
+            </Styled.DialButton>
+          )}
+          {!selectedUser && (
+            <Styled.DialButton onClick={handleDial}>
+              <FaceIcon fontSize="large" sx={{ color: theme.icon }} />
+            </Styled.DialButton>
+          )}
           <Styled.Temp
             isShow={isShow}
             style={isAnimationDone ? { zIndex: '-100' } : {}}
