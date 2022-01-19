@@ -20,7 +20,6 @@ const Users = () => {
   const theme = useContext(ThemeContext);
   const { state, dispatch } = useContext(UserContext);
   const users = state.users;
-
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleSelectedUser = () => {
@@ -77,10 +76,6 @@ const Users = () => {
     }, 50);
   };
 
-  useEffect(() => {
-    globalSelectedUser.user = selectedUser;
-  }, [selectedUser]);
-
   /**
    *  TODO: 컴포넌트 분리
    */
@@ -97,15 +92,11 @@ const Users = () => {
     index: number
   ) => {
     if (touchStart - e.targetTouches[0].clientX > 50) {
-      console.log('left swipe');
       setIsSwipe(index);
     }
     if (touchStart - e.targetTouches[0].clientX > 200) {
+      setIsSwipe(-1);
       setIsSwipeMore(true);
-      console.log('left swipe more');
-    }
-    if (touchStart - e.targetTouches[0].clientX < -120) {
-      console.log('right swipe');
     }
   };
 
@@ -127,9 +118,21 @@ const Users = () => {
     resetScrollEffect(scrollRef);
   };
 
+  const [isChecked, setIsChecked] = useState<boolean>(true);
+
+  const handleToggle = () => setIsChecked(!isChecked);
+
+  useEffect(() => {
+    globalSelectedUser.user = selectedUser;
+    globalSelectedUser.valid = isChecked;
+    console.log(globalSelectedUser.user, globalSelectedUser.valid);
+  }, [selectedUser, isChecked]);
+
   return (
     <>
-      <Switch />
+      {selectedUser && (
+        <Switch isChecked={isChecked} handleToggle={handleToggle} />
+      )}
       <Backdrop open={isShow} />
       <AddModal
         isShowModal={isShowModal}
