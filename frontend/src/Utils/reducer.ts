@@ -28,26 +28,16 @@ export default function reducer(state: State, action: Action): State {
         ...state,
         users: state.users.map((user: User): User => {
           if (user === action.user) {
-            user.avail = [...user.avail, action.day];
+            user.schedule = [
+              ...user.schedule,
+              {
+                valid: 'POSIBLE',
+                start: action.day,
+                end: action.day,
+              },
+            ];
           }
           return user;
-        }),
-      };
-    case 'TEST':
-      return {
-        ...state,
-        calendar: state.calendar.map((month: Month): Month => {
-          return {
-            monthMoment: month.monthMoment,
-            week: month.week.map((week: Week): Week => {
-              return week.map((day: Day): Day => {
-                if (!day.moment.isSame(action.day, 'day')) return day;
-                const _day = day;
-                _day.updateUser(action.user);
-                return _day;
-              });
-            }),
-          };
         }),
       };
     default:
