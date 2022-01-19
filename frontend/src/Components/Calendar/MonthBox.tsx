@@ -9,14 +9,6 @@ import { User, Valid } from 'src/Interface/UserType';
 function DayBoxLogic({ day }: { day: Day }) {
   const { state, dispatch } = useContext(UserContext);
 
-  const filteredUser = state.users.filter((user) => {
-    for (const _schedule of user.schedule) {
-      if (day.moment.isSame(_schedule.start, 'day')) {
-        return true;
-      }
-    }
-    return false;
-  });
   const reducedUser = state.users.reduce(
     (user: { info: User; valid: Valid }[], cur: User) => {
       for (const _schedule of cur.schedule) {
@@ -41,6 +33,7 @@ function DayBoxLogic({ day }: { day: Day }) {
       type: 'UPDATEDATE',
       user: globalSelectedUser.user,
       day: day.moment,
+      valid: globalSelectedUser.valid ? 'POSIBLE' : 'IMPOSIBLE',
     });
   }, [day]);
 

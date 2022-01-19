@@ -19,6 +19,8 @@ export class User {
 
 export const globalSelectedUser: {
   user: User | null;
+  valid: boolean;
 } = {
   user: null,
+  valid: true,
 };

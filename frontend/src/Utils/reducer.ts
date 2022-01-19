@@ -1,16 +1,5 @@
-import { Month, Year, Week, Day } from '../Interface/DateType';
 import { User } from '../Interface/UserType';
-
-type State = {
-  users: User[];
-  calendar: Year;
-};
-type Action =
-  | { type: 'ADD'; user: User }
-  | { type: 'DELETE'; index: number; user: User }
-  | { type: 'UPDATEDATE'; user: User; day: moment.Moment }
-  | { type: 'TEST'; user: User; day: moment.Moment }
-  | { type: 'DEFAULT' };
+import { State, Action } from 'src/Interface/ContextType';
 
 export default function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -31,7 +20,7 @@ export default function reducer(state: State, action: Action): State {
             user.schedule = [
               ...user.schedule,
               {
-                valid: 'POSIBLE',
+                valid: action.valid,
                 start: action.day,
                 end: action.day,
               },
