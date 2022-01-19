@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { ThemeContext } from '../Timong';
 import Styled from './Header.styled';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import { Backdrop } from '@mui/material';
 import { throttle } from 'lodash';
 import HeaderModal from './HeaderModal';
 
