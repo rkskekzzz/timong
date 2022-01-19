@@ -16,11 +16,13 @@ const StarterModalForm = styled.form`
   width: 200px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 30px;
 `;
 
 const StarterModalButton = styled(Button)`
   && {
+    width: 100%;
     background: #f995f0;
     :hover {
       background: #f995f0;
@@ -31,38 +33,46 @@ const StarterModalTitle = styled.span`
   font-size: 3rem;
   font-weight: bold;
 `;
-const StaterModalSlider = styled(Slider)`
-  color: white;
-  && {
-    color: transparent;
-    box-shadow: 0px;
-  }
-  && :before {
-    box-shadow: 0px 0px 0px white;
-  }
-  && span {
-    width: 300px;
-    height: 100px;
-    border-radius: 0px;
-  }
-  && :hover {
-    box-shadow: 0px 0px 0px white;
-  }
-`;
-const StarterModalNumber = styled.span`
-  font-size: 2rem;
+
+const StarterModalMaxText = styled.span`
+  font-size: 1.5rem;
   font-weight: bold;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%) translateY(-10px);
+  top: 50%;
+  transform: translateX(-50%) translateY(50%);
+`;
+
+const StarterModalNumberBox = styled.span`
+  display: flex;
+  width: 200px;
+  left: 50%;
+  gap: 10px;
+  justify-content: space-between;
+  span {
+    margin: auto 0;
+    font-size: 1.2rem;
+  }
+  p {
+    font-weight: bold;
+  }
+  input {
+    width: 50px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    background: transparent;
+    border: 0px;
+  }
 `;
 const Styled = {
   Starter,
   StarterModalForm,
   StarterModalButton,
-  StaterModalSlider,
+  StarterModalMaxText,
+
   StarterModalTitle,
-  StarterModalNumber,
+  StarterModalNumberBox,
 };
 
 export default Styled;
