@@ -1,4 +1,4 @@
-import { User } from '../Interface/UserType';
+import { User, Schedule } from '../Interface/UserType';
 import { State, Action } from 'src/Interface/ContextType';
 
 export default function reducer(state: State, action: Action): State {
@@ -21,13 +21,17 @@ export default function reducer(state: State, action: Action): State {
             start: action.day,
             end: action.day,
           };
+          let flag: boolean;
           if (user === action.user) {
-            for (const sche of user.schedule) {
-              if (sche.start.isSame(newSchedule.start, 'day'))
-                console.log('같다!');
-              return user;
-            }
-            user.schedule = [...user.schedule, newSchedule];
+            const filteredSchedule = user.schedule.filter((sche) => {
+              if (sche.start.isSame(newSchedule.start, 'day')) {
+                flag = sche.valid === newSchedule.valid;
+                return false;
+              }
+              return true;
+            });
+            if (flag) user.schedule = [...filteredSchedule];
+            else user.schedule = [...filteredSchedule, newSchedule];
           }
           return user;
         }),

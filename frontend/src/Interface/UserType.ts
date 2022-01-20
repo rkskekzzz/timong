@@ -5,15 +5,17 @@ const POSIBLE = 'POSIBLE' as const;
 const IMPOSIBLE = 'IMPOSIBLE' as const;
 export type Valid = typeof POSIBLE | typeof IMPOSIBLE;
 
+export type Schedule = {
+  valid: Valid;
+  start: Moment;
+  end: Moment;
+};
+
 export class User {
   constructor(
     public name: string,
     public color: string,
-    public schedule: {
-      valid: Valid;
-      start: Moment;
-      end: Moment;
-    }[]
+    public schedule: Schedule[]
   ) {}
 }
 
