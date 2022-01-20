@@ -32,7 +32,7 @@ const DialButton = styled.button<{ isShow: boolean }>`
   right: 16px;
   width: 56px;
   height: 56px;
-  background: #f995f0;
+  background: #f995f0b8;
   border-radius: 50%;
   border: 0px solid black;
   ${(props) => {

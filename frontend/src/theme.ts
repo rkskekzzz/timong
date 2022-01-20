@@ -17,7 +17,7 @@ export const themes = {
     backDropHeader: '#000000dd',
     foreground: '#dadada',
     iconSmall: '#f2f2f2',
-    icon: 'white',
+    icon: '#ffffff',
     foregroundSwitch: '#fafafadf',
     backgroundSwitch: '#212121df',
     foregroundAddButton: '#000000',

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
   position: fixed;
-  // z-index: 0;
   top: 0;
   left: auto;
   right: 0;
@@ -19,7 +18,7 @@ const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
         transition: transform 250ms linear 0ms, border-radius 250ms, background 250ms;
         transform: scale(0.6);
         border-radius: 50px;
-        background: #f995f0;
+        background: #f995f0b8;
       `;
     else
       return `
