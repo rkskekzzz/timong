@@ -1,5 +1,13 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
 const Temp = styled.div<{ isShow: boolean }>`
   position: fixed;
   bottom: 72px;
@@ -168,6 +176,8 @@ const SelectedUserSpan = styled.span<{ bgcolor: string }>`
     props.bgcolor || '#000000'
   }b8,
     inset -1px 4px 2px 0px ${props.bgcolor || '#000000'}a8`};
+
+  animation: ${fadeIn} 500ms;
 `;
 
 const Styled = {

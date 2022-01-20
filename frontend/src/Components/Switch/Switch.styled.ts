@@ -1,4 +1,13 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
 
 const Switch = styled.div<{ bgcolor: string }>`
   height: 40px;
@@ -11,6 +20,8 @@ const Switch = styled.div<{ bgcolor: string }>`
   border-radius: 50px;
   box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
     0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+
+  animation: ${fadeIn} 500ms;
 `;
 const SwitchInput = styled.input`
   display: none;
