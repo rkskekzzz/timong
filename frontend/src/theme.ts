@@ -8,6 +8,8 @@ export const themes = {
     icon: '#171717',
     foregroundSwitch: '#1a1a1adf',
     backgroundSwitch: '#fafafadf',
+    foregroundAddButton: '#ffffff',
+    backgroundAddButton: '#000000',
   },
   dark: {
     foregroundHeader: '#f2f2f2',
@@ -18,6 +20,8 @@ export const themes = {
     icon: 'white',
     foregroundSwitch: '#fafafadf',
     backgroundSwitch: '#212121df',
+    foregroundAddButton: '#000000',
+    backgroundAddButton: '#ffffff',
   },
   main: {
     background: '#ffd8fb',

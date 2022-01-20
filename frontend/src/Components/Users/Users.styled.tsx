@@ -127,15 +127,18 @@ const DialRowName = styled.span<{ isShow: boolean }>`
   }};
 `;
 
-const DialRowProfile = styled.button<{ isShow: boolean }>`
+const DialRowProfile = styled.button<{ isShow: boolean; bgcolor: string }>`
   width: 40px;
   height: 40px;
   margin: 4px;
   border-radius: 30px;
   border: 0;
-  background: ${(props) => props.color || 'white'};
-  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%),
-    0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
+  background: ${(props) => `${props.bgcolor || '#000000'}aa`};
+  box-shadow: ${(props) => `inset 1px -8px 10px -3px ${
+    props.bgcolor || '#000000'
+  }d8,
+    inset -1px -4px 2px 0px #000000c8`};
+
   ${(props) => {
     if (props.isShow)
       return `

@@ -13,20 +13,17 @@ function DayBoxLogic({ day }: { day: Day }) {
     (user: { info: User; valid: Valid }[], cur: User) => {
       for (const _schedule of cur.schedule) {
         if (day.moment.isSame(_schedule.start, 'day')) {
-          user = [
-            ...user,
-            {
-              info: cur,
-              valid: _schedule.valid,
-            },
-          ];
+          user.push({
+            info: cur,
+            valid: _schedule.valid,
+          });
         }
       }
       return user;
     },
     []
   );
-  // console.log(reducedUser);
+
   const handleClick = useCallback(() => {
     if (!globalSelectedUser.user) return;
     dispatch({

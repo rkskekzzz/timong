@@ -203,7 +203,7 @@ const Users = () => {
                         }ms`,
                       }}
                       isShow={isShow}
-                      color={user.color}
+                      bgcolor={user.color}
                       onClick={() => {
                         handleUserTabbed(index);
                       }}
@@ -226,13 +226,17 @@ const Users = () => {
                     transitionDelay: `${
                       (isShow ? users.length : 0) * (200 / users.length)
                     }ms`,
+                    color: theme.foregroundAddButton,
+                    fontSize: '1.5rem',
                   }}
                   isShow={isShow}
-                  color="black"
+                  bgcolor={theme.backgroundAddButton}
                   onClick={() => {
                     handleAddUserButton();
                   }}
-                ></Styled.DialRowProfile>
+                >
+                  +
+                </Styled.DialRowProfile>
               </Styled.DialRow>
             </Styled.DialBox>
           </Styled.Temp>
