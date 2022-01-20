@@ -8,6 +8,15 @@ const fadeIn = keyframes`
     opacity: 1;
   }
 `;
+
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
 const Temp = styled.div<{ isShow: boolean }>`
   position: fixed;
   bottom: 72px;
@@ -165,9 +174,10 @@ const SelectedUserSpan = styled.span<{ bgcolor: string }>`
   position: fixed;
   height: calc(24px - 0.2rem);
   margin: 16px 0;
-  bottom: 16px;
-  left: 16px;
-  background: ${(props) => `${props.bgcolor || '#000000'}bb`};
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: ${(props) => `${props.bgcolor || '#000000'}99`};
   color: white;
   border-radius: 50px;
   font-size: 0.8rem;

@@ -9,6 +9,15 @@ const fadeIn = keyframes`
   }
 `;
 
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
 const Switch = styled.div<{ bgcolor: string }>`
   height: 40px;
   margin: 8px 0;
