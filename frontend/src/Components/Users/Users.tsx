@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useCallback,
+} from 'react';
 import { User } from '../../Interface/UserType';
 import AddModal from '../Modal';
 import Styled from './Users.styled';
@@ -7,7 +13,6 @@ import Backdrop from '@mui/material/Backdrop';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import FaceIcon from '@mui/icons-material/Face';
 import { UserContext } from 'src/App';
 import { ThemeContext } from '../Timong';
@@ -16,27 +21,32 @@ import Switch from '../Switch/Switch';
 const Users = () => {
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState<boolean>(false);
+  const [touchStart, setTouchStart] = useState<number>(0);
+  const [isSwipe, setIsSwipe] = useState<number>(-1);
+  const [isSwipeMore, setIsSwipeMore] = useState<boolean>(false);
+  const [willDelete, setWillDelete] = useState<number>(-1);
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>(true);
 
-  const theme = useContext(ThemeContext);
   const { state, dispatch } = useContext(UserContext);
+  const theme = useContext(ThemeContext);
   const users = state.users;
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectedUser = () => {
+  const handleSelectedUser = useCallback(() => {
     setSelectedUser(null);
-  };
-
-  const handleClickAway = () => {
+  }, [setSelectedUser]);
+  const handleClickAway = useCallback(() => {
     if (isShowModal) return;
     setIsShow(false);
     setIsSwipe(-1);
     setTimeout(() => {
       setIsAnimationDone(true);
     }, 500);
-  };
-
-  const handleDial = () => {
+  }, [isShowModal, setIsShow, setIsSwipe, setIsAnimationDone]);
+  const handleDial = useCallback(() => {
     if (!isShow && !isAnimationDone) return;
     setIsShow(!isShow);
     setIsSwipe(-1);
@@ -47,13 +57,21 @@ const Users = () => {
         setIsAnimationDone(true);
       }
     }, 500);
-  };
-
-  const handleUserTabbed = (index: number) => {
-    setSelectedUser(users[index]);
-    handleDial();
-  };
-
+  }, [
+    isShow,
+    isAnimationDone,
+    setIsShow,
+    setIsSwipe,
+    setIsAnimationDone,
+    scrollRef,
+  ]);
+  const handleUserTabbed = useCallback(
+    (index: number) => {
+      setSelectedUser(users[index]);
+      handleDial();
+    },
+    [setSelectedUser, handleDial]
+  );
   const handleRowDelButton = (delIndex: number, user: User) => {
     if (!isShow && !isAnimationDone) return;
     setIsSwipe(-1);
@@ -65,10 +83,6 @@ const Users = () => {
     }, 500);
   };
 
-  const handleAddUserButton = () => {
-    handleModalOpen();
-  };
-
   const resetScrollEffect = (element: React.RefObject<HTMLDivElement>) => {
     setTimeout(() => {
       if (element && element.current) {
@@ -76,18 +90,8 @@ const Users = () => {
       }
     }, 50);
   };
-
-  /**
-   *  TODO: 컴포넌트 분리
-   */
-  const [touchStart, setTouchStart] = useState(0);
-  const [isSwipe, setIsSwipe] = useState<number>(-1);
-  const [isSwipeMore, setIsSwipeMore] = useState<boolean>(false);
-  const [willDelete, setWillDelete] = useState<number>(-1);
-
   const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) =>
     setTouchStart(e.targetTouches[0].clientX);
-
   const handleTouchMove = (
     e: React.TouchEvent<HTMLSpanElement>,
     index: number
@@ -96,32 +100,33 @@ const Users = () => {
       setIsSwipe(index);
     }
     if (touchStart - e.targetTouches[0].clientX > 200) {
-      setIsSwipe(-1);
       setIsSwipeMore(true);
+      setIsSwipe(-1);
     }
   };
-
   const handleTouchEnd = (index: number, user: User) => {
     isSwipeMore && handleRowDelButton(index, user);
     setIsSwipeMore(false);
   };
-
-  /**
-   *  컴포넌트 분리
-   */
-  const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const handleModalOpen = () => setIsShowModal(true);
-  const handleModalClose = () => setIsShowModal(false);
+  const handleModalOpen = useCallback(() => {
+    setIsShowModal(true);
+  }, [setIsShowModal]);
+  const handleModalClose = useCallback(() => {
+    setIsShowModal(false);
+  }, [setIsShowModal]);
+  const handleToggle = useCallback(
+    () => setIsChecked(!isChecked),
+    [setIsChecked, isChecked]
+  );
+  const handleAddUserButton = useCallback(() => {
+    handleModalOpen();
+  }, [handleModalOpen]);
   const addUser = (user: User) => {
     if (!dispatch) throw new Error('no dispatch');
     dispatch({ type: 'ADD', user });
     setIsSwipe(-1);
     resetScrollEffect(scrollRef);
   };
-
-  const [isChecked, setIsChecked] = useState<boolean>(true);
-
-  const handleToggle = () => setIsChecked(!isChecked);
 
   useEffect(() => {
     globalSelectedUser.user = selectedUser;
