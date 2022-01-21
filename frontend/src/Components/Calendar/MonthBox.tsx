@@ -6,33 +6,54 @@ import { globalSelectedUser } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 import { User, Valid } from 'src/Interface/UserType';
 
-function DayBoxLogic({ day, month }: { day: Day; month: Month }) {
+type UserWithValid = {
+  info: User;
+  valid: Valid;
+};
+type DrawerHandler = {
+  handleDrawerOpen: () => void;
+  setDayUsers: (users: UserWithValid[]) => void;
+  isShow: boolean;
+};
+
+function DayBoxLogic({
+  day,
+  month,
+  drawerHandler,
+}: {
+  day: Day;
+  month: Month;
+  drawerHandler: DrawerHandler;
+}) {
   const { state, dispatch } = useContext(UserContext);
 
-  const reducedUser = state.users.reduce(
-    (user: { info: User; valid: Valid }[], cur: User) => {
-      for (const _schedule of cur.schedule) {
-        if (day.moment.isSame(_schedule.start, 'day')) {
-          user.push({
-            info: cur,
-            valid: _schedule.valid,
-          });
-        }
+  const reducedUser = state.users.reduce((user: UserWithValid[], cur: User) => {
+    for (const _schedule of cur.schedule) {
+      if (day.moment.isSame(_schedule.start, 'day')) {
+        user.push({
+          info: cur,
+          valid: _schedule.valid,
+        });
       }
-      return user;
-    },
-    []
-  );
-
-  const handleClick = useCallback(() => {
-    if (!globalSelectedUser.user) return;
+    }
+    return user;
+  }, []);
+  const showUsers = () => {
+    drawerHandler.handleDrawerOpen();
+    drawerHandler.setDayUsers(reducedUser);
+  };
+  const updateUser = () => {
     dispatch({
       type: 'UPDATEDATE',
       user: globalSelectedUser.user,
       day: day.moment,
       valid: globalSelectedUser.valid ? 'POSIBLE' : 'IMPOSIBLE',
     });
-  }, [day]);
+  };
+  const handleClick = useCallback(() => {
+    if (!globalSelectedUser.user) showUsers();
+    else updateUser();
+  }, [updateUser, day, showUsers]);
   const isThisMonth = month.monthMoment.isSame(day.moment, 'month');
 
   return (
@@ -46,7 +67,10 @@ function DayBoxLogic({ day, month }: { day: Day; month: Month }) {
   );
 }
 
-const MonthBox: React.FC<{ month: Month }> = ({ month }) => {
+const MonthBox: React.FC<{ month: Month; drawerHandler: DrawerHandler }> = ({
+  month,
+  drawerHandler,
+}) => {
   return (
     <div>
       <Styled.CalendarTitle>
@@ -62,6 +86,7 @@ const MonthBox: React.FC<{ month: Month }> = ({ month }) => {
                     key={day.moment.format('X')}
                     day={day}
                     month={month}
+                    drawerHandler={drawerHandler}
                   />
                 );
               })}
