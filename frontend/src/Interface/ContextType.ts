@@ -1,10 +1,8 @@
 import { Dispatch } from 'react';
 import { User, Valid } from './UserType';
-import { Year } from './DateType';
 
 export type State = {
   users: User[];
-  calendar: Year;
 };
 
 export type Action =

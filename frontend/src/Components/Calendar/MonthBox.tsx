@@ -6,7 +6,7 @@ import { globalSelectedUser } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 import { User, Valid } from 'src/Interface/UserType';
 
-function DayBoxLogic({ day }: { day: Day }) {
+function DayBoxLogic({ day, month }: { day: Day; month: Month }) {
   const { state, dispatch } = useContext(UserContext);
 
   const reducedUser = state.users.reduce(
@@ -33,6 +33,7 @@ function DayBoxLogic({ day }: { day: Day }) {
       valid: globalSelectedUser.valid ? 'POSIBLE' : 'IMPOSIBLE',
     });
   }, [day]);
+  const isThisMonth = month.monthMoment.isSame(day.moment, 'month');
 
   return (
     <DayBox
@@ -40,6 +41,7 @@ function DayBoxLogic({ day }: { day: Day }) {
       day={day}
       users={reducedUser}
       handleClick={handleClick}
+      isThisMonth={isThisMonth}
     />
   );
 }
@@ -55,7 +57,13 @@ const MonthBox: React.FC<{ month: Month }> = ({ month }) => {
           <Styled.VFlexBox key={month.monthMoment.format('X') + index}>
             <Styled.HFlexBox>
               {week.map((day) => {
-                return <DayBoxLogic key={day.moment.format('X')} day={day} />;
+                return (
+                  <DayBoxLogic
+                    key={day.moment.format('X')}
+                    day={day}
+                    month={month}
+                  />
+                );
               })}
             </Styled.HFlexBox>
           </Styled.VFlexBox>

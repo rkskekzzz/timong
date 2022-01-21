@@ -10,7 +10,7 @@ const buildWeek = (monthMoment: moment.Moment, week: number): Week => {
         .week(week)
         .startOf('week')
         .add(index, 'day');
-      return new Day(day, day.month() !== monthMoment.month() ? false : true);
+      return new Day(day);
     });
 };
 
@@ -29,7 +29,7 @@ const buildMonth = (monthMoment: moment.Moment): Month => {
 };
 
 const buildYear = (today: moment.Moment): Year => {
-  return Array(12)
+  return Array(3)
     .fill(0)
     .map((_, index) => buildMonth(today.clone().add(index, 'month')));
 };

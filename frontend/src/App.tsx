@@ -14,7 +14,6 @@ export const UserContext = createContext<{
 }>({
   state: {
     users: [],
-    calendar: [],
   },
   dispatch: () => {
     null;

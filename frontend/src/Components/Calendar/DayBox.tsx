@@ -10,15 +10,15 @@ const DayBox: React.FC<{
     info: User;
     valid: Valid;
   }[];
-  // users: User[];
+  isThisMonth: boolean;
   handleClick: () => void;
-}> = ({ day, users, handleClick }) => {
+}> = ({ day, users, handleClick, isThisMonth }) => {
   return (
     <Styled.CalendarBox onClick={handleClick} id="test">
-      <Styled.CalendarDateLabel isThisMonth={day.isThisMonth}>
+      <Styled.CalendarDateLabel isThisMonth={isThisMonth}>
         {day.moment.format('D')}
       </Styled.CalendarDateLabel>
-      <Styled.CalendarDateCircleBox isThisMonth={day.isThisMonth}>
+      <Styled.CalendarDateCircleBox isThisMonth={isThisMonth}>
         <Styled.GridWrap>
           {users.map((user, index) => {
             if (user.valid == 'POSIBLE') {

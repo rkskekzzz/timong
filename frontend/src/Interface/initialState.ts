@@ -1,11 +1,7 @@
-import moment from 'moment';
-import { Year } from './DateType';
-import { buildDate, makeDate } from '../Utils';
+import { makeDate } from '../Utils';
 import { User } from './UserType';
 
-const year: Year = buildDate(moment());
-
-export const initialState: { users: User[]; calendar: Year } = {
+export const initialState: { users: User[] } = {
   users: [
     {
       name: 'ycha',
@@ -45,5 +41,4 @@ export const initialState: { users: User[]; calendar: Year } = {
       ],
     },
   ],
-  calendar: year,
 };
