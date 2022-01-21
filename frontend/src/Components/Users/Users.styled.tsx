@@ -21,15 +21,15 @@ const DialButton = styled.button<{ isShow: boolean }>`
   ${(props) => {
     if (!props.isShow)
       return `
-      box-shadow: inset 1px -8px 10px -3px #ffb6f8b8,
-      inset -1px -4px 2px 0px #5c0e55a8;
-      transition: box-shadow 500ms ease-in-out 0ms;
+        box-shadow: inset 1px -8px 10px -3px #ffb6f8b8,
+        inset -1px -4px 2px 0px #5c0e55a8;
+        transition: box-shadow 500ms ease-in-out 0ms;
     `;
     else
       return `
-      box-shadow: inset 1px 8px 10px -5px #ffb6f8b8,
-      inset -1px 4px 2px 0px #5c0e55a8;
-      transition: box-shadow 500ms ease-in-out 0ms;
+        box-shadow: inset 1px 8px 10px -5px #ffb6f8b8,
+        inset -1px 4px 2px 0px #5c0e55a8;
+        transition: box-shadow 500ms ease-in-out 0ms;
       `;
   }};
 `;

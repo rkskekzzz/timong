@@ -25,7 +25,6 @@ const DayBox: React.FC<{
               return (
                 <GlobalStyled.Circle
                   key={user.info.name + index.toString()}
-                  size="small"
                   color={user.info.color}
                 />
               );
