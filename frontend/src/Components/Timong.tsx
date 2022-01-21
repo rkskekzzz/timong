@@ -24,8 +24,9 @@ const Timong = () => {
   };
 
   useEffect(() => {
-    if (mode === 'dark') document.body.style.background = '#131313';
-    else document.body.style.background = '#ffffff';
+    if (mode === 'dark')
+      document.body.style.background = themes.dark.background;
+    else document.body.style.background = themes.light.background;
   }, [mode]);
 
   return (
