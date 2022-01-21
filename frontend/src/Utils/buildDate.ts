@@ -29,7 +29,7 @@ const buildMonth = (monthMoment: moment.Moment): Month => {
 };
 
 const buildYear = (today: moment.Moment): Year => {
-  return Array(3)
+  return Array(12)
     .fill(0)
     .map((_, index) => buildMonth(today.clone().add(index, 'month')));
 };
