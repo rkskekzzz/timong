@@ -10,6 +10,7 @@ export const themes = {
     backgroundSwitch: '#fafafadf',
     foregroundAddButton: '#ffffff',
     backgroundAddButton: '#000000',
+    background: '#ffffff',
   },
   dark: {
     foregroundHeader: '#f2f2f2',
@@ -23,6 +24,7 @@ export const themes = {
     backgroundSwitch: '#212121df',
     foregroundAddButton: '#000000',
     backgroundAddButton: '#ffffff',
+    background: '#131313',
   },
   main: {
     background: '#ffd8fb',
