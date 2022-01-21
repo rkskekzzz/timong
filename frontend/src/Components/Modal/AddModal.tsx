@@ -16,6 +16,26 @@ type Color = object & {
   source: string;
 };
 
+// const colors = [
+//   '#A93226',
+//   '#CB4335',
+//   '#884EA0',
+//   '#7D3C98',
+//   '#2471A3',
+//   '#2E86C1',
+//   '#17A589',
+//   '#138D75',
+//   '#229954',
+//   '#28B463',
+//   '#D4AC0D',
+//   '#D68910',
+//   '#CA6F1E',
+//   '#BA4A00',
+//   '#A6ACAF',
+//   '#707B7C',
+//   '#2E4053',
+// ];
+
 function ModalBoxFormLogic({
   handleModalClose,
   addUser,
@@ -77,7 +97,12 @@ function ModalBoxFormLogic({
 
   return (
     <Styled.ModalBoxForm>
-      <CirclePicker width="" color={clr} onChangeComplete={handleColorPick} />
+      <CirclePicker
+        width=""
+        color={clr}
+        // colors={colors}
+        onChangeComplete={handleColorPick}
+      />
       <Input
         error={isError.name ? true : false}
         autoComplete="false"
