@@ -9,7 +9,7 @@ const CalendarPaddingBox = styled.div<{ color: string }>`
   }
 `;
 
-const UserDrawer = styled.div<{ isShow: boolean }>`
+const UserDrawer = styled.div<{ isShow: boolean; bgcolor: string }>`
   position: fixed;
   z-index: 100;
   bottom: 0px;
