@@ -1,24 +1,6 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-`;
-
-const Switch = styled.div<{ bgcolor: string }>`
+const Switch = styled.div<{ bgcolor: string; isShow: boolean }>`
   height: 40px;
   margin: 8px 0;
   position: fixed;
@@ -29,8 +11,18 @@ const Switch = styled.div<{ bgcolor: string }>`
   border-radius: 50px;
   box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
     0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
-
-  animation: ${fadeIn} 500ms;
+  ${(props) => {
+    if (!props.isShow)
+      return `
+          opacity: 0;
+          transition: opacity 200ms ease-in-out 0ms;
+        `;
+    else
+      return `
+          opacity: 1;
+          transition: opacity 200ms ease-in-out 0ms;
+          `;
+  }};
 `;
 const SwitchInput = styled.input`
   display: none;

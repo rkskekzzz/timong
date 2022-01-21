@@ -28,6 +28,7 @@ const Users = () => {
   const [willDelete, setWillDelete] = useState<number>(-1);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(true);
+  const [isShowSwitch, setIsShowSwitch] = useState<boolean>(false);
 
   const { state, dispatch } = useContext(UserContext);
   const theme = useContext(ThemeContext);
@@ -35,9 +36,12 @@ const Users = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectedUser = useCallback(() => {
-    setSelectedUser(null);
-  }, [setSelectedUser]);
+  const handleSelectedUserDelete = useCallback(() => {
+    setIsShowSwitch(false);
+    setTimeout(() => {
+      setSelectedUser(null);
+    }, 200);
+  }, [setSelectedUser, setIsShowSwitch]);
   const handleClickAway = useCallback(() => {
     if (isShowModal) return;
     setIsShow(false);
@@ -68,46 +72,62 @@ const Users = () => {
   const handleUserTabbed = useCallback(
     (index: number) => {
       setSelectedUser(users[index]);
+      setTimeout(() => {
+        setIsShowSwitch(true);
+      }, 0);
       handleDial();
     },
-    [setSelectedUser, handleDial]
+    [setSelectedUser, handleDial, setIsShowSwitch]
   );
-  const handleRowDelButton = (delIndex: number, user: User) => {
-    if (!isShow && !isAnimationDone) return;
-    setIsSwipe(-1);
-    setWillDelete(delIndex);
-    setTimeout(() => {
-      if (!dispatch) throw new Error('no dispatch');
-      dispatch({ type: 'DELETE', index: delIndex, user });
-      setWillDelete(-1);
-    }, 500);
-  };
-
-  const resetScrollEffect = (element: React.RefObject<HTMLDivElement>) => {
-    setTimeout(() => {
-      if (element && element.current) {
-        element.current.scrollTo(0, element.current.scrollTop - 56);
-      }
-    }, 50);
-  };
-  const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) =>
-    setTouchStart(e.targetTouches[0].clientX);
-  const handleTouchMove = (
-    e: React.TouchEvent<HTMLSpanElement>,
-    index: number
-  ) => {
-    if (touchStart - e.targetTouches[0].clientX > 50) {
-      setIsSwipe(index);
-    }
-    if (touchStart - e.targetTouches[0].clientX > 200) {
-      setIsSwipeMore(true);
+  const handleRowDelButton = useCallback(
+    (delIndex: number, user: User) => {
+      if (!isShow && !isAnimationDone) return;
       setIsSwipe(-1);
-    }
-  };
-  const handleTouchEnd = (index: number, user: User) => {
-    isSwipeMore && handleRowDelButton(index, user);
-    setIsSwipeMore(false);
-  };
+      setWillDelete(delIndex);
+      setTimeout(() => {
+        if (!dispatch) throw new Error('no dispatch');
+        dispatch({ type: 'DELETE', index: delIndex, user });
+        setWillDelete(-1);
+      }, 500);
+    },
+    [isShow, isAnimationDone, setIsSwipe, setWillDelete, dispatch]
+  );
+
+  const resetScrollEffect = useCallback(
+    (element: React.RefObject<HTMLDivElement>) => {
+      setTimeout(() => {
+        if (element && element.current) {
+          element.current.scrollTo(0, element.current.scrollTop - 56);
+        }
+      }, 50);
+    },
+    []
+  );
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent<HTMLButtonElement>) => {
+      setTouchStart(e.targetTouches[0].clientX);
+    },
+    [setTouchStart]
+  );
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent<HTMLSpanElement>, index: number) => {
+      if (touchStart - e.targetTouches[0].clientX > 50) {
+        setIsSwipe(index);
+      }
+      if (touchStart - e.targetTouches[0].clientX > 200) {
+        setIsSwipeMore(true);
+        setIsSwipe(-1);
+      }
+    },
+    [touchStart, setIsSwipe, setIsSwipeMore]
+  );
+  const handleTouchEnd = useCallback(
+    (index: number, user: User) => {
+      isSwipeMore && handleRowDelButton(index, user);
+      setIsSwipeMore(false);
+    },
+    [isSwipeMore, handleRowDelButton, setIsSwipeMore]
+  );
   const handleModalOpen = useCallback(() => {
     setIsShowModal(true);
   }, [setIsShowModal]);
@@ -121,13 +141,15 @@ const Users = () => {
   const handleAddUserButton = useCallback(() => {
     handleModalOpen();
   }, [handleModalOpen]);
-  const addUser = (user: User) => {
-    if (!dispatch) throw new Error('no dispatch');
-    dispatch({ type: 'ADD', user });
-    setIsSwipe(-1);
-    resetScrollEffect(scrollRef);
-  };
-
+  const addUser = useCallback(
+    (user: User) => {
+      if (!dispatch) throw new Error('no dispatch');
+      dispatch({ type: 'ADD', user });
+      setIsSwipe(-1);
+      resetScrollEffect(scrollRef);
+    },
+    [dispatch, setIsSwipe, resetScrollEffect]
+  );
   useEffect(() => {
     globalSelectedUser.user = selectedUser;
     globalSelectedUser.valid = isChecked;
@@ -137,10 +159,17 @@ const Users = () => {
     <>
       {selectedUser && (
         <>
-          <Styled.SelectedUserSpan bgcolor={selectedUser.color}>
+          <Styled.SelectedUserSpan
+            bgcolor={selectedUser.color}
+            isShowSwitch={isShowSwitch}
+          >
             {selectedUser.name}
           </Styled.SelectedUserSpan>
-          <Switch isChecked={isChecked} handleToggle={handleToggle} />
+          <Switch
+            isChecked={isChecked}
+            handleToggle={handleToggle}
+            isShowSwitch={isShowSwitch}
+          />
         </>
       )}
       <Backdrop open={isShow} />
@@ -154,7 +183,7 @@ const Users = () => {
           {selectedUser && (
             <Styled.DialButton
               isShow={selectedUser ? true : false}
-              onClick={handleSelectedUser}
+              onClick={handleSelectedUserDelete}
             >
               <FaceRetouchingOffIcon
                 fontSize="large"
@@ -219,7 +248,6 @@ const Users = () => {
                         onClick={() => {
                           handleRowDelButton(index, user);
                         }}
-                        // sx={{ color: 'red' }}
                       />
                     </Styled.DialRowDelButton>
                   </Styled.DialRow>
@@ -240,7 +268,7 @@ const Users = () => {
                     handleAddUserButton();
                   }}
                 >
-                  +
+                  {'+'}
                 </Styled.DialRowProfile>
               </Styled.DialRow>
             </Styled.DialBox>

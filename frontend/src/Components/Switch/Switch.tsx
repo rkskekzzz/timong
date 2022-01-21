@@ -4,12 +4,13 @@ import { ThemeContext } from '../Timong';
 
 const Switch: React.FC<{
   isChecked: boolean;
+  isShowSwitch: boolean;
   handleToggle: () => void;
-}> = ({ isChecked, handleToggle }) => {
+}> = ({ isChecked, isShowSwitch, handleToggle }) => {
   const theme = useContext(ThemeContext);
 
   return (
-    <Styled.Switch bgcolor={theme.backgroundSwitch}>
+    <Styled.Switch bgcolor={theme.backgroundSwitch} isShow={isShowSwitch}>
       <Styled.SwitchInput
         type="checkbox"
         className={`switch-checkbox`}
