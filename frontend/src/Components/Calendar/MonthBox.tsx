@@ -14,6 +14,7 @@ type DrawerHandler = {
   handleDrawerOpen: () => void;
   setDayUsers: (users: UserWithValid[]) => void;
   isShow: boolean;
+  setSelectedDay: (selectedDay: Day) => void;
 };
 
 function DayBoxLogic({
@@ -39,6 +40,7 @@ function DayBoxLogic({
     return user;
   }, []);
   const showUsers = () => {
+    drawerHandler.setSelectedDay(day);
     drawerHandler.handleDrawerOpen();
     drawerHandler.setDayUsers(reducedUser);
   };

@@ -1,10 +1,16 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+  useCallback,
+} from 'react';
 import Styled from './Calendar.styled';
 import MonthBox from './MonthBox';
 import { ThemeContext } from '../Timong';
 import GlobalStyled from '../Styled/global.styled';
 import moment from 'moment';
-import { Year } from 'src/Interface/DateType';
+import { Year, Day } from 'src/Interface/DateType';
 import { buildDate } from 'src/Utils';
 import { User, Valid } from 'src/Interface/UserType';
 
@@ -18,6 +24,7 @@ const initialYear: Year = buildDate(moment());
 const Calendar = () => {
   const theme = useContext(ThemeContext);
   const [year, setYear] = useState<Year>(initialYear);
+  const [selectedDay, setSelectedDay] = useState<Day | null>(null);
 
   const touchRef = useRef(null);
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -37,17 +44,40 @@ const Calendar = () => {
     };
   }, [touchRef]);
 
+  const dayLabel = useCallback(() => {
+    if (!selectedDay) return 'null';
+    return (
+      selectedDay.moment.format('Y') +
+      '년 ' +
+      selectedDay.moment.format('M') +
+      '월 ' +
+      selectedDay.moment.format('D') +
+      '일 '
+    );
+  }, [selectedDay]);
   const list = () => {
     return (
       <Styled.UserList ref={touchRef}>
-        {dayUsers.map((user) => {
-          return (
-            <Styled.UserBox key={user.info.color}>
-              <GlobalStyled.Circle size="small" color={user.info.color} />
-              <div>{user.info.name}</div>
-            </Styled.UserBox>
-          );
-        })}
+        <Styled.DayLabel>{dayLabel()}</Styled.DayLabel>
+        <div>
+          {dayUsers.map((user) => {
+            if (user.valid == 'POSIBLE') {
+              return (
+                <Styled.UserBox>
+                  <GlobalStyled.Circle size="small" color={user.info.color} />
+                  <div>{user.info.name}</div>
+                </Styled.UserBox>
+              );
+            } else {
+              return (
+                <Styled.UserBox>
+                  <GlobalStyled.Xone size="small" color={user.info.color} />
+                  <div>{user.info.name}</div>
+                </Styled.UserBox>
+              );
+            }
+          })}
+        </div>
       </Styled.UserList>
     );
   };
@@ -56,6 +86,7 @@ const Calendar = () => {
     handleDrawerOpen,
     setDayUsers,
     isShow,
+    setSelectedDay,
   };
 
   return (
@@ -69,7 +100,18 @@ const Calendar = () => {
           />
         ))}
       </Styled.CalendarPaddingBox>
-      <Styled.UserDrawer bgcolor={theme.background} isShow={isShow}>
+      <Styled.UserDrawer
+        anchor="bottom"
+        open={isShow}
+        onClose={handleDrawerClose}
+        onOpen={handleDrawerOpen}
+        swipeAreaWidth={0}
+        disableSwipeToOpen={false}
+        ModalProps={{
+          keepMounted: true,
+        }}
+      >
+        <Styled.Puller />
         {list()}
       </Styled.UserDrawer>
     </>

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-
+import { SwipeableDrawer } from '@mui/material';
+import { Box } from '@mui/material';
 const CalendarPaddingBox = styled.div<{ color: string }>`
   display: flex;
   flex-direction: column;
@@ -9,41 +10,52 @@ const CalendarPaddingBox = styled.div<{ color: string }>`
   }
 `;
 
-const UserDrawer = styled.div<{ isShow: boolean; bgcolor: string }>`
-  position: fixed;
-  z-index: 100;
-  bottom: 0px;
-  padding: 1.5rem;
-  width: calc(100% - 2px - 3rem);
-  max-width: calc(400px - 2px - 3rem);
-  border-radius: 15px 15px 0 0;
-  background: white;
-  ${(props) => {
-    if (props.isShow)
-      return `
-      transition: transform 500ms ease-in-out 0ms;
-        `;
-    else
-      return `
-        transition: transform 500ms ease-in-out 0ms;
-        transform: translateY(100%);
-      `;
-  }}
-`;
-
 const UserBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 10px;
 `;
 
-const UserList = styled.div``;
+const UserList = styled.div`
+  border-radius: 15px 15px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const UserDrawer = styled(SwipeableDrawer)`
+  .css-9emuhu-MuiPaper-root-MuiDrawer-paper {
+    background-color: #ffffff;
+    border-radius: 20px 20px 0 0;
+    width: calc(100% - 60px);
+    padding: 30px;
+  }
+`;
+
+const DayLabel = styled.span`
+  font-size: 1.5rem;
+`;
+
+const Puller = styled(Box)`
+  && {
+    width: 60px;
+    height: 6px;
+    background-color: grey;
+    border-radius: 3px;
+    position: absolute;
+    top: 8px;
+    left: calc(50% - 30px);
+  }
+`;
 
 const Styled = {
   CalendarPaddingBox,
+  DayLabel,
   UserDrawer,
   UserList,
   UserBox,
+  Puller,
 };
 
 export default Styled;
