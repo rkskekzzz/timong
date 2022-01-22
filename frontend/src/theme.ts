@@ -10,13 +10,14 @@ export const themes = {
     backgroundSwitch: '#fafafadf',
     foregroundAddButton: '#ffffff',
     backgroundAddButton: '#000000',
+    backDrop: '#00000080',
     background: '#ffffff',
   },
   dark: {
     foregroundHeader: '#f2f2f2',
     // backgroundHeader: '#1a1a1a',
     backgroundHeader: 'linear-gradient(#1a1a1a, #1a1a1a,#1a1a1add);',
-    backDropHeader: '#000000dd',
+    backDropHeader: '#000000b0',
     foreground: '#dadada',
     iconSmall: '#f2f2f2',
     icon: '#ffffff',
@@ -24,6 +25,7 @@ export const themes = {
     backgroundSwitch: '#212121df',
     foregroundAddButton: '#000000',
     backgroundAddButton: '#ffffff',
+    backDrop: '#000000b0',
     background: '#131313',
   },
   main: {

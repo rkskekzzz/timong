@@ -107,6 +107,7 @@ const Calendar = () => {
         onOpen={handleDrawerOpen}
         swipeAreaWidth={0}
         disableSwipeToOpen={false}
+        bgcolor={theme.backDrop}
         ModalProps={{
           keepMounted: true,
         }}

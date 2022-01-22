@@ -172,7 +172,7 @@ const Users = () => {
           />
         </>
       )}
-      <Backdrop open={isShow} />
+      <Backdrop open={isShow} sx={{ bgcolor: theme.backDrop }} />
       <AddModal
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
