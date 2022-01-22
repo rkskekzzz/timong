@@ -40,7 +40,7 @@ function ModalBoxForm({
   }, []);
   const handleCloseButton = useCallback(() => {
     handleModalClose();
-  }, []);
+  }, [handleModalClose]);
   const theme = useContext(ThemeContext);
   const handleThemeChangeButton = toggleMode;
 
@@ -94,12 +94,10 @@ const HeaderModal: React.FC<{
       aria-describedby="modal-modal-description"
       color={theme.backDropHeader}
     >
-      <>
-        <ModalBoxForm
-          handleModalClose={handleModalClose}
-          toggleMode={toggleMode}
-        />
-      </>
+      <ModalBoxForm
+        handleModalClose={handleModalClose}
+        toggleMode={toggleMode}
+      />
     </Styled.ColoredModal>
   );
 };

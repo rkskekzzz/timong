@@ -1,5 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Modal } from '@mui/material';
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
 
 const ModalBox = styled.div`
   position: absolute;
@@ -24,6 +33,9 @@ const ModalBoxButtons = styled.div`
 `;
 
 const ColoredModal = styled(Modal)<{ color: string }>`
+  && {
+    animation: ${fadeIn} 500ms;
+  }
   .MuiBackdrop-root {
     background: ${(props) => props.color || '#f2f2f2'};
   }
