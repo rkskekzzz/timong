@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Button } from '@mui/material';
-import { Slider } from '@mui/material';
 
 const Starter = styled.div`
   height: 100vh;
@@ -70,7 +69,6 @@ const Styled = {
   StarterModalForm,
   StarterModalButton,
   StarterModalMaxText,
-
   StarterModalTitle,
   StarterModalNumberBox,
 };

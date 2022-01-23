@@ -1,4 +1,4 @@
-import { User, Schedule } from '../Interface/UserType';
+import { User } from '../Interface/UserType';
 import { State, Action } from 'src/Interface/ContextType';
 
 export default function reducer(state: State, action: Action): State {

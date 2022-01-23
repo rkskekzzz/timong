@@ -44,7 +44,7 @@ const DialBox = styled.div<{ isShow: boolean }>`
   overflow: hidden scroll;
   scroll-behavior: smooth;
   max-height: 504px;
-  width: calc(100% + 40px);
+  // width: calc(100% + 40px);
   ::-webkit-scrollbar {
     display: none;
   }
