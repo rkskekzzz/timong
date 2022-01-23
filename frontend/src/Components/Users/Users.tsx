@@ -268,7 +268,7 @@ const Users = () => {
                     handleAddUserButton();
                   }}
                 >
-                  {'+'}
+                  +
                 </Styled.DialRowProfile>
               </Styled.DialRow>
             </Styled.DialBox>
