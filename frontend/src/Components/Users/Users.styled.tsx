@@ -137,6 +137,7 @@ const DialRowProfile = styled.button<{ isShow: boolean; bgcolor: string }>`
   margin: 4px;
   border-radius: 30px;
   border: 0;
+  padding: 0;
   background: ${(props) => `${props.bgcolor || '#000000'}aa`};
   box-shadow: ${(props) => `inset 1px -8px 10px -3px ${
     props.bgcolor || '#000000'
