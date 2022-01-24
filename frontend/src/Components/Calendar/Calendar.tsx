@@ -158,7 +158,7 @@ const Calendar = () => {
                   rowRenderer={rowRenderer}
                   scrollTop={scrollTop}
                   width={width}
-                  style={{ maxWidth: '400px' }}
+                  style={{ maxWidth: '400px' }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
                 />
               )}
             </AutoSizer>
