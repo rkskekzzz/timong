@@ -114,7 +114,9 @@ const Calendar = () => {
   };
 
   /**
-   *  WindowScroller props 의미
+   * react-vertualized (https://bvaughn.github.io/react-virtualized/)
+   *
+   * WindowScroller props 의미
    * @param width : 너비
    * @param height: 높이
    * ㄴ 그려줄 data grid의 전체 사이즈라고 생각하면 편하다
@@ -131,9 +133,15 @@ const Calendar = () => {
     <>
       <WindowScroller nodeRef={nodeRef}>
         {({ width, height, isScrolling, scrollTop, registerChild }) => (
+          /**
+           * WindowScroller 와 AutoSizer를 함께 쓰기 위해선, 아래왁 같은 방식을 활용한다.
+           */
           <div ref={registerChild}>
             <AutoSizer>
               {() => (
+                /**
+                 * 해당 컴포넌트는 가변높이, 스크롤 감지 가능 List 컴포넌트에 대한 예시이다.
+                 */
                 <List
                   autoHeight
                   height={height}
