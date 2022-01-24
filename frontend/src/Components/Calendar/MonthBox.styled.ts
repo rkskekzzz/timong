@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+const MonthBox = styled.div<{ color: string }>`
+  * {
+    color: ${(props) => props.color || ''};
+  }
+`;
+
 const HFlexBox = styled.div`
   height: 100%;
   display: flex;
@@ -27,6 +33,6 @@ const CalendarTitle = styled.span`
   justify-content: center;
 `;
 
-const Styled = { VFlexBox, HFlexBox, CalendarTitle };
+const Styled = { MonthBox, VFlexBox, HFlexBox, CalendarTitle };
 
 export default Styled;

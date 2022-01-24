@@ -1,14 +1,6 @@
 import styled from 'styled-components';
 import { SwipeableDrawer } from '@mui/material';
 import { Box } from '@mui/material';
-const CalendarPaddingBox = styled.div<{ color: string }>`
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  * {
-    color: ${(props) => props.color || '#000'};
-  }
-`;
 
 const UserBox = styled.div`
   display: flex;
@@ -53,7 +45,6 @@ const Puller = styled(Box)`
 `;
 
 const Styled = {
-  CalendarPaddingBox,
   DayLabel,
   UserDrawer,
   UserList,

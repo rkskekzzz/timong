@@ -4,6 +4,7 @@ import Styled from './MonthBox.styled';
 import { Month, Day } from '../../Interface/DateType';
 import { globalSelectedUser } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
+import { ThemeContext } from '../Timong';
 import { User, Valid } from 'src/Interface/UserType';
 
 type UserWithValid = {
@@ -73,8 +74,9 @@ const MonthBox: React.FC<{ month: Month; drawerHandler: DrawerHandler }> = ({
   month,
   drawerHandler,
 }) => {
+  const theme = useContext(ThemeContext);
   return (
-    <div>
+    <Styled.MonthBox color={theme.foreground}>
       <Styled.CalendarTitle>
         {month.monthMoment.format('M') + '월'}
       </Styled.CalendarTitle>
@@ -96,7 +98,7 @@ const MonthBox: React.FC<{ month: Month; drawerHandler: DrawerHandler }> = ({
           </Styled.VFlexBox>
         );
       })}
-    </div>
+    </Styled.MonthBox>
   );
 };
 

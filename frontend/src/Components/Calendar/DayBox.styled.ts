@@ -20,7 +20,7 @@ const CalendarDateLabel = styled.div<{
       case 6:
         return '#3b6dff';
       default:
-        return '#000';
+        return;
     }
   }};
 `;
@@ -30,7 +30,7 @@ const CalendarDateCircleBox = styled.div<{ isThisMonth: boolean }>`
   flex-wrap: wrap;
   justify-content: flex-start;
   height: 40px;
-  padding: 2px 0;
+  padding: 5px 0;
   border-bottom: 1px solid #dadada;
   display: ${(props) => (props.isThisMonth ? '' : 'none')};
 `;
