@@ -71,7 +71,7 @@ const HeaderCalendarTitle = styled.span<{ isPinned: boolean; color: string }>`
     else
       return `
         transition: transform 250ms linear 0ms, color 250ms;
-        transform: translateY(17px) ;
+        transform: translateY(20px) ;
         `;
   }};
 `;
