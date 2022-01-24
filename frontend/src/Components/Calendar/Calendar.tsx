@@ -116,6 +116,9 @@ const Calendar = () => {
     return 60 + year[index].week.length * 80 + 30;
   };
 
+  const width = window.innerWidth;
+  console.log(width);
+
   /**
    * react-vertualized (https://bvaughn.github.io/react-virtualized/#/components/AutoSizer)
    *
@@ -134,7 +137,7 @@ const Calendar = () => {
    */
   return (
     <>
-      <WindowScroller nodeRef={nodeRef}>
+      <WindowScroller nodeRef={nodeRef} style={{ width: '100%' }}>
         {({ width, height, isScrolling, scrollTop, registerChild }) => (
           /**
            * WindowScroller 와 AutoSizer를 함께 쓰기 위해선, 아래왁 같은 방식을 활용한다.
@@ -155,6 +158,7 @@ const Calendar = () => {
                   rowRenderer={rowRenderer}
                   scrollTop={scrollTop}
                   width={width}
+                  style={{ maxWidth: '400px' }}
                 />
               )}
             </AutoSizer>
