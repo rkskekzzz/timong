@@ -13,6 +13,9 @@ const Header: React.FC<{ toggleMode: () => void }> = ({ toggleMode }) => {
   const theme = useContext(ThemeContext);
 
   const handleScroll = useCallback(() => {
+    if (window.scrollY < 10) {
+      setIsPinned(false);
+    }
     if (window.scrollY < prev_windows_scrollY) {
       prev_windows_scrollY = window.scrollY;
       setIsPinned(true);
