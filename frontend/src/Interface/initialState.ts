@@ -9,18 +9,18 @@ export const initialState: { users: User[] } = {
       schedule: [
         {
           valid: 'POSIBLE',
-          start: makeDate(2022, 1, 11),
-          end: makeDate(2022, 1, 11),
+          start: makeDate('20220111'),
+          end: makeDate('20220111'),
         },
         {
           valid: 'POSIBLE',
-          start: makeDate(2022, 1, 12),
-          end: makeDate(2022, 1, 12),
+          start: makeDate('20220112'),
+          end: makeDate('20220112'),
         },
         {
           valid: 'IMPOSIBLE',
-          start: makeDate(2022, 1, 13),
-          end: makeDate(2022, 1, 13),
+          start: makeDate('20220113'),
+          end: makeDate('20220114'),
         },
       ],
     },
@@ -30,13 +30,13 @@ export const initialState: { users: User[] } = {
       schedule: [
         {
           valid: 'IMPOSIBLE',
-          start: makeDate(2022, 1, 11),
-          end: makeDate(2022, 1, 11),
+          start: makeDate('20220111'),
+          end: makeDate('20220111'),
         },
         {
           valid: 'POSIBLE',
-          start: makeDate(2022, 1, 13),
-          end: makeDate(2022, 1, 13),
+          start: makeDate('20220113'),
+          end: makeDate('20220113'),
         },
       ],
     },
