@@ -62,21 +62,22 @@ const Calendar = () => {
         <Styled.DayLabel>{dayLabel()}</Styled.DayLabel>
         <div>
           {dayUsers.map((user) => {
-            if (user.valid == 'POSIBLE') {
-              return (
-                <Styled.UserBox>
-                  <GlobalStyled.Circle size="small" color={user.info.color} />
-                  <div>{user.info.name}</div>
-                </Styled.UserBox>
-              );
-            } else {
-              return (
-                <Styled.UserBox>
-                  <GlobalStyled.Xone size="small" color={user.info.color} />
-                  <div>{user.info.name}</div>
-                </Styled.UserBox>
-              );
-            }
+            return (
+              <Styled.UserBox key={user.info.name}>
+                {user.valid == 'POSIBLE' && (
+                  <>
+                    <GlobalStyled.Circle size="small" color={user.info.color} />
+                    <div>{user.info.name}</div>
+                  </>
+                )}
+                {user.valid == 'IMPOSIBLE' && (
+                  <>
+                    <GlobalStyled.Xone size="small" color={user.info.color} />
+                    <div>{user.info.name}</div>
+                  </>
+                )}
+              </Styled.UserBox>
+            );
           })}
         </div>
       </Styled.UserList>
@@ -114,7 +115,7 @@ const Calendar = () => {
   };
 
   /**
-   * react-vertualized (https://bvaughn.github.io/react-virtualized/)
+   * react-vertualized (https://bvaughn.github.io/react-virtualized/#/components/AutoSizer)
    *
    * WindowScroller props 의미
    * @param width : 너비
