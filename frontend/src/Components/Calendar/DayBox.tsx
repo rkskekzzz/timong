@@ -13,9 +13,11 @@ const DayBox: React.FC<{
   isThisMonth: boolean;
   handleClick: () => void;
 }> = ({ day, users, handleClick, isThisMonth }) => {
+  const dayOfWeek = day.moment.day();
+
   return (
     <Styled.CalendarBox onClick={handleClick} id="test">
-      <Styled.CalendarDateLabel isThisMonth={isThisMonth}>
+      <Styled.CalendarDateLabel isThisMonth={isThisMonth} dayOfWeek={dayOfWeek}>
         {day.moment.format('D')}
       </Styled.CalendarDateLabel>
       <Styled.CalendarDateCircleBox isThisMonth={isThisMonth}>
