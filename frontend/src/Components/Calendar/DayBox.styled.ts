@@ -16,9 +16,9 @@ const CalendarDateLabel = styled.div<{
   color: ${(props) => {
     switch (props.dayOfWeek) {
       case 0:
-        return '#ff3b3b';
+        return '#ff3b6d';
       case 6:
-        return '#3b3bff';
+        return '#3b6dff';
       default:
         return '#000';
     }
