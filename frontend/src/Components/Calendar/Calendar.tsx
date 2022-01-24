@@ -93,8 +93,6 @@ const Calendar = () => {
 
   const scrollListener = (params) => {
     if (params.scrollTop + params.clientHeight >= params.scrollHeight - 300) {
-      console.log('지금!');
-
       setYear([
         ...year,
         ...buildDate(year[year.length - 1].monthMoment.clone().add(1, 'M')),
