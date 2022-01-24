@@ -1,28 +1,44 @@
 import styled from 'styled-components';
 
-const CalendarDateLabel = styled.div<{ isThisMonth: boolean }>`
+const CalendarBox = styled.div`
+  height: 100%;
+  flex-basis: 200px;
+`;
+const CalendarDateLabel = styled.div<{
+  isThisMonth: boolean;
+  dayOfWeek: number;
+}>`
+  height: 16px;
   width: 100%;
   font-size: 0.8rem;
   padding-left: 3px;
   display: ${(props) => (props.isThisMonth ? '' : 'none')};
-`;
-
-const CalendarBox = styled.div`
-  flex-basis: 200px;
+  color: ${(props) => {
+    switch (props.dayOfWeek) {
+      case 0:
+        return '#ff3b3b';
+      case 6:
+        return '#3b3bff';
+      default:
+        return '#000';
+    }
+  }};
 `;
 
 const CalendarDateCircleBox = styled.div<{ isThisMonth: boolean }>`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  height: 40px;
+  padding: 2px 0;
   border-bottom: 1px solid #dadada;
   display: ${(props) => (props.isThisMonth ? '' : 'none')};
 `;
 
 const GridWrap = styled.div`
-  margin: 2px auto;
-  width: 10vw;
-  height: 10vw;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
   max-width: 40px;
   max-height: 40px;
   display: grid;
