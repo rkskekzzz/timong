@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, forwardRef } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Styled from './HeaderModal.styled';
 import { ThemeContext } from '../Timong';
@@ -85,6 +85,12 @@ const HeaderModal: React.FC<{
   toggleMode: () => void;
 }> = ({ isShowModal, handleModalClose, toggleMode }) => {
   const theme = useContext(ThemeContext);
+  // eslint-disable-next-line react/display-name
+  const Bar = React.forwardRef((props: any, ref: any) => (
+    <span {...props} ref={ref}>
+      {props.children}
+    </span>
+  ));
 
   return (
     <Styled.ColoredModal
@@ -94,10 +100,12 @@ const HeaderModal: React.FC<{
       aria-describedby="modal-modal-description"
       color={theme.backDropHeader}
     >
-      <ModalBoxForm
-        handleModalClose={handleModalClose}
-        toggleMode={toggleMode}
-      />
+      <Bar>
+        <ModalBoxForm
+          handleModalClose={handleModalClose}
+          toggleMode={toggleMode}
+        />
+      </Bar>
     </Styled.ColoredModal>
   );
 };
