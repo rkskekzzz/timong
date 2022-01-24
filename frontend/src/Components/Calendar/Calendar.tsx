@@ -53,7 +53,11 @@ const Calendar = () => {
       selectedDay.moment.format('M') +
       '월 ' +
       selectedDay.moment.format('D') +
-      '일 '
+      '일 ' +
+      ['일', '월', '화', '수', '목', '금', '토'][
+        selectedDay.moment.format('d')
+      ] +
+      '요일'
     );
   }, [selectedDay]);
   const list = () => {
@@ -109,7 +113,7 @@ const Calendar = () => {
   };
 
   const getRowHeight = ({ index }) => {
-    return 60 + year[index].week.length * 80;
+    return 60 + year[index].week.length * 80 + 30;
   };
 
   /**
