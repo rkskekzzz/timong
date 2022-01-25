@@ -115,10 +115,6 @@ const Calendar = () => {
   const getRowHeight = ({ index }) => {
     return 60 + year[index].week.length * 80 + 30;
   };
-
-  const width = window.innerWidth;
-  console.log(width);
-
   /**
    * react-vertualized (https://bvaughn.github.io/react-virtualized/#/components/AutoSizer)
    *
