@@ -59,14 +59,17 @@ function ModalBoxForm({
       <Styled.ModalBox>
         <CloseIcon onClick={handleCloseButton} fontSize="medium" sx={style} />
         <CopyToClipboard text={window.location.href}>
-          <Styled.ModalTextButton style={style} onClick={handleOpen}>
+          <Styled.ModalTextButton color={theme.iconSmall} onClick={handleOpen}>
             공유 하기
           </Styled.ModalTextButton>
         </CopyToClipboard>
-        <Styled.ModalTextButton style={style} onClick={handleThemeChangeButton}>
+        <Styled.ModalTextButton
+          color={theme.iconSmall}
+          onClick={handleThemeChangeButton}
+        >
           테마 변경
         </Styled.ModalTextButton>
-        <Styled.ModalTextButton style={style}>
+        <Styled.ModalTextButton color={theme.iconSmall}>
           새 링크 생성
         </Styled.ModalTextButton>
         <Styled.ModalBoxButtons>

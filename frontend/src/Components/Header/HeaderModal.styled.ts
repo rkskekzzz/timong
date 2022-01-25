@@ -21,7 +21,6 @@ const ModalBox = styled.div`
   width: 300px;
   gap: 40px;
   font-size: 1.6rem;
-  color: white;
   border-radius: 15px;
   padding: 5%;
 `;
@@ -41,8 +40,10 @@ const ColoredModal = styled(Modal)<{ color: string }>`
   }
 `;
 
-const ModalTextButton = styled.span`
+const ModalTextButton = styled.span<{ color: string }>`
   font-weight: bold;
+  transition: color 500ms ease-in-out 0ms;
+  color: ${(props) => props.color || '#000'};
 `;
 
 const Styled = {

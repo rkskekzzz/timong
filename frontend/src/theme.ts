@@ -4,7 +4,7 @@ export const themes = {
     backgroundHeader: 'linear-gradient(#f2f2f2, #f2f2f2,#f2f2f2dd);',
     backDropHeader: '#ffffffdd',
     foreground: '#000000',
-    iconSmall: 'black',
+    iconSmall: '#000000',
     icon: '#171717',
     foregroundSwitch: '#1a1a1adf',
     backgroundSwitch: '#fafafadf',
