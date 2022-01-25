@@ -173,7 +173,7 @@ const Users = () => {
           />
         </>
       )}
-      <Backdrop open={isShow} sx={{ bgcolor: theme.backDrop }} />
+      <Backdrop open={isShow} sx={{ bgcolor: theme.backDrop, zIndex: 200 }} />
       <AddModal
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
@@ -202,7 +202,7 @@ const Users = () => {
           )}
           <Styled.Temp
             isShow={isShow}
-            style={isAnimationDone ? { zIndex: '-100' } : {}}
+            style={isAnimationDone ? { zIndex: '-100' } : { zIndex: '300' }}
           >
             <Styled.DialBox ref={scrollRef} isShow={isShow}>
               {users.map((user, index) => {

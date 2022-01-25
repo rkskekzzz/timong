@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
   position: fixed;
   top: 0;
-
+  z-index: 100;
   height: 60px;
   width: 100%;
   display: flex;

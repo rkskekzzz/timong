@@ -133,7 +133,7 @@ const Calendar = () => {
    */
   return (
     <>
-      <WindowScroller nodeRef={nodeRef} style={{ width: '100%', zIndex: -1 }}>
+      <WindowScroller nodeRef={nodeRef} style={{ width: '100%' }}>
         {({ width, height, isScrolling, scrollTop, registerChild }) => (
           /**
            * WindowScroller 와 AutoSizer를 함께 쓰기 위해선, 아래왁 같은 방식을 활용한다.

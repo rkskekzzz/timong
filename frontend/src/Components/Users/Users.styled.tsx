@@ -10,6 +10,7 @@ const Temp = styled.div<{ isShow: boolean }>`
 `;
 
 const DialButton = styled.button<{ isShow: boolean }>`
+  z-index: 300;
   position: fixed;
   bottom: 16px;
   right: 16px;
