@@ -13,16 +13,18 @@ const CalendarDateLabel = styled.div<{
   font-size: 0.8rem;
   padding-left: 3px;
   display: ${(props) => (props.isThisMonth ? '' : 'none')};
-  color: ${(props) => {
-    switch (props.dayOfWeek) {
-      case 0:
-        return '#ff3b6d';
-      case 6:
-        return '#3b6dff';
-      default:
-        return;
-    }
-  }};
+  && {
+    color: ${(props) => {
+      switch (props.dayOfWeek) {
+        case 0:
+          return '#ff3b6d';
+        case 6:
+          return '#3b6dff';
+        default:
+          return;
+      }
+    }};
+  }
 `;
 
 const CalendarDateCircleBox = styled.div<{ isThisMonth: boolean }>`
