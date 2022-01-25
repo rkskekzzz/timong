@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
 const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
-  max-width: 400px;
   z-index: 500;
   position: fixed;
   top: 0;
-  right: 50%;
+
   height: 60px;
   width: 100%;
   display: flex;
@@ -16,14 +15,14 @@ const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
     if (!props.isPinned)
       return `
         transition: transform 250ms linear 0ms, border-radius 250ms, background 250ms;
-        transform: scale(60%) translateX(85%);
+        transform: scale(60%);
         border-radius: 50px;
         background: #f995f0b8;
       `;
     else
       return `
         transition: transform 250ms linear 0ms, border-radius 250ms, background 250ms;
-        transform: scale(1) translateX(50%);
+        transform: scale(1);
         border-radius: 0px;
       `;
   }};
