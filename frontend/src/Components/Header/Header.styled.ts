@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
-  z-index: 500;
   position: fixed;
   top: 0;
 

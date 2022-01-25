@@ -17,6 +17,7 @@ import FaceIcon from '@mui/icons-material/Face';
 import { UserContext } from 'src/App';
 import { ThemeContext } from '../Timong';
 import Switch from '../Switch/Switch';
+import zIndex from '@mui/material/styles/zIndex';
 
 const Users = () => {
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
