@@ -3,6 +3,7 @@ import React, {
   useContext,
   useRef,
   useEffect,
+  useMemo,
   useCallback,
 } from 'react';
 import Styled from './Calendar.styled';
@@ -45,7 +46,12 @@ const Calendar = () => {
     };
   }, [touchRef]);
 
-  const dayLabel = useCallback(() => {
+  // const dayLabel = useCallback(() => {
+  /**
+   * 값을 저장할 때에는 useMemo가 효율적이고
+   * 콜백함수를 넘겨주는 상황에서는 useCallback이 효율 적이다!
+   */
+  const dayLabel = useMemo(() => {
     if (!selectedDay) return 'null';
     return (
       selectedDay.moment.format('Y') +
@@ -60,10 +66,11 @@ const Calendar = () => {
       '요일'
     );
   }, [selectedDay]);
+
   const list = () => {
     return (
       <Styled.UserList ref={touchRef}>
-        <Styled.DayLabel>{dayLabel()}</Styled.DayLabel>
+        <Styled.DayLabel>{dayLabel}</Styled.DayLabel>
         <div>
           {dayUsers.map((user) => {
             return (
@@ -97,10 +104,15 @@ const Calendar = () => {
 
   const scrollListener = (params) => {
     if (params.scrollTop + params.clientHeight >= params.scrollHeight - 300) {
-      setYear([
+      // previous state
+      setYear((year) => [
         ...year,
         ...buildDate(year[year.length - 1].monthMoment.clone().add(1, 'M')),
       ]);
+      // setYear([
+      //   ...year,
+      //   ...buildDate(year[year.length - 1].monthMoment.clone().add(1, 'M')),
+      // ]);
     }
   };
   const rowRenderer = ({ index, style }) => {

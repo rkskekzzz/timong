@@ -1,5 +1,24 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Button } from '@mui/material';
+
+const down = keyframes`
+  0% {
+    transform: translateY(-400px);
+  }
+  50% {
+    transform: translateY(0px) rotate(5deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-6deg);
+  }
+  85% {
+    transform: translateY(0px) rotate(-6deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+`;
 
 const Starter = styled.div`
   height: 100vh;
@@ -31,6 +50,13 @@ const StarterModalButton = styled(Button)`
 const StarterModalTitle = styled.span`
   font-size: 3rem;
   font-weight: bold;
+  b {
+    position: absolute;
+    animation: ${down} ease-out 3s;
+  }
+  i {
+    color: transparent;
+  }
 `;
 
 const StarterModalMaxText = styled.span`

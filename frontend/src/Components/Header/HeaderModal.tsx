@@ -8,6 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import ArticleIcon from '@mui/icons-material/Article';
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const githubLink = 'https://github.com/rkskekzzz/blockcalendar.git';
 const emailLink = 'mailto:wkdlfflxh@naver.com';
@@ -20,6 +21,7 @@ function ModalBoxForm({
   handleModalClose: () => void;
   toggleMode: () => void;
 }) {
+  const navi = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
 
   const handleOpen = useCallback(() => {
@@ -69,7 +71,10 @@ function ModalBoxForm({
         >
           테마 변경
         </Styled.ModalTextButton>
-        <Styled.ModalTextButton color={theme.iconSmall}>
+        <Styled.ModalTextButton
+          onClick={() => navi('/')}
+          color={theme.iconSmall}
+        >
           새 링크 생성
         </Styled.ModalTextButton>
         <Styled.ModalBoxButtons>

@@ -1,3 +1,5 @@
 import Timong from './Timong';
+import Error from './Error';
+import Starter from './Starter';
 
-export default Timong;
+export { Timong, Error, Starter };

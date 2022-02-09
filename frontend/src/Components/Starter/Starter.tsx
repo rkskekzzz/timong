@@ -105,7 +105,8 @@ const Starter = () => {
   return (
     <Styled.Starter style={{ background: themes.main.background }}>
       <Styled.StarterModalTitle style={{ color: themes.main.theme }}>
-        Timong !
+        <b>T</b>
+        <i>T</i>imong !
       </Styled.StarterModalTitle>
       <StarterInputs />
     </Styled.Starter>

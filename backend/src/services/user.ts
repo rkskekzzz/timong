@@ -1,8 +1,8 @@
-import { CreateUserDTO, UpdateUserDTO } from "../interface/dto";
-import ApiError from "../modules/error";
-import { Calendar, User } from "../interface/entity";
-import { Document } from "mongoose";
-import { CalendarService } from "./calendar";
+import { CreateUserDTO, UpdateUserDTO } from '../interface/dto';
+import ApiError from '../modules/error';
+import { Calendar, User } from '../interface/entity';
+import { Document } from 'mongoose';
+import { CalendarService } from './calendar';
 
 async function create(
   calendar_id: string,

@@ -2,8 +2,7 @@ import * as React from 'react';
 import { useReducer, createContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Timong from './Components';
-import Starter from './Components/Starter';
+import { Timong, Error, Starter } from './Components';
 import { reducer } from './Utils';
 import { State, userDispatch } from './Interface/ContextType';
 import { initialState } from './Interface/initialState';
@@ -27,8 +26,9 @@ function App() {
     <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Timong />} />
-          <Route path="/:id" element={<Starter />} />
+          <Route path="/:id" element={<Timong />} />
+          <Route path="/" element={<Starter />} />
+          <Route path="/*" element={<Error />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
