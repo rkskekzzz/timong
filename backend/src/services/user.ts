@@ -18,12 +18,20 @@ async function create(
   calendar.users.push(user);
   return calendar.save();
 }
+async function getAll(calendar_id: string): Promise<User[]> {
+  return await CalendarService.getOne(calendar_id).then(
+    (calendar) => calendar.users
+  );
+}
 
 function getIndexOrFail(
   calendar: Calendar & Document,
   user_id: string
 ): number {
-  const index = calendar.users.findIndex((user) => user._id === user_id);
+  const index = calendar.users.findIndex((user) => {
+    const parseId = JSON.stringify(user._id).replace(/"/g, "");
+    return parseId === user_id;
+  });
   if (index === -1) {
     throw new ApiError(404, `User ${user_id} not found`);
   }
@@ -56,6 +64,7 @@ async function remove(calendar_id: string, user_id: string): Promise<Calendar> {
 
 export const UserService = {
   create,
+  getAll,
   getIndexOrFail,
   update,
   remove,
