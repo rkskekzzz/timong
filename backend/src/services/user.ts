@@ -18,6 +18,11 @@ async function create(
   calendar.users.push(user);
   return calendar.save();
 }
+async function getAll(calendar_id: string): Promise<User[]> {
+  return await CalendarService.getOne(calendar_id).then(
+    (calendar) => calendar.users
+  );
+}
 
 function getIndexOrFail(
   calendar: Calendar & Document,
@@ -56,6 +61,7 @@ async function remove(calendar_id: string, user_id: string): Promise<Calendar> {
 
 export const UserService = {
   create,
+  getAll,
   getIndexOrFail,
   update,
   remove,
