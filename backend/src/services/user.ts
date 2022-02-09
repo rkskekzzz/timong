@@ -28,7 +28,10 @@ function getIndexOrFail(
   calendar: Calendar & Document,
   user_id: string
 ): number {
-  const index = calendar.users.findIndex((user) => user._id === user_id);
+  const index = calendar.users.findIndex((user) => {
+    const parseId = JSON.stringify(user._id).replace(/"/g, "");
+    return parseId === user_id;
+  });
   if (index === -1) {
     throw new ApiError(404, `User ${user_id} not found`);
   }
