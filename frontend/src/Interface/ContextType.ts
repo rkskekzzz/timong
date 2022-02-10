@@ -6,6 +6,7 @@ export type State = {
 };
 
 export type Action =
+  | { type: 'INIT'; users: [User] }
   | { type: 'ADD'; user: User }
   | { type: 'DELETE'; index: number; user: User }
   | { type: 'UPDATEDATE'; user: User; day: moment.Moment; valid: Valid }

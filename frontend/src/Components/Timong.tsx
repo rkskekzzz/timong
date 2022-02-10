@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import queryString from 'qs';
 import Styled from './Timong.styled';
 import { Calendar } from './Calendar';
@@ -7,8 +7,8 @@ import Users from './Users';
 import { themes } from 'src/theme';
 import { CalendarService } from 'src/Network/TimongService';
 import CircularProgress from '@mui/material/CircularProgress';
-import { Translate } from '@mui/icons-material';
 import { Button } from '@mui/material';
+import { UserContext } from 'src/App';
 
 export const ThemeContext = React.createContext(themes.light);
 
@@ -17,6 +17,7 @@ const qs = queryString.parse(location.search, {
 });
 
 const Timong = () => {
+  const { dispatch } = useContext(UserContext);
   const [reLoad, setReLoad] = useState<boolean>(false);
   const [calendar, setCalendar] = useState<boolean>(false);
   const [mode, setMode] = useState<string>(qs.mode + '' ?? 'light');
@@ -27,8 +28,11 @@ const Timong = () => {
   };
 
   const getCalendar = async () => {
-    const result = await CalendarService.getCalendar();
-    if (result) setCalendar(true);
+    const result = await CalendarService.getCalendar(window.location.pathname);
+
+    dispatch({ type: 'INIT', users: result.users });
+    console.log(result.users);
+    if (!result) setCalendar(true);
     else console.log('here');
   };
 

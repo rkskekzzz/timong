@@ -3,23 +3,32 @@ import * as API from './APIType';
 
 export const CalendarService = {
   create: async () => {
+    const method = 'POST';
+    const url = API.url('');
     let response;
     try {
-      response = await axios.post(API.url(''));
+      response = await axios({
+        method,
+        url,
+      });
     } catch (error) {
       console.log(error);
     }
-    return response;
+    return response.data;
   },
 
-  getCalendar: async () => {
+  getCalendar: async (calendar_id) => {
+    const method = 'GET';
+    const url = API.url(`${calendar_id}`);
     let response;
     try {
-      response = await axios.get(API.url(''));
+      response = await axios({
+        method,
+        url,
+      });
     } catch (error) {
       console.log(error);
     }
-    return false;
-    // return response;
+    return response.data;
   },
 };

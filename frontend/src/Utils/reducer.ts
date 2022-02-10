@@ -3,6 +3,11 @@ import { State, Action } from 'src/Interface/ContextType';
 
 export default function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case 'INIT':
+      return {
+        ...state,
+        users: action.users,
+      };
     case 'ADD':
       return { ...state, users: state.users.concat(action.user) };
     case 'DELETE':

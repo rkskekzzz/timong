@@ -1,5 +1,12 @@
-export function url(path: string) {
-  const version = 'v1'; // process.env.REACT_APP_API_VERSION
+import axios from 'axios';
 
-  return `https://42world.kr/api/${version}/${path}`;
+export function url(path: string) {
+  return `http://localhost:5500/calendar${path}`;
+  // return `https://42world.kr/api/${version}/${path}`;
+}
+
+export function AXIOS(option) {
+  return axios({
+    ...option,
+  });
 }

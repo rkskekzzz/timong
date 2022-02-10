@@ -16,6 +16,7 @@ import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import FaceIcon from '@mui/icons-material/Face';
 import { UserContext } from 'src/App';
 import { ThemeContext } from '../Timong';
+import { UserService } from 'src/Network/UserService';
 import Switch from '../Switch/Switch';
 
 const Users = () => {
@@ -147,6 +148,12 @@ const Users = () => {
       dispatch({ type: 'ADD', user });
       setIsSwipe(-1);
       resetScrollEffect(scrollRef);
+      console.log(user);
+
+      UserService.createUser(window.location.pathname, {
+        name: user.name,
+        color: user.color,
+      });
     },
     [dispatch, setIsSwipe, resetScrollEffect]
   );
