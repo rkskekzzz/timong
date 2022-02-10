@@ -106,6 +106,7 @@ function ModalBoxFormLogic({
         placeholder="닉네임을 입력하세요..."
         value={formik.values.userName}
         onChange={formik.handleChange}
+        inputProps={{ maxLength: 10 }}
       />
       <Styled.ModalBoxButton
         onClick={handleSubmitButton}

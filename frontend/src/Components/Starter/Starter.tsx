@@ -75,9 +75,6 @@ const StarterInputs = () => {
     },
     [handleSubValue, handleAddValue, isChanging, setIsChanging]
   );
-  useEffect(() => {
-    console.log(formik.values.calendarName);
-  }, [formik.values.calendarName]);
 
   return (
     <Styled.StarterModalForm>
