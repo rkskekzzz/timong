@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { ThemeContext } from '../Timong';
 import Styled from './Header.styled';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import HeaderModal from './HeaderModal';
 
 let prev_windows_scrollY = 0;
