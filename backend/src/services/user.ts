@@ -1,8 +1,8 @@
-import { CreateUserDTO, UpdateUserDTO } from "../interface/dto";
-import ApiError from "../modules/error";
-import { Calendar, User } from "../interface/entity";
-import { Document } from "mongoose";
-import { CalendarService } from "./calendar";
+import { CreateUserDTO, UpdateUserDTO } from '../interface/dto';
+import ApiError from '../modules/error';
+import { Calendar, User } from '../interface/entity';
+import { Document } from 'mongoose';
+import { CalendarService } from './calendar';
 
 async function create(
   calendar_id: string,
@@ -30,7 +30,7 @@ function getIndexOrFail(
   user_id: string
 ): number {
   const index = calendar.users.findIndex((user) => {
-    const parseId = JSON.stringify(user._id).replace(/"/g, "");
+    const parseId = JSON.stringify(user._id).replace(/"/g, '');
     return parseId === user_id;
   });
   if (index === -1) {
@@ -58,7 +58,9 @@ async function update(
 async function remove(calendar_id: string, user_id: string): Promise<Calendar> {
   const calendar = await CalendarService.getOneDocument(calendar_id);
   const user_index = getIndexOrFail(calendar, user_id);
-  calendar.users.filter((_, index) => index !== user_index);
+  console.log('hi : ', user_index);
+
+  calendar.users = calendar.users.filter((_, index) => index !== user_index);
 
   return calendar.save();
 }
