@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { Input } from '@mui/material';
 import { useFormik } from 'formik';
 import Styled from './Starter.styled';
@@ -32,7 +32,7 @@ const StarterInputs = () => {
       }, 1000);
       return;
     }
-    const result = await CalendarService.create();
+    const result = await CalendarService.create(formik.values.calendarName);
     dispatch({ type: 'INIT', users: result.users });
     navi(result._id);
   }, [formik, value]);
@@ -75,6 +75,9 @@ const StarterInputs = () => {
     },
     [handleSubValue, handleAddValue, isChanging, setIsChanging]
   );
+  useEffect(() => {
+    console.log(formik.values.calendarName);
+  }, [formik.values.calendarName]);
 
   return (
     <Styled.StarterModalForm>
@@ -86,6 +89,7 @@ const StarterInputs = () => {
         value={formik.values.calendarName}
         onChange={formik.handleChange}
         sx={{ width: '100%' }}
+        inputProps={{ maxLength: 12 }}
       />
       <Styled.StarterModalNumberBox
         onTouchStart={handleTouchStart}
