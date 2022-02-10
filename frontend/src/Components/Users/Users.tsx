@@ -145,16 +145,17 @@ const Users = () => {
   const addUser = useCallback(
     async (user: User) => {
       if (!dispatch) throw new Error('no dispatch');
-      const result = await UserService.createUser(window.location.pathname, {
-        name: user.name,
-        color: user.color,
-      });
-      console.log(result);
-
-      dispatch({ type: 'ADD', user });
+      const result: User = await UserService.createUser(
+        window.location.pathname,
+        {
+          name: user.name,
+          color: user.color,
+        }
+      );
       setIsSwipe(-1);
-      resetScrollEffect(scrollRef);
-      console.log(user);
+      dispatch({ type: 'ADD', user: result });
+      handleUserTabbed(users.length - 1);
+      // resetScrollEffect(scrollRef);
     },
     [dispatch, setIsSwipe, resetScrollEffect]
   );
