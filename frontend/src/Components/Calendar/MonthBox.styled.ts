@@ -29,8 +29,14 @@ const CalendarTitle = styled.span`
   width: 100%;
   height: 60px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  h6 {
+    font-size: 0.4rem;
+
+    margin: 0;
+  }
 `;
 
 const Styled = { MonthBox, VFlexBox, HFlexBox, CalendarTitle };
