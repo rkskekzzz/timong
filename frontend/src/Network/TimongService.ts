@@ -2,13 +2,15 @@ import axios from 'axios';
 import * as API from './APIType';
 
 export const CalendarService = {
-  create: async () => {
+  create: async (calendarName) => {
     const method = 'POST';
     const url = API.url('');
+    const body = { name: calendarName };
     let response;
     try {
       response = await axios({
         method,
+        data: body,
         url,
       });
     } catch (error) {
@@ -17,9 +19,9 @@ export const CalendarService = {
     return response.data;
   },
 
-  getCalendar: async (calendar_id) => {
+  getCalendar: async (calendarId) => {
     const method = 'GET';
-    const url = API.url(`${calendar_id}`);
+    const url = API.url(`${calendarId}`);
     let response;
     try {
       response = await axios({
