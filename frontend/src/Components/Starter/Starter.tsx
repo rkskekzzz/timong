@@ -82,7 +82,7 @@ const StarterInputs = () => {
         error={isEmpty ? true : false}
         autoComplete="false"
         id="calendarName"
-        placeholder="캘린더 이름을 입력하세요..."
+        placeholder="input calendar name..."
         value={formik.values.calendarName}
         onChange={formik.handleChange}
         sx={{ width: '100%' }}
@@ -92,7 +92,7 @@ const StarterInputs = () => {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
       >
-        <span>최대 인원</span>
+        <span>Maximun </span>
         <p onClick={handleSubValue}>{'<'}</p>
         <input autoComplete="false" value={value} onChange={handleValue} />
         <p onClick={handleAddValue}>{'>'}</p>
@@ -103,8 +103,7 @@ const StarterInputs = () => {
         color="primary"
         sx={{ bgcolor: 'Background.paper' }}
       >
-        {/* <Styled.ModalBoxSpan>확인</Styled.ModalBoxSpan> */}
-        확인
+        Start
       </Styled.StarterModalButton>
     </Styled.StarterModalForm>
   );
@@ -114,7 +113,7 @@ const Starter = () => {
   return (
     <Styled.Starter style={{ background: themes.main.background }}>
       <Styled.StarterModalTitle style={{ color: themes.main.theme }}>
-        <b>T</b>
+        <b className="t">T</b>
         <i>T</i>
         <b>i</b>
         <i>i</i>

@@ -15,10 +15,23 @@ const down = keyframes`
     transform: translateY(0px) rotate(-6deg);
   }
   100% {
-    transform-origin: 0 100%;
-    transform: translateY(0px) rotate(0deg) rotateX(90deg);
+    transform: translateY(0px) rotate(1deg);
   }
+`;
 
+const shake = keyframes`
+  0% {
+    transform: rotate(1deg);
+  }
+  50%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
 `;
 
 const Starter = styled.div`
@@ -51,9 +64,15 @@ const StarterModalButton = styled(Button)`
 const StarterModalTitle = styled.span`
   font-size: 3rem;
   font-weight: bold;
+  .t {
+    position: absolute;
+    animation: ${down} ease-out 3s, ${shake} linear infinite 3s;
+    animation-delay: 0ms, 3s;
+  }
   b {
     position: absolute;
-    animation: ${down} ease-out 3s;
+    animation: ${shake} linear infinite 3s;
+    animation-delay: 3s;
   }
   i {
     color: transparent;
