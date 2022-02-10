@@ -58,18 +58,21 @@ const HeaderCalendarTitle = styled.span<{ isPinned: boolean; color: string }>`
   font-size: 0.7rem;
   position: relative;
   font-weight: bold;
+
   color: ${(props) => props.color || '#6a6a6a'};
   ${(props) => {
     if (!props.isPinned)
       return `
         transition: transform 250ms linear 0ms, color 250ms;
         transform: scale(2) translateX(20px);
+        padding: 20px;
         color: white;
   `;
     else
       return `
         transition: transform 250ms linear 0ms, color 250ms;
         transform: translateY(20px) ;
+
         `;
   }};
 `;

@@ -7,7 +7,10 @@ import HeaderModal from './HeaderModal';
 
 let prev_windows_scrollY = 0;
 
-const Header: React.FC<{ toggleMode: () => void }> = ({ toggleMode }) => {
+const Header: React.FC<{ toggleMode: () => void; calendarName: string }> = ({
+  toggleMode,
+  calendarName,
+}) => {
   const [isPinned, setIsPinned] = useState<boolean>(true);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const theme = useContext(ThemeContext);
@@ -51,13 +54,14 @@ const Header: React.FC<{ toggleMode: () => void }> = ({ toggleMode }) => {
             isPinned={isPinned}
             color={theme.foregroundHeader}
           >
-            init6 회식 일정!
+            {calendarName}
           </Styled.HeaderCalendarTitle>
           <MenuRoundedIcon
             sx={{
               color: isPinned ? '#ff6ff2' : 'white',
               transform: 'scale(1.2)',
               transition: 'transform 500ms linear 0ms, color 500ms',
+              cursor: 'pointer',
             }}
             fontSize="medium"
             onClick={handleModalOpen}
