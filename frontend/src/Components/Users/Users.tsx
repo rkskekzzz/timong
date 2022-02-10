@@ -153,10 +153,8 @@ const Users = () => {
           color: user.color,
         }
       );
-      setIsSwipe(-1);
       dispatch({ type: 'ADD', user: result });
       handleUserTabbed(users.length - 1);
-      // resetScrollEffect(scrollRef);
     },
     [dispatch, setIsSwipe, resetScrollEffect]
   );
