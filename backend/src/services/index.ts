@@ -1,9 +1,9 @@
 import { CalendarService } from "./calendar";
 import { UserService } from "./user";
-import { TimeService } from "./time";
+import { ScheduleService } from "./schedule";
 
 export {
   CalendarService, //
   UserService,
-  TimeService,
+  ScheduleService,
 };

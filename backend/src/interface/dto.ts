@@ -1,4 +1,4 @@
-import { CalendarType } from "./entity";
+import { CalendarType, Schedule } from "./entity";
 
 export class CreateCalendarDTO {
   type!: CalendarType;
@@ -22,7 +22,6 @@ export class UpdateUserDTO {
   color?: string;
 }
 
-export class CreateTimeDTO {
-  start!: string;
-  end!: string;
+export class UpdateSchduleDTO {
+  schedules!: Schedule[];
 }

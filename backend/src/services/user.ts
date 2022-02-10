@@ -1,8 +1,8 @@
-import { CreateUserDTO, UpdateUserDTO } from '../interface/dto';
-import ApiError from '../modules/error';
-import { Calendar, User } from '../interface/entity';
-import { Document } from 'mongoose';
-import { CalendarService } from './calendar';
+import { CreateUserDTO, UpdateUserDTO } from "../interface/dto";
+import ApiError from "../modules/error";
+import { Calendar, User } from "../interface/entity";
+import { Document } from "mongoose";
+import { CalendarService } from "./calendar";
 
 async function create(
   calendar_id: string,
@@ -10,14 +10,14 @@ async function create(
 ): Promise<Calendar> {
   const calendar = await CalendarService.getOneDocument(calendar_id);
   const user: User = {
-    avail: [],
-    unavail: [],
+    schedules: [],
     ...createUserDTO,
   };
 
   calendar.users.push(user);
   return calendar.save();
 }
+
 async function getAll(calendar_id: string): Promise<User[]> {
   return await CalendarService.getOne(calendar_id).then(
     (calendar) => calendar.users
