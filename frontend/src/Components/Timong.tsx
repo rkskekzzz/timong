@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import queryString from 'qs';
 import Styled from './Timong.styled';
 import { Calendar } from './Calendar';
@@ -17,6 +18,7 @@ const qs = queryString.parse(location.search, {
 });
 
 const Timong = () => {
+  const navi = useNavigate();
   const { dispatch } = useContext(UserContext);
   const [reLoad, setReLoad] = useState<boolean>(false);
   const [calendarName, setCalendarName] = useState<string>('');
@@ -35,7 +37,7 @@ const Timong = () => {
       setCalendarName(result.name);
       setCalendar(true);
     } else {
-      setCalendar(false);
+      navi('/404');
     }
   };
 
