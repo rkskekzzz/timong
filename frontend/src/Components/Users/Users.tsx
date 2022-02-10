@@ -18,6 +18,7 @@ import { UserContext } from 'src/App';
 import { ThemeContext } from '../Timong';
 import { UserService } from 'src/Network/UserService';
 import Switch from '../Switch/Switch';
+import arrow from 'src/assets/arrow.png';
 
 const Users = () => {
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
@@ -263,6 +264,20 @@ const Users = () => {
                 );
               })}
               <Styled.DialRow isSwipe={false} willDelete={false}>
+                {users.length === 0 && (
+                  <Styled.DialRowName
+                    className="guide"
+                    isShow={isShow}
+                    style={{
+                      transitionDelay: `${
+                        (isShow ? users.length : 0) * (200 / users.length)
+                      }ms`,
+                    }}
+                  >
+                    {'Click to Add User '}
+                    <img width={'20px'} src={arrow} alt="arrow" />
+                  </Styled.DialRowName>
+                )}
                 <Styled.DialRowProfile
                   style={{
                     transitionDelay: `${

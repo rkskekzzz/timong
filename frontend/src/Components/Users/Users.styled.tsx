@@ -96,6 +96,15 @@ const DialRow = styled.span<{ isSwipe: boolean; willDelete: boolean }>`
       `;
     }
   }};
+  .guide {
+    background: transparent;
+    border: 0px;
+    box-shadow: 0px 0px 0px;
+    font-family: 'Nanum Pen Script', cursive;
+    color: white;
+    font-size: 1.3rem;
+    padding: 0;
+  }
 `;
 
 const DialRowName = styled.span<{ isShow: boolean }>`
