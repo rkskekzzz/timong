@@ -16,7 +16,7 @@ export const UserService = {
     } catch (error) {
       console.log(error);
     }
-    return response.data;
+    return response;
   },
   updateUser: async (calendar_id) => {
     const method = 'POST';

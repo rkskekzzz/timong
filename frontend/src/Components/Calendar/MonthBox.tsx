@@ -5,6 +5,7 @@ import { Month, Day } from '../../Interface/DateType';
 import { globalSelectedUser } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 import { ThemeContext } from '../Timong';
+import { ScheduleService } from 'src/Network/ScheduleService';
 import { User, Valid } from 'src/Interface/UserType';
 
 type UserWithValid = {
@@ -30,7 +31,7 @@ function DayBoxLogic({
   const { state, dispatch } = useContext(UserContext);
 
   const reducedUser = state.users.reduce((user: UserWithValid[], cur: User) => {
-    for (const _schedule of cur.schedule) {
+    for (const _schedule of cur.schedules) {
       if (day.moment.isSame(_schedule.start, 'day')) {
         user.push({
           info: cur,
@@ -45,13 +46,18 @@ function DayBoxLogic({
     drawerHandler.handleDrawerOpen();
     drawerHandler.setDayUsers(reducedUser);
   };
-  const updateUser = () => {
+  const updateUser = async () => {
     dispatch({
       type: 'UPDATEDATE',
       user: globalSelectedUser.user,
       day: day.moment,
       valid: globalSelectedUser.valid ? 'POSIBLE' : 'IMPOSIBLE',
     });
+    const result = await ScheduleService.updateSchedules(
+      window.location.pathname,
+      globalSelectedUser.user
+    );
+    console.log(result);
   };
   const handleClick = useCallback(() => {
     if (!globalSelectedUser.user) showUsers();

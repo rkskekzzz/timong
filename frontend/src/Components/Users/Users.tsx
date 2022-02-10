@@ -143,17 +143,18 @@ const Users = () => {
     handleModalOpen();
   }, [handleModalOpen]);
   const addUser = useCallback(
-    (user: User) => {
+    async (user: User) => {
       if (!dispatch) throw new Error('no dispatch');
+      const result = await UserService.createUser(window.location.pathname, {
+        name: user.name,
+        color: user.color,
+      });
+      console.log(result);
+
       dispatch({ type: 'ADD', user });
       setIsSwipe(-1);
       resetScrollEffect(scrollRef);
       console.log(user);
-
-      UserService.createUser(window.location.pathname, {
-        name: user.name,
-        color: user.color,
-      });
     },
     [dispatch, setIsSwipe, resetScrollEffect]
   );

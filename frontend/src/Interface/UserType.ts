@@ -15,7 +15,7 @@ export class User {
   constructor(
     public name: string,
     public color: string,
-    public schedule: Schedule[],
+    public schedules: Schedule[],
     public _id: string
   ) {}
 }

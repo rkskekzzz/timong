@@ -31,6 +31,8 @@ const Timong = () => {
     const result = await CalendarService.getCalendar(window.location.pathname);
     if (result) {
       dispatch({ type: 'INIT', users: result.users });
+      console.log(result.users);
+
       setCalendar(true);
     } else {
       setCalendar(false);

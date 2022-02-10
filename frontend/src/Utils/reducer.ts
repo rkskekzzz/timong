@@ -1,5 +1,6 @@
 import { User } from '../Interface/UserType';
 import { State, Action } from 'src/Interface/ContextType';
+import moment from 'moment';
 
 export default function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -28,15 +29,17 @@ export default function reducer(state: State, action: Action): State {
           };
           let flag: boolean;
           if (user === action.user) {
-            const filteredSchedule = user.schedule.filter((sche) => {
-              if (sche.start.isSame(newSchedule.start, 'day')) {
+            const filteredSchedule = user.schedules.filter((sche) => {
+              const _sche = moment(sche.start);
+
+              if (_sche.isSame(newSchedule.start, 'day')) {
                 flag = sche.valid === newSchedule.valid;
                 return false;
               }
               return true;
             });
-            if (flag) user.schedule = [...filteredSchedule];
-            else user.schedule = [...filteredSchedule, newSchedule];
+            if (flag) user.schedules = [...filteredSchedule];
+            else user.schedules = [...filteredSchedule, newSchedule];
           }
           return user;
         }),
