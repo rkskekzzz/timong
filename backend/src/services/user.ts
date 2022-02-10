@@ -1,24 +1,24 @@
-import { CreateUserDTO, UpdateUserDTO } from '../interface/dto';
-import ApiError from '../modules/error';
-import { Calendar, User } from '../interface/entity';
-import { Document } from 'mongoose';
-import { CalendarService } from './calendar';
+import { CreateUserDTO, UpdateUserDTO } from "../interface/dto";
+import ApiError from "../modules/error";
+import { Calendar, User } from "../interface/entity";
+import { Document } from "mongoose";
+import { CalendarService } from "./calendar";
 
 async function create(
   calendar_id: string,
   createUserDTO: CreateUserDTO
-): Promise<Calendar> {
+): Promise<User> {
   const calendar = await CalendarService.getOneDocument(calendar_id);
-  console.log(createUserDTO);
-
   const user: User = {
     schedules: [],
     ...createUserDTO,
   };
 
   calendar.users.push(user);
-  return calendar.save();
+  await calendar.save();
+  return calendar.users[calendar.users.length - 1];
 }
+
 async function getAll(calendar_id: string): Promise<User[]> {
   return await CalendarService.getOne(calendar_id).then(
     (calendar) => calendar.users
@@ -30,7 +30,7 @@ function getIndexOrFail(
   user_id: string
 ): number {
   const index = calendar.users.findIndex((user) => {
-    const parseId = JSON.stringify(user._id).replace(/"/g, '');
+    const parseId = JSON.stringify(user._id).replace(/"/g, "");
     return parseId === user_id;
   });
   if (index === -1) {
