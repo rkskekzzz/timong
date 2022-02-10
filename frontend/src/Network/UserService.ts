@@ -1,7 +1,8 @@
+import { User } from 'src/Interface/UserType';
 import * as API from './APIType';
 
 export const UserService = {
-  createUser: async (calendar_id, user) => {
+  createUser: async (calendar_id, user): Promise<User> => {
     const method = 'POST';
     const url = API.url(`${calendar_id}/users`);
     const body = user;
@@ -16,7 +17,7 @@ export const UserService = {
     } catch (error) {
       console.log(error);
     }
-    return response;
+    return response.data;
   },
   updateUser: async (calendar_id) => {
     const method = 'POST';
