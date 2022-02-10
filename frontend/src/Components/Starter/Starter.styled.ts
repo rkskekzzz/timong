@@ -50,6 +50,12 @@ const StarterModalForm = styled.form`
   flex-direction: column;
   align-items: center;
   gap: 30px;
+  b {
+    position: absolute;
+    bottom: 50px;
+    font-size: 0.7rem;
+    text-align: center;
+  }
 `;
 
 const StarterModalButton = styled(Button)`
@@ -101,6 +107,7 @@ const StarterModalNumberBox = styled.span`
   p {
     font-weight: bold;
   }
+
   input {
     width: 50px;
     text-align: center;

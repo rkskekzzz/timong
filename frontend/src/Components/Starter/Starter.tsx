@@ -82,7 +82,7 @@ const StarterInputs = () => {
         error={isEmpty ? true : false}
         autoComplete="false"
         id="calendarName"
-        placeholder="input calendar name..."
+        placeholder="Input calendar name..."
         value={formik.values.calendarName}
         onChange={formik.handleChange}
         sx={{ width: '100%' }}
@@ -97,6 +97,7 @@ const StarterInputs = () => {
         <input autoComplete="false" value={value} onChange={handleValue} />
         <p onClick={handleAddValue}>{'>'}</p>
       </Styled.StarterModalNumberBox> */}
+
       <Styled.StarterModalButton
         onClick={handleSubmitButton}
         variant="contained"
@@ -105,6 +106,7 @@ const StarterInputs = () => {
       >
         Start
       </Styled.StarterModalButton>
+      <b>Each calendar can be used by up to 16 people</b>
     </Styled.StarterModalForm>
   );
 };
