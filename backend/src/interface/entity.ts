@@ -1,5 +1,5 @@
-export interface TimeRange {
-  _id?: string;
+export interface Schedule {
+  valid: boolean;
   start: string;
   end: string;
 }
@@ -8,7 +8,7 @@ export interface User {
   _id?: string;
   name: string;
   color: string;
-  schedule: TimeRange[];
+  schedules: Schedule[];
 }
 
 export enum CalendarType {

@@ -16,8 +16,13 @@ const schema = new Schema<Calendar>(
       {
         name: { type: String, required: true },
         color: { type: String, required: true },
+<<<<<<< HEAD
         schedule: [
+=======
+        schedules: [
+>>>>>>> 641840b6fcb9f013a3a052516d09ba338522cd51
           {
+            valid: { type: Boolean, required: true },
             start: { type: String, required: true },
             end: { type: String, required: true },
           },

@@ -12,7 +12,7 @@ async function create(
   console.log(createUserDTO);
 
   const user: User = {
-    schedule: [],
+    schedules: [],
     ...createUserDTO,
   };
 
