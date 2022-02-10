@@ -135,8 +135,9 @@ const Users = () => {
     [setIsChecked, isChecked]
   );
   const handleAddUserButton = useCallback(() => {
-    handleModalOpen();
-  }, [handleModalOpen]);
+    if (users.length >= 16) alert('It is already the maximum!');
+    else handleModalOpen();
+  }, [handleModalOpen, users]);
   const addUser = useCallback(
     async (user: User) => {
       if (!dispatch) throw new Error('no dispatch');
