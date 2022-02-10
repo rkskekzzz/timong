@@ -28,6 +28,7 @@ export const CalendarService = {
       });
     } catch (error) {
       console.log(error);
+      return null;
     }
     return response.data;
   },
