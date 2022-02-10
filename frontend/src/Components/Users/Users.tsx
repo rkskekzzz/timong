@@ -220,6 +220,26 @@ const Users = () => {
                     willDelete={willDelete === index ? true : false}
                     isSwipe={isSwipe === index ? true : false}
                   >
+                    {index === 0 && isShow && (
+                      <Styled.DialRowName
+                        className="guide del"
+                        isShow={isShow}
+                        style={{
+                          transitionDelay: `${
+                            (isShow ? index : users.length - index) *
+                            (200 / users.length)
+                          }ms`,
+                        }}
+                      >
+                        {' Swipe left to Delete '}
+                        <img
+                          className="rev"
+                          width={'20px'}
+                          src={arrow}
+                          alt="left arrow"
+                        />
+                      </Styled.DialRowName>
+                    )}
                     <Styled.DialRowName
                       isShow={isShow}
                       style={{

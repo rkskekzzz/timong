@@ -1,5 +1,15 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+
+`;
 const Temp = styled.div<{ isShow: boolean }>`
   position: fixed;
   bottom: 72px;
@@ -104,6 +114,13 @@ const DialRow = styled.span<{ isSwipe: boolean; willDelete: boolean }>`
     color: white;
     font-size: 1.3rem;
     padding: 0;
+    .rev {
+      transform: scaleX(-1) scaleY(1);
+    }
+  }
+  .del {
+    animation: ${fadeOut} ease-out 2s 1s;
+    animation-fill-mode: forwards;
   }
 `;
 
