@@ -1,16 +1,19 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { Input } from '@mui/material';
 import { useFormik } from 'formik';
 import Styled from './Starter.styled';
 import { themes } from 'src/theme';
 import { CalendarService } from 'src/Network/TimongService';
-
-// let prev_windows_scrollX = 0;
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from 'src/App';
 
 const StarterInputs = () => {
+  const { dispatch } = useContext(UserContext);
+  const navi = useNavigate();
+  const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const [touchStart, setTouchStart] = useState<number>(0);
   const [isChanging, setIsChanging] = useState<boolean>(false);
-  const [value, setValue] = useState<number>(4);
+  const [value, setValue] = useState<number>(16);
 
   const formik = useFormik({
     initialValues: {
@@ -21,12 +24,17 @@ const StarterInputs = () => {
     },
   });
 
-  const handleSubmitButton = useCallback(() => {
-    console.log(`title ${formik.values.calendarName}`);
-
-    console.log(`value ${value}`);
-
-    CalendarService.create();
+  const handleSubmitButton = useCallback(async () => {
+    if (formik.values.calendarName === '') {
+      setIsEmpty(true);
+      setTimeout(() => {
+        setIsEmpty(false);
+      }, 1000);
+      return;
+    }
+    const result = await CalendarService.create();
+    dispatch({ type: 'INIT', users: result.users });
+    navi(result._id);
   }, [formik, value]);
 
   const handleValue = useCallback(
@@ -71,7 +79,7 @@ const StarterInputs = () => {
   return (
     <Styled.StarterModalForm>
       <Input
-        // error={isError.name ? true : false}
+        error={isEmpty ? true : false}
         autoComplete="false"
         id="calendarName"
         placeholder="캘린더 이름을 입력하세요..."
@@ -106,7 +114,19 @@ const Starter = () => {
     <Styled.Starter style={{ background: themes.main.background }}>
       <Styled.StarterModalTitle style={{ color: themes.main.theme }}>
         <b>T</b>
-        <i>T</i>imong !
+        <i>T</i>
+        <b>i</b>
+        <i>i</i>
+        <b>m</b>
+        <i>m</i>
+        <b>o</b>
+        <i>o</i>
+        <b>n</b>
+        <i>n</i>
+        <b>g</b>
+        <i>g</i>
+        <b>!</b>
+        <i>!</i>
       </Styled.StarterModalTitle>
       <StarterInputs />
     </Styled.Starter>
