@@ -3,6 +3,10 @@ import { Calendar, CalendarType, ScheduleValidType } from "../interface/entity";
 
 const schema = new Schema<Calendar>(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       required: true,

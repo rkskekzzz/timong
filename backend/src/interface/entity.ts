@@ -23,6 +23,7 @@ export enum CalendarType {
 
 export interface Calendar {
   _id?: string;
+  name: string;
   type: CalendarType;
   start?: string;
   end?: string;
