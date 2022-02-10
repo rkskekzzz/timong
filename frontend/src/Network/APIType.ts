@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 export function url(path: string) {
-  return `http://localhost:5500/calendar${path}`;
-  // return `https://42world.kr/api/${version}/${path}`;
+  return `${process.env.REACT_APP_API_URL}/calendar${path}`;
 }
 
 export function AXIOS(option) {
