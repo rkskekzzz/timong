@@ -46,27 +46,26 @@ const Header: React.FC<{ toggleMode: () => void; calendarName: string }> = ({
         toggleMode={toggleMode}
       />
       <Styled.Header isPinned={isPinned} bgcolor={theme.backgroundHeader}>
-        <Styled.HeaderFlexDiv>
-          <Styled.HeaderTimongTitle isPinned={isPinned}>
-            Timong
-          </Styled.HeaderTimongTitle>
-          <Styled.HeaderCalendarTitle
-            isPinned={isPinned}
-            color={theme.foregroundHeader}
-          >
-            {calendarName}
-          </Styled.HeaderCalendarTitle>
-          <MenuRoundedIcon
-            sx={{
-              color: isPinned ? '#ff6ff2' : 'white',
-              transform: 'scale(1.2)',
-              transition: 'transform 500ms linear 0ms, color 500ms',
-              cursor: 'pointer',
-            }}
-            fontSize="medium"
-            onClick={handleModalOpen}
-          />
-        </Styled.HeaderFlexDiv>
+        <Styled.HeaderTimongTitle isPinned={isPinned}>
+          Timong
+        </Styled.HeaderTimongTitle>
+        <Styled.HeaderCalendarTitle
+          isPinned={isPinned}
+          color={theme.foregroundHeader}
+        >
+          {calendarName}
+        </Styled.HeaderCalendarTitle>
+        <MenuRoundedIcon
+          sx={{
+            color: isPinned ? '#ff6ff2' : 'white',
+            transform: 'scale(1.2)',
+            transition: 'transform 500ms linear 0ms, color 500ms',
+            cursor: 'pointer',
+            flexGrow: '0',
+          }}
+          fontSize="medium"
+          onClick={handleModalOpen}
+        />
       </Styled.Header>
     </>
   );
