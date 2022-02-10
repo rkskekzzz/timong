@@ -23,6 +23,7 @@ import arrow from 'src/assets/arrow.png';
 const Users = () => {
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [isAdd, setIsAdd] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
   const [touchStart, setTouchStart] = useState<number>(0);
   const [isSwipe, setIsSwipe] = useState<number>(-1);
@@ -141,7 +142,12 @@ const Users = () => {
   const addUser = useCallback(
     async (user: User) => {
       if (!dispatch) throw new Error('no dispatch');
-
+      for (const _user of users) {
+        if (_user.name === user.name || _user.color === user.color) {
+          alert('User name or color is aready exit');
+          return;
+        }
+      }
       const result: User = await UserService.createUser(
         window.location.pathname,
         {
@@ -150,10 +156,7 @@ const Users = () => {
         }
       );
       dispatch({ type: 'ADD', user: result });
-      setSelectedUser(users[users.length - 1]);
-      setTimeout(() => {
-        setIsShowSwitch(true);
-      }, 10);
+      setIsAdd(true);
     },
     [dispatch, users]
   );
@@ -161,6 +164,13 @@ const Users = () => {
     globalSelectedUser.user = selectedUser;
     globalSelectedUser.valid = isChecked;
   }, [selectedUser, isChecked]);
+  useEffect(() => {
+    if (!isAdd) return;
+    setSelectedUser(users[users.length - 1]);
+    setTimeout(() => {
+      setIsShowSwitch(true);
+    }, 10);
+  }, [users, isAdd]);
 
   return (
     <>
