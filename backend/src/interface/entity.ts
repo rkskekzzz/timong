@@ -1,5 +1,10 @@
+export enum ScheduleValidType {
+  POSIBLE = "POSIBLE",
+  IMPOSIBLE = "IMPOSIBLE",
+}
+
 export interface Schedule {
-  valid: boolean;
+  valid: ScheduleValidType;
   start: string;
   end: string;
 }
@@ -12,8 +17,8 @@ export interface User {
 }
 
 export enum CalendarType {
-  MONTHLY = 'MONTHLY',
-  WEEKLY = 'WEEKLY',
+  MONTHLY = "MONTHLY",
+  WEEKLY = "WEEKLY",
 }
 
 export interface Calendar {
