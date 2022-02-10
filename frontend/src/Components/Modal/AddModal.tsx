@@ -79,9 +79,9 @@ function ModalBoxFormLogic({
       return toggleError(_err);
     }
     const user = new User(formik.values.userName, clr, [], '');
-    addUser(user);
     formik.resetForm();
     handleModalClose();
+    addUser(user);
   };
 
   const handleColorPick = (e: object) => {

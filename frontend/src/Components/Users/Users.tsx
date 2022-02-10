@@ -95,16 +95,6 @@ const Users = () => {
     [isShow, isAnimationDone, setIsSwipe, setWillDelete, dispatch]
   );
 
-  const resetScrollEffect = useCallback(
-    (element: React.RefObject<HTMLDivElement>) => {
-      setTimeout(() => {
-        if (element && element.current) {
-          element.current.scrollTo(0, element.current.scrollTop - 56);
-        }
-      }, 50);
-    },
-    []
-  );
   const handleTouchStart = useCallback(
     (e: React.TouchEvent<HTMLButtonElement>) => {
       setTouchStart(e.targetTouches[0].clientX);
@@ -130,12 +120,12 @@ const Users = () => {
     },
     [isSwipeMore, handleRowDelButton, setIsSwipeMore]
   );
-  const handleModalOpen = useCallback(() => {
+  const handleModalOpen = () => {
     setIsShowModal(true);
-  }, [setIsShowModal]);
-  const handleModalClose = useCallback(() => {
+  };
+  const handleModalClose = () => {
     setIsShowModal(false);
-  }, [setIsShowModal]);
+  };
   const handleToggle = useCallback(
     () => setIsChecked(!isChecked),
     [setIsChecked, isChecked]
@@ -146,6 +136,7 @@ const Users = () => {
   const addUser = useCallback(
     async (user: User) => {
       if (!dispatch) throw new Error('no dispatch');
+
       const result: User = await UserService.createUser(
         window.location.pathname,
         {
@@ -153,10 +144,13 @@ const Users = () => {
           color: user.color,
         }
       );
+      setSelectedUser(users[users.length - 1]);
+      setTimeout(() => {
+        setIsShowSwitch(true);
+      }, 0);
       dispatch({ type: 'ADD', user: result });
-      handleUserTabbed(users.length - 1);
     },
-    [dispatch, setIsSwipe, resetScrollEffect]
+    [dispatch]
   );
   useEffect(() => {
     globalSelectedUser.user = selectedUser;
