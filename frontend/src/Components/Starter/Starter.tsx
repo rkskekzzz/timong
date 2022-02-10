@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext, useEffect } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { Input } from '@mui/material';
 import { useFormik } from 'formik';
 import Styled from './Starter.styled';
