@@ -109,3 +109,4 @@ data
 
 */build
 backend/src/**/*.js
+*.pem
