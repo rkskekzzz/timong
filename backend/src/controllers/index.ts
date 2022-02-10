@@ -1,9 +1,9 @@
 import { CalendarController } from "./calendar";
 import { UserController } from "./user";
-import { TimeController } from "./time";
+import { ScheduleController } from "./schedule";
 
 export {
   CalendarController, //
   UserController,
-  TimeController,
+  ScheduleController,
 };

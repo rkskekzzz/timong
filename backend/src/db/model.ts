@@ -16,14 +16,9 @@ const schema = new Schema<Calendar>(
       {
         name: { type: String, required: true },
         color: { type: String, required: true },
-        avail: [
+        schedules: [
           {
-            start: { type: String, required: true },
-            end: { type: String, required: true },
-          },
-        ],
-        unavail: [
-          {
+            valid: { type: Boolean, required: true },
             start: { type: String, required: true },
             end: { type: String, required: true },
           },

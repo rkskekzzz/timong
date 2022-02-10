@@ -3,7 +3,7 @@ import { Router } from "express";
 import {
   CalendarController,
   UserController,
-  TimeController,
+  ScheduleController,
 } from "../controllers";
 
 const router: Router = Router();
@@ -13,15 +13,13 @@ router.post("/", CalendarController.create);
 router.get("/:calendar_id", CalendarController.getOne);
 router.put("/:calendar_id", CalendarController.update);
 
+// 🙍‍♂️ 유저 라우터
 router.post("/:calendar_id/users", UserController.create);
 router.put("/:calendar_id/users", UserController.update);
 router.get("/:calendar_id/users", UserController.getAll);
 router.delete("/:calendar_id/users/:user_id", UserController.remove);
 
-router.post("/:calendar_id/users/:user_id/time", TimeController.create);
-router.delete(
-  "/:calendar_id/users/:user_id/time/:time_id",
-  TimeController.remove
-);
+// 🎏 스케쥴 라우터
+router.post("/:calendar_id/users/:user_id/schedule", ScheduleController.update);
 
 export default router;
