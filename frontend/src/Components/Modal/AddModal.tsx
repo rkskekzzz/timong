@@ -78,10 +78,8 @@ function ModalBoxFormLogic({
       const _err = error as string;
       return toggleError(_err);
     }
-
     const user = new User(formik.values.userName, clr, [], '');
     addUser(user);
-
     formik.resetForm();
     handleModalClose();
   };
@@ -89,8 +87,6 @@ function ModalBoxFormLogic({
   const handleColorPick = (e: object) => {
     const _e = e as Color;
     if (_e.hex !== clr) {
-      console.log('not same');
-
       setClr(_e.hex);
     }
   };

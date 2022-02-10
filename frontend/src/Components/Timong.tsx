@@ -19,6 +19,7 @@ const qs = queryString.parse(location.search, {
 const Timong = () => {
   const { dispatch } = useContext(UserContext);
   const [reLoad, setReLoad] = useState<boolean>(false);
+  const [calendarName, setCalendarName] = useState<string>('');
   const [calendar, setCalendar] = useState<boolean>(false);
   const [mode, setMode] = useState<string>(qs.mode + '' ?? 'light');
   const toggleMode = () => {
@@ -31,8 +32,7 @@ const Timong = () => {
     const result = await CalendarService.getCalendar(window.location.pathname);
     if (result) {
       dispatch({ type: 'INIT', users: result.users });
-      console.log(result.users);
-
+      setCalendarName(result.name);
       setCalendar(true);
     } else {
       setCalendar(false);
@@ -61,7 +61,7 @@ const Timong = () => {
       <ThemeContext.Provider
         value={mode === 'dark' ? themes.dark : themes.light}
       >
-        <Header toggleMode={toggleMode} />
+        <Header toggleMode={toggleMode} calendarName={calendarName} />
         {!calendar ? (
           <div
             style={{
