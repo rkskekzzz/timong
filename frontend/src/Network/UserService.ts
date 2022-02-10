@@ -36,4 +36,19 @@ export const UserService = {
     }
     return response.data;
   },
+  deleteUser: async (calendar_id, user_id) => {
+    const method = 'DELETE';
+    const url = API.url(`${calendar_id}/users/${user_id}`);
+
+    let response;
+    try {
+      response = await API.AXIOS({
+        method,
+        url,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    return response.data;
+  },
 };

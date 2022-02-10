@@ -88,6 +88,10 @@ const Users = () => {
       setWillDelete(delIndex);
       setTimeout(() => {
         if (!dispatch) throw new Error('no dispatch');
+        const result = UserService.deleteUser(
+          window.location.pathname,
+          user._id
+        );
         dispatch({ type: 'DELETE', index: delIndex, user });
         setWillDelete(-1);
       }, 500);
@@ -147,7 +151,7 @@ const Users = () => {
       setSelectedUser(users[users.length - 1]);
       setTimeout(() => {
         setIsShowSwitch(true);
-      }, 0);
+      }, 10);
       dispatch({ type: 'ADD', user: result });
     },
     [dispatch]
