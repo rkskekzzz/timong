@@ -88,7 +88,7 @@ const StarterInputs = () => {
         sx={{ width: '100%' }}
         inputProps={{ maxLength: 12 }}
       />
-      <Styled.StarterModalNumberBox
+      {/* <Styled.StarterModalNumberBox
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
       >
@@ -96,7 +96,7 @@ const StarterInputs = () => {
         <p onClick={handleSubValue}>{'<'}</p>
         <input autoComplete="false" value={value} onChange={handleValue} />
         <p onClick={handleAddValue}>{'>'}</p>
-      </Styled.StarterModalNumberBox>
+      </Styled.StarterModalNumberBox> */}
       <Styled.StarterModalButton
         onClick={handleSubmitButton}
         variant="contained"

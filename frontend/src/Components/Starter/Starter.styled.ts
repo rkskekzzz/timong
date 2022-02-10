@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 
 const down = keyframes`
   0% {
-    transform: translateY(-400px);
+    transform: translateY(-500px);
   }
   50% {
     transform: translateY(0px) rotate(5deg);

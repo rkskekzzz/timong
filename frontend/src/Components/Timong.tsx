@@ -74,7 +74,7 @@ const Timong = () => {
           >
             {reLoad ? (
               <Button size="large" onClick={() => window.location.reload()}>
-                새로고침
+                Refresh!
               </Button>
             ) : (
               <CircularProgress />
