@@ -109,10 +109,6 @@ const Calendar = () => {
         ...year,
         ...buildDate(year[year.length - 1].monthMoment.clone().add(1, 'M')),
       ]);
-      // setYear([
-      //   ...year,
-      //   ...buildDate(year[year.length - 1].monthMoment.clone().add(1, 'M')),
-      // ]);
     }
   };
   const rowRenderer = ({ index, style }) => {

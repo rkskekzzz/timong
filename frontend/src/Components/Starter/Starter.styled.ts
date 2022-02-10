@@ -15,7 +15,8 @@ const down = keyframes`
     transform: translateY(0px) rotate(-6deg);
   }
   100% {
-    transform: translateY(0px) rotate(0deg);
+    transform-origin: 0 100%;
+    transform: translateY(0px) rotate(0deg) rotateX(90deg);
   }
 
 `;
