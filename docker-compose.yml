@@ -3,8 +3,55 @@ services:
   db:
     image: mongo:latest
     environment:
-      MONGO_INITDB_ROOT_USERNAME: calendar
-      MONGO_INITDB_ROOT_PASSWORD: calendar
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: calendar
     ports:
       - "27017:27017"
+    volumes:
+      - ${MONGO_MOUNT_PATH}:/data/db
+    networks:
+      - service_network
+    restart: always
+
+  # backend:
+  #   container_name: backend
+  #   build:
+  #     context: .
+  #     dockerfile: ${BACKEND_DOCKERFILE}
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - 5500:5500
+  #   networks:
+  #     - service_network
+  #   restart: always
+
+  # frontend:
+  #   container_name: frontend
+  #   build:
+  #     context: .
+  #     dockerfile: ${FRONTEND_DOCKERFILE}
+  #   networks:
+  #     - service_network
+  #   restart: always
+
+  # nginx-proxy:
+  #   container_name: nginx-proxy
+  #   depends_on:
+  #     - db
+  #     - backend
+  #     - frontend
+  #   image: nginx:latest
+  #   ports:
+  #     - "80:80"
+  #     - "433:433"
+  #   volumes:
+  #     - ./proxy/nginx.conf:/etc/nginx/nginx.conf
+  #   restart: always
+  #   networks:
+  #     - service_network
+
+networks:
+  service_network:
+    driver: bridge
