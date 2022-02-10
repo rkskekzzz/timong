@@ -148,13 +148,13 @@ const Users = () => {
           color: user.color,
         }
       );
+      dispatch({ type: 'ADD', user: result });
       setSelectedUser(users[users.length - 1]);
       setTimeout(() => {
         setIsShowSwitch(true);
       }, 10);
-      dispatch({ type: 'ADD', user: result });
     },
-    [dispatch]
+    [dispatch, users]
   );
   useEffect(() => {
     globalSelectedUser.user = selectedUser;
