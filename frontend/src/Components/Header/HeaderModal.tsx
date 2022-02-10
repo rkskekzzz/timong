@@ -55,27 +55,27 @@ function ModalBoxForm({
     <>
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          클립보드에 주소가 복사되었습니다!
+          Copy To Clipboard!
         </Alert>
       </Snackbar>
       <Styled.ModalBox>
         <CloseIcon onClick={handleCloseButton} fontSize="medium" sx={style} />
         <CopyToClipboard text={window.location.href}>
           <Styled.ModalTextButton color={theme.iconSmall} onClick={handleOpen}>
-            공유 하기
+            Share Link
           </Styled.ModalTextButton>
         </CopyToClipboard>
         <Styled.ModalTextButton
           color={theme.iconSmall}
           onClick={handleThemeChangeButton}
         >
-          테마 변경
+          {theme.mode === 'light' ? 'Dark Mode   ' : 'Light Mode   '}
         </Styled.ModalTextButton>
         <Styled.ModalTextButton
           onClick={() => navi('/')}
           color={theme.iconSmall}
         >
-          새 링크 생성
+          New Calendar
         </Styled.ModalTextButton>
         <Styled.ModalBoxButtons>
           <GitHubIcon onClick={() => handleClick(githubLink)} sx={style} />

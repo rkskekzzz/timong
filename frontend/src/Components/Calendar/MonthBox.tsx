@@ -87,7 +87,7 @@ const MonthBox: React.FC<{ month: Month; drawerHandler: DrawerHandler }> = ({
         <h6 style={{ color: theme.foreground + '55' }}>
           {month.monthMoment.format('Y')}
         </h6>
-        {month.monthMoment.format('M') + '월'}
+        {month.monthMoment.format('M')}
       </Styled.CalendarTitle>
       {month.week.map((week, index) => {
         return (

@@ -24,15 +24,16 @@ const VFlexBox = styled.div`
 `;
 
 const CalendarTitle = styled.span`
-  font-size: 1.18rem;
+  font-size: 1.5rem;
   font-weight: bold;
   width: 100%;
   height: 60px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   h6 {
+    position: absolute;
+    transform: translateX(-30px);
     font-size: 0.4rem;
 
     margin: 0;

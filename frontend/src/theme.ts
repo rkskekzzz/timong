@@ -1,5 +1,6 @@
 export const themes = {
   light: {
+    mode: 'light',
     foregroundHeader: '#6a6a6a',
     backgroundHeader: 'linear-gradient(#f2f2f2, #f2f2f2,#f2f2f2dd);',
     backDropHeader: '#ffffffdd',
@@ -14,6 +15,7 @@ export const themes = {
     background: '#ffffff',
   },
   dark: {
+    mode: 'dark',
     foregroundHeader: '#f2f2f2',
     // backgroundHeader: '#1a1a1a',
     backgroundHeader: 'linear-gradient(#1a1a1a, #1a1a1a,#1a1a1add);',
