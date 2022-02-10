@@ -9,9 +9,10 @@ async function create(
   createUserDTO: CreateUserDTO
 ): Promise<Calendar> {
   const calendar = await CalendarService.getOneDocument(calendar_id);
+  console.log(createUserDTO);
+
   const user: User = {
-    avail: [],
-    unavail: [],
+    schedule: [],
     ...createUserDTO,
   };
 
@@ -29,7 +30,7 @@ function getIndexOrFail(
   user_id: string
 ): number {
   const index = calendar.users.findIndex((user) => {
-    const parseId = JSON.stringify(user._id).replace(/"/g, "");
+    const parseId = JSON.stringify(user._id).replace(/"/g, '');
     return parseId === user_id;
   });
   if (index === -1) {

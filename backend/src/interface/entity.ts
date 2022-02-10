@@ -8,13 +8,12 @@ export interface User {
   _id?: string;
   name: string;
   color: string;
-  avail: TimeRange[];
-  unavail: TimeRange[];
+  schedule: TimeRange[];
 }
 
 export enum CalendarType {
-  MONTHLY = "MONTHLY",
-  WEEKLY = "WEEKLY",
+  MONTHLY = 'MONTHLY',
+  WEEKLY = 'WEEKLY',
 }
 
 export interface Calendar {

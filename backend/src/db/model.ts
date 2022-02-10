@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
-import { Calendar, CalendarType } from "../interface/entity";
+import { Calendar, CalendarType } from '../interface/entity';
 
 const schema = new Schema<Calendar>(
   {
@@ -16,13 +16,7 @@ const schema = new Schema<Calendar>(
       {
         name: { type: String, required: true },
         color: { type: String, required: true },
-        avail: [
-          {
-            start: { type: String, required: true },
-            end: { type: String, required: true },
-          },
-        ],
-        unavail: [
+        schedule: [
           {
             start: { type: String, required: true },
             end: { type: String, required: true },
@@ -34,4 +28,4 @@ const schema = new Schema<Calendar>(
   { timestamps: true }
 );
 
-export default model<Calendar>("Calendar", schema);
+export default model<Calendar>('Calendar', schema);
