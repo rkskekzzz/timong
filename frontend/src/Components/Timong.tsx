@@ -29,11 +29,12 @@ const Timong = () => {
 
   const getCalendar = async () => {
     const result = await CalendarService.getCalendar(window.location.pathname);
-
-    dispatch({ type: 'INIT', users: result.users });
-    console.log(result.users);
-    if (!result) setCalendar(true);
-    else console.log('here');
+    if (result) {
+      dispatch({ type: 'INIT', users: result.users });
+      setCalendar(true);
+    } else {
+      setCalendar(false);
+    }
   };
 
   useEffect(() => {
@@ -43,12 +44,15 @@ const Timong = () => {
   }, [mode]);
 
   useEffect(() => {
-    if (reLoad) return;
+    if (reLoad || calendar) return;
+    function showReLoad() {
+      setTimeout(() => {
+        setReLoad(true);
+      }, 4000);
+    }
     getCalendar();
-    setTimeout(() => {
-      setReLoad(true);
-    }, 4000);
-  }, [reLoad]);
+    showReLoad();
+  }, []);
 
   return (
     <>
@@ -56,7 +60,7 @@ const Timong = () => {
         value={mode === 'dark' ? themes.dark : themes.light}
       >
         <Header toggleMode={toggleMode} />
-        {calendar ? (
+        {!calendar ? (
           <div
             style={{
               width: '100%',

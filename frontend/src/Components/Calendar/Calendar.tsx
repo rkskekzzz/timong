@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  useContext,
-  useRef,
-  useEffect,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { useState, useContext, useRef, useEffect, useMemo } from 'react';
 import Styled from './Calendar.styled';
 import MonthBox from './MonthBox';
 import { ThemeContext } from '../Timong';
@@ -28,7 +21,7 @@ const Calendar = () => {
   const [selectedDay, setSelectedDay] = useState<Day | null>(null);
 
   const touchRef = useRef(null);
-  const nodeRef = useRef(null);
+
   const [isShow, setIsShow] = useState<boolean>(false);
   const [dayUsers, setDayUsers] = useState<UserWithValid[]>([]);
   const handleDrawerOpen = () => setIsShow(!isShow);
@@ -135,13 +128,13 @@ const Calendar = () => {
    * @param registerChild : registerChild를 활용해서 windowscroller의 자식 컴포넌트로 ref를 전달할 수 있다.
    * ref를 사용하지 않으면 windowscroller가 findDOMNode()를 호출하는데 이는 strict mode에서는 권장하지 않는 방식이기 때문에 ref를 사용하는 것이 적합하다.
    * 문제인지
-   * @link https://github.com/bvaughn/react-virtualized/issues/1572
+   * @see https://github.com/bvaughn/react-virtualized/issues/1572
    * 해결책
-   * @link https://github.com/bvaughn/react-virtualized/blob/master/docs/WindowScroller.md#render-props
+   * @see https://github.com/bvaughn/react-virtualized/blob/master/docs/WindowScroller.md#render-props
    */
   return (
     <>
-      <WindowScroller nodeRef={nodeRef} style={{ width: '100%' }}>
+      <WindowScroller style={{ width: '100%' }}>
         {({ width, height, isScrolling, scrollTop, registerChild }) => (
           /**
            * WindowScroller 와 AutoSizer를 함께 쓰기 위해선, 아래왁 같은 방식을 활용한다.
