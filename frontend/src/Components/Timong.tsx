@@ -86,8 +86,6 @@ const Timong = () => {
   );
 
   useEffect(() => {
-    console.log(mode);
-
     if (mode === 'dark')
       document.body.style.background = theme.myPalette.background;
     else document.body.style.background = theme.myPalette.background;
@@ -129,7 +127,7 @@ const Timong = () => {
         ) : (
           <>
             <Styled.Body>
-              <Calendar />
+              <Calendar mode={mode} />
             </Styled.Body>
             <Users />
           </>

@@ -16,7 +16,6 @@ const Header: React.FC<{ toggleMode: () => void; calendarName: string }> = ({
   const theme = useTheme();
 
   const handleScroll = useCallback(() => {
-    console.log(window.scrollY);
     if (window.scrollY < 10) {
       setIsPinned(true);
     }

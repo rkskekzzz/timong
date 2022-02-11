@@ -15,18 +15,17 @@ type UserWithValid = {
 };
 const initialYear: Year = buildDate(moment());
 
-const Calendar = () => {
+const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
   const theme = useTheme();
+  const touchRef = useRef(null);
   const [year, setYear] = useState<Year>(initialYear);
   const [selectedDay, setSelectedDay] = useState<Day | null>(null);
-
-  const touchRef = useRef(null);
-
   const [isShow, setIsShow] = useState<boolean>(false);
   const [dayUsers, setDayUsers] = useState<UserWithValid[]>([]);
   const handleDrawerOpen = () => setIsShow(!isShow);
   const handleDrawerClose = () => setIsShow(false);
 
+  mode;
   useEffect(() => {
     function handleClickOutside(event) {
       if (touchRef.current && !touchRef.current.contains(event.target)) {
