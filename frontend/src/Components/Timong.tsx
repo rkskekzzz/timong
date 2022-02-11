@@ -93,13 +93,13 @@ const Timong = () => {
 
   useEffect(() => {
     if (reLoad || calendar) return;
-    function showReLoad() {
-      setTimeout(() => {
-        setReLoad(true);
-      }, 4000);
-    }
     getCalendar();
-    showReLoad();
+    const timer = setTimeout(() => {
+      setReLoad(true);
+    }, 4000);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   return (

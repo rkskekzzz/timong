@@ -164,9 +164,12 @@ const Users = () => {
   useEffect(() => {
     if (!isAdd) return;
     setSelectedUser(users[users.length - 1]);
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsShowSwitch(true);
     }, 10);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [users, isAdd]);
 
   return (
