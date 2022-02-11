@@ -95,7 +95,9 @@ const HeaderModal: React.FC<{
   const theme = useContext(ThemeContext);
 
   const ForwardFC = React.forwardRef(function ForwardFCCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     props: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ref: any
   ) {
     return (

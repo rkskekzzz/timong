@@ -11,9 +11,9 @@ const StarterInputs = () => {
   const { dispatch } = useContext(UserContext);
   const navi = useNavigate();
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
-  const [touchStart, setTouchStart] = useState<number>(0);
-  const [isChanging, setIsChanging] = useState<boolean>(false);
-  const [value, setValue] = useState<number>(16);
+  // const [touchStart, setTouchStart] = useState<number>(0);
+  // const [isChanging, setIsChanging] = useState<boolean>(false);
+  // const [value, setValue] = useState<number>(16);
 
   const formik = useFormik({
     initialValues: {
@@ -35,46 +35,46 @@ const StarterInputs = () => {
     const result = await CalendarService.create(formik.values.calendarName);
     dispatch({ type: 'INIT', users: result.users });
     navi(result._id);
-  }, [formik, value]);
+  }, [formik]);
 
-  const handleValue = useCallback(
-    (e) => {
-      setValue(e.target.value > 25 ? 25 : e.target.value);
-    },
-    [setValue]
-  );
+  // const handleValue = useCallback(
+  //   (e) => {
+  //     setValue(e.target.value > 25 ? 25 : e.target.value);
+  //   },
+  //   [setValue]
+  // );
 
-  const handleAddValue = useCallback(() => {
-    setValue(value + 1 >= 25 ? 25 : value + 1);
-  }, [value]);
+  // const handleAddValue = useCallback(() => {
+  //   setValue(value + 1 >= 25 ? 25 : value + 1);
+  // }, [value]);
 
-  const handleSubValue = useCallback(() => {
-    setValue(!value ? value : value - 1);
-  }, [value]);
+  // const handleSubValue = useCallback(() => {
+  //   setValue(!value ? value : value - 1);
+  // }, [value]);
 
-  const handleTouchStart = useCallback(
-    (e: React.TouchEvent<HTMLButtonElement>) => {
-      setTouchStart(e.targetTouches[0].clientX);
-    },
-    [setTouchStart]
-  );
+  // const handleTouchStart = useCallback(
+  //   (e: React.TouchEvent<HTMLButtonElement>) => {
+  //     setTouchStart(e.targetTouches[0].clientX);
+  //   },
+  //   [setTouchStart]
+  // );
 
-  const handleTouchMove = useCallback(
-    (e: React.TouchEvent<HTMLSpanElement>) => {
-      if (isChanging) return;
-      if (touchStart - e.targetTouches[0].clientX > 20) {
-        handleSubValue();
-      }
-      if (touchStart - e.targetTouches[0].clientX < -20) {
-        handleAddValue();
-      }
-      setIsChanging(true);
-      setTimeout(() => {
-        setIsChanging(false);
-      }, 200);
-    },
-    [handleSubValue, handleAddValue, isChanging, setIsChanging]
-  );
+  // const handleTouchMove = useCallback(
+  //   (e: React.TouchEvent<HTMLSpanElement>) => {
+  //     if (isChanging) return;
+  //     if (touchStart - e.targetTouches[0].clientX > 20) {
+  //       handleSubValue();
+  //     }
+  //     if (touchStart - e.targetTouches[0].clientX < -20) {
+  //       handleAddValue();
+  //     }
+  //     setIsChanging(true);
+  //     setTimeout(() => {
+  //       setIsChanging(false);
+  //     }, 200);
+  //   },
+  //   [handleSubValue, handleAddValue, isChanging, setIsChanging]
+  // );
 
   return (
     <Styled.StarterModalForm>

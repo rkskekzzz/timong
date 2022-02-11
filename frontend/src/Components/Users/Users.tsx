@@ -89,10 +89,8 @@ const Users = () => {
       setWillDelete(delIndex);
       setTimeout(() => {
         if (!dispatch) throw new Error('no dispatch');
-        const result = UserService.deleteUser(
-          window.location.pathname,
-          user._id
-        );
+        // TODO: del 에러나면 alert띄우기
+        UserService.deleteUser(window.location.pathname, user._id);
         dispatch({ type: 'DELETE', index: delIndex, user });
         setWillDelete(-1);
       }, 500);
