@@ -21,7 +21,6 @@ export const UserContext = createContext<{
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log('환경변수 잘 들어왔니?', process.env.REACT_APP_API_URL);
   return (
     <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
