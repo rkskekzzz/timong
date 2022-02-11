@@ -1,0 +1,79 @@
+name: Build_deploy
+on:
+  push:
+    branches:
+      - main #master 브랜치에 push 이벤트가 일어났을 때만 실행
+   # paths:
+    #- frontend/**
+     # - backend/**
+jobs:
+  Build_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      #master 브랜치로 체크아웃
+      - name: 레포지토리 체크아웃
+        uses: actions/checkout@master
+
+      #노드 모듈을 캐싱하여 package-lock.json이 업데이트 되지 않으면 다음 스탭에서 재설치 하지 않도록
+      - name: 노드 모듈 캐싱
+        id: node-module-cache
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.OS }}-node-module-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-module-cache
+      - name: Front 노드 모듈 설치
+        if: steps.front-node-module-cache.outputs.cache-hit != 'true'
+        run: cd frontend && npm install
+
+      - name: Front 빌드하기
+        run: cd frontend && npm run build
+
+      - name: Blockcalendar_build 레포지토리로 frontend/build 배포
+        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN_FOR_REPO }}
+        with:
+          source_file: "./frontend/build"
+          destination_repo: "rkskekzzz/blockcalendar_build"
+          destination_branch: "master"
+          destination_folder: "./frontend"
+          user_email: "wkdlfflxh@naver.com"
+          user_name: "rkskekzzz"
+          commit_message: "Build: 프론트앤드"
+
+      - name: Back 노드 모듈 설치
+        if: steps.front-node-module-cache.outputs.cache-hit != 'true'
+        run: cd backend && npm install
+
+      - name: Back 빌드하기
+        run: cd backend && npm run build
+
+      - name: Blockcalendar_build 레포지토리로 backend/build 배포
+        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN_FOR_REPO }}
+        with:
+          source_file: "./backend/build"
+          destination_repo: "rkskekzzz/blockcalendar_build"
+          destination_branch: "master"
+          destination_folder: "./backend"
+          user_email: "wkdlfflxh@naver.com"
+          user_name: "rkskekzzz"
+          commit_message: "Build: 백엔드"
+
+      - name: Blockcalendar_build 레포지토리로 backend/node_modules 배포
+        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN_FOR_REPO }}
+        with:
+          source_file: "./backend/node_modules"
+          destination_repo: "rkskekzzz/blockcalendar_build"
+          destination_branch: "master"
+          destination_folder: "./backend"
+          user_email: "wkdlfflxh@naver.com"
+          user_name: "rkskekzzz"
+          commit_message: "Build: 백엔드"
