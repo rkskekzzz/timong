@@ -17,7 +17,6 @@ export const themes = {
   dark: {
     mode: 'dark',
     foregroundHeader: '#f2f2f2',
-    // backgroundHeader: '#1a1a1a',
     backgroundHeader: 'linear-gradient(#1a1a1a, #1a1a1a,#1a1a1add);',
     backDropHeader: '#000000b0',
     foreground: '#dadada',

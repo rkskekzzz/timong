@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
-import { ThemeContext } from '../Timong';
+import React, { useState, useEffect, useCallback } from 'react';
 import Styled from './Header.styled';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import throttle from 'lodash/throttle';
 import HeaderModal from './HeaderModal';
+import { useTheme } from '@mui/material';
 
 let prev_windows_scrollY = 0;
 
@@ -13,7 +13,7 @@ const Header: React.FC<{ toggleMode: () => void; calendarName: string }> = ({
 }) => {
   const [isPinned, setIsPinned] = useState<boolean>(true);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   const handleScroll = useCallback(() => {
     if (window.scrollY < 10) {
@@ -45,13 +45,16 @@ const Header: React.FC<{ toggleMode: () => void; calendarName: string }> = ({
         handleModalClose={handleModalClose}
         toggleMode={toggleMode}
       />
-      <Styled.Header isPinned={isPinned} bgcolor={theme.backgroundHeader}>
+      <Styled.Header
+        isPinned={isPinned}
+        bgcolor={theme.myPalette.backgroundHeader}
+      >
         <Styled.HeaderTimongTitle isPinned={isPinned}>
           Timong
         </Styled.HeaderTimongTitle>
         <Styled.HeaderCalendarTitle
           isPinned={isPinned}
-          color={theme.foregroundHeader}
+          color={theme.myPalette.foregroundHeader}
         >
           {calendarName}
         </Styled.HeaderCalendarTitle>

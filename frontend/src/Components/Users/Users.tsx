@@ -15,11 +15,11 @@ import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import FaceIcon from '@mui/icons-material/Face';
 import { UserContext } from 'src/App';
-import { ThemeContext } from '../Timong';
 import { UserService } from 'src/Network/UserService';
 import Switch from '../Switch/Switch';
 import arrow from 'src/assets/arrow.png';
 import { useLocation } from 'react-router-dom';
+import { useTheme } from '@mui/material';
 
 const Users = () => {
   const location = useLocation();
@@ -36,7 +36,7 @@ const Users = () => {
   const [isShowSwitch, setIsShowSwitch] = useState<boolean>(false);
 
   const { state, dispatch } = useContext(UserContext);
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   const users = state.users;
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -186,7 +186,10 @@ const Users = () => {
           />
         </>
       )}
-      <Backdrop open={isShow} sx={{ bgcolor: theme.backDrop, zIndex: 200 }} />
+      <Backdrop
+        open={isShow}
+        sx={{ bgcolor: theme.myPalette.backDrop, zIndex: 200 }}
+      />
       <AddModal
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
@@ -201,7 +204,7 @@ const Users = () => {
             >
               <FaceRetouchingOffIcon
                 fontSize="large"
-                sx={{ color: theme.icon }}
+                sx={{ color: theme.myPalette.icon }}
               />
             </Styled.DialButton>
           )}
@@ -210,7 +213,7 @@ const Users = () => {
               isShow={selectedUser ? true : false}
               onClick={handleDial}
             >
-              <FaceIcon fontSize="large" sx={{ color: theme.icon }} />
+              <FaceIcon fontSize="large" sx={{ color: theme.myPalette.icon }} />
             </Styled.DialButton>
           )}
           <Styled.Temp
@@ -307,11 +310,11 @@ const Users = () => {
                     transitionDelay: `${
                       (isShow ? users.length : 0) * (200 / users.length)
                     }ms`,
-                    color: theme.foregroundAddButton,
+                    color: theme.myPalette.foregroundAddButton,
                     fontSize: '1.5rem',
                   }}
                   isShow={isShow}
-                  bgcolor={theme.backgroundAddButton}
+                  bgcolor={theme.myPalette.backgroundAddButton}
                   onClick={() => {
                     handleAddUserButton();
                   }}

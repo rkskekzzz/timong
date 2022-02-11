@@ -4,7 +4,7 @@ import Styled from './MonthBox.styled';
 import { Month, Day } from '../../Interface/DateType';
 import { globalSelectedUser } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
-import { ThemeContext } from '../Timong';
+import { useTheme } from '@mui/material';
 import { ScheduleService } from 'src/Network/ScheduleService';
 import { User, Valid } from 'src/Interface/UserType';
 import { useLocation } from 'react-router-dom';
@@ -82,11 +82,11 @@ const MonthBox: React.FC<{ month: Month; drawerHandler: DrawerHandler }> = ({
   month,
   drawerHandler,
 }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   return (
-    <Styled.MonthBox color={theme.foreground}>
+    <Styled.MonthBox color={theme.myPalette.foreground}>
       <Styled.CalendarTitle>
-        <h6 style={{ color: theme.foreground + '55' }}>
+        <h6 style={{ color: theme.myPalette.foreground + '55' }}>
           {month.monthMoment.format('Y')}
         </h6>
         {month.monthMoment.format('M')}

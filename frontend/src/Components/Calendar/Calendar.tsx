@@ -1,12 +1,12 @@
-import React, { useState, useContext, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Styled from './Calendar.styled';
 import MonthBox from './MonthBox';
-import { ThemeContext } from '../Timong';
 import GlobalStyled from '../Styled/global.styled';
 import moment from 'moment';
 import { Year, Day } from 'src/Interface/DateType';
 import { buildDate } from 'src/Utils';
 import { User, Valid } from 'src/Interface/UserType';
+import { useTheme, Box } from '@mui/material';
 
 import { AutoSizer, List, WindowScroller } from 'react-virtualized';
 type UserWithValid = {
@@ -16,7 +16,7 @@ type UserWithValid = {
 const initialYear: Year = buildDate(moment());
 
 const Calendar = () => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   const [year, setYear] = useState<Year>(initialYear);
   const [selectedDay, setSelectedDay] = useState<Day | null>(null);
 
@@ -133,7 +133,7 @@ const Calendar = () => {
    * @see https://github.com/bvaughn/react-virtualized/blob/master/docs/WindowScroller.md#render-props
    */
   return (
-    <>
+    <Box bgcolor={theme.myPalette.background}>
       <WindowScroller style={{ width: '100%' }}>
         {({ width, height, isScrolling, scrollTop, registerChild }) => (
           /**
@@ -155,7 +155,9 @@ const Calendar = () => {
                   rowRenderer={rowRenderer}
                   scrollTop={scrollTop}
                   width={width}
-                  style={{ maxWidth: '400px' }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
+                  style={{
+                    maxWidth: '400px',
+                  }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
                 />
               )}
             </AutoSizer>
@@ -169,7 +171,7 @@ const Calendar = () => {
         onOpen={handleDrawerOpen}
         swipeAreaWidth={0}
         disableSwipeToOpen={false}
-        bgcolor={theme.backDrop}
+        bgcolor={theme.myPalette.backDrop}
         ModalProps={{
           keepMounted: true,
         }}
@@ -177,7 +179,7 @@ const Calendar = () => {
         <Styled.Puller />
         {list()}
       </Styled.UserDrawer>
-    </>
+    </Box>
   );
 };
 

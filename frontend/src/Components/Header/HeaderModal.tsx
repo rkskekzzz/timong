@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Styled from './HeaderModal.styled';
-import { ThemeContext } from '../Timong';
 import Snackbar from '@mui/material/Snackbar';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
@@ -9,6 +8,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material';
 
 const githubLink = 'https://github.com/rkskekzzz/blockcalendar.git';
 const emailLink = 'mailto:wkdlfflxh@naver.com';
@@ -43,11 +43,11 @@ function ModalBoxForm({
   const handleCloseButton = useCallback(() => {
     handleModalClose();
   }, [handleModalClose]);
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   const handleThemeChangeButton = toggleMode;
 
   const style = {
-    color: theme.iconSmall,
+    color: theme.myPalette.iconSmall,
     transition: 'color 500ms ease-in-out 0ms',
   };
 
@@ -61,19 +61,22 @@ function ModalBoxForm({
       <Styled.ModalBox>
         <CloseIcon onClick={handleCloseButton} fontSize="medium" sx={style} />
         <CopyToClipboard text={window.location.href}>
-          <Styled.ModalTextButton color={theme.iconSmall} onClick={handleOpen}>
+          <Styled.ModalTextButton
+            color={theme.myPalette.iconSmall}
+            onClick={handleOpen}
+          >
             Share Link
           </Styled.ModalTextButton>
         </CopyToClipboard>
         <Styled.ModalTextButton
-          color={theme.iconSmall}
+          color={theme.myPalette.iconSmall}
           onClick={handleThemeChangeButton}
         >
-          {theme.mode === 'light' ? 'Dark Mode   ' : 'Light Mode   '}
+          {theme.myPalette.mode === 'light' ? 'Dark Mode   ' : 'Light Mode   '}
         </Styled.ModalTextButton>
         <Styled.ModalTextButton
           onClick={() => navi('/')}
-          color={theme.iconSmall}
+          color={theme.myPalette.iconSmall}
         >
           New Calendar
         </Styled.ModalTextButton>
@@ -92,7 +95,7 @@ const HeaderModal: React.FC<{
   handleModalClose: () => void;
   toggleMode: () => void;
 }> = ({ isShowModal, handleModalClose, toggleMode }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   const ForwardFC = React.forwardRef(function ForwardFCCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -113,7 +116,7 @@ const HeaderModal: React.FC<{
       onClose={handleModalClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
-      color={theme.backDropHeader}
+      color={theme.myPalette.backDropHeader}
     >
       <ForwardFC>
         <ModalBoxForm

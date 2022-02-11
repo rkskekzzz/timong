@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import queryString from 'qs';
 import Styled from './Timong.styled';
 import { Calendar } from './Calendar';
 import Header from './Header';
@@ -11,12 +10,44 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Button } from '@mui/material';
 import { UserContext } from 'src/App';
 import { useLocation } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-export const ThemeContext = React.createContext(themes.light);
-
-const qs = queryString.parse(location.search, {
-  ignoreQueryPrefix: true,
-});
+declare module '@mui/material/styles' {
+  interface Theme {
+    myPalette: {
+      mode: string;
+      foregroundHeader: string;
+      backgroundHeader: string;
+      backDropHeader: string;
+      foreground: string;
+      iconSmall: string;
+      icon: string;
+      foregroundSwitch: string;
+      backgroundSwitch: string;
+      foregroundAddButton: string;
+      backgroundAddButton: string;
+      backDrop: string;
+      background: string;
+    };
+  }
+  interface ThemeOptions {
+    myPalette?: {
+      mode?: string;
+      foregroundHeader?: string;
+      backgroundHeader?: string;
+      backDropHeader?: string;
+      foreground?: string;
+      iconSmall?: string;
+      icon?: string;
+      foregroundSwitch?: string;
+      backgroundSwitch?: string;
+      foregroundAddButton?: string;
+      backgroundAddButton?: string;
+      backDrop?: string;
+      background?: string;
+    };
+  }
+}
 
 const Timong = () => {
   const location = useLocation();
@@ -25,11 +56,11 @@ const Timong = () => {
   const [reLoad, setReLoad] = useState<boolean>(false);
   const [calendarName, setCalendarName] = useState<string>('');
   const [calendar, setCalendar] = useState<boolean>(false);
-  const [mode, setMode] = useState<string>(qs.mode + '' ?? 'light');
+  const [mode, setMode] = useState<string>('light');
   const toggleMode = () => {
     const _mode = mode === 'dark' ? 'light' : 'dark';
 
-    setMode(`${_mode}`);
+    setMode(_mode);
   };
 
   const getCalendar = async () => {
@@ -43,10 +74,23 @@ const Timong = () => {
     }
   };
 
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: mode === 'dark' ? 'dark' : 'light',
+        },
+        myPalette: mode === 'dark' ? themes.dark : themes.light,
+      }),
+    [mode]
+  );
+
   useEffect(() => {
+    console.log(mode);
+
     if (mode === 'dark')
-      document.body.style.background = themes.dark.background;
-    else document.body.style.background = themes.light.background;
+      document.body.style.background = theme.myPalette.background;
+    else document.body.style.background = theme.myPalette.background;
   }, [mode]);
 
   useEffect(() => {
@@ -62,9 +106,7 @@ const Timong = () => {
 
   return (
     <>
-      <ThemeContext.Provider
-        value={mode === 'dark' ? themes.dark : themes.light}
-      >
+      <ThemeProvider theme={theme}>
         <Header toggleMode={toggleMode} calendarName={calendarName} />
         {!calendar ? (
           <div
@@ -92,7 +134,7 @@ const Timong = () => {
             <Users />
           </>
         )}
-      </ThemeContext.Provider>
+      </ThemeProvider>
     </>
   );
 };

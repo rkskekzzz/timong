@@ -13,10 +13,8 @@ const Cloud = styled.div<{ bgcolor: string }>`
   }
 
   .cloud {
-    width: 100%;
-    height: 100%;
-    max-width: 30vw;
-    max-height: 10vw;
+    width: 30vw;
+    height: 10vw;
     background: ${(props) => props.bgcolor ?? 'white'};
     border-radius: 100px;
     position: absolute;
@@ -30,11 +28,9 @@ const Cloud = styled.div<{ bgcolor: string }>`
     background: ${(props) => props.bgcolor ?? 'white'};
     top: -10vw;
     left: 6vw;
-    width: 100%;
-    height: 100%;
-    max-width: 18vw;
-    max-height: 18vw;
-    border-radius: 100px;
+    width: 18vw;
+    height: 18vw;
+    border-radius: 50%;
   }
 
   .x1 {

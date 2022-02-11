@@ -1,16 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Styled from './Switch.styled';
-import { ThemeContext } from '../Timong';
+import { useTheme } from '@mui/material';
 
 const Switch: React.FC<{
   isChecked: boolean;
   isShowSwitch: boolean;
   handleToggle: () => void;
 }> = ({ isChecked, isShowSwitch, handleToggle }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   return (
-    <Styled.Switch bgcolor={theme.backgroundSwitch} isShow={isShowSwitch}>
+    <Styled.Switch
+      bgcolor={theme.myPalette.backgroundSwitch}
+      isShow={isShowSwitch}
+    >
       <Styled.SwitchInput
         type="checkbox"
         className={`switch-checkbox`}
@@ -20,8 +23,12 @@ const Switch: React.FC<{
       />
       <Styled.SwitchSelected isChecked={isChecked}></Styled.SwitchSelected>
       <Styled.SwitchLabel htmlFor={`switch-input`}>
-        <Styled.SwitchText color={theme.foregroundSwitch}>O</Styled.SwitchText>
-        <Styled.SwitchText color={theme.foregroundSwitch}>X</Styled.SwitchText>
+        <Styled.SwitchText color={theme.myPalette.foregroundSwitch}>
+          O
+        </Styled.SwitchText>
+        <Styled.SwitchText color={theme.myPalette.foregroundSwitch}>
+          X
+        </Styled.SwitchText>
       </Styled.SwitchLabel>
     </Styled.Switch>
   );

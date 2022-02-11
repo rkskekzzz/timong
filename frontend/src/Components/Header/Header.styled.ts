@@ -20,7 +20,8 @@ const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
     if (!props.isPinned)
       return `
         transition: transform 250ms linear 0ms, border-radius 250ms, background 250ms;
-        transform: scale(60%);
+        transform: scale(0.6);
+        -webkit-transform: scale(0.6);
         border-radius: 50px;
         background: #f995f0b8;
       `;
