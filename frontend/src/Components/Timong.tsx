@@ -10,6 +10,7 @@ import { CalendarService } from 'src/Network/TimongService';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Button } from '@mui/material';
 import { UserContext } from 'src/App';
+import { useLocation } from 'react-router-dom';
 
 export const ThemeContext = React.createContext(themes.light);
 
@@ -18,6 +19,7 @@ const qs = queryString.parse(location.search, {
 });
 
 const Timong = () => {
+  const location = useLocation();
   const navi = useNavigate();
   const { dispatch } = useContext(UserContext);
   const [reLoad, setReLoad] = useState<boolean>(false);
@@ -31,7 +33,7 @@ const Timong = () => {
   };
 
   const getCalendar = async () => {
-    const result = await CalendarService.getCalendar(window.location.pathname);
+    const result = await CalendarService.getCalendar(location.pathname);
     if (result) {
       dispatch({ type: 'INIT', users: result.users });
       setCalendarName(result.name);

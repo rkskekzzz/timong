@@ -7,6 +7,7 @@ import { UserContext } from 'src/App';
 import { ThemeContext } from '../Timong';
 import { ScheduleService } from 'src/Network/ScheduleService';
 import { User, Valid } from 'src/Interface/UserType';
+import { useLocation } from 'react-router-dom';
 
 type UserWithValid = {
   info: User;
@@ -28,6 +29,7 @@ function DayBoxLogic({
   month: Month;
   drawerHandler: DrawerHandler;
 }) {
+  const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
 
   const reducedUser = state.users.reduce((user: UserWithValid[], cur: User) => {
@@ -54,7 +56,7 @@ function DayBoxLogic({
       valid: globalSelectedUser.valid ? 'POSIBLE' : 'IMPOSIBLE',
     });
     const result = await ScheduleService.updateSchedules(
-      window.location.pathname,
+      location.pathname,
       globalSelectedUser.user
     );
     console.log(result);

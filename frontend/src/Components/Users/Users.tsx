@@ -19,8 +19,10 @@ import { ThemeContext } from '../Timong';
 import { UserService } from 'src/Network/UserService';
 import Switch from '../Switch/Switch';
 import arrow from 'src/assets/arrow.png';
+import { useLocation } from 'react-router-dom';
 
 const Users = () => {
+  const location = useLocation();
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isAdd, setIsAdd] = useState<boolean>(false);
@@ -146,13 +148,10 @@ const Users = () => {
           return;
         }
       }
-      const result: User = await UserService.createUser(
-        window.location.pathname,
-        {
-          name: user.name,
-          color: user.color,
-        }
-      );
+      const result: User = await UserService.createUser(location.pathname, {
+        name: user.name,
+        color: user.color,
+      });
       dispatch({ type: 'ADD', user: result });
       setIsAdd(true);
     },
