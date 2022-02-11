@@ -16,8 +16,9 @@ const Header: React.FC<{ toggleMode: () => void; calendarName: string }> = ({
   const theme = useTheme();
 
   const handleScroll = useCallback(() => {
+    console.log(window.scrollY);
     if (window.scrollY < 10) {
-      setIsPinned(false);
+      setIsPinned(true);
     }
     if (window.scrollY < prev_windows_scrollY) {
       prev_windows_scrollY = window.scrollY;
@@ -30,6 +31,12 @@ const Header: React.FC<{ toggleMode: () => void; calendarName: string }> = ({
 
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
+
+  useEffect(() => {
+    if (window.scrollY < 10) {
+      setIsPinned(true);
+    }
+  }, [isPinned]);
 
   useEffect(() => {
     window.addEventListener('scroll', throttle(handleScroll, 300));

@@ -17,10 +17,10 @@ const UserList = styled.div`
 `;
 
 const UserDrawer = styled(SwipeableDrawer)<{ bgcolor: string }>`
-  .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
+  .MuiBackdrop-root {
     background-color: ${(props) => props.bgcolor || '#00000080'};
   }
-  .css-9emuhu-MuiPaper-root-MuiDrawer-paper {
+  .MuiPaper-root {
     background-color: #ffffff;
     border-radius: 20px 20px 0 0;
     width: calc(100% - 60px);
