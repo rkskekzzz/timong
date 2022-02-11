@@ -6,7 +6,7 @@ import { themes } from 'src/theme';
 import { CalendarService } from 'src/Network/TimongService';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from 'src/App';
-import './Starter.css';
+import GlobalStyled from '../GlobalStyled.styled';
 
 const StarterInputs = () => {
   const { dispatch } = useContext(UserContext);
@@ -115,15 +115,15 @@ const StarterInputs = () => {
 const Starter = () => {
   return (
     <Styled.Starter style={{ background: themes.main.background }}>
-      <div className="box">
+      <GlobalStyled.Cloud bgcolor="white">
         <div className="clouds">
-          <div className="cloud x1"></div>
-          <div className="cloud x2"></div>
-          <div className="cloud x3"></div>
-          <div className="cloud x4"></div>
-          <div className="cloud x5"></div>
+          <div className="cloud x1" />
+          <div className="cloud x2" />
+          <div className="cloud x3" />
+          <div className="cloud x4" />
+          <div className="cloud x5" />
         </div>
-      </div>
+      </GlobalStyled.Cloud>
       <Styled.StarterModalTitle style={{ color: themes.main.theme }}>
         <b className="t">T</b>
         <i>T</i>
