@@ -98,7 +98,6 @@ const StarterInputs = () => {
         <input autoComplete="false" value={value} onChange={handleValue} />
         <p onClick={handleAddValue}>{'>'}</p>
       </Styled.StarterModalNumberBox> */}
-
       <Styled.StarterModalButton
         onClick={handleSubmitButton}
         variant="contained"
