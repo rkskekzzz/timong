@@ -14,7 +14,6 @@ router.get('/:calendar_id', CalendarController.getOne);
 
 // 🙍‍♂️ 유저 라우터
 router.post('/:calendar_id/users', UserController.create);
-router.get('/:calendar_id/users', UserController.getAll);
 router.delete('/:calendar_id/users/:user_id', UserController.remove);
 
 // 🎏 스케쥴 라우터
