@@ -166,6 +166,7 @@ const Users = () => {
     setSelectedUser(users[users.length - 1]);
     const timer = setTimeout(() => {
       setIsShowSwitch(true);
+      setIsAdd(false);
     }, 10);
     return () => {
       clearTimeout(timer);
