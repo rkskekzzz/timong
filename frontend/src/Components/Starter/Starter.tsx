@@ -24,6 +24,9 @@ const StarterInputs = () => {
       console.log('submit');
     },
   });
+  const handleSubmit = useCallback((event) => {
+    event.preventDefault();
+  }, []);
 
   const handleSubmitButton = useCallback(async () => {
     if (formik.values.calendarName === '') {
@@ -78,7 +81,7 @@ const StarterInputs = () => {
   // );
 
   return (
-    <Styled.StarterModalForm>
+    <Styled.StarterModalForm onSubmit={handleSubmit}>
       <Input
         error={isEmpty ? true : false}
         autoComplete="false"
@@ -99,6 +102,7 @@ const StarterInputs = () => {
         <p onClick={handleAddValue}>{'>'}</p>
       </Styled.StarterModalNumberBox> */}
       <Styled.StarterModalButton
+        type="submit"
         onClick={handleSubmitButton}
         variant="contained"
         color="primary"

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Styled from './AddModal.styled';
 import { useFormik } from 'formik';
 import { User } from 'src/Interface/UserType';
@@ -94,9 +94,12 @@ function ModalBoxFormLogic({
       setClr(_e.hex);
     }
   };
+  const handleSubmit = useCallback((event) => {
+    event.preventDefault();
+  }, []);
 
   return (
-    <Styled.ModalBoxForm>
+    <Styled.ModalBoxForm onSubmit={handleSubmit}>
       <CirclePicker
         width=""
         color={clr}
@@ -113,6 +116,7 @@ function ModalBoxFormLogic({
         inputProps={{ maxLength: 10 }}
       />
       <Styled.ModalBoxButton
+        type="submit"
         onClick={handleSubmitButton}
         variant="contained"
         color="primary"
