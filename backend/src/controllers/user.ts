@@ -11,13 +11,6 @@ async function create(req: Request, res: Response): Promise<Response> {
   return res.status(200).json(calendar);
 }
 
-async function getAll(req: Request, res: Response): Promise<Response> {
-  const calendar_id: string = req.params.calendar_id;
-  const users = await UserService.getAll(calendar_id);
-
-  return res.status(200).json(users);
-}
-
 async function remove(req: Request, res: Response): Promise<Response> {
   const calendar_id: string = req.params.calendar_id;
   const user_id: string = req.params.user_id;
@@ -28,6 +21,5 @@ async function remove(req: Request, res: Response): Promise<Response> {
 
 export const UserController = {
   create,
-  getAll,
   remove,
 };

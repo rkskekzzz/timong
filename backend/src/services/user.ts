@@ -19,12 +19,6 @@ async function create(
   return calendar.users[calendar.users.length - 1];
 }
 
-async function getAll(calendar_id: string): Promise<User[]> {
-  const calendar = await CalendarService.getOne(calendar_id);
-
-  return calendar.users;
-}
-
 function getIndexOrFail(
   calendar: Calendar & Document,
   user_id: string
@@ -50,7 +44,6 @@ async function remove(calendar_id: string, user_id: string): Promise<Calendar> {
 
 export const UserService = {
   create,
-  getAll,
   getIndexOrFail,
   remove,
 };
