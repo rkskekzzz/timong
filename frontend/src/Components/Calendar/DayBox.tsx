@@ -16,7 +16,10 @@ const DayBox: React.FC<{
   const dayOfWeek = day.moment.day();
 
   return (
-    <Styled.CalendarBox onClick={handleClick} id="test">
+    <Styled.CalendarBox
+      onClick={isThisMonth ? handleClick : () => null}
+      id="test"
+    >
       <Styled.CalendarDateLabel isThisMonth={isThisMonth} dayOfWeek={dayOfWeek}>
         {day.moment.format('D')}
       </Styled.CalendarDateLabel>

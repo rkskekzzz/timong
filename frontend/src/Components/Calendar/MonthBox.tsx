@@ -55,11 +55,10 @@ function DayBoxLogic({
       day: day.moment,
       valid: globalSelectedUser.valid ? 'POSIBLE' : 'IMPOSIBLE',
     });
-    const result = await ScheduleService.updateSchedules(
+    await ScheduleService.updateSchedules(
       location.pathname,
       globalSelectedUser.user
     );
-    console.log(result);
   };
   const handleClick = useCallback(() => {
     if (!globalSelectedUser.user) showUsers();
