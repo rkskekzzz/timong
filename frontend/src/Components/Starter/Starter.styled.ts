@@ -52,7 +52,7 @@ const StarterModalForm = styled.form`
   align-items: center;
   gap: 30px;
   b {
-    position: absolute;
+    position: fixed;
     bottom: 50px;
     font-size: 0.7rem;
     text-align: center;
