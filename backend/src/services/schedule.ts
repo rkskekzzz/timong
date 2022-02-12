@@ -9,7 +9,7 @@ async function update(
   updateSchduleDTO: UpdateSchduleDTO
 ): Promise<Calendar> {
   const calendar = await CalendarService.getOneDocument(calendar_id);
-  const index = UserService.getIndexOrFail(calendar, user_id);
+  const index = UserService.findIndexOrFail(calendar, user_id);
   const user = calendar.users[index];
   user.schedules = updateSchduleDTO.schedules;
 

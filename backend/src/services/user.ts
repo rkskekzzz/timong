@@ -16,7 +16,7 @@ async function create(
   return calendar.users[calendar.users.length - 1];
 }
 
-function getIndexOrFail(
+function findIndexOrFail(
   calendar: Calendar & Document,
   user_id: string
 ): number {
@@ -32,7 +32,7 @@ function getIndexOrFail(
 
 async function remove(calendar_id: string, user_id: string): Promise<Calendar> {
   const calendar = await CalendarService.getOneDocument(calendar_id);
-  const user_index = getIndexOrFail(calendar, user_id);
+  const user_index = findIndexOrFail(calendar, user_id);
 
   calendar.users = calendar.users.filter((_, index) => index !== user_index);
 
@@ -41,6 +41,6 @@ async function remove(calendar_id: string, user_id: string): Promise<Calendar> {
 
 export const UserService = {
   create,
-  getIndexOrFail,
+  findIndexOrFail,
   remove,
 };
