@@ -1,5 +1,4 @@
 import { UpdateSchduleDTO } from '../interface/dto';
-import ApiError from '../modules/error';
 import { Calendar } from '../interface/entity';
 import { CalendarService } from './calendar';
 import { UserService } from '.';

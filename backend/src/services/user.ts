@@ -1,4 +1,4 @@
-import { CreateUserDTO, UpdateUserDTO } from '../interface/dto';
+import { CreateUserDTO } from '../interface/dto';
 import ApiError from '../modules/error';
 import { Calendar, User } from '../interface/entity';
 import { Document } from 'mongoose';
@@ -20,9 +20,9 @@ async function create(
 }
 
 async function getAll(calendar_id: string): Promise<User[]> {
-  return await CalendarService.getOne(calendar_id).then(
-    (calendar) => calendar.users
-  );
+  const calendar = await CalendarService.getOne(calendar_id);
+
+  return calendar.users;
 }
 
 function getIndexOrFail(
@@ -39,26 +39,9 @@ function getIndexOrFail(
   return index;
 }
 
-async function update(
-  calendar_id: string,
-  user_id: string,
-  updateUserDTO: UpdateUserDTO
-): Promise<Calendar> {
-  const calendar = await CalendarService.getOneDocument(calendar_id);
-  const index = getIndexOrFail(calendar, user_id);
-  const user = calendar.users[index];
-  calendar.users[index] = {
-    ...user,
-    ...updateUserDTO,
-  };
-
-  return calendar.save();
-}
-
 async function remove(calendar_id: string, user_id: string): Promise<Calendar> {
   const calendar = await CalendarService.getOneDocument(calendar_id);
   const user_index = getIndexOrFail(calendar, user_id);
-  console.log('hi : ', user_index);
 
   calendar.users = calendar.users.filter((_, index) => index !== user_index);
 
@@ -69,6 +52,5 @@ export const UserService = {
   create,
   getAll,
   getIndexOrFail,
-  update,
   remove,
 };
