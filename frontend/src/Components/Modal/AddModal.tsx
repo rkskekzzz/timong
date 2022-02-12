@@ -6,6 +6,7 @@ import { User } from 'src/Interface/UserType';
 import { Input, Modal } from '@mui/material';
 import { CirclePicker } from 'react-color';
 import { validForm } from '../../Utils';
+import { useTheme } from '@mui/material';
 
 type Color = object & {
   hex: string;
@@ -71,7 +72,10 @@ function ModalBoxFormLogic({
   };
   const handleSubmitButton = () => {
     if (isError.color || isError.name) return;
-
+    if (clr === '#ffffff') {
+      alert('Pick the Color!');
+      return;
+    }
     try {
       validForm(formik.values);
     } catch (error) {
@@ -125,6 +129,7 @@ const AddModal: React.FC<{
   addUser: (user: User) => void;
   isShowModal: boolean;
 }> = ({ handleModalClose, addUser, isShowModal }) => {
+  const theme = useTheme();
   return (
     <Modal
       open={isShowModal}
@@ -132,7 +137,7 @@ const AddModal: React.FC<{
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Styled.ModalBox>
+      <Styled.ModalBox style={{ background: theme.myPalette.backgroundModal }}>
         <ModalBoxFormLogic
           handleModalClose={handleModalClose}
           addUser={addUser}

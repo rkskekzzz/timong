@@ -18,6 +18,7 @@ declare module '@mui/material/styles' {
       mode: string;
       foregroundHeader: string;
       backgroundHeader: string;
+      backgroundModal: string;
       backDropHeader: string;
       foreground: string;
       iconSmall: string;
@@ -35,6 +36,7 @@ declare module '@mui/material/styles' {
       mode?: string;
       foregroundHeader?: string;
       backgroundHeader?: string;
+      backgroundModal?: string;
       backDropHeader?: string;
       foreground?: string;
       iconSmall?: string;
