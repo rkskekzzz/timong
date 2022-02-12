@@ -9,13 +9,10 @@ async function create(
   createUserDTO: CreateUserDTO
 ): Promise<User> {
   const calendar = await CalendarService.getOneDocument(calendar_id);
-  const user: User = {
-    schedules: [],
-    ...createUserDTO,
-  };
 
-  calendar.users.push(user);
+  calendar.users.push(createUserDTO);
   await calendar.save();
+
   return calendar.users[calendar.users.length - 1];
 }
 
