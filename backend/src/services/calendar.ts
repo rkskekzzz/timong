@@ -1,4 +1,4 @@
-import { CreateCalendarDTO, UpdateCalendarDTO } from "../interface/dto";
+import { CreateCalendarDTO } from "../interface/dto";
 import CalendarModel from "../db/model";
 import ApiError from "../modules/error";
 import { Calendar } from "../interface/entity";
@@ -22,19 +22,8 @@ async function getOne(calendar_id: string): Promise<Calendar> {
   return getOneDocument(calendar_id);
 }
 
-async function update(
-  calendar_id: string,
-  updateCalendarDTO: UpdateCalendarDTO
-): Promise<Calendar> {
-  const calendar = await getOneDocument(calendar_id);
-  return calendar.update({
-    ...updateCalendarDTO,
-  });
-}
-
 export const CalendarService = {
   create,
   getOne,
   getOneDocument,
-  update,
 };

@@ -1,17 +1,11 @@
 import { Schema, model } from "mongoose";
-import { Calendar, CalendarType, ScheduleValidType } from "../interface/entity";
+import { Calendar, ScheduleValidType } from "../interface/entity";
 
 const schema = new Schema<Calendar>(
   {
     name: {
       type: String,
       required: true,
-    },
-    type: {
-      type: String,
-      required: true,
-      enum: CalendarType,
-      default: CalendarType.MONTHLY,
     },
     start: { type: String, required: false },
     end: { type: String, required: false },
