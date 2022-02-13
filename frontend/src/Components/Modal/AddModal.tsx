@@ -116,7 +116,7 @@ function ModalBoxFormLogic({
         inputProps={{ maxLength: 10 }}
       />
       <Styled.ModalBoxButton
-        type="submit"
+        // type="submit"
         onClick={handleSubmitButton}
         variant="contained"
         color="primary"
