@@ -6,9 +6,11 @@ import 'express-async-errors';
 async function create(req: Request, res: Response): Promise<Response> {
   const calendar_id: string = req.params.calendar_id;
   const createUserDTO: CreateUserDTO = req.body;
-  const calendar = await UserService.create(calendar_id, createUserDTO);
 
-  return res.status(200).json(calendar);
+  const calendar = await UserService.create(calendar_id, createUserDTO);
+  const newUser = calendar.users[calendar.users.length - 1];
+
+  return res.status(200).json(newUser);
 }
 
 async function remove(req: Request, res: Response): Promise<Response> {

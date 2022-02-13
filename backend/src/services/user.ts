@@ -1,19 +1,18 @@
 import { CreateUserDTO } from '../interface/dto';
 import ApiError from '../modules/error';
-import { Calendar, User } from '../interface/entity';
+import { Calendar } from '../interface/entity';
 import { Document } from 'mongoose';
 import { CalendarService } from './calendar';
 
 async function create(
   calendar_id: string,
   createUserDTO: CreateUserDTO
-): Promise<User> {
+): Promise<Calendar> {
   const calendar = await CalendarService.getOneDocument(calendar_id);
 
   calendar.users.push(createUserDTO);
-  await calendar.save();
 
-  return calendar.users[calendar.users.length - 1];
+  return calendar.save();
 }
 
 function findIndexOrFail(
