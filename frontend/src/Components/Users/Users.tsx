@@ -171,7 +171,7 @@ const Users = () => {
       if (!dispatch) throw new Error('no dispatch');
       for (const _user of users) {
         if (_user.name === user.name) {
-          alert('User name is aready exit');
+          alert('User name is aready exist');
           return;
         }
       }
