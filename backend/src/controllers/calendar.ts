@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
-import { CalendarService } from "../services";
+import { CalendarService, UserService } from "../services";
 import { CreateCalendarDTO } from "../interface/dto";
+import { sampleUser } from "../db/sample";
 import "express-async-errors";
 
 async function create(req: Request, res: Response): Promise<Response> {
   const createCalendarDTO: CreateCalendarDTO = req.body;
-  const calendar = await CalendarService.create(createCalendarDTO);
+  let calendar = await CalendarService.create(createCalendarDTO);
+
+  if (calendar && calendar._id) {
+    calendar = await UserService.create(calendar._id!, sampleUser);
+  }
 
   return res.status(200).json(calendar);
 }
