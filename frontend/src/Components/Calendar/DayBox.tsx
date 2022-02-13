@@ -48,4 +48,4 @@ const DayBox: React.FC<{
   );
 };
 
-export default React.memo(DayBox);
+export default DayBox;

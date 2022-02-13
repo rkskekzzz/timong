@@ -112,4 +112,4 @@ const MonthBox: React.FC<{ month: Month; drawerHandler: DrawerHandler }> = ({
   );
 };
 
-export default React.memo(MonthBox);
+export default MonthBox;

@@ -182,4 +182,4 @@ const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
   );
 };
 
-export default React.memo(Calendar);
+export default Calendar;
