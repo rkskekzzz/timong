@@ -185,6 +185,10 @@ const Users = () => {
     [dispatch, users]
   );
   useEffect(() => {
+    if (isShow) window.document.body.style.overflow = 'hidden';
+    else window.document.body.style.overflow = '';
+  }, [isShow]);
+  useEffect(() => {
     globalSelectedUser.user = selectedUser;
     globalSelectedUser.valid = isChecked;
   }, [selectedUser, isChecked]);
