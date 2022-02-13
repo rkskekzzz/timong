@@ -106,6 +106,12 @@ const Users = () => {
     },
     [setTouchStart]
   );
+  const handleMouseStart = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      setTouchStart(e.clientX);
+    },
+    [setTouchStart]
+  );
   const handleTouchMove = useCallback(
     (e: React.TouchEvent<HTMLSpanElement>, index: number) => {
       if (touchStart - e.targetTouches[0].clientX > 50) {
@@ -118,7 +124,26 @@ const Users = () => {
     },
     [touchStart, setIsSwipe, setIsSwipeMore]
   );
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLSpanElement>, index: number) => {
+      if (touchStart - e.clientX > 50) {
+        setIsSwipe(index);
+      }
+      if (touchStart - e.clientX > 200) {
+        setIsSwipeMore(true);
+        setIsSwipe(-1);
+      }
+    },
+    [touchStart, setIsSwipe, setIsSwipeMore]
+  );
   const handleTouchEnd = useCallback(
+    (index: number, user: User) => {
+      isSwipeMore && handleRowDelButton(index, user);
+      setIsSwipeMore(false);
+    },
+    [isSwipeMore, handleRowDelButton, setIsSwipeMore]
+  );
+  const handleMouseEnd = useCallback(
     (index: number, user: User) => {
       isSwipeMore && handleRowDelButton(index, user);
       setIsSwipeMore(false);
@@ -235,6 +260,13 @@ const Users = () => {
                     }}
                     onTouchEnd={() => {
                       handleTouchEnd(index, user);
+                    }}
+                    onMouseDown={handleMouseStart}
+                    onMouseMove={(e) => {
+                      handleMouseMove(e, index);
+                    }}
+                    onMouseUp={() => {
+                      handleMouseEnd(index, user);
                     }}
                     willDelete={willDelete === index ? true : false}
                     isSwipe={isSwipe === index ? true : false}
