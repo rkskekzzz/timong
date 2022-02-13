@@ -20,11 +20,13 @@ app.use("/calendar", routes);
 app.use(error.errorPageNotFound);
 app.use(error.errorHandler);
 
-mongooseConnect();
-app.listen(config.host.port, () => {
-  console.log(`
-  ################################################
-  🛡️  Server listening on port: ${config.host.port}🛡️
-  ################################################
-`);
+mongooseConnect().then(() => {
+  console.log(`DB connected!`);
+  app.listen(config.host.port, () => {
+    console.log(`
+      ################################################
+      🛡️  Server listening on port: ${config.host.port}🛡️
+      ################################################
+    `);
+  });
 });
