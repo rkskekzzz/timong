@@ -126,12 +126,13 @@ const Users = () => {
   );
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLSpanElement>, index: number) => {
+      if (touchStart === 0) return;
       if (touchStart - e.clientX > 50) {
         setIsSwipe(index);
       }
       if (touchStart - e.clientX > 200) {
-        setIsSwipeMore(true);
         setIsSwipe(-1);
+        setIsSwipeMore(true);
       }
     },
     [touchStart, setIsSwipe, setIsSwipeMore]
@@ -145,6 +146,7 @@ const Users = () => {
   );
   const handleMouseEnd = useCallback(
     (index: number, user: User) => {
+      setTouchStart(0);
       isSwipeMore && handleRowDelButton(index, user);
       setIsSwipeMore(false);
     },
@@ -168,8 +170,8 @@ const Users = () => {
     async (user: User) => {
       if (!dispatch) throw new Error('no dispatch');
       for (const _user of users) {
-        if (_user.name === user.name || _user.color === user.color) {
-          alert('User name or color is aready exit');
+        if (_user.name === user.name) {
+          alert('User name is aready exit');
           return;
         }
       }
@@ -192,7 +194,7 @@ const Users = () => {
     const timer = setTimeout(() => {
       setIsShowSwitch(true);
       setIsAdd(false);
-    }, 10);
+    }, 0);
     return () => {
       clearTimeout(timer);
     };
