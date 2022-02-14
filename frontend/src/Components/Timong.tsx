@@ -60,8 +60,8 @@ const Timong = () => {
   const [reLoad, setReLoad] = useState<boolean>(false);
   const [calendarName, setCalendarName] = useState<string>('');
   const [calendar, setCalendar] = useState<boolean>(false);
-  const [mode, setMode] = useState<string>('light');
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const [mode, setMode] = useState<string>(prefersDarkMode ? 'dark' : 'light');
   const toggleMode = () => {
     const _mode = mode === 'dark' ? 'light' : 'dark';
     setThemeChanged(true);

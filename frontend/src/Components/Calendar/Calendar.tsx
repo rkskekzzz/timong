@@ -119,6 +119,7 @@ const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
   };
   const rowRenderer = ({ index, style }) => {
     const month = year[index];
+
     return (
       <div style={style} key={month.monthMoment.format('x') + index}>
         <MonthBox month={month} drawerHandler={drawerHandler} />
@@ -129,6 +130,7 @@ const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
   const getRowHeight = ({ index }) => {
     return 60 + year[index].week.length * 80 + 30;
   };
+
   /**
    * react-vertualized (https://bvaughn.github.io/react-virtualized/#/components/AutoSizer)
    *
@@ -147,7 +149,7 @@ const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
    */
   return (
     <Box bgcolor={theme.myPalette.background}>
-      <WindowScroller style={{ width: '100%' }}>
+      <WindowScroller mode={mode} style={{ width: '100%' }}>
         {({ width, height, isScrolling, scrollTop, registerChild }) => (
           /**
            * WindowScroller 와 AutoSizer를 함께 쓰기 위해선, 아래왁 같은 방식을 활용한다.
@@ -168,7 +170,6 @@ const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
                   rowRenderer={rowRenderer}
                   scrollTop={scrollTop}
                   width={width}
-                  mode={mode}
                   style={{
                     maxWidth: '400px',
                   }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
