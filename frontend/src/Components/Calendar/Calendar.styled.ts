@@ -16,13 +16,16 @@ const UserList = styled.div`
   gap: 10px;
 `;
 
-const UserDrawer = styled(SwipeableDrawer)<{ bgcolor: string }>`
+const UserDrawer = styled(SwipeableDrawer)<{
+  bgcolor: string;
+  bgdropColor: string;
+}>`
   .MuiBackdrop-root {
-    background-color: ${(props) => props.bgcolor || '#00000080'};
+    background-color: ${(props) => props.bgdropColor || '#00000080'};
   }
   .MuiPaper-root {
-    background-color: #ffffff;
-    border-radius: 20px 20px 0 0;
+    background-color: ${(props) => props.bgcolor || '#00000080'};
+    border-radius: 20px 20px 0px 0px;
     width: calc(100% - 60px);
     padding: 30px;
   }

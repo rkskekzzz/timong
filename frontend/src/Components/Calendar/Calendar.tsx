@@ -7,8 +7,10 @@ import { Year, Day } from 'src/Interface/DateType';
 import { buildDate } from 'src/Utils';
 import { User, Valid } from 'src/Interface/UserType';
 import { useTheme, Box } from '@mui/material';
+import { makeStyles } from '@mui/material';
 
 import { AutoSizer, List, WindowScroller } from 'react-virtualized';
+
 type UserWithValid = {
   info: User;
   valid: Valid;
@@ -170,7 +172,8 @@ const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
         onOpen={handleDrawerOpen}
         swipeAreaWidth={0}
         disableSwipeToOpen={false}
-        bgcolor={theme.myPalette.backDrop}
+        bgcolor={theme.myPalette.background}
+        bgdropColor={theme.myPalette.backDrop}
         ModalProps={{
           keepMounted: true,
         }}
