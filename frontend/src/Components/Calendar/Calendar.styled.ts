@@ -17,7 +17,10 @@ const UserList = styled.div`
 
   .list {
     display: flex;
+    flex-direction: row;
+
     span {
+      flex-basis: 50vw;
       flex-grow: 1;
     }
   }
