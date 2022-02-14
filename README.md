@@ -121,7 +121,7 @@ New Calendar 버튼을 통해 새 달력을 만들어서 공유할 수 있어요
 
 # Timong을 만들면서 배운 것은?
 
-## Frontend by suhshin
+## **Frontend** by suhshin
 
 이전 프로젝트와 다르게 디테일 및 완성도에 집중했습니다. 클라이언트를 고려하여 최적화된 랜더링과 직관적인 인터렉션을 설계하려고 노력했습니다.
 
@@ -178,6 +178,16 @@ New Calendar 버튼을 통해 새 달력을 만들어서 공유할 수 있어요
 
 이번 프로젝트에서는 Letsencrypt를 활용해서 12시간마다 인증서를 갱신해주는 스크립트를 사용했습니다. Letsencrypte를 사용하면 multidomain까지 무료로 사용할 수 있어서 적합하다고 생각했습니다.
 
-## Backend by ycha
+## **Backend** by ycha
+
+### 몽고 DB 사용
+
+지금까지 RDB만 사용했었는데, Nosql을 처음 사용해보았습니다.
+
+nested object를 처리하는게 익숙하지 않아서 조금 까다로웠습니다.
 
 ## **Deploy** by kilee
+
+AWS 라이트 세일을 사용하여 배포해보았습니다.
+
+[보러가기]](https://www.craft.do/s/t71WkFolHXjYXS)
