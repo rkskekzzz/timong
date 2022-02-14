@@ -168,6 +168,7 @@ const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
                   rowRenderer={rowRenderer}
                   scrollTop={scrollTop}
                   width={width}
+                  mode={mode}
                   style={{
                     maxWidth: '400px',
                   }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
