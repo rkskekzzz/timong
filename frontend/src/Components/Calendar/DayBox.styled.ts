@@ -9,16 +9,14 @@ const CalendarBox = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
   }
 `;
-const CalendarDateLabel = styled.div<{
+const CalendarDateLabel = styled.span<{
   isThisMonth: boolean;
   dayOfWeek: number;
 }>`
-  /* height: 10px; */
-  width: 100%;
-  font-size: 0.8rem;
+  font-size: 0.5rem;
   padding-left: 3px;
   display: ${(props) => (props.isThisMonth ? '' : 'none')};
   && {
