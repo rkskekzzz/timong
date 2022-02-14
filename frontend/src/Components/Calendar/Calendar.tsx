@@ -185,7 +185,7 @@ const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
         swipeAreaWidth={0}
         disableSwipeToOpen={false}
         bgcolor={theme.myPalette.background}
-        bgdropColor={theme.myPalette.backDrop}
+        bgdropcolor={theme.myPalette.backDrop}
         ModalProps={{
           keepMounted: true,
         }}
