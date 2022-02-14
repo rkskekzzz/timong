@@ -56,6 +56,7 @@ const Timong = () => {
   const location = useLocation();
   const navi = useNavigate();
   const { dispatch } = useContext(UserContext);
+  const [themeChanged, setThemeChanged] = useState<boolean>(false);
   const [reLoad, setReLoad] = useState<boolean>(false);
   const [calendarName, setCalendarName] = useState<string>('');
   const [calendar, setCalendar] = useState<boolean>(false);
@@ -63,7 +64,7 @@ const Timong = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const toggleMode = () => {
     const _mode = mode === 'dark' ? 'light' : 'dark';
-
+    setThemeChanged(true);
     setMode(_mode);
   };
 
@@ -82,18 +83,24 @@ const Timong = () => {
     () =>
       createTheme({
         palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
+          mode: (
+            themeChanged ? (mode === 'dark' ? false : true) : prefersDarkMode
+          )
+            ? 'dark'
+            : 'light',
         },
-        myPalette: prefersDarkMode ? themes.dark : themes.light,
+        myPalette: (
+          themeChanged ? (mode === 'dark' ? false : true) : prefersDarkMode
+        )
+          ? themes.dark
+          : themes.light,
       }),
-    [prefersDarkMode]
+    [prefersDarkMode, mode, themeChanged]
   );
 
   useEffect(() => {
-    if (prefersDarkMode)
-      document.body.style.background = theme.myPalette.background;
-    else document.body.style.background = theme.myPalette.background;
-  }, [prefersDarkMode]);
+    document.body.style.background = theme.myPalette.background;
+  }, [prefersDarkMode, mode, themeChanged]);
 
   useEffect(() => {
     if (reLoad || calendar) return;

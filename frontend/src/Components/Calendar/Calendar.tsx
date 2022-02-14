@@ -191,7 +191,7 @@ const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
         }}
       >
         <Styled.Puller />
-        {list()}
+        {/* {list()} */}
       </Styled.UserDrawer>
     </Box>
   );
