@@ -7,7 +7,6 @@ import { Year, Day } from 'src/Interface/DateType';
 import { buildDate } from 'src/Utils';
 import { User, Valid } from 'src/Interface/UserType';
 import { useTheme, Box } from '@mui/material';
-import { makeStyles } from '@mui/material';
 
 import { AutoSizer, List, WindowScroller } from 'react-virtualized';
 
