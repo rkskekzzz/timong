@@ -25,10 +25,10 @@ const UserList = styled.div`
 
 const UserDrawer = styled(SwipeableDrawer)<{
   bgcolor: string;
-  bgdropColor: string;
+  bgdropcolor: string;
 }>`
   .MuiBackdrop-root {
-    background-color: ${(props) => props.bgdropColor || '#00000080'};
+    background-color: ${(props) => props.bgdropcolor || '#00000080'};
   }
   .MuiPaper-root {
     background-color: ${(props) => props.bgcolor || '#00000080'};
