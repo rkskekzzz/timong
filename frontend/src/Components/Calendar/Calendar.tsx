@@ -109,7 +109,7 @@ const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
   };
 
   const scrollListener = (params) => {
-    if (params.scrollTop + params.clientHeight >= params.scrollHeight - 300) {
+    if (params.scrollTop + params.clientHeight >= params.scrollHeight - 1000) {
       // previous state
       setYear((year) => [
         ...year,
