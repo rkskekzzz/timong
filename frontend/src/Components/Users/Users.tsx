@@ -372,4 +372,4 @@ const Users = () => {
   );
 };
 
-export default React.memo(Users);
+export default Users;
