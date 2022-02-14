@@ -7,9 +7,10 @@ import Users from './Users';
 import { themes } from 'src/theme';
 import { CalendarService } from 'src/Network/TimongService';
 import CircularProgress from '@mui/material/CircularProgress';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 import { UserContext } from 'src/App';
 import { useLocation } from 'react-router-dom';
+import { useMediaQuery } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
@@ -59,6 +60,7 @@ const Timong = () => {
   const [calendarName, setCalendarName] = useState<string>('');
   const [calendar, setCalendar] = useState<boolean>(false);
   const [mode, setMode] = useState<string>('light');
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const toggleMode = () => {
     const _mode = mode === 'dark' ? 'light' : 'dark';
 
@@ -80,18 +82,18 @@ const Timong = () => {
     () =>
       createTheme({
         palette: {
-          mode: mode === 'dark' ? 'dark' : 'light',
+          mode: prefersDarkMode ? 'dark' : 'light',
         },
-        myPalette: mode === 'dark' ? themes.dark : themes.light,
+        myPalette: prefersDarkMode ? themes.dark : themes.light,
       }),
-    [mode]
+    [prefersDarkMode]
   );
 
   useEffect(() => {
-    if (mode === 'dark')
+    if (prefersDarkMode)
       document.body.style.background = theme.myPalette.background;
     else document.body.style.background = theme.myPalette.background;
-  }, [mode]);
+  }, [prefersDarkMode]);
 
   useEffect(() => {
     if (reLoad || calendar) return;
