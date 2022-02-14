@@ -11,8 +11,9 @@ const DayBox: React.FC<{
     valid: Valid;
   }[];
   isThisMonth: boolean;
+  isToday: boolean;
   handleClick: () => void;
-}> = ({ day, users, handleClick, isThisMonth }) => {
+}> = ({ day, users, handleClick, isThisMonth, isToday }) => {
   const dayOfWeek = day.moment.day();
 
   return (
@@ -20,30 +21,38 @@ const DayBox: React.FC<{
       onClick={isThisMonth ? handleClick : () => null}
       id="test"
     >
-      <Styled.CalendarDateLabel isThisMonth={isThisMonth} dayOfWeek={dayOfWeek}>
-        {day.moment.format('D')}
-      </Styled.CalendarDateLabel>
-      <Styled.CalendarDateCircleBox isThisMonth={isThisMonth}>
-        <Styled.GridWrap>
-          {users.map((user, index) => {
-            if (user.valid == 'POSIBLE') {
-              return (
-                <GlobalStyled.Circle
-                  key={user.info.name + index.toString()}
-                  color={user.info.color}
-                />
-              );
-            } else {
-              return (
-                <GlobalStyled.Xone
-                  key={user.info.name + index.toString()}
-                  color={user.info.color}
-                />
-              );
-            }
-          })}
-        </Styled.GridWrap>
-      </Styled.CalendarDateCircleBox>
+      <div
+        className="vflex"
+        style={isToday ? { background: '#fbb5ff3c', borderRadius: '5px' } : {}}
+      >
+        <Styled.CalendarDateLabel
+          isThisMonth={isThisMonth}
+          dayOfWeek={dayOfWeek}
+        >
+          {day.moment.format('D')}
+        </Styled.CalendarDateLabel>
+        <Styled.CalendarDateCircleBox isThisMonth={isThisMonth}>
+          <Styled.GridWrap>
+            {users.map((user, index) => {
+              if (user.valid == 'POSIBLE') {
+                return (
+                  <GlobalStyled.Circle
+                    key={user.info.name + index.toString()}
+                    color={user.info.color}
+                  />
+                );
+              } else {
+                return (
+                  <GlobalStyled.Xone
+                    key={user.info.name + index.toString()}
+                    color={user.info.color}
+                  />
+                );
+              }
+            })}
+          </Styled.GridWrap>
+        </Styled.CalendarDateCircleBox>
+      </div>
     </Styled.CalendarBox>
   );
 };

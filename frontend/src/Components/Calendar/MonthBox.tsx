@@ -8,6 +8,7 @@ import { useTheme } from '@mui/material';
 import { ScheduleService } from 'src/Network/ScheduleService';
 import { User, Valid } from 'src/Interface/UserType';
 import { useLocation } from 'react-router-dom';
+import moment from 'moment';
 
 type UserWithValid = {
   info: User;
@@ -65,7 +66,7 @@ function DayBoxLogic({
     else updateUser();
   }, [updateUser, day, showUsers]);
   const isThisMonth = month.monthMoment.isSame(day.moment, 'month');
-
+  const isToday = day.moment.isSame(moment(), 'day');
   return (
     <DayBox
       key={day.moment.format('X')}
@@ -73,6 +74,7 @@ function DayBoxLogic({
       users={reducedUser}
       handleClick={handleClick}
       isThisMonth={isThisMonth}
+      isToday={isToday}
     />
   );
 }

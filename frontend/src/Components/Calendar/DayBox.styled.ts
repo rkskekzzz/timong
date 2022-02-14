@@ -3,12 +3,20 @@ import styled from 'styled-components';
 const CalendarBox = styled.div`
   height: 100%;
   flex-basis: 200px;
+  border-bottom: 1px solid #dadada;
+  padding: 2px 0;
+  .vflex {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
 `;
 const CalendarDateLabel = styled.div<{
   isThisMonth: boolean;
   dayOfWeek: number;
 }>`
-  height: 16px;
+  /* height: 10px; */
   width: 100%;
   font-size: 0.8rem;
   padding-left: 3px;
@@ -32,8 +40,7 @@ const CalendarDateCircleBox = styled.div<{ isThisMonth: boolean }>`
   flex-wrap: wrap;
   justify-content: flex-start;
   height: 40px;
-  padding: 5px 0;
-  border-bottom: 1px solid #dadada;
+
   display: ${(props) => (props.isThisMonth ? '' : 'none')};
 `;
 
