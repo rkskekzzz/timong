@@ -64,25 +64,38 @@ const Calendar: React.FC<{ mode: string }> = ({ mode }) => {
     return (
       <Styled.UserList ref={touchRef}>
         <Styled.DayLabel>{dayLabel}</Styled.DayLabel>
-        <div>
-          {dayUsers.map((user) => {
-            return (
-              <Styled.UserBox key={user.info.name}>
-                {user.valid == 'POSIBLE' && (
-                  <>
-                    <GlobalStyled.Circle size="small" color={user.info.color} />
-                    <div>{user.info.name}</div>
-                  </>
-                )}
-                {user.valid == 'IMPOSIBLE' && (
-                  <>
-                    <GlobalStyled.Xone size="small" color={user.info.color} />
-                    <div>{user.info.name}</div>
-                  </>
-                )}
-              </Styled.UserBox>
-            );
-          })}
+        <div className="list">
+          <span>
+            {dayUsers.map((user) => {
+              return (
+                <Styled.UserBox key={user.info.name}>
+                  {user.valid == 'POSIBLE' && (
+                    <>
+                      <GlobalStyled.Circle
+                        size="small"
+                        color={user.info.color}
+                      />
+                      <div>{user.info.name}</div>
+                    </>
+                  )}
+                </Styled.UserBox>
+              );
+            })}
+          </span>
+          <span>
+            {dayUsers.map((user) => {
+              return (
+                <Styled.UserBox key={user.info.name}>
+                  {user.valid == 'IMPOSIBLE' && (
+                    <>
+                      <GlobalStyled.Xone size="small" color={user.info.color} />
+                      <div>{user.info.name}</div>
+                    </>
+                  )}
+                </Styled.UserBox>
+              );
+            })}
+          </span>
         </div>
       </Styled.UserList>
     );

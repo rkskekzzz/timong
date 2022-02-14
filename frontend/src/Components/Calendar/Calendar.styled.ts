@@ -14,6 +14,13 @@ const UserList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  .list {
+    display: flex;
+    span {
+      flex-grow: 1;
+    }
+  }
 `;
 
 const UserDrawer = styled(SwipeableDrawer)<{
