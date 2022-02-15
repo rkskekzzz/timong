@@ -13,8 +13,7 @@ const Header = styled.div<{ isPinned: boolean; bgcolor: string }>`
   justify-content: space-between;
   box-sizing: border-box;
 
-  box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px,
-    rgb(0 0 0 / 14%) 0px 4px 5px 0px, rgb(0 0 0 / 12%) 0px 1px 10px 0px;
+  box-shadow: rgb(0 0 0 / 16%) 0px 1px 10px 0px;
   background: ${(props) => props.bgcolor || '#f2f2f2'};
   ${(props) => {
     if (!props.isPinned)
