@@ -63,7 +63,7 @@ const Timong = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [mode, setMode] = useState<string>(prefersDarkMode ? 'dark' : 'light');
   const toggleMode = () => {
-    const _mode = mode === 'dark' ? 'light' : 'dark';
+    const _mode = mode === 'dark' ? 'dark' : 'light';
     setThemeChanged(true);
     setMode(_mode);
   };
@@ -100,7 +100,7 @@ const Timong = () => {
 
   useEffect(() => {
     document.body.style.background = theme.myPalette.background;
-  }, [prefersDarkMode, mode, themeChanged]);
+  }, [theme]);
 
   useEffect(() => {
     if (reLoad || calendar) return;
