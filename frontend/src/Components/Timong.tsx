@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import { UserContext } from 'src/App';
 import { useLocation } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
+import { CalendarType } from 'src/Interface/CalendarType';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
@@ -56,6 +57,7 @@ const Timong = () => {
   const location = useLocation();
   const navi = useNavigate();
   const { dispatch } = useContext(UserContext);
+  const [calendarType, setCalendarType] = useState<CalendarType>('Monthly');
   const [themeChanged, setThemeChanged] = useState<boolean>(false);
   const [reLoad, setReLoad] = useState<boolean>(false);
   const [calendarName, setCalendarName] = useState<string>('');
@@ -138,7 +140,7 @@ const Timong = () => {
         ) : (
           <>
             <Styled.Body>
-              <Calendar mode={mode} />
+              <Calendar mode={mode} calendarType={calendarType} />
             </Styled.Body>
             <Users />
           </>
