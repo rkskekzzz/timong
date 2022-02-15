@@ -43,6 +43,20 @@ const DialButton = styled.button<{ isShow: boolean }>`
         transition: box-shadow 500ms ease-in-out 0ms;
       `;
   }};
+
+  .buttonGuide {
+    font-family: 'Nanum Pen Script', cursive;
+    font-size: 1.5rem;
+    width: 200px;
+    right: 64px;
+    transform: translateY(10px);
+    position: absolute;
+    animation: ${fadeOut} 1s ease-out 1s;
+    animation-fill-mode: forwards;
+  }
+  .hide {
+    display: none;
+  }
 `;
 
 const DialBox = styled.div<{ isShow: boolean }>`

@@ -34,6 +34,7 @@ const Users = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(true);
   const [isShowSwitch, setIsShowSwitch] = useState<boolean>(false);
+  const [isButtonGuideShow, setIsButtonGuideShow] = useState<boolean>(true);
 
   const { state, dispatch } = useContext(UserContext);
   const theme = useTheme();
@@ -207,6 +208,14 @@ const Users = () => {
       clearTimeout(timer);
     };
   }, [users, isAdd]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsButtonGuideShow(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <>
@@ -252,6 +261,13 @@ const Users = () => {
               isShow={selectedUser ? true : false}
               onClick={handleDial}
             >
+              <div
+                className={isButtonGuideShow ? 'buttonGuide' : 'hide'}
+                style={{ color: theme.myPalette.foregroundHeader }}
+              >
+                {'Click to Select User '}
+                <img width={'20px'} src={arrow} alt="arrow" />
+              </div>
               <FaceIcon fontSize="large" sx={{ color: theme.myPalette.icon }} />
             </Styled.DialButton>
           )}
