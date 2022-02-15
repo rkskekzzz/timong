@@ -96,7 +96,7 @@ const Users = () => {
         UserService.deleteUser(window.location.pathname, user._id);
         dispatch({ type: 'DELETE', index: delIndex, user });
         setWillDelete(-1);
-      }, 1000);
+      }, 800);
     },
     [isShow, isAnimationDone, setIsSwipe, setWillDelete, dispatch, isSwipe]
   );
@@ -115,6 +115,7 @@ const Users = () => {
   );
   const handleTouchMove = useCallback(
     (e: React.TouchEvent<HTMLSpanElement>, index: number) => {
+      if (!isShow) return;
       if (touchStart - e.targetTouches[0].clientX > 50) {
         setIsSwipe(index);
       }
@@ -123,20 +124,20 @@ const Users = () => {
         setIsSwipe(-1);
       }
     },
-    [touchStart, setIsSwipe, setIsSwipeMore]
+    [touchStart, setIsSwipe, setIsSwipeMore, isShow]
   );
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLSpanElement>, index: number) => {
-      if (touchStart === 0) return;
+      if (touchStart === 0 || !isShow) return;
       if (touchStart - e.clientX > 50) {
         setIsSwipe(index);
       }
-      if (touchStart - e.clientX > 200) {
+      if (touchStart - e.clientX > 400) {
         setIsSwipe(-1);
         setIsSwipeMore(true);
       }
     },
-    [touchStart, setIsSwipe, setIsSwipeMore]
+    [touchStart, setIsSwipe, setIsSwipeMore, isShow]
   );
   const handleTouchEnd = useCallback(
     (index: number, user: User) => {
@@ -187,7 +188,10 @@ const Users = () => {
   );
   useEffect(() => {
     if (isShow) window.document.body.style.overflow = 'hidden';
-    else window.document.body.style.overflow = '';
+    else {
+      setIsSwipe(-1);
+      window.document.body.style.overflow = '';
+    }
   }, [isShow]);
   useEffect(() => {
     globalSelectedUser.user = selectedUser;
@@ -324,6 +328,7 @@ const Users = () => {
                     />
                     <Styled.DialRowDelButton>
                       <DeleteForeverRoundedIcon
+                        sx={{ color: theme.myPalette.icon }}
                         fontSize="medium"
                         onClick={() => {
                           handleRowDelButton(index, user);
