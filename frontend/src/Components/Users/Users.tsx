@@ -86,18 +86,19 @@ const Users = () => {
   );
   const handleRowDelButton = useCallback(
     (delIndex: number, user: User) => {
-      if (!isShow && !isAnimationDone) return;
-      setIsSwipe(-1);
+      // console.log(isShow, isAnimationDone, willDelete, isSwipe);
+      if (!isShow || isAnimationDone || isSwipe < 0) return;
       setWillDelete(delIndex);
+      setIsSwipe(-1);
       setTimeout(() => {
         if (!dispatch) throw new Error('no dispatch');
         // TODO: del 에러나면 alert띄우기
         UserService.deleteUser(window.location.pathname, user._id);
         dispatch({ type: 'DELETE', index: delIndex, user });
         setWillDelete(-1);
-      }, 500);
+      }, 1000);
     },
-    [isShow, isAnimationDone, setIsSwipe, setWillDelete, dispatch]
+    [isShow, isAnimationDone, setIsSwipe, setWillDelete, dispatch, isSwipe]
   );
 
   const handleTouchStart = useCallback(
