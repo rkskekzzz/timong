@@ -1,7 +1,7 @@
 import React, { useContext, useCallback } from 'react';
 import DayBox from './DayBox';
 import Styled from './MonthBox.styled';
-import { Month, Day } from '../../Interface/DateType';
+import { Month, Day } from 'src/Interface/DateType';
 import { globalSelectedUser } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 import { useTheme } from '@mui/material';
