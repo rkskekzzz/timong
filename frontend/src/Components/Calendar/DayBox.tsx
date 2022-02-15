@@ -20,6 +20,7 @@ const DayBox: React.FC<{
     <Styled.CalendarBox
       onClick={isThisMonth ? handleClick : () => null}
       id="test"
+      style={isThisMonth ? {} : { border: '0px' }}
     >
       <div
         className="vflex"
