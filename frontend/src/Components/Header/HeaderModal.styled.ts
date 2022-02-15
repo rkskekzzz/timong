@@ -44,6 +44,7 @@ const ModalTextButton = styled.span<{ color: string }>`
   font-weight: bold;
   transition: color 500ms ease-in-out 0ms;
   color: ${(props) => props.color || '#000'};
+  cursor: pointer;
 `;
 
 const Styled = {
