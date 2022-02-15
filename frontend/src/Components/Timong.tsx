@@ -63,7 +63,7 @@ const Timong = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [mode, setMode] = useState<string>(prefersDarkMode ? 'dark' : 'light');
   const toggleMode = () => {
-    const _mode = mode === 'dark' ? 'dark' : 'light';
+    const _mode = mode === 'dark' ? 'light' : 'dark';
     setThemeChanged(true);
     setMode(_mode);
   };
