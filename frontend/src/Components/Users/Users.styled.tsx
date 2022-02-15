@@ -46,6 +46,7 @@ const DialButton = styled.button<{ isShow: boolean }>`
 
   .buttonGuide {
     font-family: 'Nanum Pen Script', cursive;
+    border-radius: 6px;
     font-size: 1.5rem;
     width: 200px;
     right: 64px;

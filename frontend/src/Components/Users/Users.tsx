@@ -119,6 +119,11 @@ const Users = () => {
       if (!isShow) return;
       if (touchStart - e.targetTouches[0].clientX > 50) {
         setIsSwipe(index);
+        return;
+      }
+      if (touchStart - e.targetTouches[0].clientX < 200) {
+        setIsSwipe(-1);
+        return;
       }
       if (touchStart - e.targetTouches[0].clientX > 200) {
         setIsSwipeMore(true);
@@ -132,10 +137,16 @@ const Users = () => {
       if (touchStart === 0 || !isShow) return;
       if (touchStart - e.clientX > 50) {
         setIsSwipe(index);
+        return;
+      }
+      if (touchStart - e.clientX < 400) {
+        setIsSwipe(-1);
+        return;
       }
       if (touchStart - e.clientX > 400) {
         setIsSwipe(-1);
         setIsSwipeMore(true);
+        return;
       }
     },
     [touchStart, setIsSwipe, setIsSwipeMore, isShow]
@@ -263,7 +274,10 @@ const Users = () => {
             >
               <div
                 className={isButtonGuideShow ? 'buttonGuide' : 'hide'}
-                style={{ color: theme.myPalette.foregroundHeader }}
+                style={{
+                  color: theme.myPalette.foregroundHeader,
+                  background: theme.myPalette.foreground + '22',
+                }}
               >
                 {'Click to Select User '}
                 <img width={'20px'} src={arrow} alt="arrow" />
