@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   db:
     container_name: db
@@ -8,7 +8,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: calendar
     ports:
-      - "27017:27017"
+      - '27017:27017'
     volumes:
       - ${MONGO_MOUNT_PATH}:/data/db
     networks:
@@ -45,8 +45,8 @@ services:
       - frontend
     image: nginx:latest
     ports:
-      - "80:80"
-      - "433:433"
+      - '80:80'
+      - '433:433'
     volumes:
       - ./proxy/nginx.conf:/etc/nginx/nginx.conf
     restart: always
