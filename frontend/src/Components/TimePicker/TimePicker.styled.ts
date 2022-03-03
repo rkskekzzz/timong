@@ -1,3 +1,4 @@
+import NumberEx from 'src/Common/NumberEx';
 import styled from 'styled-components';
 
 const TimePickerBox = styled.div<{
@@ -6,35 +7,50 @@ const TimePickerBox = styled.div<{
 }>`
   box-sizing: border-box;
   width: 100%;
-  height: auth;
+  max-width: 400px;
+  height: ${NumberEx.timePickerHeight};
   position: fixed;
   bottom: 0px;
+  left: 50%;
   border-radius: 15px 15px 0px 0px;
   background-color: ${(props) => `${props.bgcolor ?? '#ffffff'}`};
-  padding: 5%;
+  padding: 3vh;
   ${(props) => {
     if (props.isShowTimePicker)
       return `
-      transform: translateY(0%);
+      transition: transform 0.5s;
+      transform: translate(-50%, 0%);
     `;
     else
       return `
-      transform: translateY(100%);
+      transition: transform 0.5s;
+      transform: translate(-50%, 100%);
     `;
   }};
   .paddingbox {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
   .hflex {
     display: flex;
     flex-direction: row;
   }
-  .user-info {
-    align-items: center;
-    gap: 10px;
-
-    .user-info-name {
-      transform: translateY(-2px);
+  .timepicker-header {
+    justify-content: space-between;
+    .user-info {
+      gap: 10px;
+      align-items: center;
+      .user-info-name {
+        transform: translateY(-2px);
+      }
+    }
+  }
+  .timebox {
+    span {
+      /* height: 30px; */
+      flex: 1 1 0;
     }
   }
 `;

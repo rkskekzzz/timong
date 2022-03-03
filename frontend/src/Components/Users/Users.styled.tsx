@@ -10,20 +10,13 @@ const fadeOut = keyframes`
   }
 `;
 
-const Temp = styled.div<{ isShow: boolean }>`
-  position: fixed;
-  bottom: 72px;
-  right: 16px;
-  display: flex;
-  align-items: end;
-  flex-direction: column-reverse;
-`;
-
 const DialButton = styled.button<{ isShow: boolean }>`
   z-index: 300;
   position: fixed;
   bottom: 16px;
-  right: 16px;
+  left: calc(50% + 200px);
+  /* transform: translateX(calc(50% + 25vw)); */
+  /* left: 50%; */
   width: 56px;
   height: 56px;
   background: #f995f0b8;
@@ -65,20 +58,37 @@ const DialButton = styled.button<{ isShow: boolean }>`
 
   @keyframes slideup {
     0% {
-      transform: translateY(0px);
+      transform: translate(calc(-50% + -28px - 16px), 0px);
     }
     100% {
-      transform: translateY(-${NumberEx.timePickerHeight});
+      transform: translate(
+        calc(-50% + -28px - 16px),
+        -${NumberEx.timePickerHeight}
+      );
     }
   }
   @keyframes slidedown {
     0% {
-      transform: translateY(-${NumberEx.timePickerHeight});
+      transform: translate(
+        calc(-50% + -28px - 16px),
+        -${NumberEx.timePickerHeight}
+      );
     }
     100% {
-      transform: translateY(0px);
+      transform: translate(calc(-50% + -28px - 16px), 0px);
     }
   }
+`;
+
+const Temp = styled.div<{ isShow: boolean }>`
+  position: fixed;
+  width: 200px;
+  bottom: 72px;
+  left: calc(50% + 200px);
+  transform: translate(calc(-50% + -100px - 16px), 0px);
+  display: flex;
+  align-items: end;
+  flex-direction: column-reverse;
 `;
 
 const DialBox = styled.div<{ isShow: boolean }>`
@@ -105,7 +115,7 @@ const DialRowDelButton = styled.div`
   width: 40px;
   height: 40px;
   margin: 4px;
-  position: fixed;
+  position: absolute;
   left: 100%;
   display: flex;
   align-items: center;
@@ -143,6 +153,9 @@ const DialRow = styled.span<{ isSwipe: boolean; willDelete: boolean }>`
     }
   }};
   .guide {
+    width: 500px;
+    position: absolute;
+    left: -100%;
     background: transparent;
     border: 0px;
     box-shadow: 0px 0px 0px;

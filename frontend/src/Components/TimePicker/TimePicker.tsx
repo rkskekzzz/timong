@@ -30,17 +30,33 @@ const TimePicker: React.FC<{
   return (
     <Styled.TimePickerBox isShowTimePicker={isShowTimePicker} bgcolor="white">
       <div className="paddingbox">
-        <div className="hflex user-info">
-          <SelectedUserState />
-          <span className="user-info-name">
-            {selectedUser ? selectedUser.name : 'default'}
-          </span>
+        <div className="hflex timepicker-header">
+          <div className="hflex user-info">
+            <SelectedUserState />
+            <span className="user-info-name">
+              {selectedUser ? selectedUser.name : 'default'}
+            </span>
+          </div>
+          <Switch
+            checked={isChecked}
+            onChange={handleToggle}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
         </div>
-        <Switch
-          checked={isChecked}
-          onChange={handleToggle}
-          inputProps={{ 'aria-label': 'controlled' }}
-        />
+        <div className="hflex timebox">
+          <span>0</span>
+          <span>6</span>
+          <span>12</span>
+          <span>18</span>
+          <span>24</span>
+        </div>
+        <div className="hflex timebox">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </Styled.TimePickerBox>
   );

@@ -35,6 +35,7 @@ const Users = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(true);
   const [isButtonGuideShow, setIsButtonGuideShow] = useState<boolean>(true);
+  const [isFirstOpen, setIsFirstOpen] = useState<boolean>(true);
 
   const { state, dispatch } = useContext(UserContext);
   const theme = useTheme();
@@ -55,10 +56,18 @@ const Users = () => {
       setIsAnimationDone(true);
     }, 500);
   }, [isShowModal, setIsShow, setIsSwipe, setIsAnimationDone]);
+  const showGuide = useCallback(() => {
+    setIsSwipe(0);
+    setTimeout(() => {
+      setIsSwipe(-1);
+    }, 1000);
+    setIsFirstOpen(false);
+  }, [setIsSwipe, setIsFirstOpen]);
   const handleDial = useCallback(() => {
     if (!isShow && !isAnimationDone) return;
+    if (isFirstOpen) showGuide();
+    else setIsSwipe(-1);
     setIsShow(!isShow);
-    setIsSwipe(-1);
     setIsAnimationDone(false);
     setTimeout(() => {
       if (isShow && scrollRef && scrollRef.current) {
@@ -67,12 +76,14 @@ const Users = () => {
       }
     }, 500);
   }, [
+    showGuide,
     isShow,
     isAnimationDone,
     setIsShow,
     setIsSwipe,
     setIsAnimationDone,
     scrollRef,
+    isFirstOpen,
   ]);
   const handleUserTabbed = useCallback(
     (index: number) => {
@@ -298,26 +309,6 @@ const Users = () => {
                     willDelete={willDelete === index ? true : false}
                     isSwipe={isSwipe === index ? true : false}
                   >
-                    {index === 0 && isShow && (
-                      <Styled.DialRowName
-                        className="guide del"
-                        isShow={isShow}
-                        style={{
-                          transitionDelay: `${
-                            (isShow ? index : users.length - index) *
-                            (200 / users.length)
-                          }ms`,
-                        }}
-                      >
-                        {' Swipe left to Delete '}
-                        <img
-                          className="rev"
-                          width={'20px'}
-                          src={arrow}
-                          alt="left arrow"
-                        />
-                      </Styled.DialRowName>
-                    )}
                     <Styled.DialRowName
                       isShow={isShow}
                       style={{
@@ -357,7 +348,7 @@ const Users = () => {
               <Styled.DialRow isSwipe={false} willDelete={false}>
                 {users.length === 0 && (
                   <Styled.DialRowName
-                    className="guide"
+                    // className="guide"
                     isShow={isShow}
                     style={{
                       transitionDelay: `${
@@ -365,8 +356,7 @@ const Users = () => {
                       }ms`,
                     }}
                   >
-                    {'Click to Add User '}
-                    <img width={'20px'} src={arrow} alt="arrow" />
+                    {'Add User '}
                   </Styled.DialRowName>
                 )}
                 <Styled.DialRowProfile
