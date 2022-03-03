@@ -1,6 +1,6 @@
 import React from 'react';
 import Styled from './Error.styled';
-import GlobalStyled from '../GlobalStyled.styled';
+import GlobalStyled from '../GlobalStyled/GlobalStyled.styled';
 import { useNavigate } from 'react-router-dom';
 
 const Error = () => {

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Styled from './Monthly.styled';
 import MonthBox from './MonthBox';
-import GlobalStyled from 'src/Components/Styled/global.styled';
+import GlobalStyled from 'src/Components/GlobalStyled/GlobalStyled.styled';
 import moment from 'moment';
 import { Year, Day } from 'src/Interface/DateType';
 import { buildDate } from 'src/Utils';
