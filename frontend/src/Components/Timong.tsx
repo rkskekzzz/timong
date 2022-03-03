@@ -139,10 +139,10 @@ const Timong = () => {
           </div>
         ) : (
           <>
-            <Styled.Body>
+            <Styled.Body className="here">
               <Calendar mode={mode} calendarType={calendarType} />
+              <Users />
             </Styled.Body>
-            <Users />
           </>
         )}
       </ThemeProvider>
