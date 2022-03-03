@@ -1,6 +1,6 @@
 import React from 'react';
 import Styled from './DayBox.styled';
-import GlobalStyled from 'src/Components/Styled/global.styled';
+import GlobalStyled from 'src/Components/GlobalStyled/GlobalStyled.styled';
 import { Day } from 'src/Interface/DateType';
 import { User, Valid } from 'src/Interface/UserType';
 

@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import Size from 'src/Common/Size';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
-type CircleType = 'small';
+type CircleType = Size;
 
 const Circle = styled.div<{ size?: CircleType }>`
-  height: ${(props) => (props.size === 'small' ? '9px' : '100%')};
-  width: ${(props) => (props.size === 'small' ? '9px' : '100%')};
+  height: ${(props) => props.size ?? '100%'};
+  width: ${(props) => props.size ?? '100%'};
 
   border-radius: 30px;
   background: ${(props) => props.color || 'white'};
@@ -13,22 +14,22 @@ const Circle = styled.div<{ size?: CircleType }>`
 
 const X = styled(CloseRoundedIcon)<{ bgcolor?: string; size?: CircleType }>`
   && {
-    height: ${(props) => (props.size === 'small' ? '9px' : '100%')};
-    width: ${(props) => (props.size === 'small' ? '9px' : '100%')};
+    height: ${(props) => props.size ?? '100%'};
+    width: ${(props) => props.size ?? '100%'};
     padding: 0;
     color: ${(props) => props.bgcolor || 'white'};
   }
 `;
 
 const Xone = styled.div<{ color?: string; size?: CircleType }>`
-  height: ${(props) => (props.size === 'small' ? '9px' : '100%')};
-  width: ${(props) => (props.size === 'small' ? '9px' : '100%')};
+  height: ${(props) => props.size ?? '100%'};
+  width: ${(props) => props.size ?? '100%'};
   transform: translateX(0.22rem) translateY(-0.05rem);
   &:before {
     position: absolute;
     border-radius: 2px;
     content: ' ';
-    height: 11px;
+    height: calc(${(props) => props.size ?? '100%'} + 2px);
     width: 2px;
     background: ${(props) => props.color || 'white'};
   }
@@ -36,7 +37,7 @@ const Xone = styled.div<{ color?: string; size?: CircleType }>`
     position: absolute;
     border-radius: 2px;
     content: ' ';
-    height: 11px;
+    height: calc(${(props) => props.size ?? '100%'} + 2px);
     width: 2px;
     background: ${(props) => props.color || 'white'};
   }

@@ -7,7 +7,7 @@ import { Year, Day } from 'src/Interface/DateType';
 import { buildDate } from 'src/Utils';
 import { User, Valid } from 'src/Interface/UserType';
 import { useTheme, Box } from '@mui/material';
-
+import Size from 'src/Common/Size';
 import { AutoSizer, List, WindowScroller } from 'react-virtualized';
 
 type UserWithValid = {
@@ -72,7 +72,7 @@ const Monthly: React.FC<{ mode: string }> = ({ mode }) => {
                   {user.valid == 'POSIBLE' && (
                     <>
                       <GlobalStyled.Circle
-                        size="small"
+                        size={Size.Small}
                         color={user.info.color}
                       />
                       <div>{user.info.name}</div>
@@ -88,7 +88,10 @@ const Monthly: React.FC<{ mode: string }> = ({ mode }) => {
                 <Styled.UserBox key={user.info.name}>
                   {user.valid == 'IMPOSIBLE' && (
                     <>
-                      <GlobalStyled.Xone size="small" color={user.info.color} />
+                      <GlobalStyled.Xone
+                        size={Size.Small}
+                        color={user.info.color}
+                      />
                       <div>{user.info.name}</div>
                     </>
                   )}
