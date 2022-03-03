@@ -10,6 +10,7 @@
     "jsx": "react" /* Specify what JSX code is generated. */,
     /* Modules */
     "module": "commonjs" /* Specify what module code is generated. */,
+    "declaration": true,
     "rootDirs": ["./"],
     "baseUrl": "./" /* Specify the base directory to resolve non-relative module names. */,
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,

@@ -1,15 +1,15 @@
 import styled, { keyframes } from 'styled-components';
+import NumberEx from 'src/Common/NumberEx';
 
 const fadeOut = keyframes`
   0% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
   }
-
 `;
+
 const Temp = styled.div<{ isShow: boolean }>`
   position: fixed;
   bottom: 72px;
@@ -35,12 +35,16 @@ const DialButton = styled.button<{ isShow: boolean }>`
         box-shadow: inset 1px -8px 10px -3px #ffb6f8b8,
         inset -1px -4px 2px 0px #5c0e55a8;
         transition: box-shadow 500ms ease-in-out 0ms;
+        animation: slidedown 0.5s;
+        animation-fill-mode: forwards;
     `;
     else
       return `
         box-shadow: inset 1px 8px 10px -5px #ffb6f8b8,
         inset -1px 4px 2px 0px #5c0e55a8;
         transition: box-shadow 500ms ease-in-out 0ms;
+        animation: slideup 0.5s;
+        animation-fill-mode: forwards;
       `;
   }};
 
@@ -57,6 +61,23 @@ const DialButton = styled.button<{ isShow: boolean }>`
   }
   .hide {
     display: none;
+  }
+
+  @keyframes slideup {
+    0% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(-${NumberEx.timePickerHeight});
+    }
+  }
+  @keyframes slidedown {
+    0% {
+      transform: translateY(-${NumberEx.timePickerHeight});
+    }
+    100% {
+      transform: translateY(0px);
+    }
   }
 `;
 
@@ -200,42 +221,8 @@ const DialRowProfile = styled.button<{ isShow: boolean; bgcolor: string }>`
   }};
 `;
 
-const SelectedUserSpan = styled.span<{
-  bgcolor: string;
-  isShowSwitch: boolean;
-}>`
-  position: fixed;
-  height: calc(24px - 0.2rem);
-  margin: 16px 0;
-  bottom: 56px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: ${(props) => `${props.bgcolor || '#000000'}99`};
-  color: white;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  padding: 0.1rem 0.7rem;
-  box-shadow: ${(props) => `inset 1px 8px 10px -5px ${
-    props.bgcolor || '#000000'
-  }b8,
-    inset -1px 4px 2px 0px ${props.bgcolor || '#000000'}a8`};
-  ${(props) => {
-    if (!props.isShowSwitch)
-      return `
-            opacity: 0;
-            transition: opacity 200ms ease-in-out 0ms;
-          `;
-    else
-      return `
-            opacity: 1;
-            transition: opacity 200ms ease-in-out 0ms;
-            `;
-  }};
-`;
-
 const Styled = {
   Temp,
-  SelectedUserSpan,
   DialBox,
   DialRow,
   DialButton,

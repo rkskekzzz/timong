@@ -5,18 +5,19 @@ import React, {
   useContext,
   useCallback,
 } from 'react';
-import { User } from '../../Interface/UserType';
+import { User } from 'src/Interface/UserType';
 import AddModal from '../Modal';
 import Styled from './Users.styled';
-import { globalSelectedUser } from '../../Interface/UserType';
+import { globalSelectedUser } from 'src/Interface/UserType';
 import Backdrop from '@mui/material/Backdrop';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
+import TimePicker from '../TimePicker/TimePicker';
 import FaceIcon from '@mui/icons-material/Face';
 import { UserContext } from 'src/App';
 import { UserService } from 'src/Network/UserService';
-import Switch from '../Switch/Switch';
+
 import arrow from 'src/assets/arrow.png';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '@mui/material';
@@ -33,7 +34,6 @@ const Users = () => {
   const [willDelete, setWillDelete] = useState<number>(-1);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(true);
-  const [isShowSwitch, setIsShowSwitch] = useState<boolean>(false);
   const [isButtonGuideShow, setIsButtonGuideShow] = useState<boolean>(true);
 
   const { state, dispatch } = useContext(UserContext);
@@ -43,11 +43,10 @@ const Users = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleSelectedUserDelete = useCallback(() => {
-    setIsShowSwitch(false);
     setTimeout(() => {
       setSelectedUser(null);
     }, 200);
-  }, [setSelectedUser, setIsShowSwitch]);
+  }, [setSelectedUser]);
   const handleClickAway = useCallback(() => {
     if (isShowModal) return;
     setIsShow(false);
@@ -78,12 +77,9 @@ const Users = () => {
   const handleUserTabbed = useCallback(
     (index: number) => {
       setSelectedUser(users[index]);
-      setTimeout(() => {
-        setIsShowSwitch(true);
-      }, 0);
       handleDial();
     },
-    [setSelectedUser, handleDial, setIsShowSwitch]
+    [setSelectedUser, handleDial]
   );
   const handleRowDelButton = useCallback(
     (delIndex: number, user: User) => {
@@ -168,16 +164,16 @@ const Users = () => {
     },
     [isSwipeMore, handleRowDelButton, setIsSwipeMore]
   );
+  const handleToggle = useCallback(
+    () => setIsChecked(!isChecked),
+    [setIsChecked, isChecked]
+  );
   const handleModalOpen = () => {
     setIsShowModal(true);
   };
   const handleModalClose = () => {
     setIsShowModal(false);
   };
-  const handleToggle = useCallback(
-    () => setIsChecked(!isChecked),
-    [setIsChecked, isChecked]
-  );
   const handleAddUserButton = useCallback(() => {
     handleModalOpen();
   }, [handleModalOpen, users]);
@@ -214,7 +210,6 @@ const Users = () => {
     if (!isAdd) return;
     setSelectedUser(users[users.length - 1]);
     const timer = setTimeout(() => {
-      setIsShowSwitch(true);
       setIsAdd(false);
     }, 0);
     return () => {
@@ -232,21 +227,11 @@ const Users = () => {
 
   return (
     <>
-      {selectedUser && (
-        <>
-          <Styled.SelectedUserSpan
-            bgcolor={selectedUser.color}
-            isShowSwitch={isShowSwitch}
-          >
-            {selectedUser.name}
-          </Styled.SelectedUserSpan>
-          <Switch
-            isChecked={isChecked}
-            handleToggle={handleToggle}
-            isShowSwitch={isShowSwitch}
-          />
-        </>
-      )}
+      <TimePicker
+        isChecked={isChecked}
+        selectedUser={selectedUser}
+        handleToggle={handleToggle}
+      />
       <Backdrop
         open={isShow}
         sx={{ bgcolor: theme.myPalette.backDrop, zIndex: 200 }}
