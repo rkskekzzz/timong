@@ -1,5 +1,5 @@
 const NumberEx = {
-  timePickerHeight: '100px',
+  timePickerHeight: '15vh',
 };
 
 export default NumberEx;
