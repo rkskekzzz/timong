@@ -6,7 +6,7 @@ import { themes } from 'src/theme';
 import { CalendarService } from 'src/Network/TimongService';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from 'src/App';
-import GlobalStyled from '../GlobalStyled.styled';
+import GlobalStyled from '../GlobalStyled/GlobalStyled.styled';
 
 const StarterInputs = () => {
   const { dispatch } = useContext(UserContext);
