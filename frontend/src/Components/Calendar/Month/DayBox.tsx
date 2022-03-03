@@ -24,7 +24,11 @@ const DayBox: React.FC<{
     >
       <div
         className="vflex"
-        style={isToday ? { background: '#fbb5ff3c', borderRadius: '5px' } : {}}
+        style={
+          isToday && isThisMonth
+            ? { background: '#fbb5ff3c', borderRadius: '5px' }
+            : {}
+        }
       >
         <Styled.CalendarDateLabel
           isThisMonth={isThisMonth}
