@@ -7,6 +7,8 @@ export interface Schedule {
   valid: ScheduleValidType;
   start: string;
   end: string;
+  posibleTime: number[];
+  imposibleTime: number[];
 }
 
 export interface User {
