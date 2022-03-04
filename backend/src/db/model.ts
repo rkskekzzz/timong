@@ -23,12 +23,12 @@ const schema = new Schema<Calendar>(
             start: { type: String, required: true },
             end: { type: String, required: true },
             posibleTime: {
-              type: [String],
+              type: [Number],
               required: true,
               default: [],
             },
             imposibleTime: {
-              type: [String],
+              type: [Number],
               required: true,
               default: [],
             },
