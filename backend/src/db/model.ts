@@ -22,6 +22,16 @@ const schema = new Schema<Calendar>(
             },
             start: { type: String, required: true },
             end: { type: String, required: true },
+            posibleTime: {
+              type: [String],
+              required: true,
+              default: [],
+            },
+            imposibleTime: {
+              type: [String],
+              required: true,
+              default: [],
+            },
           },
         ],
       },

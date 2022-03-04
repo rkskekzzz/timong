@@ -2,8 +2,13 @@ import { ScheduleValidType, User } from "../interface/entity";
 
 function getDay(offsetFromToday: number): string {
   const curr = new Date();
-  const day = new Date(curr.getFullYear(), curr.getMonth() + 1, curr.getDate() + offsetFromToday, 24);
-  
+  const day = new Date(
+    curr.getFullYear(),
+    curr.getMonth() + 1,
+    curr.getDate() + offsetFromToday,
+    24
+  );
+
   return day.toISOString();
 }
 
@@ -15,11 +20,15 @@ export const sampleUser: User = {
       valid: ScheduleValidType.POSIBLE,
       start: getDay(0),
       end: getDay(0),
+      posibleTime: [],
+      imposibleTime: [],
     },
     {
       valid: ScheduleValidType.IMPOSIBLE,
       start: getDay(1),
       end: getDay(1),
+      posibleTime: [],
+      imposibleTime: [],
     },
   ],
 };
