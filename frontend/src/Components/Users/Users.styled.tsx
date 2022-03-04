@@ -43,6 +43,21 @@ const DialButton = styled.button<{ isShow: boolean }>`
         transition: box-shadow 500ms ease-in-out 0ms;
       `;
   }};
+
+  .buttonGuide {
+    font-family: 'Nanum Pen Script', cursive;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    width: 200px;
+    right: 64px;
+    transform: translateY(10px);
+    position: absolute;
+    animation: ${fadeOut} 1s ease-out 1s;
+    animation-fill-mode: forwards;
+  }
+  .hide {
+    display: none;
+  }
 `;
 
 const DialBox = styled.div<{ isShow: boolean }>`
@@ -54,7 +69,7 @@ const DialBox = styled.div<{ isShow: boolean }>`
   margin-bottom: 16px;
   overflow: hidden scroll;
   scroll-behavior: smooth;
-  max-height: 504px;
+  max-height: 80vh;
 
   display: -webkit-flex;
   position: -webkit-relative;

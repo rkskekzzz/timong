@@ -39,7 +39,7 @@ const Cloud = styled.div<{ bgcolor: string }>`
   }
 
   .x2 {
-    top: 40vh;
+    top: 20vh;
     left: 10vw;
     transform: scale(0.6);
     opacity: 0.6;
@@ -48,7 +48,7 @@ const Cloud = styled.div<{ bgcolor: string }>`
 
   .x3 {
     left: 50vw;
-    top: 60vh;
+    top: 50vh;
     transform: scale(0.8);
     opacity: 0.8;
     animation: moveclouds 20s linear infinite;
@@ -56,7 +56,7 @@ const Cloud = styled.div<{ bgcolor: string }>`
 
   .x4 {
     left: 15vw;
-    top: 70vh;
+    top: 60vh;
     transform: scale(0.75);
     opacity: 0.75;
     animation: moveclouds 18s linear infinite;
@@ -64,7 +64,7 @@ const Cloud = styled.div<{ bgcolor: string }>`
 
   .x5 {
     left: 30vw;
-    top: 80vh;
+    top: 70vh;
     transform: scale(0.8);
     opacity: 0.8;
     animation: moveclouds 20s linear infinite;

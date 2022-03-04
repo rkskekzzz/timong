@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@types/react-color": "^3.0.6",
+    "@types/react-virtualized": "^9.21.18",
     "@types/styled-components": "^5.1.19",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
