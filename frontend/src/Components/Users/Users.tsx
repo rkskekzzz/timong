@@ -60,7 +60,7 @@ const Users = () => {
     setIsSwipe(0);
     setTimeout(() => {
       setIsSwipe(-1);
-    }, 1000);
+    }, 600);
     setIsFirstOpen(false);
   }, [setIsSwipe, setIsFirstOpen]);
   const handleDial = useCallback(() => {
