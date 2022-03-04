@@ -1,8 +1,11 @@
+import moment from 'moment';
 import { Dispatch } from 'react';
+import { Day } from './DateType';
 import { User, Valid } from './UserType';
 
 export type State = {
   users: User[];
+  selectedDate: Day;
 };
 
 export type Action =
@@ -11,6 +14,7 @@ export type Action =
   | { type: 'DELETE'; index: number; user: User }
   | { type: 'UPDATEDATE'; user: User; day: moment.Moment; valid: Valid }
   | { type: 'TEST'; user: User; day: moment.Moment }
+  | { type: 'SETSELECTEDATE'; day: moment.Moment }
   | { type: 'DEFAULT' };
 
 export type userDispatch = Dispatch<Action>;

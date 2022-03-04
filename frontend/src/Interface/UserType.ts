@@ -9,8 +9,8 @@ export type Schedule = {
   valid: Valid;
   start: Moment;
   end: Moment;
-  // posibleTime: number[]; // 추가
-  // imposibleTime: number[]; // 추가
+  posibleTime: number[];
+  imposibleTime: number[];
 };
 
 export class User {

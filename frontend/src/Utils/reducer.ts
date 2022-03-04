@@ -1,5 +1,6 @@
 import { User } from '../Interface/UserType';
 import { State, Action } from 'src/Interface/ContextType';
+import { Day } from 'src/Interface/DateType';
 import moment from 'moment';
 
 export default function reducer(state: State, action: Action): State {
@@ -43,6 +44,11 @@ export default function reducer(state: State, action: Action): State {
           }
           return user;
         }),
+      };
+    case 'SETSELECTEDATE':
+      return {
+        ...state,
+        selectedDate: new Day(action.day),
       };
     default:
       return state;

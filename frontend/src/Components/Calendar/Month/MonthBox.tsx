@@ -56,6 +56,7 @@ function DayBoxLogic({
       day: day.moment,
       valid: globalSelectedUser.valid ? 'POSIBLE' : 'IMPOSIBLE',
     });
+    dispatch({ type: 'SETSELECTEDATE', day: day.moment });
     await ScheduleService.updateSchedules(
       location.pathname,
       globalSelectedUser.user

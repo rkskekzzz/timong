@@ -13,6 +13,7 @@ export const UserContext = createContext<{
 }>({
   state: {
     users: [],
+    selectedDate: null,
   },
   dispatch: () => {
     null;
