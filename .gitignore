@@ -107,6 +107,9 @@ dist
 .tern-port
 data
 
+# DB Backup
+mongo/
+
 */build
 backend/src/**/*.js
 *.pem

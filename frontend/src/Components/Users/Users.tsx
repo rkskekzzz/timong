@@ -34,6 +34,7 @@ const Users = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(true);
   const [isShowSwitch, setIsShowSwitch] = useState<boolean>(false);
+  const [isButtonGuideShow, setIsButtonGuideShow] = useState<boolean>(true);
 
   const { state, dispatch } = useContext(UserContext);
   const theme = useTheme();
@@ -86,18 +87,19 @@ const Users = () => {
   );
   const handleRowDelButton = useCallback(
     (delIndex: number, user: User) => {
-      if (!isShow && !isAnimationDone) return;
-      setIsSwipe(-1);
+      // console.log(isShow, isAnimationDone, willDelete, isSwipe);
+      if (!isShow || isAnimationDone || isSwipe < 0) return;
       setWillDelete(delIndex);
+      setIsSwipe(-1);
       setTimeout(() => {
         if (!dispatch) throw new Error('no dispatch');
         // TODO: del 에러나면 alert띄우기
         UserService.deleteUser(window.location.pathname, user._id);
         dispatch({ type: 'DELETE', index: delIndex, user });
         setWillDelete(-1);
-      }, 500);
+      }, 800);
     },
-    [isShow, isAnimationDone, setIsSwipe, setWillDelete, dispatch]
+    [isShow, isAnimationDone, setIsSwipe, setWillDelete, dispatch, isSwipe]
   );
 
   const handleTouchStart = useCallback(
@@ -114,28 +116,42 @@ const Users = () => {
   );
   const handleTouchMove = useCallback(
     (e: React.TouchEvent<HTMLSpanElement>, index: number) => {
+      if (!isShow) return;
       if (touchStart - e.targetTouches[0].clientX > 50) {
         setIsSwipe(index);
+        return;
+      }
+      if (touchStart - e.targetTouches[0].clientX < 200) {
+        setIsSwipe(-1);
+        return;
       }
       if (touchStart - e.targetTouches[0].clientX > 200) {
         setIsSwipeMore(true);
         setIsSwipe(-1);
       }
     },
-    [touchStart, setIsSwipe, setIsSwipeMore]
+    [touchStart, setIsSwipe, setIsSwipeMore, isShow]
   );
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLSpanElement>, index: number) => {
-      if (touchStart === 0) return;
+      if (touchStart === 0 || !isShow) return;
       if (touchStart - e.clientX > 50) {
+        setTouchStart(0);
         setIsSwipe(index);
+        return;
       }
-      if (touchStart - e.clientX > 200) {
+      if (isSwipe !== -1 && touchStart - e.clientX < 400) {
+        setIsSwipe(-1);
+        setTouchStart(0);
+        return;
+      }
+      if (touchStart - e.clientX > 400) {
         setIsSwipe(-1);
         setIsSwipeMore(true);
+        return;
       }
     },
-    [touchStart, setIsSwipe, setIsSwipeMore]
+    [touchStart, setIsSwipe, setIsSwipeMore, isShow, isSwipe]
   );
   const handleTouchEnd = useCallback(
     (index: number, user: User) => {
@@ -163,8 +179,7 @@ const Users = () => {
     [setIsChecked, isChecked]
   );
   const handleAddUserButton = useCallback(() => {
-    if (users.length >= 16) alert('It is already the maximum!');
-    else handleModalOpen();
+    handleModalOpen();
   }, [handleModalOpen, users]);
   const addUser = useCallback(
     async (user: User) => {
@@ -186,7 +201,10 @@ const Users = () => {
   );
   useEffect(() => {
     if (isShow) window.document.body.style.overflow = 'hidden';
-    else window.document.body.style.overflow = '';
+    else {
+      setIsSwipe(-1);
+      window.document.body.style.overflow = '';
+    }
   }, [isShow]);
   useEffect(() => {
     globalSelectedUser.user = selectedUser;
@@ -203,6 +221,14 @@ const Users = () => {
       clearTimeout(timer);
     };
   }, [users, isAdd]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsButtonGuideShow(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <>
@@ -248,6 +274,16 @@ const Users = () => {
               isShow={selectedUser ? true : false}
               onClick={handleDial}
             >
+              <div
+                className={isButtonGuideShow ? 'buttonGuide' : 'hide'}
+                style={{
+                  color: theme.myPalette.foregroundHeader,
+                  background: theme.myPalette.foreground + '22',
+                }}
+              >
+                {'Click to Select User '}
+                <img width={'20px'} src={arrow} alt="arrow" />
+              </div>
               <FaceIcon fontSize="large" sx={{ color: theme.myPalette.icon }} />
             </Styled.DialButton>
           )}
@@ -323,6 +359,7 @@ const Users = () => {
                     />
                     <Styled.DialRowDelButton>
                       <DeleteForeverRoundedIcon
+                        sx={{ color: theme.myPalette.icon }}
                         fontSize="medium"
                         onClick={() => {
                           handleRowDelButton(index, user);
@@ -372,4 +409,4 @@ const Users = () => {
   );
 };
 
-export default React.memo(Users);
+export default Users;
