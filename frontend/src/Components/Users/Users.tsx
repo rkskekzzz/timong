@@ -65,9 +65,10 @@ const Users = () => {
   }, [setIsSwipe, setIsFirstOpen]);
   const handleDial = useCallback(() => {
     if (!isShow && !isAnimationDone) return;
-    if (isFirstOpen) showGuide();
+    // if (isFirstOpen) showGuide();
     else setIsSwipe(-1);
     setIsShow(!isShow);
+    dispatch({ type: 'SETSELECTEDATE', day: null });
     setIsAnimationDone(false);
     setTimeout(() => {
       if (isShow && scrollRef && scrollRef.current) {
@@ -90,7 +91,7 @@ const Users = () => {
       setSelectedUser(users[index]);
       handleDial();
     },
-    [setSelectedUser, handleDial]
+    [setSelectedUser, handleDial, users]
   );
   const handleRowDelButton = useCallback(
     (delIndex: number, user: User) => {
