@@ -1,22 +1,16 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
-import Styled from './Monthly.styled';
+import React, { useState, useRef, useEffect } from 'react';
 import MonthBox from './MonthBox';
-import GlobalStyled from 'src/Components/GlobalStyled/GlobalStyled.styled';
 import moment from 'moment';
 import { Year, Day } from 'src/Interface/DateType';
 import { buildDate } from 'src/Utils';
-import { User, Valid } from 'src/Interface/UserType';
 import { useTheme, Box } from '@mui/material';
-import Size from 'src/Common/Size';
 import { AutoSizer, List, WindowScroller } from 'react-virtualized';
+import UserDrawer from 'src/Components/UserDrawer/UserDrawer';
+import { UserWithValid } from 'src/Interface/UserType';
 
-type UserWithValid = {
-  info: User;
-  valid: Valid;
-};
 const initialYear: Year = buildDate(moment());
 
-const Monthly: React.FC<{ mode: string }> = ({ mode }) => {
+const Monthly = () => {
   const theme = useTheme();
   const touchRef = useRef(null);
   const [year, setYear] = useState<Year>(initialYear);
@@ -26,7 +20,6 @@ const Monthly: React.FC<{ mode: string }> = ({ mode }) => {
   const handleDrawerOpen = () => setIsShow(!isShow);
   const handleDrawerClose = () => setIsShow(false);
 
-  mode;
   useEffect(() => {
     function handleClickOutside(event) {
       if (touchRef.current && !touchRef.current.contains(event.target)) {
@@ -39,71 +32,6 @@ const Monthly: React.FC<{ mode: string }> = ({ mode }) => {
     };
   }, [touchRef]);
 
-  // const dayLabel = useCallback(() => {
-  /**
-   * 값을 저장할 때에는 useMemo가 효율적이고
-   * 콜백함수를 넘겨주는 상황에서는 useCallback이 효율 적이다!
-   */
-  const dayLabel = useMemo(() => {
-    if (!selectedDay) return 'null';
-    return (
-      selectedDay.moment.format('Y') +
-      '년 ' +
-      selectedDay.moment.format('M') +
-      '월 ' +
-      selectedDay.moment.format('D') +
-      '일 ' +
-      ['일', '월', '화', '수', '목', '금', '토'][
-        selectedDay.moment.format('d')
-      ] +
-      '요일'
-    );
-  }, [selectedDay]);
-
-  const list = () => {
-    return (
-      <Styled.UserList ref={touchRef}>
-        <Styled.DayLabel>{dayLabel}</Styled.DayLabel>
-        <div className="list">
-          <span>
-            {dayUsers.map((user) => {
-              return (
-                <Styled.UserBox key={user.info.name}>
-                  {user.valid == 'POSIBLE' && (
-                    <>
-                      <GlobalStyled.Circle
-                        size={Size.Small}
-                        color={user.info.color}
-                      />
-                      <div>{user.info.name}</div>
-                    </>
-                  )}
-                </Styled.UserBox>
-              );
-            })}
-          </span>
-          <span>
-            {dayUsers.map((user) => {
-              return (
-                <Styled.UserBox key={user.info.name}>
-                  {user.valid == 'IMPOSIBLE' && (
-                    <>
-                      <GlobalStyled.Xone
-                        size={Size.Small}
-                        color={user.info.color}
-                      />
-                      <div>{user.info.name}</div>
-                    </>
-                  )}
-                </Styled.UserBox>
-              );
-            })}
-          </span>
-        </div>
-      </Styled.UserList>
-    );
-  };
-
   const drawerHandler = {
     handleDrawerOpen,
     setDayUsers,
@@ -113,7 +41,6 @@ const Monthly: React.FC<{ mode: string }> = ({ mode }) => {
 
   const scrollListener = (params) => {
     if (params.scrollTop + params.clientHeight >= params.scrollHeight - 1000) {
-      // previous state
       setYear((year) => [
         ...year,
         ...buildDate(year[year.length - 1].monthMoment.clone().add(1, 'M')),
@@ -122,7 +49,6 @@ const Monthly: React.FC<{ mode: string }> = ({ mode }) => {
   };
   const rowRenderer = ({ index, style }) => {
     const month = year[index];
-
     return (
       <div style={style} key={month.monthMoment.format('x') + index}>
         <MonthBox month={month} drawerHandler={drawerHandler} />
@@ -152,7 +78,7 @@ const Monthly: React.FC<{ mode: string }> = ({ mode }) => {
    */
   return (
     <Box bgcolor={theme.myPalette.background}>
-      <WindowScroller mode={mode} style={{ width: '100%' }}>
+      <WindowScroller style={{ width: '100%' }}>
         {({ width, height, isScrolling, scrollTop, registerChild }) => (
           /**
            * WindowScroller 와 AutoSizer를 함께 쓰기 위해선, 아래왁 같은 방식을 활용한다.
@@ -182,22 +108,14 @@ const Monthly: React.FC<{ mode: string }> = ({ mode }) => {
           </div>
         )}
       </WindowScroller>
-      <Styled.UserDrawer
-        anchor="bottom"
-        open={isShow}
-        onClose={handleDrawerClose}
-        onOpen={handleDrawerOpen}
-        swipeAreaWidth={0}
-        disableSwipeToOpen={false}
-        bgcolor={theme.myPalette.background}
-        bgdropcolor={theme.myPalette.backDrop}
-        ModalProps={{
-          keepMounted: true,
-        }}
-      >
-        <Styled.Puller />
-        {list()}
-      </Styled.UserDrawer>
+      <UserDrawer
+        touchRef={touchRef}
+        selectedDay={selectedDay}
+        dayUsers={dayUsers}
+        isShow={isShow}
+        handleDrawerOpen={handleDrawerOpen}
+        handleDrawerClose={handleDrawerClose}
+      />
     </Box>
   );
 };
