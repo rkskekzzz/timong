@@ -57,7 +57,8 @@ const Timong = () => {
   const location = useLocation();
   const navi = useNavigate();
   const { dispatch } = useContext(UserContext);
-  const [calendarType, setCalendarType] = useState<CalendarType>('Monthly');
+  // const [calendarType, setCalendarType] = useState<CalendarType>('Monthly');
+  const calendarType: CalendarType = 'Monthly';
   const [themeChanged, setThemeChanged] = useState<boolean>(false);
   const [reLoad, setReLoad] = useState<boolean>(false);
   const [calendarName, setCalendarName] = useState<string>('');
@@ -140,7 +141,7 @@ const Timong = () => {
         ) : (
           <>
             <Styled.Body className="here">
-              <Calendar mode={mode} calendarType={calendarType} />
+              <Calendar calendarType={calendarType} />
               <Users />
             </Styled.Body>
           </>
