@@ -15,6 +15,7 @@ export type Action =
   | { type: 'UPDATEDATE'; user: User; day: moment.Moment; valid: Valid }
   | { type: 'TEST'; user: User; day: moment.Moment }
   | { type: 'SETSELECTEDATE'; day: moment.Moment }
+  | { type: 'UPDATETIMETABLE'; user: User; date: Day; time: number }
   | { type: 'DEFAULT' };
 
 export type userDispatch = Dispatch<Action>;
