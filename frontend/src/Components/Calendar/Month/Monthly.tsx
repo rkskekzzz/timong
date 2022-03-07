@@ -6,6 +6,7 @@ import { buildDate } from 'src/Utils';
 import { useTheme, Box } from '@mui/material';
 import { AutoSizer, List, WindowScroller } from 'react-virtualized';
 import UserDrawer from 'src/Components/UserDrawer/UserDrawer';
+import NumberEx from 'src/Common/NumberEx';
 import { UserWithValid } from 'src/Interface/UserType';
 
 const initialYear: Year = buildDate(moment());
@@ -100,7 +101,7 @@ const Monthly = () => {
                   scrollTop={scrollTop}
                   width={width}
                   style={{
-                    maxWidth: '400px',
+                    maxWidth: NumberEx.calendarMaxWidth,
                   }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
                 />
               )}
@@ -113,7 +114,6 @@ const Monthly = () => {
         selectedDay={selectedDay}
         dayUsers={dayUsers}
         isShow={isShow}
-        handleDrawerOpen={handleDrawerOpen}
         handleDrawerClose={handleDrawerClose}
       />
     </Box>
