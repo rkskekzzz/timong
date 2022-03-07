@@ -5,7 +5,7 @@ import Styled from './UserDrawer.styled';
 import GlobalStyled from 'src/Components/GlobalStyled/GlobalStyled.styled';
 import { Day } from 'src/Interface/DateType';
 import { UserWithValid } from 'src/Interface/UserType';
-import { useTheme } from '@mui/material';
+import { Backdrop, useTheme } from '@mui/material';
 import Size from 'src/Common/Size';
 
 const UserDrawer: React.FC<{
@@ -13,16 +13,8 @@ const UserDrawer: React.FC<{
   selectedDay: Day | null;
   dayUsers: UserWithValid[];
   isShow: boolean;
-  handleDrawerOpen: () => void;
   handleDrawerClose: () => void;
-}> = ({
-  touchRef,
-  selectedDay,
-  dayUsers,
-  isShow,
-  handleDrawerOpen,
-  handleDrawerClose,
-}) => {
+}> = ({ touchRef, selectedDay, dayUsers, isShow, handleDrawerClose }) => {
   const theme = useTheme();
   const list = () => {
     return (
@@ -69,22 +61,20 @@ const UserDrawer: React.FC<{
   };
 
   return (
-    <Styled.UserDrawer
-      anchor="bottom"
-      open={isShow}
-      onClose={handleDrawerClose}
-      onOpen={handleDrawerOpen}
-      swipeAreaWidth={0}
-      disableSwipeToOpen={false}
-      bgcolor={theme.myPalette.background}
-      bgdropcolor={theme.myPalette.backDrop}
-      ModalProps={{
-        keepMounted: true,
-      }}
-    >
-      <Styled.Puller />
-      {list()}
-    </Styled.UserDrawer>
+    <>
+      <Backdrop open={isShow} onClick={handleDrawerClose} />
+      <Styled.UserDrawer
+        isShow={isShow}
+        // onClose={handleDrawerClose}
+        // onOpen={handleDrawerOpen}
+        fgcolor={theme.myPalette.foreground}
+        bgcolor={theme.myPalette.background}
+        bgdropcolor={theme.myPalette.backDrop}
+      >
+        <Styled.Puller />
+        {list()}
+      </Styled.UserDrawer>
+    </>
   );
 };
 

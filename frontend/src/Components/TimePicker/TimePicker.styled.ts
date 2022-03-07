@@ -3,11 +3,13 @@ import styled from 'styled-components';
 
 const TimePickerBox = styled.div<{
   bgcolor: string;
+  fgcolor: string;
   isShowTimePicker: boolean;
+  size: number;
 }>`
   box-sizing: border-box;
   width: 100%;
-  max-width: 400px;
+  max-width: ${NumberEx.calendarMaxWidth};
   height: ${NumberEx.timePickerHeight};
   position: fixed;
   bottom: 0px;
@@ -27,12 +29,19 @@ const TimePickerBox = styled.div<{
       transform: translate(-50%, 100%);
     `;
   }};
+
+  * {
+    color: ${(props) => `${props.fgcolor ?? '#ffffff'}`};
+  }
+
   .paddingbox {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 5px;
-
+    .subtitle {
+      font-weight: 300;
+    }
     h6 {
       margin: 0;
       padding: 0;
@@ -45,27 +54,39 @@ const TimePickerBox = styled.div<{
 
   .timebox {
     span {
-      height: 20px;
       flex: 1 1 0;
     }
     .timebox-span {
-      border-top: 1px solid #00000066;
-      border-bottom: 1px solid #00000066;
-      border-right: 1px solid #00000066;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 1px;
+      .timebox-span-color {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        border: 1px solid ${(props) => `${props.fgcolor + '33' ?? '#ffffff'}`};
+        transition: all 0.25s ease-in-out 0ms;
+      }
+      .filled {
+        background: ${(props) => `${props.fgcolor + '33' ?? '#ffffff'}`};
+      }
     }
-    .timebox-span:first-child {
-      border-left: 1px solid #00000066;
-    }
+
     .timebox-label {
-      font-size: 0.8rem;
+      font-size: 0.5rem;
+      text-align: center;
     }
   }
 `;
 
 const TimePickerHeader = styled.div`
   justify-content: space-between;
+  gap: 0px;
   .user-info {
-    gap: 10px;
+    gap: 5px;
     align-items: center;
     .user-info-name {
       transform: translateY(-2px);

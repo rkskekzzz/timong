@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { SwipeableDrawer } from '@mui/material';
+import NumberEx from 'src/Common/NumberEx';
 import { Box } from '@mui/material';
 
 const UserList = styled.div`
@@ -38,19 +38,37 @@ const Puller = styled(Box)`
   }
 `;
 
-const UserDrawer = styled(SwipeableDrawer)<{
+const UserDrawer = styled.div<{
+  isShow: boolean;
   bgcolor: string;
   bgdropcolor: string;
+  fgcolor: string;
 }>`
-  .MuiBackdrop-root {
-    background-color: ${(props) => props.bgdropcolor || '#00000080'};
+  z-index: 1000;
+  position: fixed;
+  box-sizing: border-box;
+  left: 50%;
+  bottom: 0;
+  width: 100%;
+  max-width: ${NumberEx.calendarMaxWidth};
+  padding: 30px;
+  border-radius: 20px 20px 0px 0px;
+  background-color: ${(props) => props.bgcolor || '#00000080'};
+  transition: all 0.5s ease-in-out 0s;
+  * {
+    color: ${(props) => props.fgcolor || '#ffffff'};
   }
-  .MuiPaper-root {
-    background-color: ${(props) => props.bgcolor || '#00000080'};
-    border-radius: 20px 20px 0px 0px;
-    width: calc(100% - 60px);
-    padding: 30px;
-  }
+  ${(props) => {
+    if (props.isShow) {
+      return `
+        transform: translate(-50%, 0);
+      `;
+    } else {
+      return `
+        transform: translate(-50%, 100%);
+      `;
+    }
+  }}
 `;
 
 const Styled = {

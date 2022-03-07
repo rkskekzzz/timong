@@ -1,5 +1,6 @@
 const NumberEx = {
-  timePickerHeight: '200px',
+  timePickerHeight: '230px',
+  calendarMaxWidth: '400px',
 };
 
 export default NumberEx;
