@@ -1,11 +1,14 @@
-import React, { useCallback, useMemo, useState, useContext } from 'react';
+import React, { useCallback, useMemo, useContext } from 'react';
 import Styled from './TimePicker.styled';
 import { useTheme } from '@mui/material';
-import { User } from 'src/Interface/UserType';
+import { Schedule, User } from 'src/Interface/UserType';
 import Size from 'src/Common/Size';
 import { Switch } from '@mui/material';
 import GlobalStyled from '../GlobalStyled/GlobalStyled.styled';
 import { UserContext } from 'src/App';
+import { Divider } from '@mui/material';
+import DayLabel from 'src/Components/DayLabel';
+import moment from 'moment';
 
 const TimePicker: React.FC<{
   selectedUser: User;
@@ -13,7 +16,8 @@ const TimePicker: React.FC<{
   isChecked: boolean;
 }> = ({ selectedUser, handleToggle, isChecked }) => {
   const { state, dispatch } = useContext(UserContext);
-  const [size, setSize] = useState<number>(8);
+  // const [size, setSize] = useState<number>(12);
+  const size = 12;
   const theme = useTheme();
 
   const isShowTimePicker = useMemo(() => {
@@ -24,17 +28,33 @@ const TimePicker: React.FC<{
   const SelectedUserState = useCallback(() => {
     if (!selectedUser) return <GlobalStyled.Circle color="#000000" />;
     if (isChecked) {
-      return <GlobalStyled.Circle color={selectedUser.color} size={Size.Big} />;
+      return (
+        <GlobalStyled.Circle color={selectedUser.color} size={Size.Medium} />
+      );
     } else {
-      return <GlobalStyled.Xone color={selectedUser.color} size={Size.Big} />;
+      return (
+        <GlobalStyled.Xone color={selectedUser.color} size={Size.Medium} />
+      );
     }
   }, [selectedUser, isChecked]);
 
-  const handleDividedTimeBoxTabbed = (index: number) => {
-    console.log('here ', index);
-    console.log(selectedUser.schedules);
-  };
-  //   const getUserTimeTable = () => {};
+  const handleDividedTimeBoxTabbed = useCallback(
+    (index: number) => {
+      if (!selectedUser) return;
+      if (!state.selectedDate) {
+        alert('Please Chose Date!');
+        return;
+      }
+      dispatch({
+        type: 'UPDATETIMETABLE',
+        user: selectedUser,
+        date: state.selectedDate,
+        time: index,
+      });
+      console.log(selectedUser.schedules);
+    },
+    [selectedUser, state.selectedDate]
+  );
 
   const DividedTimeLabel = useCallback(() => {
     return (
@@ -43,7 +63,7 @@ const TimePicker: React.FC<{
           .fill(0)
           .map((_, index) => {
             return (
-              <span className="time-label" key={index}>
+              <span className="timebox-label" key={index}>
                 {index * (24 / size)}
               </span>
             );
@@ -53,40 +73,72 @@ const TimePicker: React.FC<{
   }, [size]);
 
   const DividedTimeSpan = useCallback(() => {
+    const check = () => {
+      if (!selectedUser || !state.selectedDate) return [];
+      const arr = selectedUser.schedules.filter((schedule: Schedule) => {
+        const _schedule = moment(schedule.start);
+        if (_schedule.isSame(state.selectedDate.moment, 'D')) {
+          return true;
+        }
+        return false;
+      });
+      if (arr[0]) return arr[0].posibleTime;
+      else return [];
+    };
+
     return (
       <>
         {Array(size)
           .fill(0)
           .map((_, index) => {
+            const checkArr = check();
             return (
               <span
                 className="timebox-span"
                 onClick={() => handleDividedTimeBoxTabbed(index)}
                 key={index}
-              />
+              >
+                <span
+                  className={
+                    checkArr.includes(index)
+                      ? 'timebox-span-color filled'
+                      : 'timebox-span-color'
+                  }
+                />
+              </span>
             );
           })}
       </>
     );
-  }, [size]);
+  }, [size, selectedUser, state.selectedDate]);
 
   return (
-    <Styled.TimePickerBox isShowTimePicker={isShowTimePicker} bgcolor="white">
+    <Styled.TimePickerBox
+      isShowTimePicker={isShowTimePicker}
+      bgcolor={theme.myPalette.backgroundModal}
+      fgcolor={theme.myPalette.foreground}
+      size={size}
+    >
       <div className="paddingbox">
-        <h6>{state.selectedDate.moment.format('yyyy M D')}</h6>
-        <Styled.TimePickerHeader className="hflex">
-          <div className="user-info hflex">
-            <SelectedUserState />
-            <span className="user-info-name">
-              {selectedUser ? selectedUser.name : 'default'}
-            </span>
-          </div>
-          <Switch
-            checked={isChecked}
-            onChange={handleToggle}
-            inputProps={{ 'aria-label': 'controlled' }}
-          />
-        </Styled.TimePickerHeader>
+        <DayLabel selectedDay={state.selectedDate} />
+        <div>
+          <span className="subtitle">선택한 사용자</span>
+          <Styled.TimePickerHeader className="hflex">
+            <div className="user-info hflex">
+              <SelectedUserState />
+              <span className="user-info-name">
+                {selectedUser ? selectedUser.name : 'default'}
+              </span>
+            </div>
+            <Switch
+              checked={isChecked}
+              onChange={handleToggle}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+          </Styled.TimePickerHeader>
+        </div>
+        <Divider />
+        <span className="subtitle">가능한 시간 선택</span>
         <div className="hflex timebox">
           <DividedTimeLabel />
         </div>
