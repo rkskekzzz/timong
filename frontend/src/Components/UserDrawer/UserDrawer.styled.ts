@@ -10,11 +10,17 @@ const UserList = styled.div`
 
   .list {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    gap: 10px;
 
-    span {
-      flex-basis: 50vw;
-      flex-grow: 1;
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      b,
+      p {
+        padding: 0;
+        margin: 0;
+      }
     }
   }
 `;
