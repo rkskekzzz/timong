@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useCallback } from 'react';
 import DayLabel from 'src/Components/DayLabel';
 import Styled from './UserDrawer.styled';
 import GlobalStyled from 'src/Components/GlobalStyled/GlobalStyled.styled';
@@ -36,65 +36,54 @@ const UserDrawer: React.FC<{
     else window.document.body.style.overflow = '';
   }, [isShow]);
 
-  const list = () => {
-    return (
-      <Styled.UserList ref={touchRef}>
-        <DayLabel selectedDay={selectedDay} />
-        <div className="list">
+  const List = useCallback(
+    ({ userArr, text }: { userArr: UserWithValid[]; text: string }) => {
+      return (
+        <>
           <div className="list-header">
-            <b>가능한 사람</b>
-            <p>{posibleDayUsers.length}명</p>
+            <b>{text}</b>
+            <p>{userArr.length}명</p>
           </div>
           <span>
-            {posibleDayUsers.map((user) => {
+            {userArr.map((user) => {
               return (
                 <Styled.UserBox key={user.info.name}>
-                  <GlobalStyled.Circle
-                    size={Size.Small}
-                    color={user.info.color}
-                  />
-                  <div>{user.info.name}</div>
+                  <div className="userinfo">
+                    <GlobalStyled.Circle
+                      size={Size.Small}
+                      color={user.info.color}
+                    />
+                    <div>{user.info.name}</div>
+                  </div>
                   <div>usertimebox</div>
                 </Styled.UserBox>
               );
             })}
           </span>
-          <Divider />
-          <div className="list-header">
-            <b>불가능한 사람</b>
-            <p>{imposibleDayUsers.length}명</p>
-          </div>
-          <span>
-            {imposibleDayUsers.map((user) => {
-              return (
-                <Styled.UserBox key={user.info.name}>
-                  <GlobalStyled.Xone
-                    size={Size.Small}
-                    color={user.info.color}
-                  />
-                  <div>{user.info.name}</div>
-                </Styled.UserBox>
-              );
-            })}
-          </span>
-        </div>
-      </Styled.UserList>
-    );
-  };
+        </>
+      );
+    },
+    []
+  );
 
   return (
     <>
       <Backdrop open={isShow} onClick={handleDrawerClose} />
       <Styled.UserDrawer
         isShow={isShow}
-        // onClose={handleDrawerClose}
-        // onOpen={handleDrawerOpen}
         fgcolor={theme.myPalette.foreground}
         bgcolor={theme.myPalette.background}
         bgdropcolor={theme.myPalette.backDrop}
       >
         <Styled.Puller />
-        {list()}
+        <Styled.UserList ref={touchRef}>
+          <DayLabel selectedDay={selectedDay} />
+          <div className="list">
+            <List userArr={posibleDayUsers} text={'가능한 사람'} />
+            <Divider />
+            <List userArr={imposibleDayUsers} text={'불가능한 사람'} />
+          </div>
+        </Styled.UserList>
       </Styled.UserDrawer>
     </>
   );

@@ -21,15 +21,22 @@ const UserList = styled.div`
         padding: 0;
         margin: 0;
       }
+      b {
+        font-weight: 300;
+      }
     }
   }
 `;
 
 const UserBox = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  .userinfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
 `;
 
 const Puller = styled(Box)`
