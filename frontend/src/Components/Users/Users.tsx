@@ -41,9 +41,10 @@ const Users = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectedUserDelete = useCallback(() => {
+  const handleDialClose = useCallback(() => {
     setTimeout(() => {
       setSelectedUser(null);
+      setIsChecked(true);
     }, 200);
   }, [setSelectedUser]);
   const handleClickAway = useCallback(() => {
@@ -93,7 +94,6 @@ const Users = () => {
   );
   const handleRowDelButton = useCallback(
     (delIndex: number, user: User) => {
-      // console.log(isShow, isAnimationDone, willDelete, isSwipe);
       if (!isShow || isAnimationDone || isSwipe < 0) return;
       setWillDelete(delIndex);
       setIsSwipe(-1);
@@ -235,10 +235,6 @@ const Users = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(state.selectedDate);
-  }, []);
-
   return (
     <>
       <TimePicker
@@ -261,7 +257,7 @@ const Users = () => {
             <Styled.DialButton
               isShow={selectedUser ? true : false}
               selectedDate={state.selectedDate}
-              onClick={handleSelectedUserDelete}
+              onClick={handleDialClose}
             >
               <FaceRetouchingOffIcon
                 fontSize="large"
