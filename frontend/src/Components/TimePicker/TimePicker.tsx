@@ -8,6 +8,7 @@ import GlobalStyled from '../GlobalStyled/GlobalStyled.styled';
 import { UserContext } from 'src/App';
 import { Divider } from '@mui/material';
 import DayLabel from 'src/Components/DayLabel';
+import NumberEx from 'src/Common/NumberEx';
 import moment from 'moment';
 
 const TimePicker: React.FC<{
@@ -17,7 +18,7 @@ const TimePicker: React.FC<{
 }> = ({ selectedUser, handleToggle, isChecked }) => {
   const { state, dispatch } = useContext(UserContext);
   // const [size, setSize] = useState<number>(12);
-  const size = 12;
+  const size = NumberEx.timeBoxSize;
   const theme = useTheme();
 
   const isShowTimePicker = useMemo(() => {
