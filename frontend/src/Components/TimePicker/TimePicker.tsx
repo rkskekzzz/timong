@@ -9,6 +9,8 @@ import { UserContext } from 'src/App';
 import { Divider } from '@mui/material';
 import DayLabel from 'src/Components/DayLabel';
 import NumberEx from 'src/Common/NumberEx';
+import { ScheduleService } from 'src/Network/ScheduleService';
+import { useLocation } from 'react-router-dom';
 import moment from 'moment';
 
 const TimePicker: React.FC<{
@@ -20,6 +22,7 @@ const TimePicker: React.FC<{
   // const [size, setSize] = useState<number>(12);
   const size = NumberEx.timeBoxSize;
   const theme = useTheme();
+  const location = useLocation();
 
   const isShowTimePicker = useMemo(() => {
     if (!selectedUser) return false;
@@ -40,7 +43,7 @@ const TimePicker: React.FC<{
   }, [selectedUser, isChecked]);
 
   const handleDividedTimeBoxTabbed = useCallback(
-    (index: number) => {
+    async (index: number) => {
       if (!selectedUser) return;
       if (!state.selectedDate) {
         alert('Please Chose Date!');
@@ -52,6 +55,7 @@ const TimePicker: React.FC<{
         date: state.selectedDate,
         time: index,
       });
+      await ScheduleService.updateSchedules(location.pathname, selectedUser);
     },
     [selectedUser, state.selectedDate]
   );
