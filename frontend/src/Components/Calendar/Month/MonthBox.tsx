@@ -48,6 +48,7 @@ function DayBoxLogic({
     drawerHandler.setSelectedDay(day);
     drawerHandler.handleDrawerOpen();
     drawerHandler.setDayUsers(reducedUser);
+    dispatch({ type: 'SETSELECTEDATE', day: day.moment });
   };
   const updateUser = async () => {
     dispatch({
