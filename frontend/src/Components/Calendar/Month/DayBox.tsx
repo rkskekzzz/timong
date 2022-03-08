@@ -13,7 +13,8 @@ const DayBox: React.FC<{
   isThisMonth: boolean;
   isToday: boolean;
   handleClick: () => void;
-}> = ({ day, users, handleClick, isThisMonth, isToday }) => {
+  gridSize: number;
+}> = ({ day, users, handleClick, isThisMonth, isToday, gridSize }) => {
   const dayOfWeek = day.moment.day();
 
   return (
@@ -37,7 +38,7 @@ const DayBox: React.FC<{
           {day.moment.format('D')}
         </Styled.CalendarDateLabel>
         <Styled.CalendarDateCircleBox isThisMonth={isThisMonth}>
-          <Styled.GridWrap>
+          <Styled.GridWrap gridSize={gridSize}>
             {users.map((user, index) => {
               if (user.valid == 'POSIBLE') {
                 return (

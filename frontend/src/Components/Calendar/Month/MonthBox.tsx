@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useMemo } from 'react';
 import DayBox from './DayBox';
 import Styled from './MonthBox.styled';
 import { Month, Day } from 'src/Interface/DateType';
@@ -68,6 +68,9 @@ function DayBoxLogic({
   }, [updateUser, day, showUsers]);
   const isThisMonth = month.monthMoment.isSame(day.moment, 'month');
   const isToday = day.moment.isSame(moment(), 'day');
+  const gridSize = useMemo(() => {
+    return Math.max(Math.floor(Math.sqrt(state.users.length)), 4);
+  }, [state.users]);
   return (
     <DayBox
       key={day.moment.format('X')}
@@ -76,6 +79,7 @@ function DayBoxLogic({
       handleClick={handleClick}
       isThisMonth={isThisMonth}
       isToday={isToday}
+      gridSize={gridSize}
     />
   );
 }
