@@ -52,7 +52,6 @@ const TimePicker: React.FC<{
         date: state.selectedDate,
         time: index,
       });
-      console.log(selectedUser.schedules);
     },
     [selectedUser, state.selectedDate]
   );
