@@ -7,6 +7,7 @@ import { Day } from 'src/Interface/DateType';
 import { UserWithValid } from 'src/Interface/UserType';
 import { Backdrop, Divider, useTheme } from '@mui/material';
 import Size from 'src/Common/Size';
+import UserDrawerTimeBox from './UserDrawerTimeBox';
 
 const UserDrawer: React.FC<{
   touchRef: React.MutableRefObject<any>;
@@ -55,7 +56,7 @@ const UserDrawer: React.FC<{
                     />
                     <div>{user.info.name}</div>
                   </div>
-                  <div>usertimebox</div>
+                  <UserDrawerTimeBox user={user} />
                 </Styled.UserBox>
               );
             })}

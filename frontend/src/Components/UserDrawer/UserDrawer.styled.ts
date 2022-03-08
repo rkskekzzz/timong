@@ -31,11 +31,13 @@ const UserList = styled.div`
 const UserBox = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   .userinfo {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10px;
+    flex: 1 1 0;
   }
 `;
 
@@ -68,6 +70,7 @@ const UserDrawer = styled.div<{
   border-radius: 20px 20px 0px 0px;
   background-color: ${(props) => props.bgcolor || '#00000080'};
   transition: all 0.5s ease-in-out 0s;
+
   * {
     color: ${(props) => props.fgcolor || '#ffffff'};
   }
