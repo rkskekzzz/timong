@@ -17,7 +17,6 @@ import TimePicker from '../TimePicker/TimePicker';
 import FaceIcon from '@mui/icons-material/Face';
 import { UserContext } from 'src/App';
 import { UserService } from 'src/Network/UserService';
-
 import arrow from 'src/assets/arrow.png';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '@mui/material';
@@ -36,7 +35,6 @@ const Users = () => {
   const [isChecked, setIsChecked] = useState<boolean>(true);
   const [isButtonGuideShow, setIsButtonGuideShow] = useState<boolean>(true);
   const [isFirstOpen, setIsFirstOpen] = useState<boolean>(true);
-
   const { state, dispatch } = useContext(UserContext);
   const theme = useTheme();
   const users = state.users;
@@ -237,6 +235,10 @@ const Users = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(state.selectedDate);
+  }, []);
+
   return (
     <>
       <TimePicker
@@ -258,6 +260,7 @@ const Users = () => {
           {selectedUser && (
             <Styled.DialButton
               isShow={selectedUser ? true : false}
+              selectedDate={state.selectedDate}
               onClick={handleSelectedUserDelete}
             >
               <FaceRetouchingOffIcon
@@ -269,6 +272,7 @@ const Users = () => {
           {!selectedUser && (
             <Styled.DialButton
               isShow={selectedUser ? true : false}
+              selectedDate={state.selectedDate}
               onClick={handleDial}
             >
               <div

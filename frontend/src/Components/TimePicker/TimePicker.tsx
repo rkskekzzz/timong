@@ -114,7 +114,7 @@ const TimePicker: React.FC<{
 
   return (
     <Styled.TimePickerBox
-      isShowTimePicker={isShowTimePicker}
+      isShowTimePicker={isShowTimePicker && state.selectedDate !== null}
       bgcolor={theme.myPalette.backgroundModal}
       fgcolor={theme.myPalette.foreground}
       size={size}

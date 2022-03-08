@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import NumberEx from 'src/Common/NumberEx';
+import { Day } from 'src/Interface/DateType';
 
 const fadeOut = keyframes`
   0% {
@@ -10,7 +11,7 @@ const fadeOut = keyframes`
   }
 `;
 
-const DialButton = styled.button<{ isShow: boolean }>`
+const DialButton = styled.button<{ isShow: boolean; selectedDate: Day }>`
   z-index: 300;
   position: fixed;
   bottom: 16px;
@@ -22,6 +23,14 @@ const DialButton = styled.button<{ isShow: boolean }>`
   background: #f995f0b8;
   border-radius: 50%;
   border: 0px solid black;
+  transform: translateX(calc(-50% + -28px - 16px));
+  ${(props) => {
+    if (props.selectedDate !== null)
+      return `
+        animation: slideup 0.5s;
+        animation-fill-mode: forwards;
+      `;
+  }};
   ${(props) => {
     if (!props.isShow)
       return `
@@ -36,8 +45,6 @@ const DialButton = styled.button<{ isShow: boolean }>`
         box-shadow: inset 1px 8px 10px -5px #ffb6f8b8,
         inset -1px 4px 2px 0px #5c0e55a8;
         transition: box-shadow 500ms ease-in-out 0ms;
-        animation: slideup 0.5s;
-        animation-fill-mode: forwards;
       `;
   }};
 
