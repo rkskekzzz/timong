@@ -25,20 +25,22 @@ const Xone = styled.div<{ color?: string; size?: CircleType }>`
   height: ${(props) => props.size ?? '100%'};
   width: ${(props) => props.size ?? '100%'};
   transform: translateX(0.22rem) translateY(-0.05rem);
+  transform: ${(props) =>
+    props.size ? `translate(calc(), calc())` : `translate(42%, -8%)`};
   &:before {
     position: absolute;
     border-radius: 2px;
     content: ' ';
-    height: calc(${(props) => props.size ?? '100%'} + 2px);
-    width: 2px;
+    height: calc(${(props) => props.size ?? '100%'} + 1px);
+    width: 1.5px;
     background: ${(props) => props.color || 'white'};
   }
   &:after {
     position: absolute;
     border-radius: 2px;
     content: ' ';
-    height: calc(${(props) => props.size ?? '100%'} + 2px);
-    width: 2px;
+    height: calc(${(props) => props.size ?? '100%'} + 1px);
+    width: 1.5px;
     background: ${(props) => props.color || 'white'};
   }
   &:before {
