@@ -15,15 +15,12 @@ const DialButton = styled.button<{ isShow: boolean; selectedDate: Day }>`
   z-index: 300;
   position: fixed;
   bottom: 16px;
-  left: calc(50% + 200px);
-  /* transform: translateX(calc(50% + 25vw)); */
-  /* left: 50%; */
+  right: 16px;
   width: 56px;
   height: 56px;
   background: #f995f0b8;
   border-radius: 50%;
   border: 0px solid black;
-  transform: translateX(calc(-50% + -28px - 16px));
   ${(props) => {
     if (props.selectedDate !== null)
       return `
@@ -71,41 +68,26 @@ const DialButton = styled.button<{ isShow: boolean; selectedDate: Day }>`
 
   @keyframes slideup {
     0% {
-      transform: translate(calc(-50% + -28px - 16px), 0px);
+      transform: translate(0, 0px);
     }
     100% {
-      transform: translate(
-        calc(-50% + -28px - 16px),
-        -${NumberEx.timePickerHeight}
-      );
+      transform: translate(0, -${NumberEx.timePickerHeight});
     }
   }
   @keyframes slidedown {
     0% {
-      transform: translate(
-        calc(-50% + -28px - 16px),
-        -${NumberEx.timePickerHeight}
-      );
+      transform: translate(0, -${NumberEx.timePickerHeight});
     }
     100% {
-      transform: translate(calc(-50% + -28px - 16px), 0px);
+      transform: translate(0, 0px);
     }
   }
 `;
 
 const Temp = styled.div<{ isShow: boolean }>`
   position: fixed;
-  width: 250px;
   bottom: 72px;
-  left: calc(50% + 200px);
-  transform: translate(calc(-50% + -125px + -15px), 0px);
-  @media not all and (min-resolution: 0.001dpcm) {
-    @supports (-webkit-appearance: none) {
-      transform: translate(calc(-50% + -100px + -13px), 0px);
-      /* 이 안에 Safari(10.1 이상)에서만 적용할 스타일 작성 */
-      /* transform: translate(calc(-50% + -51px), 0px); */
-    }
-  }
+  right: 16px;
   display: flex;
   align-items: end;
   flex-direction: column-reverse;
