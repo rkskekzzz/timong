@@ -32,14 +32,20 @@ const DialButton = styled.button<{ isShow: boolean; selectedDate: Day }>`
       `;
   }};
   ${(props) => {
-    if (!props.isShow)
+    if (!props.isShow && props.selectedDate !== null)
       return `
         box-shadow: inset 1px -8px 10px -3px #ffb6f8b8,
         inset -1px -4px 2px 0px #5c0e55a8;
         transition: box-shadow 500ms ease-in-out 0ms;
         animation: slidedown 0.5s;
         animation-fill-mode: forwards;
-    `;
+        `;
+    else if (!props.isShow)
+      return `
+        box-shadow: inset 1px -8px 10px -3px #ffb6f8b8,
+        inset -1px -4px 2px 0px #5c0e55a8;
+        transition: box-shadow 500ms ease-in-out 0ms;
+      `;
     else
       return `
         box-shadow: inset 1px 8px 10px -5px #ffb6f8b8,
@@ -237,12 +243,12 @@ const DialRowProfile = styled.button<{ isShow: boolean; bgcolor: string }>`
   ${(props) => {
     if (props.isShow)
       return `
-      transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,opacity 0.8s;
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, opacity 0.8s;
       opacity: 1;
     `;
     else
       return `
-      transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,opacity 0.8s;
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, opacity 0.8s;
       transform: scale(0);
       opacity: 0;`;
   }};
