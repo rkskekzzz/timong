@@ -139,7 +139,7 @@ const DialRow = styled.span<{ isSwipe: boolean; willDelete: boolean }>`
     `;
     else
       return `
-      transition: transform 200ms ease-in-out 0ms;
+      transition: transform 300ms ease-in-out 0ms;
       `;
   }};
   ${(props) => {
@@ -194,14 +194,14 @@ const DialRowName = styled.span<{ isShow: boolean }>`
   ${(props) => {
     if (props.isShow)
       return `
-      transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
       opacity: 1;
       transform-origin: 100% 50%;
       margin-right: 8px;
     `;
     else
       return `
-      transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
       transform: scale(0.5);
       transform-origin: 100% 50%;
       margin-right: 8px;
