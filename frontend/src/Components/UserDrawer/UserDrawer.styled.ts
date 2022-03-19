@@ -66,11 +66,12 @@ const UserDrawer = styled.div<{
   bottom: 0;
   width: 100%;
   max-width: ${NumberEx.calendarMaxWidth};
+  max-height: 80vh;
+  overflow: scroll;
   padding: 30px;
   border-radius: 20px 20px 0px 0px;
   background-color: ${(props) => props.bgcolor || '#00000080'};
   transition: all 0.5s ease-in-out 0s;
-
   * {
     color: ${(props) => props.fgcolor || '#ffffff'};
   }
