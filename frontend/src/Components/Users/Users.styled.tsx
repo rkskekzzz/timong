@@ -89,14 +89,15 @@ const DialButton = styled.button<{ isShow: boolean; selectedDate: Day }>`
 
 const Temp = styled.div<{ isShow: boolean }>`
   position: fixed;
-  width: 200px;
+  width: 250px;
   bottom: 72px;
   left: calc(50% + 200px);
-  transform: translate(calc(-50% + -100px + -16px), 0px);
+  transform: translate(calc(-50% + -125px + -15px), 0px);
   @media not all and (min-resolution: 0.001dpcm) {
     @supports (-webkit-appearance: none) {
+      transform: translate(calc(-50% + -100px + -13px), 0px);
       /* 이 안에 Safari(10.1 이상)에서만 적용할 스타일 작성 */
-      transform: translate(calc(-50% + -51px), 0px);
+      /* transform: translate(calc(-50% + -51px), 0px); */
     }
   }
   display: flex;
