@@ -24,5 +24,5 @@ export interface Calendar {
   start?: string;
   end?: string;
   users: User[];
-  meetingDays: String[];
+  meetingDays: string[];
 }
