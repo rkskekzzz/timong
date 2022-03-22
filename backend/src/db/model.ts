@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { Calendar, ScheduleValidType } from "../interface/entity";
+import { Schema, model } from 'mongoose';
+import { Calendar, ScheduleValidType } from '../interface/entity';
 
 const schema = new Schema<Calendar>(
   {
@@ -36,8 +36,9 @@ const schema = new Schema<Calendar>(
         ],
       },
     ],
+    meetingDays: { type: [String], required: false, default: [] },
   },
   { timestamps: true }
 );
 
-export default model<Calendar>("Calendar", schema);
+export default model<Calendar>('Calendar', schema);

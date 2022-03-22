@@ -1,6 +1,6 @@
 export enum ScheduleValidType {
-  POSIBLE = "POSIBLE",
-  IMPOSIBLE = "IMPOSIBLE",
+  POSIBLE = 'POSIBLE',
+  IMPOSIBLE = 'IMPOSIBLE',
 }
 
 export interface Schedule {
@@ -24,4 +24,5 @@ export interface Calendar {
   start?: string;
   end?: string;
   users: User[];
+  meetingDays: String[];
 }
