@@ -1,8 +1,8 @@
-import { CreateCalendarDTO } from "../interface/dto";
-import CalendarModel from "../db/model";
-import ApiError from "../modules/error";
-import { Calendar } from "../interface/entity";
-import { Document } from "mongoose";
+import { CreateCalendarDTO } from '../interface/dto';
+import CalendarModel from '../db/model';
+import ApiError from '../modules/error';
+import { Calendar } from '../interface/entity';
+import { Document } from 'mongoose';
 
 async function create(createCalendarDTO: CreateCalendarDTO): Promise<Calendar> {
   return CalendarModel.create(createCalendarDTO);
@@ -15,6 +15,8 @@ async function getOneDocument(
   if (!calendar) {
     throw new ApiError(404, `Calendar ${calendar_id} not found`);
   }
+  if (!calendar.meetingDays) calendar.meetingDays = [];
+  calendar.save();
   return calendar;
 }
 
