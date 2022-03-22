@@ -16,7 +16,6 @@ async function getOneDocument(
     throw new ApiError(404, `Calendar ${calendar_id} not found`);
   }
   if (!calendar.meetingDays) calendar.meetingDays = [];
-  calendar.save();
   return calendar;
 }
 
