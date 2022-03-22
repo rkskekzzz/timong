@@ -11,6 +11,7 @@ const router: Router = Router();
 // 📆 캘린더 라우터
 router.post('/', CalendarController.create);
 router.get('/:calendar_id', CalendarController.getOne);
+router.post('/:calendar_id', CalendarController.updateMeetingDays);
 
 // 🙍‍♂️ 유저 라우터
 router.post('/:calendar_id/users', UserController.create);
