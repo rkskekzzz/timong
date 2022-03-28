@@ -73,8 +73,14 @@ const Timong = () => {
 
   const getCalendar = async () => {
     const result = await CalendarService.getCalendar(location.pathname);
+    console.log(result);
+
     if (result) {
-      dispatch({ type: 'INIT', users: result.users });
+      dispatch({
+        type: 'INIT',
+        users: result.users,
+        meetingDays: result.meetingDays,
+      });
       setCalendarName(result.name);
       setCalendar(true);
     } else {
