@@ -5,11 +5,12 @@ import { User, Valid } from './UserType';
 
 export type State = {
   users: User[];
+  meetingDays: string[];
   selectedDate: Day;
 };
 
 export type Action =
-  | { type: 'INIT'; users: [User] }
+  | { type: 'INIT'; users: [User]; meetingDays: [string] }
   | { type: 'ADD'; user: User }
   | { type: 'DELETE'; index: number; user: User }
   | { type: 'UPDATEDATE'; user: User; day: moment.Moment; valid: Valid }

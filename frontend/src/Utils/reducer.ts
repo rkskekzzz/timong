@@ -9,6 +9,7 @@ export default function reducer(state: State, action: Action): State {
       return {
         ...state,
         users: action.users,
+        meetingDays: action.meetingDays,
       };
     case 'ADD':
       return { ...state, users: state.users.concat(action.user) };

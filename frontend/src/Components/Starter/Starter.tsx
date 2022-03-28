@@ -37,7 +37,11 @@ const StarterInputs = () => {
       return;
     }
     const result = await CalendarService.create(formik.values.calendarName);
-    dispatch({ type: 'INIT', users: result.users });
+    dispatch({
+      type: 'INIT',
+      users: result.users,
+      meetingDays: result.meetingDays,
+    });
     navi(result._id);
   }, [formik]);
 
