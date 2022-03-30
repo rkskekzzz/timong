@@ -62,6 +62,7 @@ const StarterModalForm = styled.form`
 const StarterModalButton = styled(Button)`
   && {
     width: 100%;
+    height: 46px;
     background: #f995f0;
     :hover {
       background: #f995f0;
