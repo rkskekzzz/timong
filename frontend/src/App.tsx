@@ -6,6 +6,7 @@ import { Timong, Error, Starter } from './Components';
 import { reducer } from './Utils';
 import { State, userDispatch } from './Interface/ContextType';
 import { initialState } from './Interface/initialState';
+import List from './Pages/List/List';
 
 export const UserContext = createContext<{
   state: State;
@@ -27,8 +28,9 @@ function App() {
     <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/:id" element={<Timong />} />
+          <Route path="/anony/:id" element={<Timong />} />
           <Route path="/" element={<Starter />} />
+          <Route path="/:user_id" element={<List />} />
           <Route path="/404" element={<Error />} />
           <Route path="*" element={<Navigate to="/404" />} />
         </Routes>

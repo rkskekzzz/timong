@@ -72,7 +72,9 @@ const Timong = () => {
   };
 
   const getCalendar = async () => {
-    const result = await CalendarService.getCalendar(location.pathname);
+    const result = await CalendarService.getCalendar(
+      '/' + location.pathname.split('/')[2]
+    );
     console.log(result);
 
     if (result) {

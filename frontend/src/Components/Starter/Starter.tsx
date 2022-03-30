@@ -6,6 +6,7 @@ import { themes } from 'src/theme';
 import { CalendarService } from 'src/Network/TimongService';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from 'src/App';
+import SignInButton from './SignInButton';
 import GlobalStyled from '../GlobalStyled/GlobalStyled.styled';
 
 const StarterInputs = () => {
@@ -42,47 +43,8 @@ const StarterInputs = () => {
       users: result.users,
       meetingDays: result.meetingDays,
     });
-    navi(result._id);
+    navi('anony/' + result._id);
   }, [formik]);
-
-  // const handleValue = useCallback(
-  //   (e) => {
-  //     setValue(e.target.value > 25 ? 25 : e.target.value);
-  //   },
-  //   [setValue]
-  // );
-
-  // const handleAddValue = useCallback(() => {
-  //   setValue(value + 1 >= 25 ? 25 : value + 1);
-  // }, [value]);
-
-  // const handleSubValue = useCallback(() => {
-  //   setValue(!value ? value : value - 1);
-  // }, [value]);
-
-  // const handleTouchStart = useCallback(
-  //   (e: React.TouchEvent<HTMLButtonElement>) => {
-  //     setTouchStart(e.targetTouches[0].clientX);
-  //   },
-  //   [setTouchStart]
-  // );
-
-  // const handleTouchMove = useCallback(
-  //   (e: React.TouchEvent<HTMLSpanElement>) => {
-  //     if (isChanging) return;
-  //     if (touchStart - e.targetTouches[0].clientX > 20) {
-  //       handleSubValue();
-  //     }
-  //     if (touchStart - e.targetTouches[0].clientX < -20) {
-  //       handleAddValue();
-  //     }
-  //     setIsChanging(true);
-  //     setTimeout(() => {
-  //       setIsChanging(false);
-  //     }, 200);
-  //   },
-  //   [handleSubValue, handleAddValue, isChanging, setIsChanging]
-  // );
 
   return (
     <Styled.StarterModalForm onSubmit={handleSubmit}>
@@ -96,25 +58,18 @@ const StarterInputs = () => {
         sx={{ width: '100%' }}
         inputProps={{ maxLength: 12 }}
       />
-      {/* <Styled.StarterModalNumberBox
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-      >
-        <span>Maximun </span>
-        <p onClick={handleSubValue}>{'<'}</p>
-        <input autoComplete="false" value={value} onChange={handleValue} />
-        <p onClick={handleAddValue}>{'>'}</p>
-      </Styled.StarterModalNumberBox> */}
-      <Styled.StarterModalButton
-        type="submit"
-        onClick={handleSubmitButton}
-        variant="contained"
-        color="primary"
-        sx={{ bgcolor: 'Background.paper' }}
-      >
-        Start
-      </Styled.StarterModalButton>
-      <b>Each calendar can be used by up to 16 people</b>
+      <div>
+        <Styled.StarterModalButton
+          type="submit"
+          onClick={handleSubmitButton}
+          variant="contained"
+          color="primary"
+          sx={{ bgcolor: 'Background.paper' }}
+        >
+          Start
+        </Styled.StarterModalButton>
+        <SignInButton />
+      </div>
     </Styled.StarterModalForm>
   );
 };
