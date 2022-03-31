@@ -14,13 +14,7 @@ const githubLink = 'https://github.com/rkskekzzz/blockcalendar.git';
 const emailLink = 'mailto:wkdlfflxh@naver.com';
 const articleLink = 'https://80000coding.oopy.io';
 
-function ModalBoxForm({
-  handleModalClose,
-  toggleMode,
-}: {
-  handleModalClose: () => void;
-  toggleMode: () => void;
-}) {
+function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
   const navi = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
 
@@ -40,11 +34,13 @@ function ModalBoxForm({
   const handleClick = useCallback((link: string) => {
     window.open(link);
   }, []);
+  const handleThemeChangeButton = () => {
+    console.log('click');
+  };
   const handleCloseButton = useCallback(() => {
     handleModalClose();
   }, [handleModalClose]);
   const theme = useTheme();
-  const handleThemeChangeButton = toggleMode;
 
   const style = {
     color: theme.myPalette.iconSmall,
@@ -93,8 +89,7 @@ function ModalBoxForm({
 const HeaderModal: React.FC<{
   isShowModal: boolean;
   handleModalClose: () => void;
-  toggleMode: () => void;
-}> = ({ isShowModal, handleModalClose, toggleMode }) => {
+}> = ({ isShowModal, handleModalClose }) => {
   const theme = useTheme();
 
   const ForwardFC = React.forwardRef(function ForwardFCCallback(
@@ -119,10 +114,7 @@ const HeaderModal: React.FC<{
       color={theme.myPalette.backDropHeader}
     >
       <ForwardFC>
-        <ModalBoxForm
-          handleModalClose={handleModalClose}
-          toggleMode={toggleMode}
-        />
+        <ModalBoxForm handleModalClose={handleModalClose} />
       </ForwardFC>
     </Styled.ColoredModal>
   );
