@@ -14,10 +14,12 @@ const SignedCalendar = () => {
   });
   return (
     <Styled.SignedCalendar>
-      <Header calendarName="no" />
-      <div className="body">
-        <div style={{ color: theme.myPalette.foreground }}>list module</div>
-        <Calendar calendarType="Monthly" />
+      <div className="container">
+        <Header calendarName="no" />
+        <div className="body">
+          <div style={{ color: theme.myPalette.foreground }}>list module</div>
+          <Calendar calendarType="Monthly" />
+        </div>
       </div>
     </Styled.SignedCalendar>
   );

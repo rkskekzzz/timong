@@ -7,10 +7,22 @@ const SignedCalendar = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  .container {
+    flex: 1 1 0;
+    overflow: auto;
 
-  .body {
-    /* margin: 0 auto; */
-    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .body {
+      padding-top: 60px;
+      height: calc(100vh - 60px);
+      overflow: hidden;
+      display: flex;
+      div {
+        flex: 1 1 0;
+      }
+    }
   }
 `;
 
