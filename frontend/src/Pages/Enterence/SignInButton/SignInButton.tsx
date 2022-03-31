@@ -49,7 +49,7 @@ const SignInButton = () => {
       if (user) {
         dispatch({ type: 'SIGNIN' });
         console.log(user);
-        navi('/calendar');
+        // navi('/calendar');
       }
       // This gives you a Google Access Token. You can use it to access Google APIs.
       // const credential = GoogleAuthProvider.credentialFromResult(result);

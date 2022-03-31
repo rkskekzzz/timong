@@ -42,7 +42,7 @@ const HeaderFlexDiv = styled.div`
   justify-content: space-between;
 `;
 
-const HeaderTimongTitle = styled.span<{ isPinned: boolean }>`
+const HeaderAnonyCalendarTitle = styled.span<{ isPinned: boolean }>`
   position: absolute;
   font-size: 1.2rem;
   font-weight: bold;
@@ -87,7 +87,7 @@ const Styled = {
   Header,
   HeaderFlexDiv,
   HeaderCalendarTitle,
-  HeaderTimongTitle,
+  HeaderAnonyCalendarTitle,
 };
 
 export default Styled;

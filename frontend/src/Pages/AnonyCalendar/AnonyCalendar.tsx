@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Styled from './Timong.styled';
-import { Calendar } from './Calendar';
-import Header from './Header';
-import Users from './Users';
+import Styled from './AnonyCalendar.styled';
+import { Calendar } from 'src/Components/Calendar';
+import Header from 'src/Components/Header';
+import Users from 'src/Components/Users';
 import { themes } from 'src/theme';
-import { CalendarService } from 'src/Network/TimongService';
+import { CalendarService } from 'src/Network/CalendarService';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import { UserContext } from 'src/App';
@@ -53,7 +53,7 @@ declare module '@mui/material/styles' {
   }
 }
 
-const Timong = () => {
+const AnonyCalendar = () => {
   const location = useLocation();
   const navi = useNavigate();
   const { dispatch } = useContext(UserContext);
@@ -159,4 +159,4 @@ const Timong = () => {
   );
 };
 
-export default Timong;
+export default AnonyCalendar;

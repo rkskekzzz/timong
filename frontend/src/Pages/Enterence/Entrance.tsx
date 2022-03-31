@@ -1,15 +1,15 @@
 import React, { useState, useCallback, useContext } from 'react';
 import { Input } from '@mui/material';
 import { useFormik } from 'formik';
-import Styled from './Starter.styled';
+import Styled from './Entrance.styled';
 import { themes } from 'src/theme';
-import { CalendarService } from 'src/Network/TimongService';
+import { CalendarService } from 'src/Network/CalendarService';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from 'src/App';
 import SignInButton from './SignInButton';
-import GlobalStyled from '../GlobalStyled/GlobalStyled.styled';
+import GlobalStyled from 'src/Components/GlobalStyled/GlobalStyled.styled';
 
-const StarterInputs = () => {
+const EntranceInputs = () => {
   const { dispatch } = useContext(UserContext);
   const navi = useNavigate();
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
@@ -47,7 +47,7 @@ const StarterInputs = () => {
   }, [formik]);
 
   return (
-    <Styled.StarterModalForm onSubmit={handleSubmit}>
+    <Styled.EntranceModalForm onSubmit={handleSubmit}>
       <Input
         error={isEmpty ? true : false}
         autoComplete="false"
@@ -59,7 +59,7 @@ const StarterInputs = () => {
         inputProps={{ maxLength: 12 }}
       />
       <div>
-        <Styled.StarterModalButton
+        <Styled.EntranceModalButton
           type="submit"
           onClick={handleSubmitButton}
           variant="contained"
@@ -67,16 +67,16 @@ const StarterInputs = () => {
           sx={{ bgcolor: 'Background.paper' }}
         >
           Start
-        </Styled.StarterModalButton>
+        </Styled.EntranceModalButton>
         <SignInButton />
       </div>
-    </Styled.StarterModalForm>
+    </Styled.EntranceModalForm>
   );
 };
 
-const Starter = () => {
+const Entrance = () => {
   return (
-    <Styled.Starter style={{ background: themes.main.background }}>
+    <Styled.Entrance style={{ background: themes.main.background }}>
       <GlobalStyled.Cloud bgcolor="white">
         <div className="clouds">
           <div className="cloud x1" />
@@ -86,7 +86,7 @@ const Starter = () => {
           <div className="cloud x5" />
         </div>
       </GlobalStyled.Cloud>
-      <Styled.StarterModalTitle style={{ color: themes.main.theme }}>
+      <Styled.EntranceModalTitle style={{ color: themes.main.theme }}>
         <b className="t">T</b>
         <i>T</i>
         <b>i</b>
@@ -101,10 +101,10 @@ const Starter = () => {
         <i>g</i>
         <b>!</b>
         <i>!</i>
-      </Styled.StarterModalTitle>
-      <StarterInputs />
-    </Styled.Starter>
+      </Styled.EntranceModalTitle>
+      <EntranceInputs />
+    </Styled.Entrance>
   );
 };
 
-export default Starter;
+export default Entrance;

@@ -8,10 +8,10 @@ import {
   Outlet,
 } from 'react-router-dom';
 import './App.css';
-import { Timong, Error, Starter } from './Components';
 import { reducer } from './Utils';
 import { State, userDispatch } from './Interface/ContextType';
 import { initialState } from './Interface/initialState';
+import { SignedCalendar, Error, AnonyCalendar, Entrance } from './Pages';
 
 export const UserContext = createContext<{
   state: State;
@@ -42,11 +42,11 @@ function App() {
     <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/:id" element={<Timong />} />
-          <Route path="/" element={<Starter />} />
+          <Route path="/:id" element={<AnonyCalendar />} />
+          <Route path="/" element={<Entrance />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/calendar" element={<List />} />
-            <Route path="/calendar/:calendar_id" element={<Timong />} />
+            <Route path="/calendar" element={<SignedCalendar />} />
+            <Route path="/calendar/:calendar_id" element={<AnonyCalendar />} />
           </Route>
           <Route path="/404" element={<Error />} />
           <Route path="*" element={<Navigate to="/404" />} />

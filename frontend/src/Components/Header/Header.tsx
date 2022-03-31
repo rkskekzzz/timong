@@ -55,9 +55,9 @@ const Header: React.FC<{ toggleMode: () => void; calendarName: string }> = ({
         isPinned={isPinned}
         bgcolor={theme.myPalette.backgroundHeader}
       >
-        <Styled.HeaderTimongTitle isPinned={isPinned}>
-          Timong
-        </Styled.HeaderTimongTitle>
+        <Styled.HeaderAnonyCalendarTitle isPinned={isPinned}>
+          AnonyCalendar
+        </Styled.HeaderAnonyCalendarTitle>
         <Styled.HeaderCalendarTitle
           isPinned={isPinned}
           color={theme.myPalette.foregroundHeader}
