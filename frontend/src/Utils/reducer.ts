@@ -91,6 +91,11 @@ export default function reducer(state: State, action: Action): State {
         ...state,
         selectedDate: action.day ? new Day(action.day) : null,
       };
+    case 'CHANGEMODE':
+      return {
+        ...state,
+        mode: action.mode,
+      };
     default:
       return state;
   }
