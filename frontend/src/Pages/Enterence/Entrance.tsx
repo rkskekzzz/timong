@@ -43,7 +43,7 @@ const EntranceInputs = () => {
       users: result.users,
       meetingDays: result.meetingDays,
     });
-    navi('anony/' + result._id);
+    navi(result._id);
   }, [formik]);
 
   return (
