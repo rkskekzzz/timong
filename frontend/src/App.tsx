@@ -12,7 +12,6 @@ import { Timong, Error, Starter } from './Components';
 import { reducer } from './Utils';
 import { State, userDispatch } from './Interface/ContextType';
 import { initialState } from './Interface/initialState';
-import List from './Pages/List/List';
 
 export const UserContext = createContext<{
   state: State;
