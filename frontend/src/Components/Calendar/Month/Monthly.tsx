@@ -4,7 +4,8 @@ import moment from 'moment';
 import { Year, Day } from 'src/Interface/DateType';
 import { buildDate } from 'src/Utils';
 import { useTheme, Box } from '@mui/material';
-import { AutoSizer, List, WindowScroller } from 'react-virtualized';
+import Styled from './Monthly.styled';
+import { AutoSizer, List } from 'react-virtualized';
 import UserDrawer from 'src/Components/UserDrawer/UserDrawer';
 import NumberEx from 'src/Common/NumberEx';
 import { UserWithValid } from 'src/Interface/UserType';
@@ -41,23 +42,23 @@ const Monthly = () => {
   };
 
   const scrollListener = (params) => {
-    if (params.scrollTop + params.clientHeight >= params.scrollHeight - 1000) {
+    if (params.scrollTop + params.clientHeight >= params.scrollHeight - 100) {
       setYear((year) => [
         ...year,
         ...buildDate(year[year.length - 1].monthMoment.clone().add(1, 'M')),
       ]);
     }
   };
-  const rowRenderer = ({ index, style }) => {
+  const rowRenderer = ({ index, key, style }) => {
     const month = year[index];
     return (
-      <div style={style} key={month.monthMoment.format('x') + index}>
+      <div style={style} key={key}>
         <MonthBox month={month} drawerHandler={drawerHandler} />
       </div>
     );
   };
 
-  const getRowHeight = ({ index }) => {
+  const getRowHeight = ({ index }: { index: number }) => {
     return 60 + year[index].week.length * 80 + 30;
   };
 
@@ -79,36 +80,24 @@ const Monthly = () => {
    */
   return (
     <Box bgcolor={theme.myPalette.background}>
-      <WindowScroller style={{ width: '100%' }}>
-        {({ width, height, isScrolling, scrollTop, registerChild }) => (
-          /**
-           * WindowScroller 와 AutoSizer를 함께 쓰기 위해선, 아래왁 같은 방식을 활용한다.
-           */
-          <div ref={registerChild}>
-            <AutoSizer>
-              {() => (
-                /**
-                 * 해당 컴포넌트는 가변높이, 스크롤 감지 가능 List 컴포넌트에 대한 예시이다.
-                 */
-                <List
-                  autoHeight
-                  height={height}
-                  isScrolling={isScrolling}
-                  onScroll={scrollListener}
-                  rowCount={year.length}
-                  rowHeight={getRowHeight}
-                  rowRenderer={rowRenderer}
-                  scrollTop={scrollTop}
-                  width={width}
-                  style={{
-                    maxWidth: NumberEx.calendarMaxWidth,
-                  }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
-                />
-              )}
-            </AutoSizer>
-          </div>
-        )}
-      </WindowScroller>
+      <Styled.AutoSizerWrapper>
+        <AutoSizer>
+          {({ height, width }) => (
+            <List
+              className="list"
+              height={height}
+              rowHeight={getRowHeight}
+              onScroll={scrollListener}
+              rowCount={year.length}
+              rowRenderer={rowRenderer}
+              width={width}
+              style={{
+                maxWidth: NumberEx.calendarMaxWidth,
+              }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
+            />
+          )}
+        </AutoSizer>
+      </Styled.AutoSizerWrapper>
       <UserDrawer
         touchRef={touchRef}
         selectedDay={selectedDay}
