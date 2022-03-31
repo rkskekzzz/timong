@@ -11,6 +11,11 @@ export default function reducer(state: State, action: Action): State {
         users: action.users,
         meetingDays: action.meetingDays,
       };
+    case 'SIGNIN':
+      return {
+        ...state,
+        isSigned: 'asdf',
+      };
     case 'ADD':
       return { ...state, users: state.users.concat(action.user) };
     case 'DELETE':

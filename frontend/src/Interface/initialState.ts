@@ -1,11 +1,7 @@
-import { Day } from './DateType';
-import { User } from './UserType';
+import { State } from './ContextType';
 
-export const initialState: {
-  users: User[];
-  meetingDays: string[];
-  selectedDate: Day;
-} = {
+export const initialState: State = {
+  isSigned: null,
   users: [],
   meetingDays: [],
   selectedDate: null,
