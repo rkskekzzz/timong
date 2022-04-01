@@ -61,8 +61,6 @@ const UserDrawer = styled.div<{
 }>`
   z-index: 1000;
   position: fixed;
-  box-sizing: border-box;
-  left: 50%;
   bottom: 0;
   width: 100%;
   max-width: ${NumberEx.calendarMaxWidth};
@@ -78,11 +76,11 @@ const UserDrawer = styled.div<{
   ${(props) => {
     if (props.isShow) {
       return `
-        transform: translate(-50%, 0);
+        transform: translate(0, 0);
       `;
     } else {
       return `
-        transform: translate(-50%, 100%);
+        transform: translate(0, 100%);
       `;
     }
   }}
