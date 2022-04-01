@@ -79,7 +79,7 @@ const Monthly = () => {
    * @see https://github.com/bvaughn/react-virtualized/blob/master/docs/WindowScroller.md#render-props
    */
   return (
-    <Box bgcolor={theme.myPalette.background}>
+    <Box>
       <Styled.AutoSizerWrapper>
         <AutoSizer>
           {({ height, width }) => (
