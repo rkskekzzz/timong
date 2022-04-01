@@ -49,10 +49,6 @@ function App() {
     [prefersDarkMode]
   );
 
-  // useEffect(() => {
-  //   // document.body.style.background = theme.myPalette.background;
-  // }, [theme]);
-
   useEffect(() => {
     dispatch({ type: 'CHANGEMODE', mode: prefersDarkMode ? 'light' : 'dark' });
   }, [prefersDarkMode]);
