@@ -5,6 +5,9 @@ body {
   /* height: 100%; */
   font-family: 'Noto Sans KR', sans-serif;
 }
+* {
+  box-sizing: border-box;
+}
 *::-webkit-scrollbar {
   display: none;
 }
