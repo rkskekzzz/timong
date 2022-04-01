@@ -16,7 +16,7 @@ const HFlexBox = styled.div`
 `;
 
 const VFlexBox = styled.div`
-  height: 60px;
+  height: 80px;
   display: flex;
   flex-direction: column;
   padding: 10px;
