@@ -1,16 +1,14 @@
 import styled from 'styled-components';
+import { Box } from '@mui/material';
 
-const SignedCalendar = styled.div`
+const SignedCalendar = styled(Box)`
   width: 100%;
   height: 100vh;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   .container {
     flex: 1 1 0;
-    overflow: auto;
-
     display: flex;
     flex-direction: column;
     justify-content: center;

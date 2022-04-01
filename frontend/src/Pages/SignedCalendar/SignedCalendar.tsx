@@ -16,7 +16,7 @@ const SignedCalendar = () => {
   });
 
   return (
-    <Styled.SignedCalendar>
+    <Styled.SignedCalendar bgcolor={theme.myPalette.background}>
       <div className="container">
         <Header calendarName="no" />
         <div className="body">

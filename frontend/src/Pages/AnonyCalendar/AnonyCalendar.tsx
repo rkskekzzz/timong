@@ -10,10 +10,12 @@ import Button from '@mui/material/Button';
 import { UserContext } from 'src/App';
 import { useLocation } from 'react-router-dom';
 import { CalendarType } from 'src/Interface/CalendarType';
+import { useTheme } from '@mui/material';
 
 const AnonyCalendar = () => {
   const location = useLocation();
   const navi = useNavigate();
+  const theme = useTheme();
   const { dispatch } = useContext(UserContext);
   const calendarType: CalendarType = 'Monthly';
   const [reLoad, setReLoad] = useState<boolean>(false);
@@ -48,7 +50,7 @@ const AnonyCalendar = () => {
   }, []);
 
   return (
-    <Styled.AnonyCalendar>
+    <Styled.AnonyCalendar bgcolor={theme.myPalette.background}>
       <Header calendarName={calendarName} />
       {!calendar ? (
         <div
