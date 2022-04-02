@@ -3,6 +3,7 @@ import Styled from './Header.styled';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import HeaderModal from './HeaderModal';
 import { useTheme } from '@mui/material';
+import logo from 'src/assets/logo512.png';
 
 const Header: React.FC<{ calendarName: string }> = ({ calendarName }) => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
@@ -18,9 +19,12 @@ const Header: React.FC<{ calendarName: string }> = ({ calendarName }) => {
         handleModalClose={handleModalClose}
       />
       <Styled.Header bgcolor={theme.myPalette.backgroundHeader}>
-        <Styled.HeaderAnonyCalendarTitle>
-          AnonyCalendar
-        </Styled.HeaderAnonyCalendarTitle>
+        <div>
+          <img src={logo} alt="timong logo" />
+          <Styled.HeaderAnonyCalendarTitle>
+            Timong
+          </Styled.HeaderAnonyCalendarTitle>
+        </div>
         <Styled.HeaderCalendarTitle color={theme.myPalette.foregroundHeader}>
           {calendarName}
         </Styled.HeaderCalendarTitle>
