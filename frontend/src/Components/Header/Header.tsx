@@ -25,12 +25,12 @@ const Header: React.FC<{ calendarName: string }> = ({ calendarName }) => {
             Timong
           </Styled.HeaderAnonyCalendarTitle>
         </div>
-        <Styled.HeaderCalendarTitle color={theme.myPalette.foregroundHeader}>
+        {/* <Styled.HeaderCalendarTitle color={theme.myPalette.foregroundHeader}>
           {calendarName}
-        </Styled.HeaderCalendarTitle>
+        </Styled.HeaderCalendarTitle> */}
         <MenuRoundedIcon
           sx={{
-            color: 'white',
+            color: theme.myPalette.foreground,
             transform: 'scale(1.2)',
             transition: 'transform 500ms linear 0ms, color 500ms',
             cursor: 'pointer',
