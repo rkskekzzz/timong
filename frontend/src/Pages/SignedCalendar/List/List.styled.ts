@@ -16,9 +16,10 @@ const List = styled.div`
 
 const Card = styled.span<{ fgcolor: string }>`
   width: 40vw;
+  max-width: 500px;
   height: 100px;
   padding: 1rem;
-  background: #ffffff33;
+  background: #ffffff11;
   border-radius: 10px;
   color: ${(props) => `${props.fgcolor}`};
   box-shadow: 0px 4px 2px -2px rgb(0, 0, 0, 0.2),
