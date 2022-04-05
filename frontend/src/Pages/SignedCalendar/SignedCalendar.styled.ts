@@ -17,6 +17,7 @@ const SignedCalendar = styled(Box)`
       height: calc(100vh - 60px);
       overflow: hidden;
       display: flex;
+      gap: 60px;
       div {
         flex: 1 1 0;
       }
