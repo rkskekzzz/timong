@@ -127,11 +127,11 @@ const Users = () => {
         setIsSwipe(index);
         return;
       }
-      if (touchStart - e.targetTouches[0].clientX < 200) {
+      if (touchStart - e.targetTouches[0].clientX < -100) {
         setIsSwipe(-1);
         return;
       }
-      if (touchStart - e.targetTouches[0].clientX > 200) {
+      if (touchStart - e.targetTouches[0].clientX > 500) {
         setIsSwipeMore(true);
         setIsSwipe(-1);
       }
@@ -141,6 +141,7 @@ const Users = () => {
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLSpanElement>, index: number) => {
       if (touchStart === 0 || !isShow) return;
+      if (touchStart - e.clientX < 10 && touchStart - e.clientX > -10) return;
       if (touchStart - e.clientX > 50) {
         setTouchStart(0);
         setIsSwipe(index);
