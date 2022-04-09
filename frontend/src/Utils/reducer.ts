@@ -14,7 +14,7 @@ export default function reducer(state: State, action: Action): State {
     case 'SIGNIN':
       return {
         ...state,
-        isSigned: 'asdf',
+        isSigned: action.uid,
       };
     case 'ADD':
       return { ...state, users: state.users.concat(action.user) };
