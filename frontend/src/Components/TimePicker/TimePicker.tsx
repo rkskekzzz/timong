@@ -50,7 +50,7 @@ const TimePicker: React.FC<{
         return;
       }
       dispatch({
-        type: 'UPDATETIMETABLE',
+        type: 'ANONY_UPDATETIMETABLE',
         user: selectedUser,
         date: state.selectedDate,
         time: index,

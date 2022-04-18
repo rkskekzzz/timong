@@ -16,16 +16,21 @@ export default function reducer(state: State, action: Action): State {
         ...state,
         isSigned: action.uid,
       };
-    case 'ADD':
+    case 'CHANGEMODE':
+      return {
+        ...state,
+        mode: action.mode,
+      };
+    case 'ANONY_ADD':
       return { ...state, users: state.users.concat(action.user) };
-    case 'DELETE':
+    case 'ANONY_DELETE':
       return {
         ...state,
         users: state.users.filter((_, index) => {
           return index !== action.index;
         }),
       };
-    case 'UPDATEDATE':
+    case 'ANONY_UPDATEDATE':
       return {
         ...state,
         users: state.users.map((user: User): User => {
@@ -55,7 +60,7 @@ export default function reducer(state: State, action: Action): State {
           return user;
         }),
       };
-    case 'UPDATETIMETABLE':
+    case 'ANONY_UPDATETIMETABLE':
       return {
         ...state,
         users: state.users.map((user: User): User => {
@@ -90,11 +95,6 @@ export default function reducer(state: State, action: Action): State {
       return {
         ...state,
         selectedDate: action.day ? new Day(action.day) : null,
-      };
-    case 'CHANGEMODE':
-      return {
-        ...state,
-        mode: action.mode,
       };
     default:
       return state;

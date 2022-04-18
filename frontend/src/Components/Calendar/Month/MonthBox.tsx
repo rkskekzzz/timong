@@ -52,7 +52,7 @@ function DayBoxLogic({
   };
   const updateUser = async () => {
     dispatch({
-      type: 'UPDATEDATE',
+      type: 'ANONY_UPDATEDATE',
       user: globalSelectedUser.user,
       day: day.moment,
       valid: globalSelectedUser.valid ? 'POSIBLE' : 'IMPOSIBLE',

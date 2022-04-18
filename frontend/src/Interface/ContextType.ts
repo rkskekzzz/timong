@@ -16,12 +16,12 @@ export type State = {
 export type Action =
   | { type: 'INIT'; users: [User]; meetingDays: [string] }
   | { type: 'SIGNIN'; uid: string }
-  | { type: 'ADD'; user: User }
-  | { type: 'DELETE'; index: number; user: User }
-  | { type: 'UPDATEDATE'; user: User; day: moment.Moment; valid: Valid }
+  | { type: 'ANONY_ADD'; user: User }
+  | { type: 'ANONY_DELETE'; index: number; user: User }
+  | { type: 'ANONY_UPDATEDATE'; user: User; day: moment.Moment; valid: Valid }
   | { type: 'TEST'; user: User; day: moment.Moment }
   | { type: 'SETSELECTEDATE'; day: moment.Moment }
-  | { type: 'UPDATETIMETABLE'; user: User; date: Day; time: number }
+  | { type: 'ANONY_UPDATETIMETABLE'; user: User; date: Day; time: number }
   | { type: 'CHANGEMODE'; mode: PaletteMode }
   | { type: 'DEFAULT' };
 

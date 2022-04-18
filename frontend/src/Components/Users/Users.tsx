@@ -101,7 +101,7 @@ const Users = () => {
         if (!dispatch) throw new Error('no dispatch');
         // TODO: del 에러나면 alert띄우기
         UserService.deleteUser(window.location.pathname, user._id);
-        dispatch({ type: 'DELETE', index: delIndex, user });
+        dispatch({ type: 'ANONY_DELETE', index: delIndex, user });
         setWillDelete(-1);
       }, 800);
     },
@@ -200,7 +200,7 @@ const Users = () => {
         name: user.name,
         color: user.color,
       });
-      dispatch({ type: 'ADD', user: result });
+      dispatch({ type: 'ANONY_ADD', user: result });
       setIsAdd(true);
     },
     [dispatch, users]
