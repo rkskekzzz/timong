@@ -43,18 +43,33 @@ const List = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) dispatch({ type: 'SIGNIN', uid: user.uid });
+      if (user) {
+        dispatch({ type: 'SIGNIN', uid: user.uid });
+      }
     });
   }, []);
 
   useEffect(() => {
+    /**
+     * fetch calendar list with firebase (by user_id)
+     *
+     * if user already exist, fetch the list
+     * else, make new Document in User Collection with user_id
+     *
+     * user_id is made by firebase auth.
+     * you can get this id with getAuth() method
+     */
     const fetchData = async () => {
-      const docRef = doc(dbService, 'Users', state.isSigned);
+      const docRef = doc(dbService, 'TestUsers', state.isSigned);
       const docSnap = await getDoc(docRef);
       if (!docSnap.exists()) {
         console.log('??');
         await setDoc(docRef, {
           calendar_list: [],
+          calenlsit: [
+            'users/kyL2jWZrdmbqoWT38yegl43WMbr1',
+            'users/kyL2jWZrdmbqoWT38yegl43WMbr1',
+          ],
         });
       } else {
         const { calendar_list } = docSnap.data();
@@ -62,7 +77,7 @@ const List = () => {
       }
     };
     if (state.isSigned) fetchData();
-  }, [state]);
+  }, [state.isSigned]);
 
   return (
     <Styled.List>
