@@ -16,6 +16,9 @@ const Header = styled.div<{ bgcolor: string }>`
   box-shadow: rgb(0 0 0 / 16%) 0px 1px 10px 0px;
   background: ${(props) => props.bgcolor || '#f2f2f2'};
 
+  div:first-child {
+    cursor: pointer;
+  }
   div {
     display: flex;
     align-items: center;

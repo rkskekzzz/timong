@@ -4,13 +4,16 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import HeaderModal from './HeaderModal';
 import { useTheme } from '@mui/material';
 import logo from 'src/assets/logo512.png';
+import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC<{ calendarName: string }> = ({ calendarName }) => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const theme = useTheme();
+  const navi = useNavigate();
 
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
+  const handleLogoTabbed = () => navi('/calendar');
 
   return (
     <>
@@ -19,7 +22,7 @@ const Header: React.FC<{ calendarName: string }> = ({ calendarName }) => {
         handleModalClose={handleModalClose}
       />
       <Styled.Header bgcolor={theme.myPalette.backgroundHeader}>
-        <div>
+        <div onClick={handleLogoTabbed}>
           <img src={logo} alt="timong logo" />
           <Styled.HeaderAnonyCalendarTitle>
             Timong
