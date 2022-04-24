@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Styled from './AnonyCalendar.styled';
 import { Calendar } from 'src/Components/Calendar';
 import Header from 'src/Components/Header';
-import Users from 'src/Components/Users';
 import { CalendarService } from 'src/Network/CalendarService';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
@@ -74,7 +73,6 @@ const AnonyCalendar = () => {
         <>
           <Styled.Body>
             <Calendar calendarType={calendarType} />
-            <Users />
           </Styled.Body>
         </>
       )}
