@@ -4,11 +4,13 @@ const Weekly = 'Weekly' as const;
 
 export type CalendarType = typeof Monthly | typeof Weekly;
 
-export type Calendar = {
-  _id?: string;
+export interface Calendar {
+  _id: string;
   name: string;
+}
+export interface CalendarDetail extends Calendar {
   start?: string;
   end?: string;
   users: User[];
   meetingDays: string[];
-};
+}
