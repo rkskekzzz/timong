@@ -32,14 +32,14 @@ const SignedCalendar = () => {
     <Styled.SignedCalendar bgcolor={theme.myPalette.background}>
       <div className="container">
         <Header calendarName="no" />
-        <div className="body">
+        <Styled.Body bgcolor={theme.myPalette.background}>
           <List />
           <div
             className={'responsive ' + (location.search ? 'show' : 'hidden')}
           >
             <Calendar calendarType="Monthly" />
           </div>
-        </div>
+        </Styled.Body>
       </div>
     </Styled.SignedCalendar>
   );
