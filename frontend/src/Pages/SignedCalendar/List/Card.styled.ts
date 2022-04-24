@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 const Card = styled.span<{ fgcolor: string }>`
   width: 40vw;
+  @media (max-width: 760px) {
+    width: 90vw;
+  }
   max-width: 400px;
   height: 100px;
   padding: 1rem;
