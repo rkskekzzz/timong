@@ -6,8 +6,8 @@ const Card = styled.span<{ fgcolor: string }>`
     width: 90vw;
   }
   max-width: 400px;
-  height: 100px;
-  padding: 1rem;
+  /* height: 100px; */
+  /* padding: 1rem; */
   background: #ffffff11;
   align-self: flex-end;
   border-radius: 10px;
@@ -22,7 +22,17 @@ const Card = styled.span<{ fgcolor: string }>`
     padding: 0;
     margin: 0;
   }
-  div {
+  .list {
+    padding: 0 0.1rem 0 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      height: 50px;
+    }
+  }
+
+  .add {
     width: 100%;
     height: 100%;
     display: flex;

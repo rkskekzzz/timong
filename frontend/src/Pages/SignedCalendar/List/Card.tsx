@@ -1,7 +1,8 @@
 import React from 'react';
-import { useTheme } from '@mui/material';
+import { Button, useTheme } from '@mui/material';
 import Styled from './Card.styled';
 import { Calendar } from 'src/Interface/CalendarType';
+import IosShareIcon from '@mui/icons-material/IosShare';
 
 const Card = ({
   group,
@@ -17,14 +18,15 @@ const Card = ({
       onClick={handleCardTabbed}
     >
       {group ? (
-        <>
+        <div className="list">
           <p>{group.name}</p>
-          {/* <h2>{group.group_name}</h2> */}
-          {/* <p>{group.group_users}</p> */}
-        </>
+          <Button onClick={() => alert('here')}>
+            <IosShareIcon />
+          </Button>
+        </div>
       ) : (
-        <div>
-          <span className="add">+</span>
+        <div className="add">
+          <span>+</span>
         </div>
       )}
     </Styled.Card>
