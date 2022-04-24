@@ -15,8 +15,25 @@ const SignedCalendar = styled(Box)`
       overflow: hidden;
       display: flex;
       gap: 60px;
-      div {
-        flex: 1 1 0;
+      @media (min-width: 760px) {
+        div {
+          flex: 1 1 0;
+        }
+      }
+      @media (max-width: 760px) {
+        justify-content: center;
+        .responsive {
+          z-index: 1000;
+          position: fixed;
+          width: 100%;
+        }
+        .hidden {
+          transform: translateX(100%);
+        }
+        .show {
+          transition: all 0.5s;
+          transform: translateX(0%);
+        }
       }
     }
   }
