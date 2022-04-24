@@ -6,14 +6,14 @@ import { UserContext } from 'src/App';
 import List from './List';
 import Header from 'src/Components/Header';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from 'src/firebase';
-import EditButton from './List/EditButton';
 
 const SignedCalendar = () => {
   const { dispatch } = useContext(UserContext);
   const theme = useTheme();
   const navi = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     onAuthStateChanged(auth, (_user) => {
@@ -25,15 +25,21 @@ const SignedCalendar = () => {
     });
   }, []);
 
+  useEffect(() => {
+    console.log(location);
+  }, []);
   return (
     <Styled.SignedCalendar bgcolor={theme.myPalette.background}>
       <div className="container">
         <Header calendarName="no" />
         <div className="body">
           <List />
-          <Calendar calendarType="Monthly" />
+          <div
+            className={'responsive ' + (location.search ? 'show' : 'hidden')}
+          >
+            <Calendar calendarType="Monthly" />
+          </div>
         </div>
-        <EditButton />
       </div>
     </Styled.SignedCalendar>
   );

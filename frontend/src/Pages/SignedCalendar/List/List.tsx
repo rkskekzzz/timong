@@ -7,6 +7,7 @@ import { CalendarService } from 'src/Network/CalendarService';
 import { UserService } from 'src/Network/UserService';
 import { Calendar } from 'src/Interface/CalendarType';
 import Card from './Card';
+import { useNavigate } from 'react-router-dom';
 
 //import는 필수이다.
 
@@ -14,6 +15,7 @@ const List = () => {
   const [calendarList, setCalendarList] = useState<Calendar[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const { state, dispatch } = useContext(UserContext);
+  const navi = useNavigate();
 
   const fetchData = async () => {
     /**
@@ -65,6 +67,7 @@ const List = () => {
   };
   const handleCardTabbed = (index: number) => {
     setSelectedIndex(index);
+    navi('/calendar/?id=' + calendarList[selectedIndex]._id);
   };
 
   useEffect(() => {
@@ -89,18 +92,16 @@ const List = () => {
 
   return (
     <Styled.List>
-      <div className="list-box">
-        {calendarList.map((element, index) => {
-          return (
-            <Card
-              key={element._id + index}
-              group={element}
-              handleCardTabbed={() => handleCardTabbed(index)}
-            />
-          );
-        })}
-        <Card group={null} handleCardTabbed={addCalendar} />
-      </div>
+      {calendarList.map((element, index) => {
+        return (
+          <Card
+            key={element._id + index}
+            group={element}
+            handleCardTabbed={() => handleCardTabbed(index)}
+          />
+        );
+      })}
+      <Card group={null} handleCardTabbed={addCalendar} />
     </Styled.List>
   );
 };
