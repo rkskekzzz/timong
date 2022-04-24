@@ -6,7 +6,7 @@ import { CalendarType } from 'src/Interface/CalendarType';
 const Calendar: React.FC<{
   calendarType: CalendarType;
 }> = ({ calendarType }) => {
-  return <div>{calendarType === 'Monthly' ? <Monthly /> : <Weekly />}</div>;
+  return <>{calendarType === 'Monthly' ? <Monthly /> : <Weekly />}</>;
 };
 
 export default Calendar;
