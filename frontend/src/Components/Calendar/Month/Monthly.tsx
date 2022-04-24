@@ -1,19 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import MonthBox from './MonthBox';
 import moment from 'moment';
 import { Year, Day } from 'src/Interface/DateType';
 import { buildDate } from 'src/Utils';
-import { useTheme, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import Styled from './Monthly.styled';
 import { AutoSizer, List } from 'react-virtualized';
 import UserDrawer from 'src/Components/UserDrawer/UserDrawer';
 import NumberEx from 'src/Common/NumberEx';
 import { UserWithValid } from 'src/Interface/UserType';
+import { UserContext } from 'src/App';
+import EditButton from 'src/Pages/SignedCalendar/List/EditButton';
+import Users from 'src/Components/Users';
 
 const initialYear: Year = buildDate(moment());
 
 const Monthly = () => {
-  const theme = useTheme();
   const touchRef = useRef(null);
   const [year, setYear] = useState<Year>(initialYear);
   const [selectedDay, setSelectedDay] = useState<Day | null>(null);
@@ -21,6 +23,7 @@ const Monthly = () => {
   const [dayUsers, setDayUsers] = useState<UserWithValid[]>([]);
   const handleDrawerOpen = () => setIsShow(!isShow);
   const handleDrawerClose = () => setIsShow(false);
+  const { state } = useContext(UserContext);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -105,6 +108,7 @@ const Monthly = () => {
         isShow={isShow}
         handleDrawerClose={handleDrawerClose}
       />
+      {state.isSigned ? <EditButton /> : <Users />}
     </Box>
   );
 };

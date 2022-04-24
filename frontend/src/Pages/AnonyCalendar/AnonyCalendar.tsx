@@ -72,7 +72,7 @@ const AnonyCalendar = () => {
         </div>
       ) : (
         <>
-          <Styled.Body className="here">
+          <Styled.Body>
             <Calendar calendarType={calendarType} />
             <Users />
           </Styled.Body>
