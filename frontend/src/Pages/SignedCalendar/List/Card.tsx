@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, useTheme } from '@mui/material';
+import { Tooltip, Button, useTheme } from '@mui/material';
 import Styled from './Card.styled';
 import { Calendar } from 'src/Interface/CalendarType';
 import IosShareIcon from '@mui/icons-material/IosShare';
@@ -20,14 +20,18 @@ const Card = ({
       {group ? (
         <div className="list">
           <p>{group.name}</p>
-          <Button onClick={() => alert('here')}>
-            <IosShareIcon />
-          </Button>
+          <Tooltip title="share">
+            <Button onClick={() => alert('here')}>
+              <IosShareIcon />
+            </Button>
+          </Tooltip>
         </div>
       ) : (
-        <div className="add">
-          <span>+</span>
-        </div>
+        <Tooltip title="add calendar">
+          <Button className="add">
+            <span>+</span>
+          </Button>
+        </Tooltip>
       )}
     </Styled.Card>
   );
