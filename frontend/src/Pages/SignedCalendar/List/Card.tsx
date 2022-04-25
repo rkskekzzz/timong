@@ -19,7 +19,11 @@ const Card = ({
     >
       {group ? (
         <div className="list">
-          <p>{group.name}</p>
+          <Tooltip title="show calendar">
+            <Button fullWidth style={{ justifyContent: 'start' }}>
+              <p>{group.name}</p>
+            </Button>
+          </Tooltip>
           <Tooltip title="share">
             <Button onClick={() => alert('here')}>
               <IosShareIcon />

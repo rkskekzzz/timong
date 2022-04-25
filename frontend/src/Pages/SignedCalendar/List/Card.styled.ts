@@ -23,7 +23,6 @@ const Card = styled.span<{ fgcolor: string }>`
     margin: 0;
   }
   .list {
-    padding: 0 0.1rem 0 0.75rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
