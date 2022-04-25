@@ -6,17 +6,14 @@ const Card = styled.span<{ fgcolor: string }>`
     width: 90vw;
   }
   max-width: 400px;
-  /* height: 100px; */
-  /* padding: 1rem; */
   background: #ffffff11;
   align-self: flex-end;
   border-radius: 10px;
+  cursor: pointer;
   color: ${(props) => `${props.fgcolor}`};
   box-shadow: 0px 4px 2px -2px rgb(0, 0, 0, 0.2),
     0px 2px 2px 0px rgb(0, 0, 0, 0.14), 0px 2px 6px 0px rgb(0, 0, 0, 0.12);
-  cursor: pointer;
-  :hover {
-  }
+
   h2,
   p {
     padding: 0;
