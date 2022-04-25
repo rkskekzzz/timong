@@ -25,11 +25,3 @@ export class User {
     public _id: string
   ) {}
 }
-
-export const globalSelectedUser: {
-  user: User | null;
-  valid: boolean;
-} = {
-  user: null,
-  valid: true,
-};

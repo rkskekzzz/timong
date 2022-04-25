@@ -10,6 +10,8 @@ export type State = {
   meetingDays: string[];
   selectedCalendar: string;
   selectedDate: Day;
+  selectedUser: User;
+  valid: Valid;
   mode: PaletteMode;
 };
 
@@ -21,6 +23,7 @@ export type Action =
   | { type: 'ANONY_UPDATEDATE'; user: User; day: moment.Moment; valid: Valid }
   | { type: 'TEST'; user: User; day: moment.Moment }
   | { type: 'SETSELECTEDATE'; day: moment.Moment }
+  | { type: 'SETSELECTEUSER'; user: User }
   | { type: 'ANONY_UPDATETIMETABLE'; user: User; date: Day; time: number }
   | { type: 'CHANGEMODE'; mode: PaletteMode }
   | { type: 'DEFAULT' };

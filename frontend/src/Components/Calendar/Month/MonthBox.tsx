@@ -2,7 +2,6 @@ import React, { useContext, useCallback, useMemo } from 'react';
 import DayBox from './DayBox';
 import Styled from './MonthBox.styled';
 import { Month, Day } from 'src/Interface/DateType';
-import { globalSelectedUser } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 import { useTheme } from '@mui/material';
 import { ScheduleService } from 'src/Network/ScheduleService';
@@ -53,18 +52,18 @@ function DayBoxLogic({
   const updateUser = async () => {
     dispatch({
       type: 'ANONY_UPDATEDATE',
-      user: globalSelectedUser.user,
+      user: state.selectedUser,
       day: day.moment,
-      valid: globalSelectedUser.valid ? 'POSIBLE' : 'IMPOSIBLE',
+      valid: state.valid ? 'POSIBLE' : 'IMPOSIBLE',
     });
     dispatch({ type: 'SETSELECTEDATE', day: day.moment });
     await ScheduleService.updateSchedules(
       location.pathname,
-      globalSelectedUser.user
+      state.selectedUser
     );
   };
   const handleClick = useCallback(() => {
-    if (!globalSelectedUser.user) showUsers();
+    if (!state.selectedUser) showUsers();
     else updateUser();
   }, [updateUser, day, showUsers]);
   const isThisMonth = month.monthMoment.isSame(day.moment, 'month');

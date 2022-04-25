@@ -8,12 +8,10 @@ import React, {
 import { User } from 'src/Interface/UserType';
 import AddModal from '../Modal';
 import Styled from './Users.styled';
-import { globalSelectedUser } from 'src/Interface/UserType';
 import Backdrop from '@mui/material/Backdrop';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
-import TimePicker from '../TimePicker/TimePicker';
 import FaceIcon from '@mui/icons-material/Face';
 import { UserContext } from 'src/App';
 import { UserService } from 'src/Network/UserService';
@@ -24,7 +22,6 @@ import { useTheme } from '@mui/material';
 const Users = () => {
   const location = useLocation();
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isAdd, setIsAdd] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
   const [touchStart, setTouchStart] = useState<number>(0);
@@ -32,7 +29,6 @@ const Users = () => {
   const [isSwipeMore, setIsSwipeMore] = useState<boolean>(false);
   const [willDelete, setWillDelete] = useState<number>(-1);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const [isChecked, setIsChecked] = useState<boolean>(true);
   const [isButtonGuideShow, setIsButtonGuideShow] = useState<boolean>(true);
   const [isFirstOpen, setIsFirstOpen] = useState<boolean>(true);
   const { state, dispatch } = useContext(UserContext);
@@ -43,10 +39,9 @@ const Users = () => {
 
   const handleDialClose = useCallback(() => {
     setTimeout(() => {
-      setSelectedUser(null);
-      setIsChecked(true);
+      dispatch({ type: 'SETSELECTEUSER', user: null });
     }, 200);
-  }, [setSelectedUser]);
+  }, []);
   const handleClickAway = useCallback(() => {
     if (isShowModal) return;
     setIsShow(false);
@@ -87,10 +82,10 @@ const Users = () => {
   ]);
   const handleUserTabbed = useCallback(
     (index: number) => {
-      setSelectedUser(users[index]);
+      dispatch({ type: 'SETSELECTEUSER', user: users[index] });
       handleDial();
     },
-    [setSelectedUser, handleDial, users]
+    [handleDial, users]
   );
   const handleRowDelButton = useCallback(
     (delIndex: number, user: User) => {
@@ -174,10 +169,6 @@ const Users = () => {
     },
     [isSwipeMore, handleRowDelButton, setIsSwipeMore]
   );
-  const handleToggle = useCallback(
-    () => setIsChecked(!isChecked),
-    [setIsChecked, isChecked]
-  );
   const handleModalOpen = () => {
     setIsShowModal(true);
   };
@@ -213,12 +204,8 @@ const Users = () => {
     }
   }, [isShow]);
   useEffect(() => {
-    globalSelectedUser.user = selectedUser;
-    globalSelectedUser.valid = isChecked;
-  }, [selectedUser, isChecked]);
-  useEffect(() => {
     if (!isAdd) return;
-    setSelectedUser(users[users.length - 1]);
+    dispatch({ type: 'SETSELECTEUSER', user: users[users.length - 1] });
     const timer = setTimeout(() => {
       setIsAdd(false);
     }, 0);
@@ -237,11 +224,6 @@ const Users = () => {
 
   return (
     <>
-      <TimePicker
-        isChecked={isChecked}
-        selectedUser={selectedUser}
-        handleToggle={handleToggle}
-      />
       <Backdrop
         open={isShow}
         sx={{ bgcolor: theme.myPalette.backDrop, zIndex: 200 }}
@@ -253,9 +235,9 @@ const Users = () => {
       />
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
-          {selectedUser && (
+          {state.selectedUser && (
             <Styled.DialButton
-              isShow={selectedUser ? true : false}
+              isShow={state.selectedUser ? true : false}
               selectedDate={state.selectedDate}
               onClick={handleDialClose}
             >
@@ -265,9 +247,9 @@ const Users = () => {
               />
             </Styled.DialButton>
           )}
-          {!selectedUser && (
+          {!state.selectedUser && (
             <Styled.DialButton
-              isShow={selectedUser ? true : false}
+              isShow={state.selectedUser ? true : false}
               selectedDate={state.selectedDate}
               onClick={handleDial}
             >

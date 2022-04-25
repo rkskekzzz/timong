@@ -1,17 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import MonthBox from './MonthBox';
 import moment from 'moment';
 import { Year, Day } from 'src/Interface/DateType';
+import { UserWithValid } from 'src/Interface/UserType';
 import { buildDate } from 'src/Utils';
 import { Box } from '@mui/material';
 import Styled from './Monthly.styled';
 import { AutoSizer, List } from 'react-virtualized';
 import UserDrawer from 'src/Components/UserDrawer/UserDrawer';
 import NumberEx from 'src/Common/NumberEx';
-import { UserWithValid } from 'src/Interface/UserType';
 import EditButton from 'src/Pages/SignedCalendar/List/EditButton';
 import Users from 'src/Components/Users';
 import { useLocation } from 'react-router-dom';
+import { UserContext } from 'src/App';
+import TimePicker from 'src/Components/TimePicker';
 
 const initialYear: Year = buildDate(moment());
 
@@ -22,6 +24,8 @@ const Monthly = () => {
   const [selectedDay, setSelectedDay] = useState<Day | null>(null);
   const [isShow, setIsShow] = useState<boolean>(false);
   const [dayUsers, setDayUsers] = useState<UserWithValid[]>([]);
+  const [isShowEdit, setIsShowEdit] = useState<boolean>(false);
+  const { state } = useContext(UserContext);
   const handleDrawerOpen = () => setIsShow(!isShow);
   const handleDrawerClose = () => setIsShow(false);
 
@@ -65,6 +69,15 @@ const Monthly = () => {
     return 60 + year[index].week.length * 80 + 30;
   };
 
+  useEffect(() => {
+    if (location.pathname.includes('calendar')) {
+      console.log(location.search);
+    } else {
+      setIsShowEdit(state.selectedUser !== null);
+    }
+    console.log(state.selectedUser);
+  }, [state.selectedUser]);
+
   /**
    * react-vertualized (https://bvaughn.github.io/react-virtualized/#/components/AutoSizer)
    *
@@ -101,6 +114,10 @@ const Monthly = () => {
           )}
         </AutoSizer>
       </Styled.AutoSizerWrapper>
+      <TimePicker
+        isShowEdit={isShowEdit}
+        selectedUser={state.isSigned ? state.users[0] : state.selectedUser}
+      />
       <UserDrawer
         touchRef={touchRef}
         selectedDay={selectedDay}

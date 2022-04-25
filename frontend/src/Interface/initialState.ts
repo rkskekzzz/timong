@@ -6,5 +6,7 @@ export const initialState: State = {
   meetingDays: [],
   selectedCalendar: null,
   selectedDate: null,
+  selectedUser: null,
+  valid: 'POSIBLE',
   mode: 'dark',
 };
