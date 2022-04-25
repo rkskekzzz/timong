@@ -1,33 +1,28 @@
-import React, { useCallback, useMemo, useContext } from 'react';
+import React, { useCallback, useState, useContext } from 'react';
 import Styled from './TimePicker.styled';
 import { useTheme } from '@mui/material';
 import { Schedule, User } from 'src/Interface/UserType';
 import Size from 'src/Common/Size';
-import { Switch } from '@mui/material';
+import { Divider, Switch } from '@mui/material';
 import GlobalStyled from '../GlobalStyled/GlobalStyled.styled';
 import { UserContext } from 'src/App';
-import { Divider } from '@mui/material';
 import DayLabel from 'src/Components/DayLabel';
 import NumberEx from 'src/Common/NumberEx';
 import { ScheduleService } from 'src/Network/ScheduleService';
 import { useLocation } from 'react-router-dom';
 import moment from 'moment';
 
-const TimePicker: React.FC<{
-  selectedUser: User;
-  handleToggle: () => void;
-  isChecked: boolean;
-}> = ({ selectedUser, handleToggle, isChecked }) => {
+const TimePicker: React.FC<{ isShowEdit: boolean; selectedUser: User }> = ({
+  isShowEdit,
+  selectedUser,
+}) => {
   const { state, dispatch } = useContext(UserContext);
-  // const [size, setSize] = useState<number>(12);
+
+  const [isChecked, setIsChecked] = useState<boolean>(false);
   const size = NumberEx.timeBoxSize;
   const theme = useTheme();
   const location = useLocation();
-
-  const isShowTimePicker = useMemo(() => {
-    if (!selectedUser) return false;
-    return true;
-  }, [selectedUser]);
+  const handleToggleTabbed = () => setIsChecked((isChecked) => !isChecked);
 
   const SelectedUserState = useCallback(() => {
     if (!selectedUser) return <GlobalStyled.Circle color="#000000" />;
@@ -118,7 +113,7 @@ const TimePicker: React.FC<{
 
   return (
     <Styled.TimePickerBox
-      isShowTimePicker={isShowTimePicker && state.selectedDate !== null}
+      isShowTimePicker={isShowEdit && state.selectedDate !== null}
       bgcolor={theme.myPalette.backgroundModal}
       fgcolor={theme.myPalette.foreground}
       size={size}
@@ -136,7 +131,7 @@ const TimePicker: React.FC<{
             </div>
             <Switch
               checked={isChecked}
-              onChange={handleToggle}
+              onChange={handleToggleTabbed}
               inputProps={{ 'aria-label': 'controlled' }}
             />
           </Styled.TimePickerHeader>
