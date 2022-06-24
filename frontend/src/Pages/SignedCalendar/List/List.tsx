@@ -8,6 +8,7 @@ import { UserService } from 'src/Network/UserService';
 import { Calendar } from 'src/Interface/CalendarType';
 import Card from './Card';
 import { useNavigate } from 'react-router-dom';
+import { User } from 'src/Interface/UserType';
 
 //import는 필수이다.
 
@@ -38,7 +39,15 @@ const List = () => {
         user_calendar_list: [],
       });
     } else {
-      const { user_calendar_list } = docSnap.data();
+      const { user_calendar_list, user_name, user_color, user_schedule } =
+        docSnap.data();
+      console.log(user_name, user_color);
+      const user = new User(user_name, user_color, user_schedule, '');
+      dispatch({
+        type: 'SIGNED_SETUSER',
+        user: user,
+      });
+
       setCalendarList(user_calendar_list);
     }
   };
@@ -48,6 +57,8 @@ const List = () => {
     const calendar = await CalendarService.create('default');
     const user = await getDoc(docRef);
     if (!calendar || !user) alert('fail to fetch data..!!');
+
+    console.log(calendar);
 
     const createResult = UserService.createUser('/' + calendar._id, {
       name: user.data().user_name,
@@ -80,7 +91,7 @@ const List = () => {
       const result = await CalendarService.getCalendar(
         '/' + calendarList[selectedIndex]._id
       );
-      if (!result) console.log('no result');
+      if (!result) navi('/404');
       dispatch({
         type: 'INIT',
         users: result.users,

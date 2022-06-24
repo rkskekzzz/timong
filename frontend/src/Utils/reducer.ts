@@ -21,6 +21,11 @@ export default function reducer(state: State, action: Action): State {
         ...state,
         mode: action.mode,
       };
+    case 'SIGNED_SETUSER':
+      return {
+        ...state,
+        signedUser: action.user,
+      };
     case 'ANONY_ADD':
       return { ...state, users: state.users.concat(action.user) };
     case 'ANONY_DELETE':

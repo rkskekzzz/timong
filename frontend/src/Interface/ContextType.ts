@@ -11,6 +11,7 @@ export type State = {
   selectedCalendar: string;
   selectedDate: Day;
   selectedUser: User;
+  signedUser: User;
   valid: Valid;
   mode: PaletteMode;
 };
@@ -18,6 +19,7 @@ export type State = {
 export type Action =
   | { type: 'INIT'; users: [User]; meetingDays: [string] }
   | { type: 'SIGNIN'; uid: string }
+  | { type: 'SIGNED_SETUSER'; user: User }
   | { type: 'ANONY_ADD'; user: User }
   | { type: 'ANONY_DELETE'; index: number; user: User }
   | { type: 'ANONY_UPDATEDATE'; user: User; day: moment.Moment; valid: Valid }

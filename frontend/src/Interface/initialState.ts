@@ -7,6 +7,7 @@ export const initialState: State = {
   selectedCalendar: null,
   selectedDate: null,
   selectedUser: null,
+  signedUser: null,
   valid: 'POSIBLE',
   mode: 'dark',
 };
