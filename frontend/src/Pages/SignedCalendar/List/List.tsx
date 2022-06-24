@@ -41,7 +41,6 @@ const List = () => {
     } else {
       const { user_calendar_list, user_name, user_color, user_schedule } =
         docSnap.data();
-      console.log(user_name, user_color);
       const user = new User(user_name, user_color, user_schedule, '');
       dispatch({
         type: 'SIGNED_SETUSER',
@@ -57,8 +56,6 @@ const List = () => {
     const calendar = await CalendarService.create('default');
     const user = await getDoc(docRef);
     if (!calendar || !user) alert('fail to fetch data..!!');
-
-    console.log(calendar);
 
     const createResult = UserService.createUser('/' + calendar._id, {
       name: user.data().user_name,
