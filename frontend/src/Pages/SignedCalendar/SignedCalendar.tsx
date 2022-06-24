@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Styled from './SignedCalendar.styled';
 import { Calendar } from 'src/Components/Calendar';
 import { useTheme } from '@mui/material';
@@ -28,16 +28,19 @@ const SignedCalendar = () => {
   useEffect(() => {
     console.log(location);
   }, []);
+
   return (
     <Styled.SignedCalendar bgcolor={theme.myPalette.background}>
       <div className="container">
         <Header calendarName="no" />
         <Styled.Body bgcolor={theme.myPalette.background}>
-          <List />
-          <div
-            className={'responsive ' + (location.search ? 'show' : 'hidden')}
-          >
-            <Calendar calendarType="Monthly" />
+          <div className="body-box">
+            <List />
+            <div
+              className={'responsive ' + (location.search ? 'show' : 'hidden')}
+            >
+              <Calendar calendarType="Monthly" />
+            </div>
           </div>
         </Styled.Body>
       </div>

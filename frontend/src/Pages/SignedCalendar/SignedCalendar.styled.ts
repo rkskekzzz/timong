@@ -17,8 +17,13 @@ const Body = styled.div<{ bgcolor: string }>`
   height: calc(100vh - 60px);
   overflow: hidden;
   display: flex;
+  justify-content: center;
   gap: 60px;
 
+  .body-box {
+    display: flex;
+    max-width: 1024px;
+  }
   .responsive {
     background: ${(props) => props.bgcolor};
   }
