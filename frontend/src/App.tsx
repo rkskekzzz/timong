@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useReducer, createContext, useState, useEffect } from 'react';
+import { useReducer, createContext, useEffect } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -13,7 +13,13 @@ import { themes } from './theme';
 import { useMediaQuery } from '@mui/material';
 import { State, userDispatch } from './Interface/ContextType';
 import { initialState } from './Interface/initialState';
-import { SignedCalendar, Error, AnonyCalendar, Entrance } from './Pages';
+import {
+  SignedCalendar,
+  Error,
+  AnonyCalendar,
+  Entrance,
+  Invite,
+} from './Pages';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export const UserContext = createContext<{
@@ -63,6 +69,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/calendar" element={<SignedCalendar />} />
             </Route>
+            <Route path="/invite/:id" element={<Invite />} />
             <Route path="/404" element={<Error />} />
             <Route path="*" element={<Navigate to="/404" />} />
           </Routes>
