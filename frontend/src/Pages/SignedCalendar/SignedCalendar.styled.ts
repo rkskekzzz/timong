@@ -34,18 +34,19 @@ const Body = styled.div<{ bgcolor: string }>`
     }
   }
   @media (max-width: 760px) {
-    justify-content: center;
+    /* justify-content: center; */
     .responsive {
       z-index: 1000;
       position: fixed;
       width: 100%;
     }
     .hidden {
-      transform: translateX(100%);
+      right: -100%;
+      transition: all 0.5s;
     }
     .show {
+      right: 0%;
       transition: all 0.5s;
-      transform: translateX(0%);
     }
   }
 `;
