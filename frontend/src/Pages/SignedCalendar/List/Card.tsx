@@ -12,10 +12,10 @@ const Card = ({
   handleCardTabbed: () => void;
 }) => {
   const theme = useTheme();
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Styled.Card
@@ -24,7 +24,7 @@ const Card = ({
     >
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          Copy To Clipboard!
+          <p style={{ width: '300px' }}>Copy To Clipboard!</p>
         </Alert>
       </Snackbar>
       {group ? (

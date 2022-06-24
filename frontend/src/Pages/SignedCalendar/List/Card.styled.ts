@@ -28,6 +28,9 @@ const Card = styled.span<{ fgcolor: string }>`
       & {
         color: ${(props) => props.fgcolor};
       }
+      p {
+        padding-left: 10px;
+      }
     }
   }
 
@@ -37,6 +40,7 @@ const Card = styled.span<{ fgcolor: string }>`
     align-items: center;
     justify-content: center;
     span {
+      color: ${(props) => props.fgcolor};
       font-size: 2rem;
     }
   }
