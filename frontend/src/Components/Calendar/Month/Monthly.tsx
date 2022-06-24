@@ -99,31 +99,33 @@ const Monthly = () => {
       <Styled.AutoSizerWrapper>
         <AutoSizer>
           {({ height, width }) => (
-            <List
-              className="list"
-              height={height}
-              rowHeight={getRowHeight}
-              onScroll={scrollListener}
-              rowCount={year.length}
-              rowRenderer={rowRenderer}
-              width={width}
-              style={{
-                maxWidth: NumberEx.calendarMaxWidth,
-              }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
-            />
+            <>
+              <List
+                className="list"
+                height={height}
+                rowHeight={getRowHeight}
+                onScroll={scrollListener}
+                rowCount={year.length}
+                rowRenderer={rowRenderer}
+                width={width}
+                style={{
+                  maxWidth: NumberEx.calendarMaxWidth,
+                }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
+              />
+              <UserDrawer
+                touchRef={touchRef}
+                selectedDay={selectedDay}
+                dayUsers={dayUsers}
+                isShow={isShow}
+                handleDrawerClose={handleDrawerClose}
+              />
+            </>
           )}
         </AutoSizer>
       </Styled.AutoSizerWrapper>
       <TimePicker
         isShowEdit={isShowEdit}
         selectedUser={state.isSigned ? state.users[0] : state.selectedUser}
-      />
-      <UserDrawer
-        touchRef={touchRef}
-        selectedDay={selectedDay}
-        dayUsers={dayUsers}
-        isShow={isShow}
-        handleDrawerClose={handleDrawerClose}
       />
       {location.pathname.includes('calendar') ? <EditButton /> : <Users />}
     </Box>
