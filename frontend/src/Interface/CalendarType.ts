@@ -7,6 +7,7 @@ export type CalendarType = typeof Monthly | typeof Weekly;
 export interface Calendar {
   _id: string;
   name: string;
+  user_name: string;
 }
 export interface CalendarDetail extends Calendar {
   start?: string;

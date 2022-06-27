@@ -29,18 +29,6 @@ const Monthly = () => {
   const handleDrawerOpen = () => setIsShow(!isShow);
   const handleDrawerClose = () => setIsShow(false);
 
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (touchRef.current && !touchRef.current.contains(event.target)) {
-        if (isShow) setIsShow(false);
-      }
-    }
-    window.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      window.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [touchRef]);
-
   const drawerHandler = {
     handleDrawerOpen,
     setDayUsers,
@@ -68,6 +56,18 @@ const Monthly = () => {
   const getRowHeight = ({ index }: { index: number }) => {
     return 60 + year[index].week.length * 80 + 30;
   };
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (touchRef.current && !touchRef.current.contains(event.target)) {
+        if (isShow) setIsShow(false);
+      }
+    }
+    window.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      window.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [touchRef]);
 
   useEffect(() => {
     if (location.pathname.includes('calendar')) {

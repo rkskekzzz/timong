@@ -12,8 +12,10 @@ import { User } from 'src/Interface/UserType';
 
 //import는 필수이다.
 
-const List = () => {
-  const [calendarList, setCalendarList] = useState<Calendar[]>([]);
+const List: React.FC<{
+  calendarList: Calendar[];
+  setCalendarList: React.Dispatch<React.SetStateAction<Calendar[]>>;
+}> = ({ calendarList, setCalendarList }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const { state, dispatch } = useContext(UserContext);
   const navi = useNavigate();

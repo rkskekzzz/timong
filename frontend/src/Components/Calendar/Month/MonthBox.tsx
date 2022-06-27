@@ -31,6 +31,9 @@ function DayBoxLogic({
 }) {
   const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
+  const database_id = location.pathname.includes('calendar')
+    ? location.search.substring(4)
+    : location.pathname;
 
   const reducedUser = state.users.reduce((user: UserWithValid[], cur: User) => {
     for (const _schedule of cur.schedules) {
@@ -57,10 +60,10 @@ function DayBoxLogic({
       valid: state.valid ? 'POSIBLE' : 'IMPOSIBLE',
     });
     dispatch({ type: 'SETSELECTEDATE', day: day.moment });
-    await ScheduleService.updateSchedules(
-      location.pathname,
-      state.selectedUser
-    );
+    console.log(database_id);
+    console.log(state.selectedUser);
+
+    await ScheduleService.updateSchedules(database_id, state.selectedUser);
   };
   const handleClick = useCallback(() => {
     if (!state.selectedUser) showUsers();

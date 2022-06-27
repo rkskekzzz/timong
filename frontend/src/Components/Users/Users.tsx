@@ -34,6 +34,9 @@ const Users = () => {
   const { state, dispatch } = useContext(UserContext);
   const theme = useTheme();
   const users = state.users;
+  const database_id = location.pathname.includes('calendar')
+    ? location.search.substring(4)
+    : location.pathname;
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -59,7 +62,7 @@ const Users = () => {
   }, [setIsSwipe, setIsFirstOpen]);
   const handleDial = useCallback(() => {
     if (!isShow && !isAnimationDone) return;
-    // if (isFirstOpen) showGuide();
+    // if (isFirstOpen) showGuide(); // 가이드 제거
     else setIsSwipe(-1);
     setIsShow(!isShow);
     dispatch({ type: 'SETSELECTEDATE', day: null });
@@ -95,7 +98,7 @@ const Users = () => {
       setTimeout(() => {
         if (!dispatch) throw new Error('no dispatch');
         // TODO: del 에러나면 alert띄우기
-        UserService.deleteUser(window.location.pathname, user._id);
+        UserService.deleteUser(database_id, user._id);
         dispatch({ type: 'ANONY_DELETE', index: delIndex, user });
         setWillDelete(-1);
       }, 800);
