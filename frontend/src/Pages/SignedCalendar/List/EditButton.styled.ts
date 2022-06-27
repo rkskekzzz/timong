@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const EditButton = styled.span`
-  position: absolute;
+  position: fixed;
   color: white;
   z-index: 1000;
   bottom: 16px;
