@@ -3,11 +3,13 @@ import { Dispatch } from 'react';
 import { Day } from './DateType';
 import { PaletteMode } from '@mui/material';
 import { User, Valid } from './UserType';
+import { Calendar } from './CalendarType';
 
 export type State = {
   isSigned: string | null;
   users: User[];
   meetingDays: string[];
+  calendarList: Calendar[];
   selectedCalendar: string;
   selectedDate: Day;
   selectedUser: User;
@@ -19,7 +21,8 @@ export type State = {
 export type Action =
   | { type: 'INIT'; users: [User]; meetingDays: [string] }
   | { type: 'SIGNIN'; uid: string }
-  | { type: 'SIGNED_SETUSER'; user: User }
+  | { type: 'SIGNED_SET_USER'; calendar: Calendar }
+  | { type: 'SIGNED_SET_CALENDARLIST'; calendarList: Calendar[] }
   | { type: 'ANONY_ADD'; user: User }
   | { type: 'ANONY_DELETE'; index: number; user: User }
   | { type: 'ANONY_UPDATEDATE'; user: User; day: moment.Moment; valid: Valid }

@@ -21,10 +21,15 @@ export default function reducer(state: State, action: Action): State {
         ...state,
         mode: action.mode,
       };
-    case 'SIGNED_SETUSER':
+    case 'SIGNED_SET_USER':
       return {
         ...state,
-        signedUser: action.user,
+        calendarList: { ...state.calendarList, ...action.calendar },
+      };
+    case 'SIGNED_SET_CALENDARLIST':
+      return {
+        ...state,
+        calendarList: action.calendarList,
       };
     case 'ANONY_ADD':
       return { ...state, users: state.users.concat(action.user) };

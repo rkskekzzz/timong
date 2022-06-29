@@ -1,22 +1,20 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Styled from './List.styled';
 import { dbService } from 'src/firebase';
 import { UserContext } from 'src/App';
 import { doc, getDoc, setDoc } from '@firebase/firestore';
 import { CalendarService } from 'src/Network/CalendarService';
-import { UserService } from 'src/Network/UserService';
 import { Calendar } from 'src/Interface/CalendarType';
 import Card from './Card';
 import { useNavigate } from 'react-router-dom';
-import { User } from 'src/Interface/UserType';
 
 //import는 필수이다.
 
 const List: React.FC<{
   calendarList: Calendar[];
-  setCalendarList: React.Dispatch<React.SetStateAction<Calendar[]>>;
-}> = ({ calendarList, setCalendarList }) => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  selectedIndex: number;
+  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ calendarList, selectedIndex, setSelectedIndex }) => {
   const { state, dispatch } = useContext(UserContext);
   const navi = useNavigate();
 
@@ -34,22 +32,16 @@ const List: React.FC<{
     const docSnap = await getDoc(docRef);
     if (!docSnap.exists()) {
       await setDoc(docRef, {
-        user_name: 'default',
-        user_color: '#0000ff',
         user_id: state.isSigned,
         user_schedules: [],
         user_calendar_list: [],
       });
     } else {
-      const { user_calendar_list, user_name, user_color, user_schedule } =
-        docSnap.data();
-      const user = new User(user_name, user_color, user_schedule, '');
+      const { user_calendar_list } = docSnap.data();
       dispatch({
-        type: 'SIGNED_SETUSER',
-        user: user,
+        type: 'SIGNED_SET_CALENDARLIST',
+        calendarList: user_calendar_list,
       });
-
-      setCalendarList(user_calendar_list);
     }
   };
 
@@ -58,22 +50,18 @@ const List: React.FC<{
     const calendar = await CalendarService.create('default');
     const user = await getDoc(docRef);
     if (!calendar || !user) alert('fail to fetch data..!!');
-
-    const createResult = UserService.createUser('/' + calendar._id, {
-      name: user.data().user_name,
-      color: user.data().user_color,
-    });
     const createCalendarRelation = setDoc(docRef, {
       ...user.data(),
       user_calendar_list: [
         ...user.data().user_calendar_list,
         {
           _id: calendar._id,
+          user_name: '',
           name: 'default',
         },
       ],
     });
-    Promise.all([createResult, createCalendarRelation]).then(fetchData);
+    Promise.all([createCalendarRelation]).then(fetchData);
   };
   const handleCardTabbed = (index: number) => {
     setSelectedIndex(index);

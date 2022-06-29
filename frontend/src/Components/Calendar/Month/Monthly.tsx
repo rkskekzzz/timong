@@ -17,7 +17,10 @@ import TimePicker from 'src/Components/TimePicker';
 
 const initialYear: Year = buildDate(moment());
 
-const Monthly = () => {
+const Monthly: React.FC<{
+  isUserCreated: boolean;
+  updateCalendar: (name: string) => void;
+}> = ({ isUserCreated, updateCalendar }) => {
   const location = useLocation();
   const touchRef = useRef(null);
   const [year, setYear] = useState<Year>(initialYear);
@@ -70,12 +73,8 @@ const Monthly = () => {
   }, [touchRef]);
 
   useEffect(() => {
-    if (location.pathname.includes('calendar')) {
-      console.log(location.search);
-    } else {
+    if (!location.pathname.includes('calendar'))
       setIsShowEdit(state.selectedUser !== null);
-    }
-    console.log(state.selectedUser);
   }, [state.selectedUser]);
 
   /**
@@ -127,7 +126,14 @@ const Monthly = () => {
         isShowEdit={isShowEdit}
         selectedUser={state.isSigned ? state.users[0] : state.selectedUser}
       />
-      {location.pathname.includes('calendar') ? <EditButton /> : <Users />}
+      {location.pathname.includes('calendar') ? (
+        <EditButton
+          isUserCreated={isUserCreated}
+          updateCalendar={updateCalendar}
+        />
+      ) : (
+        <Users />
+      )}
     </Box>
   );
 };

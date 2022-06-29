@@ -4,6 +4,7 @@ export const initialState: State = {
   isSigned: null,
   users: [],
   meetingDays: [],
+  calendarList: [],
   selectedCalendar: null,
   selectedDate: null,
   selectedUser: null,

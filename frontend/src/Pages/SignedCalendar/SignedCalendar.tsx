@@ -1,38 +1,49 @@
 import React, { useContext, useEffect, useState } from 'react';
-
 import Styled from './SignedCalendar.styled';
 import { useTheme } from '@mui/material';
-
 import { UserContext } from 'src/App';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from 'src/firebase';
-
-import { Calendar } from 'src/Interface/CalendarType';
+import { CalendarService } from 'src/Network/CalendarService';
 import List from './List';
 import Header from 'src/Components/Header';
 import Monthly from 'src/Components/Calendar/Month';
+import { doc, getDoc, setDoc } from '@firebase/firestore';
+import { dbService } from 'src/firebase';
 
 const SignedCalendar = () => {
   const theme = useTheme();
   const navi = useNavigate();
   const location = useLocation();
-  const { dispatch } = useContext(UserContext);
-  const [calendarList, setCalendarList] = useState<Calendar[]>([]);
-  // const database_id = location.pathname.includes('calendar')
-  //   ? location.search.substring(4)
-  //   : location.pathname;
+  const { state, dispatch } = useContext(UserContext);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [isUserCreated, setIsUserCreated] = useState<boolean>(false);
+  const database_id = location.pathname.includes('calendar')
+    ? location.search.substring(4)
+    : location.pathname;
 
-  // useEffect(() => {
-  //   const this_calendar = calendarList.filter((calendar) => {
-  //     return calendar._id === database_id;
-  //   })[0];
-  //   let isUserCreated = false;
-  //   state.users.forEach((user) => {
-  //     if (user.name === this_calendar.user_name) isUserCreated = true;
-  //   });
-  //   setIsShowModal(!isUserCreated);
-  // }, [calendarList]);
+  const updateCalendarFirebase = async () => {
+    const docRef = doc(dbService, 'TestUsers', state.isSigned);
+    const calendar = await CalendarService.create('default');
+    const user = await getDoc(docRef);
+    if (!calendar || !user) alert('fail to fetch data..!!');
+    setDoc(docRef, {
+      ...user.data(),
+      user_calendar_list: [...state.calendarList],
+    });
+  };
+
+  const updateCalendar = (name: string) => {
+    const calendarList = state.calendarList.map((calendar) => {
+      const _calendar = calendar;
+      if (calendar._id === database_id) _calendar.user_name = name;
+
+      return calendar;
+    });
+    dispatch({ type: 'SIGNED_SET_CALENDARLIST', calendarList: calendarList });
+    updateCalendarFirebase();
+  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (_user) => {
@@ -45,8 +56,37 @@ const SignedCalendar = () => {
   }, []);
 
   useEffect(() => {
-    console.log(location);
-  }, []);
+    if (state.calendarList.length == 0) return;
+
+    const getCalendar = async () => {
+      const result = await CalendarService.getCalendar(
+        '/' + state.calendarList[selectedIndex]._id
+      );
+      if (!result) navi('/404');
+      dispatch({
+        type: 'INIT',
+        users: result.users,
+        meetingDays: result.meetingDays,
+      });
+      navi('/calendar/?id=' + state.calendarList[selectedIndex]._id);
+    };
+    if (database_id !== state.calendarList[selectedIndex]._id) getCalendar();
+  }, [state.calendarList, selectedIndex]);
+
+  useEffect(() => {
+    if (state.calendarList.length == 0) return;
+
+    let _isUserCreated = false;
+    const this_calendar = state.calendarList.find(
+      (calendar) => calendar._id === database_id
+    );
+    // console.log('this calendar : ', this_calendar.user_name);
+    // console.log(state.users);
+    state.users.forEach((user) => {
+      if (user.name === this_calendar.user_name) _isUserCreated = true;
+    });
+    setIsUserCreated(_isUserCreated);
+  }, [state.calendarList, state.users]);
 
   return (
     <Styled.SignedCalendar bgcolor={theme.myPalette.background}>
@@ -55,13 +95,17 @@ const SignedCalendar = () => {
         <Styled.Body bgcolor={theme.myPalette.background}>
           <div className="body-box">
             <List
-              calendarList={calendarList}
-              setCalendarList={setCalendarList}
+              calendarList={state.calendarList}
+              selectedIndex={selectedIndex}
+              setSelectedIndex={setSelectedIndex}
             />
             <div
               className={'responsive ' + (location.search ? 'show' : 'hidden')}
             >
-              <Monthly />
+              <Monthly
+                isUserCreated={isUserCreated}
+                updateCalendar={updateCalendar}
+              />
             </div>
           </div>
         </Styled.Body>
