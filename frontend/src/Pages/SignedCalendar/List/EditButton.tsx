@@ -34,10 +34,14 @@ const actionAftereUserSettup = [
 const actionBeforeUserSettup = [{ icon: <ShareIcon />, name: '프로필 만들기' }];
 
 const EditButton: React.FC<{
+  userDrawerRef: React.RefObject<HTMLDivElement>;
   isUserCreated: number;
   updateCalendar: (name: string) => void;
-}> = ({ isUserCreated, updateCalendar }) => {
+  isShowEdit: boolean;
+  isShow: boolean;
+}> = ({ userDrawerRef, isUserCreated, updateCalendar, isShowEdit, isShow }) => {
   const { state, dispatch } = useContext(UserContext);
+  const [height, setHeight] = useState<number>(0);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [isCopy, setIsCopy] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
@@ -46,7 +50,6 @@ const EditButton: React.FC<{
     : location.pathname;
   const theme = useTheme();
 
-  const handleClick = () => setOpen((prevState) => !prevState);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -135,6 +138,11 @@ const EditButton: React.FC<{
     }
   };
 
+  useEffect(() => {
+    setHeight(userDrawerRef.current.clientHeight);
+    if (!isShow && !isShowEdit) setHeight(0);
+  }, [isShow, isShowEdit]);
+
   return (
     <>
       <Backdrop
@@ -158,9 +166,10 @@ const EditButton: React.FC<{
         ariaLabel="SpeedDial tooltip example"
         sx={{
           position: 'absolute',
-          bottom: 376,
+          bottom: isShow || isShowEdit ? height + 76 : 76,
           right: 16,
           zIndex: 200,
+          transition: 'all 0.5s ease-out 0s',
         }}
         icon={state.selectedUser ? <CheckIcon /> : <SpeedDialIcon />}
         onClose={handleClose}

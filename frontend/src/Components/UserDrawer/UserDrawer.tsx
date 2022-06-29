@@ -10,12 +10,20 @@ import Size from 'src/Common/Size';
 import UserDrawerTimeBox from './UserDrawerTimeBox';
 
 const UserDrawer: React.FC<{
-  touchRef: React.MutableRefObject<any>;
+  userDrawerRef: React.RefObject<HTMLDivElement>;
+  touchRef: React.MutableRefObject<HTMLDivElement>;
   selectedDay: Day | null;
   dayUsers: UserWithValid[];
   isShow: boolean;
   handleDrawerClose: () => void;
-}> = ({ touchRef, selectedDay, dayUsers, isShow, handleDrawerClose }) => {
+}> = ({
+  userDrawerRef,
+  touchRef,
+  selectedDay,
+  dayUsers,
+  isShow,
+  handleDrawerClose,
+}) => {
   const theme = useTheme();
   const [touchStart, setTouchStart] = useState<number>(0);
   const posibleDayUsers = useMemo(() => {
@@ -114,6 +122,7 @@ const UserDrawer: React.FC<{
     <>
       <Backdrop open={isShow} onClick={handleDrawerClose} />
       <Styled.UserDrawer
+        ref={userDrawerRef}
         isShow={isShow}
         fgcolor={theme.myPalette.foreground}
         bgcolor={theme.myPalette.background}

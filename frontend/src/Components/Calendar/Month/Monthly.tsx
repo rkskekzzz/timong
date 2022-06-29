@@ -23,6 +23,7 @@ const Monthly: React.FC<{
 }> = ({ isUserCreated, updateCalendar }) => {
   const location = useLocation();
   const touchRef = useRef(null);
+  const userDrawerRef = useRef(null);
   const [year, setYear] = useState<Year>(initialYear);
   const [selectedDay, setSelectedDay] = useState<Day | null>(null);
   const [dayUsers, setDayUsers] = useState<UserWithValid[]>([]);
@@ -114,8 +115,11 @@ const Monthly: React.FC<{
               <div className="movebox" style={{ width: width }}>
                 {location.pathname.includes('calendar') ? (
                   <EditButton
+                    userDrawerRef={userDrawerRef}
                     isUserCreated={isUserCreated}
                     updateCalendar={updateCalendar}
+                    isShowEdit={isShowEdit}
+                    isShow={isShow}
                   />
                 ) : (
                   <Users />
@@ -125,6 +129,7 @@ const Monthly: React.FC<{
                   selectedUser={state.selectedUser}
                 />
                 <UserDrawer
+                  userDrawerRef={userDrawerRef}
                   isShow={isShow}
                   touchRef={touchRef}
                   selectedDay={selectedDay}
