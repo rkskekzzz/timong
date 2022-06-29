@@ -28,7 +28,7 @@ const Monthly: React.FC<{
   const [dayUsers, setDayUsers] = useState<UserWithValid[]>([]);
   const [isShow, setIsShow] = useState<boolean>(false);
   const [isShowEdit, setIsShowEdit] = useState<boolean>(false);
-  const { state, dispatch } = useContext(UserContext);
+  const { state } = useContext(UserContext);
   const handleDrawerOpen = () => setIsShow(!isShow);
   const handleDrawerClose = () => setIsShow(false);
 
@@ -121,8 +121,7 @@ const Monthly: React.FC<{
                   <Users />
                 )}
                 <TimePicker
-                  isShowEdit={isShow}
-                  // isShow={isShow}s
+                  isShowEdit={isShowEdit}
                   selectedUser={state.selectedUser}
                 />
                 <UserDrawer
