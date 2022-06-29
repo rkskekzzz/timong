@@ -7,10 +7,11 @@ import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import ShareIcon from '@mui/icons-material/Share';
 import { useTheme } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
-import AddModal from 'src/Components/Modal';
 import { UserService } from 'src/Network/UserService';
 import { User } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
+import AddModal from 'src/Components/Modal';
+import CheckIcon from '@mui/icons-material/Check';
 
 /**
  * action
@@ -33,7 +34,7 @@ const actionAftereUserSettup = [
 const actionBeforeUserSettup = [{ icon: <ShareIcon />, name: '프로필 만들기' }];
 
 const EditButton: React.FC<{
-  isUserCreated: boolean;
+  isUserCreated: number;
   updateCalendar: (name: string) => void;
 }> = ({ isUserCreated, updateCalendar }) => {
   const { state, dispatch } = useContext(UserContext);
@@ -45,6 +46,7 @@ const EditButton: React.FC<{
     : location.pathname;
   const theme = useTheme();
 
+  const handleClick = () => setOpen((prevState) => !prevState);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -70,7 +72,7 @@ const EditButton: React.FC<{
   };
 
   const actions = useMemo(() => {
-    if (isUserCreated) {
+    if (isUserCreated !== -1) {
       return actionAftereUserSettup;
     } else {
       return actionBeforeUserSettup;
@@ -78,7 +80,7 @@ const EditButton: React.FC<{
   }, [isUserCreated]);
 
   const editSchedule = () => {
-    console.log('editSchedule');
+    dispatch({ type: 'SETSELECTEUSER', user: state.users[isUserCreated] });
   };
 
   // const editProfile = () => {
@@ -105,6 +107,10 @@ const EditButton: React.FC<{
 
   const addUserModalOpen = () => {
     handleModalOpen();
+  };
+
+  const handleCloseEdit = () => {
+    dispatch({ type: 'SETSELECTEUSER', user: null });
   };
 
   const handleActions = (name: string) => {
@@ -151,14 +157,15 @@ const EditButton: React.FC<{
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
         sx={{
-          position: 'fixed',
-          bottom: 16,
+          position: 'absolute',
+          bottom: 376,
           right: 16,
           zIndex: 200,
         }}
-        icon={<SpeedDialIcon />}
+        icon={state.selectedUser ? <CheckIcon /> : <SpeedDialIcon />}
         onClose={handleClose}
-        onClick={handleOpen}
+        onOpen={state.selectedUser ? () => null : handleOpen}
+        onClick={state.selectedUser ? handleCloseEdit : () => null}
         open={open}
       >
         {actions.map((action) => (
@@ -167,7 +174,10 @@ const EditButton: React.FC<{
             icon={action.icon}
             tooltipTitle={action.name}
             tooltipOpen
-            onClick={() => handleActions(action.name)}
+            onClick={() => {
+              handleActions(action.name);
+              handleClose();
+            }}
           />
         ))}
       </SpeedDial>

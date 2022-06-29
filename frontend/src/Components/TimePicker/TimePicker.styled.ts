@@ -13,7 +13,7 @@ const TimePickerBox = styled.div<{
   height: ${NumberEx.timePickerHeight};
   position: fixed;
   bottom: 0px;
-  left: 50%;
+  z-index: 300;
   border-radius: 15px 15px 0px 0px;
   background-color: ${(props) => `${props.bgcolor ?? '#ffffff'}`};
   padding: 3vh 3vh 0 3vh;
@@ -21,12 +21,12 @@ const TimePickerBox = styled.div<{
     if (props.isShowTimePicker)
       return `
       transition: transform 0.5s;
-      transform: translate(-50%, 0%);
+      transform: translate(0%, 0%);
     `;
     else
       return `
       transition: transform 0.5s;
-      transform: translate(-50%, 100%);
+      transform: translate(0%, 100%);
     `;
   }};
 

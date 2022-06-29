@@ -19,7 +19,7 @@ const SignedCalendar = () => {
   const { state, dispatch } = useContext(UserContext);
   const [isCalendarLoad, setIsCalendarLoad] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [isUserCreated, setIsUserCreated] = useState<boolean>(false);
+  const [isUserCreated, setIsUserCreated] = useState<number>(-1);
   const database_id = location.pathname.includes('calendar')
     ? location.search.substring(4)
     : location.pathname;
@@ -80,12 +80,14 @@ const SignedCalendar = () => {
   }, [isCalendarLoad]);
 
   useEffect(() => {
-    let _isUserCreated = false;
+    let _isUserCreated = -1;
     const this_calendar = state.calendarList.find(
       (calendar) => calendar._id === state.calendarList[selectedIndex]._id
     );
-    state.users.forEach((user) => {
-      if (user.name === this_calendar.user_name) _isUserCreated = true;
+    state.users.forEach((user, index) => {
+      if (user.name === this_calendar.user_name) {
+        _isUserCreated = index;
+      }
     });
     setIsUserCreated(_isUserCreated);
   }, [state.users]);

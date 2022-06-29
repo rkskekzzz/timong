@@ -18,17 +18,17 @@ import TimePicker from 'src/Components/TimePicker';
 const initialYear: Year = buildDate(moment());
 
 const Monthly: React.FC<{
-  isUserCreated: boolean;
+  isUserCreated: number;
   updateCalendar: (name: string) => void;
 }> = ({ isUserCreated, updateCalendar }) => {
   const location = useLocation();
   const touchRef = useRef(null);
   const [year, setYear] = useState<Year>(initialYear);
   const [selectedDay, setSelectedDay] = useState<Day | null>(null);
-  const [isShow, setIsShow] = useState<boolean>(false);
   const [dayUsers, setDayUsers] = useState<UserWithValid[]>([]);
+  const [isShow, setIsShow] = useState<boolean>(false);
   const [isShowEdit, setIsShowEdit] = useState<boolean>(false);
-  const { state } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
   const handleDrawerOpen = () => setIsShow(!isShow);
   const handleDrawerClose = () => setIsShow(false);
 
@@ -47,6 +47,7 @@ const Monthly: React.FC<{
       ]);
     }
   };
+
   const rowRenderer = ({ index, key, style }) => {
     const month = year[index];
     return (
@@ -73,8 +74,7 @@ const Monthly: React.FC<{
   }, [touchRef]);
 
   useEffect(() => {
-    if (!location.pathname.includes('calendar'))
-      setIsShowEdit(state.selectedUser !== null);
+    setIsShowEdit(state.selectedUser !== null);
   }, [state.selectedUser]);
 
   /**
@@ -94,7 +94,7 @@ const Monthly: React.FC<{
    * @see https://github.com/bvaughn/react-virtualized/blob/master/docs/WindowScroller.md#render-props
    */
   return (
-    <Box>
+    <Box position="relative">
       <Styled.AutoSizerWrapper>
         <AutoSizer>
           {({ height, width }) => (
@@ -111,29 +111,32 @@ const Monthly: React.FC<{
                   maxWidth: NumberEx.calendarMaxWidth,
                 }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
               />
-              <UserDrawer
-                touchRef={touchRef}
-                selectedDay={selectedDay}
-                dayUsers={dayUsers}
-                isShow={isShow}
-                handleDrawerClose={handleDrawerClose}
-              />
+              <div className="movebox" style={{ width: width }}>
+                {location.pathname.includes('calendar') ? (
+                  <EditButton
+                    isUserCreated={isUserCreated}
+                    updateCalendar={updateCalendar}
+                  />
+                ) : (
+                  <Users />
+                )}
+                <TimePicker
+                  isShowEdit={isShow}
+                  // isShow={isShow}s
+                  selectedUser={state.selectedUser}
+                />
+                <UserDrawer
+                  isShow={isShow}
+                  touchRef={touchRef}
+                  selectedDay={selectedDay}
+                  dayUsers={dayUsers}
+                  handleDrawerClose={handleDrawerClose}
+                />
+              </div>
             </>
           )}
         </AutoSizer>
       </Styled.AutoSizerWrapper>
-      <TimePicker
-        isShowEdit={isShowEdit}
-        selectedUser={state.isSigned ? state.users[0] : state.selectedUser}
-      />
-      {location.pathname.includes('calendar') ? (
-        <EditButton
-          isUserCreated={isUserCreated}
-          updateCalendar={updateCalendar}
-        />
-      ) : (
-        <Users />
-      )}
     </Box>
   );
 };

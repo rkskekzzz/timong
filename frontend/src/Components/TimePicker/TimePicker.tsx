@@ -25,7 +25,8 @@ const TimePicker: React.FC<{ isShowEdit: boolean; selectedUser: User }> = ({
   const handleToggleTabbed = () => setIsChecked((isChecked) => !isChecked);
 
   const SelectedUserState = useCallback(() => {
-    if (!selectedUser) return <GlobalStyled.Circle color="#000000" />;
+    if (!selectedUser)
+      return <GlobalStyled.Circle color="#000000" size={Size.Medium} />;
     if (isChecked) {
       return (
         <GlobalStyled.Circle color={selectedUser.color} size={Size.Medium} />
