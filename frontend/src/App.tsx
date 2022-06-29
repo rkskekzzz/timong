@@ -51,6 +51,7 @@ function App() {
           mode: state.mode,
         },
         myPalette: state.mode == 'dark' ? themes.dark : themes.light,
+        main: themes.main,
       }),
     [prefersDarkMode]
   );

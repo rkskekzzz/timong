@@ -7,9 +7,11 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 const Card = ({
   group,
   handleCardTabbed,
+  selected,
 }: {
   group: Calendar;
   handleCardTabbed: () => void;
+  selected: boolean;
 }) => {
   const theme = useTheme();
   const [open, setOpen] = useState<boolean>(false);
@@ -19,6 +21,7 @@ const Card = ({
 
   return (
     <Styled.Card
+      selected={selected}
       fgcolor={theme.myPalette.foreground}
       onClick={handleCardTabbed}
     >

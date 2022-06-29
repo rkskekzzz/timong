@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
-const Card = styled.span<{ fgcolor: string }>`
+const Card = styled.span<{ fgcolor: string; selected: boolean }>`
   width: 40vw;
   @media (max-width: 760px) {
     width: 90vw;
   }
   max-width: 400px;
-  background: #ffffff11;
+  background: ${(props) => `${props.selected ? '#00000011' : '#ffffff11'}`};
+  box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${(props) => `${props.selected ? '#f995f0' : '#ffffff00'}`};
   align-self: flex-end;
   border-radius: 10px;
   cursor: pointer;

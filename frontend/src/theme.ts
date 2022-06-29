@@ -16,6 +16,10 @@ declare module '@mui/material/styles' {
       backDrop: string;
       background: string;
     };
+    main: {
+      background: string;
+      theme: string;
+    };
   }
   interface ThemeOptions {
     myPalette?: {
@@ -33,6 +37,10 @@ declare module '@mui/material/styles' {
       backgroundAddButton?: string;
       backDrop?: string;
       background?: string;
+    };
+    main: {
+      background?: string;
+      theme?: string;
     };
   }
 }
