@@ -17,6 +17,7 @@ const SignedCalendar = () => {
   const navi = useNavigate();
   const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
+  const [isCalendarLoad, setIsCalendarLoad] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [isUserCreated, setIsUserCreated] = useState<boolean>(false);
   const database_id = location.pathname.includes('calendar')
@@ -57,8 +58,8 @@ const SignedCalendar = () => {
 
   useEffect(() => {
     if (state.calendarList.length == 0) return;
-
     const getCalendar = async () => {
+      setIsCalendarLoad(false);
       const result = await CalendarService.getCalendar(
         '/' + state.calendarList[selectedIndex]._id
       );
@@ -68,25 +69,26 @@ const SignedCalendar = () => {
         users: result.users,
         meetingDays: result.meetingDays,
       });
-      navi('/calendar/?id=' + state.calendarList[selectedIndex]._id);
+      setIsCalendarLoad(true);
     };
-    if (database_id !== state.calendarList[selectedIndex]._id) getCalendar();
-  }, [state.calendarList, selectedIndex]);
+    getCalendar();
+  }, [selectedIndex]);
 
   useEffect(() => {
-    if (state.calendarList.length == 0) return;
+    if (isCalendarLoad)
+      navi('/calendar/?id=' + state.calendarList[selectedIndex]._id);
+  }, [isCalendarLoad]);
 
+  useEffect(() => {
     let _isUserCreated = false;
     const this_calendar = state.calendarList.find(
-      (calendar) => calendar._id === database_id
+      (calendar) => calendar._id === state.calendarList[selectedIndex]._id
     );
-    // console.log('this calendar : ', this_calendar.user_name);
-    // console.log(state.users);
     state.users.forEach((user) => {
       if (user.name === this_calendar.user_name) _isUserCreated = true;
     });
     setIsUserCreated(_isUserCreated);
-  }, [state.calendarList, state.users]);
+  }, [state.users]);
 
   return (
     <Styled.SignedCalendar bgcolor={theme.myPalette.background}>
