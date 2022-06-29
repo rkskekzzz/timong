@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Styled from './List.styled';
 import { dbService } from 'src/firebase';
 import { UserContext } from 'src/App';
@@ -7,6 +7,8 @@ import { CalendarService } from 'src/Network/CalendarService';
 import { Calendar } from 'src/Interface/CalendarType';
 import Card from './Card';
 import { useNavigate } from 'react-router-dom';
+import AddModal from 'src/Components/Modal';
+import { User } from 'src/Interface/UserType';
 
 //import는 필수이다.
 
@@ -15,7 +17,11 @@ const List: React.FC<{
   selectedIndex: number;
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
 }> = ({ calendarList, selectedIndex, setSelectedIndex }) => {
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const { state, dispatch } = useContext(UserContext);
+  const handleModalOpen = () => setIsShowModal(true);
+  const handleModalClose = () => setIsShowModal(false);
+
   const navi = useNavigate();
 
   const fetchData = async () => {
@@ -45,7 +51,7 @@ const List: React.FC<{
     }
   };
 
-  const addCalendar = async () => {
+  const addCalendar = async (element: User) => {
     const docRef = doc(dbService, 'TestUsers', state.isSigned);
     const calendar = await CalendarService.create('default');
     const user = await getDoc(docRef);
@@ -57,15 +63,15 @@ const List: React.FC<{
         {
           _id: calendar._id,
           user_name: '',
-          name: 'default',
+          name: element.name,
         },
       ],
     });
     Promise.all([createCalendarRelation]).then(fetchData);
   };
+
   const handleCardTabbed = (index: number) => {
     setSelectedIndex(index);
-    navi('/calendar/?id=' + calendarList[selectedIndex]._id);
   };
 
   useEffect(() => {
@@ -89,18 +95,27 @@ const List: React.FC<{
   }, [calendarList, selectedIndex]);
 
   return (
-    <Styled.List>
-      {calendarList.map((element, index) => {
-        return (
-          <Card
-            key={element._id + index}
-            group={element}
-            handleCardTabbed={() => handleCardTabbed(index)}
-          />
-        );
-      })}
-      <Card group={null} handleCardTabbed={addCalendar} />
-    </Styled.List>
+    <>
+      <AddModal
+        isShowModal={isShowModal}
+        handleModalClose={handleModalClose}
+        addUser={addCalendar}
+        placeholder="캘린더 이름을 입력해주세요..."
+      />
+      <Styled.List>
+        {calendarList.map((element, index) => {
+          return (
+            <Card
+              selected={selectedIndex === index ? true : false}
+              key={element._id + index}
+              group={element}
+              handleCardTabbed={() => handleCardTabbed(index)}
+            />
+          );
+        })}
+        <Card group={null} handleCardTabbed={handleModalOpen} />
+      </Styled.List>
+    </>
   );
 };
 
