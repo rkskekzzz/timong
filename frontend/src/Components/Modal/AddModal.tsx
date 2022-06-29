@@ -40,9 +40,11 @@ type Color = object & {
 function ModalBoxFormLogic({
   handleModalClose,
   addUser,
+  placeholder,
 }: {
   handleModalClose: () => void;
   addUser: (user: User) => void;
+  placeholder: string;
 }) {
   const [isError, setIsError] = useState<{ color: boolean; name: boolean }>({
     color: false,
@@ -110,7 +112,7 @@ function ModalBoxFormLogic({
         error={isError.name ? true : false}
         autoComplete="false"
         id="userName"
-        placeholder="닉네임을 입력하세요..."
+        placeholder={placeholder}
         value={formik.values.userName}
         onChange={formik.handleChange}
         inputProps={{ maxLength: 10 }}
@@ -132,7 +134,8 @@ const AddModal: React.FC<{
   handleModalClose: () => void;
   addUser: (user: User) => void;
   isShowModal: boolean;
-}> = ({ handleModalClose, addUser, isShowModal }) => {
+  placeholder: string;
+}> = ({ handleModalClose, addUser, isShowModal, placeholder }) => {
   const theme = useTheme();
   return (
     <Modal
@@ -145,6 +148,7 @@ const AddModal: React.FC<{
         <ModalBoxFormLogic
           handleModalClose={handleModalClose}
           addUser={addUser}
+          placeholder={placeholder}
         />
       </Styled.ModalBox>
     </Modal>

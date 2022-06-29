@@ -235,6 +235,7 @@ const Users = () => {
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
         addUser={addUser}
+        placeholder="유저 이름을 입력해주세요..."
       />
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>

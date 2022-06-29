@@ -1,19 +1,12 @@
-import React, { useState, useMemo, useCallback, useContext } from 'react';
+import React, { useState, useMemo, useEffect, useContext } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
-// import SaveIcon from '@mui/icons-material/Save';
-// import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 import { useTheme } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
-import SnackbarContent from '@mui/material/SnackbarContent';
-import Alert from '@mui/material/Alert';
-
-// import { CopyToClipboard } from 'react-copy-to-clipboard';
-
 import AddModal from 'src/Components/Modal';
 import { UserService } from 'src/Network/UserService';
 import { User } from 'src/Interface/UserType';
@@ -146,6 +139,7 @@ const EditButton: React.FC<{
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
         addUser={addUser}
+        placeholder="유저 이름을 입력해주세요..."
       />
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
@@ -156,7 +150,12 @@ const EditButton: React.FC<{
       />
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
-        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+        sx={{
+          position: 'fixed',
+          bottom: 16,
+          right: 16,
+          zIndex: 200,
+        }}
         icon={<SpeedDialIcon />}
         onClose={handleClose}
         onClick={handleOpen}
