@@ -18,9 +18,10 @@ import TimePicker from 'src/Components/TimePicker';
 const initialYear: Year = buildDate(moment());
 
 const Monthly: React.FC<{
+  selectedIndex: number;
   isUserCreated: number;
   updateCalendar: (name: string) => void;
-}> = ({ isUserCreated, updateCalendar }) => {
+}> = ({ selectedIndex, isUserCreated, updateCalendar }) => {
   const location = useLocation();
   const touchRef = useRef(null);
   const userDrawerRef = useRef(null);
@@ -54,7 +55,11 @@ const Monthly: React.FC<{
     const month = year[index];
     return (
       <div style={style} key={key}>
-        <MonthBox month={month} drawerHandler={drawerHandler} />
+        <MonthBox
+          month={month}
+          drawerHandler={drawerHandler}
+          selectedIndex={selectedIndex}
+        />
       </div>
     );
   };
@@ -123,6 +128,7 @@ const Monthly: React.FC<{
                     isShowEdit={isShowEdit}
                     isShow={isShow}
                     setIsShow={setIsShow}
+                    selectedIndex={selectedIndex}
                   />
                 ) : (
                   <Users />

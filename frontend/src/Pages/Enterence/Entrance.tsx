@@ -13,9 +13,6 @@ const EntranceInputs = () => {
   const { dispatch } = useContext(UserContext);
   const navi = useNavigate();
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
-  // const [touchStart, setTouchStart] = useState<number>(0);
-  // const [isChanging, setIsChanging] = useState<boolean>(false);
-  // const [value, setValue] = useState<number>(16);
 
   const formik = useFormik({
     initialValues: {

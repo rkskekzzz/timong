@@ -6,14 +6,20 @@ import { useTheme } from '@mui/material';
 import logo from 'src/assets/logo512.png';
 import { useNavigate } from 'react-router-dom';
 
-const Header: React.FC<{ calendarName: string }> = ({ calendarName }) => {
+const Header: React.FC<{
+  calendarName: string;
+  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ calendarName, setSelectedIndex }) => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const theme = useTheme();
   const navi = useNavigate();
 
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
-  const handleLogoTabbed = () => navi('/calendar');
+  const handleLogoTabbed = () => {
+    setSelectedIndex(-1);
+    navi('/calendar');
+  };
 
   return (
     <>
@@ -28,9 +34,11 @@ const Header: React.FC<{ calendarName: string }> = ({ calendarName }) => {
             Timong
           </Styled.HeaderAnonyCalendarTitle>
         </div>
-        {/* <Styled.HeaderCalendarTitle color={theme.myPalette.foregroundHeader}>
-          {calendarName}
-        </Styled.HeaderCalendarTitle> */}
+        {calendarName !== 'no' ?? (
+          <Styled.HeaderCalendarTitle color={theme.myPalette.foregroundHeader}>
+            {calendarName}
+          </Styled.HeaderCalendarTitle>
+        )}
         <MenuRoundedIcon
           sx={{
             color: theme.myPalette.foreground,

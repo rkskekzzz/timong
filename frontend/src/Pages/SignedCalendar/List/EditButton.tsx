@@ -43,6 +43,7 @@ const EditButton: React.FC<{
   isShowEdit: boolean;
   isShow: boolean;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedIndex: number;
 }> = ({
   userDrawerRef,
   timePickerRef,
@@ -51,15 +52,13 @@ const EditButton: React.FC<{
   isShowEdit,
   isShow,
   setIsShow,
+  selectedIndex,
 }) => {
   const { state, dispatch } = useContext(UserContext);
   const [height, setHeight] = useState<number>(0);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [isCopy, setIsCopy] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
-  const database_id = location.pathname.includes('calendar')
-    ? location.search.substring(4)
-    : location.pathname;
   const theme = useTheme();
 
   const handleOpen = () => setOpen(true);
@@ -79,7 +78,7 @@ const EditButton: React.FC<{
         return;
       }
     }
-    await UserService.createUser('/' + database_id, {
+    await UserService.createUser('/' + state.calendarList[selectedIndex]._id, {
       name: user.name,
       color: user.color,
     });

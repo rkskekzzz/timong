@@ -14,30 +14,27 @@ const SignedCalendar = styled(Box)`
 `;
 
 const Body = styled.div<{ bgcolor: string }>`
+  width: 100%;
+  max-width: 1024px;
   height: calc(100vh - 60px);
   overflow: hidden;
   display: flex;
-  justify-content: center;
-  gap: 60px;
 
-  .body-box {
-    display: flex;
-    max-width: 1024px;
-  }
   .responsive {
+    width: 100%;
     background: ${(props) => props.bgcolor};
   }
 
-  @media (min-width: 760px) {
-    .body-box {
-      flex: 1 1 0;
-    }
-    .body-box > div {
-      flex: 1 1 0;
-    }
+  .nocalendar {
+    height: 100%;
+    color: #ffffff;
+    transition: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+
   @media (max-width: 760px) {
-    /* justify-content: center; */
     .responsive {
       z-index: 1000;
       position: fixed;

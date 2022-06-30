@@ -1,17 +1,16 @@
 import styled from 'styled-components';
 
 const Card = styled.span<{ fgcolor: string; selected: boolean }>`
-  width: 40vw;
-  @media (max-width: 760px) {
-    width: 90vw;
-  }
+  width: 80%;
+  display: flex;
+  /* align-items: center; */
   max-width: 400px;
   background: ${(props) => `${props.selected ? '#00000011' : '#ffffff11'}`};
   box-sizing: border-box;
   border-width: 1px;
   border-style: solid;
   border-color: ${(props) => `${props.selected ? '#f995f0' : '#ffffff00'}`};
-  align-self: flex-end;
+
   border-radius: 10px;
   cursor: pointer;
   color: ${(props) => `${props.fgcolor}`};
@@ -24,9 +23,9 @@ const Card = styled.span<{ fgcolor: string; selected: boolean }>`
     margin: 0;
   }
   .list {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
     button {
       height: 50px;
       & {
@@ -41,8 +40,7 @@ const Card = styled.span<{ fgcolor: string; selected: boolean }>`
   .add {
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+
     span {
       color: ${(props) => props.fgcolor};
       font-size: 2rem;

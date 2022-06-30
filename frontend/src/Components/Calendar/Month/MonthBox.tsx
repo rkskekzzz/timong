@@ -24,16 +24,15 @@ function DayBoxLogic({
   day,
   month,
   drawerHandler,
+  selectedIndex,
 }: {
   day: Day;
   month: Month;
   drawerHandler: DrawerHandler;
+  selectedIndex: number;
 }) {
   const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
-  const database_id = location.pathname.includes('calendar')
-    ? location.search.substring(4)
-    : location.pathname;
 
   const reducedUser = state.users.reduce((user: UserWithValid[], cur: User) => {
     for (const _schedule of cur.schedules) {
@@ -60,10 +59,18 @@ function DayBoxLogic({
       valid: state.valid ? 'POSIBLE' : 'IMPOSIBLE',
     });
     dispatch({ type: 'SETSELECTEDATE', day: day.moment });
-    console.log(database_id);
-    console.log(state.selectedUser);
 
-    await ScheduleService.updateSchedules(database_id, state.selectedUser);
+    if (state.isSigned) {
+      await ScheduleService.updateSchedules(
+        '/' + state.calendarList[selectedIndex]._id,
+        state.selectedUser
+      );
+    } else {
+      await ScheduleService.updateSchedules(
+        location.pathname,
+        state.selectedUser
+      );
+    }
   };
   const handleClick = useCallback(() => {
     if (!state.selectedUser) showUsers();
@@ -87,10 +94,11 @@ function DayBoxLogic({
   );
 }
 
-const MonthBox: React.FC<{ month: Month; drawerHandler: DrawerHandler }> = ({
-  month,
-  drawerHandler,
-}) => {
+const MonthBox: React.FC<{
+  month: Month;
+  drawerHandler: DrawerHandler;
+  selectedIndex: number;
+}> = ({ month, drawerHandler, selectedIndex }) => {
   const theme = useTheme();
   return (
     <Styled.MonthBox color={theme.myPalette.foreground}>
@@ -111,6 +119,7 @@ const MonthBox: React.FC<{ month: Month; drawerHandler: DrawerHandler }> = ({
                     day={day}
                     month={month}
                     drawerHandler={drawerHandler}
+                    selectedIndex={selectedIndex}
                   />
                 );
               })}

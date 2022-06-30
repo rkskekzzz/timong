@@ -51,7 +51,7 @@ const List: React.FC<{
 
   const addCalendar = async (element: User) => {
     const docRef = doc(dbService, 'TestUsers', state.isSigned);
-    const calendar = await CalendarService.create('default');
+    const calendar = await CalendarService.create(element.name);
     const user = await getDoc(docRef);
     if (!calendar || !user) alert('fail to fetch data..!!');
     const createCalendarRelation = setDoc(docRef, {
@@ -99,7 +99,11 @@ const List: React.FC<{
             />
           );
         })}
-        <Card group={null} handleCardTabbed={handleModalOpen} />
+        <Card
+          selected={false}
+          group={null}
+          handleCardTabbed={handleModalOpen}
+        />
       </Styled.List>
     </>
   );
