@@ -29,7 +29,10 @@ const Body = styled.div<{ bgcolor: string }>`
   }
 
   @media (min-width: 760px) {
-    div {
+    .body-box {
+      flex: 1 1 0;
+    }
+    .body-box > div {
       flex: 1 1 0;
     }
   }
