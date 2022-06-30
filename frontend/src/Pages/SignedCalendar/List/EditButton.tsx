@@ -13,16 +13,14 @@ import { UserContext } from 'src/App';
 import AddModal from 'src/Components/Modal';
 import CheckIcon from '@mui/icons-material/Check';
 
-/**
- * action
- * if setup:
- * - edit date :
- * - edit user & delete user :
- * - find user :
- * - share : Share
- * else:
- * - add user
- */
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const actionAftereUserSettup = [
   { icon: <FileCopyIcon />, name: '날짜 선택' },
@@ -155,13 +153,22 @@ const EditButton: React.FC<{
         addUser={addUser}
         placeholder="유저 이름을 입력해주세요..."
       />
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={isCopy}
-        autoHideDuration={2000}
-        onClose={handleCopyFalse}
-        message="복사되었습니다."
-      />
+      <div style={{ width: '100%' }}>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          open={isCopy}
+          autoHideDuration={2000}
+          onClose={handleCopyFalse}
+        >
+          <Alert
+            onClose={handleCopyFalse}
+            severity="success"
+            sx={{ width: '100%' }}
+          >
+            복사되었습니다!
+          </Alert>
+        </Snackbar>
+      </div>
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
         sx={{
