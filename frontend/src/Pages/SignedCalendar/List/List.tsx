@@ -22,8 +22,6 @@ const List: React.FC<{
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
 
-  const navi = useNavigate();
-
   const fetchData = async () => {
     /**
      * fetch calendar list with firebase (by user_id)
@@ -79,20 +77,8 @@ const List: React.FC<{
   }, [state.isSigned]);
 
   useEffect(() => {
-    if (calendarList.length == 0) return;
-    const getCalendar = async () => {
-      const result = await CalendarService.getCalendar(
-        '/' + calendarList[selectedIndex]._id
-      );
-      if (!result) navi('/404');
-      dispatch({
-        type: 'INIT',
-        users: result.users,
-        meetingDays: result.meetingDays,
-      });
-    };
-    getCalendar();
-  }, [calendarList, selectedIndex]);
+    if (state.calendarList.length > 0) setSelectedIndex(0);
+  }, [state.calendarList]);
 
   return (
     <>
