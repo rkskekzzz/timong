@@ -15,6 +15,10 @@ import CheckIcon from '@mui/icons-material/Check';
 
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
+const selectdateName = '날짜선택';
+const shareName = '공유하기';
+const newprofileName = '프로필만들기';
+
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
@@ -23,21 +27,31 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const actionAftereUserSettup = [
-  { icon: <FileCopyIcon />, name: '날짜 선택' },
+  { icon: <FileCopyIcon />, name: selectdateName },
   // { icon: <SaveIcon />, name: '프로필 수정' },
   // { icon: <PrintIcon />, name: '유저 검색' },
-  { icon: <ShareIcon />, name: '공유하기' },
+  { icon: <ShareIcon />, name: shareName },
 ];
 
-const actionBeforeUserSettup = [{ icon: <ShareIcon />, name: '프로필 만들기' }];
+const actionBeforeUserSettup = [{ icon: <ShareIcon />, name: newprofileName }];
 
 const EditButton: React.FC<{
   userDrawerRef: React.RefObject<HTMLDivElement>;
+  timePickerRef: React.RefObject<HTMLDivElement>;
   isUserCreated: number;
   updateCalendar: (name: string) => void;
   isShowEdit: boolean;
   isShow: boolean;
-}> = ({ userDrawerRef, isUserCreated, updateCalendar, isShowEdit, isShow }) => {
+  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({
+  userDrawerRef,
+  timePickerRef,
+  isUserCreated,
+  updateCalendar,
+  isShowEdit,
+  isShow,
+  setIsShow,
+}) => {
   const { state, dispatch } = useContext(UserContext);
   const [height, setHeight] = useState<number>(0);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
@@ -81,6 +95,8 @@ const EditButton: React.FC<{
   }, [isUserCreated]);
 
   const editSchedule = () => {
+    console.log('edit');
+    console.log(state.users[isUserCreated]);
     dispatch({ type: 'SETSELECTEUSER', user: state.users[isUserCreated] });
   };
 
@@ -116,7 +132,7 @@ const EditButton: React.FC<{
 
   const handleActions = (name: string) => {
     switch (name) {
-      case '날짜 선택':
+      case selectdateName:
         editSchedule();
         break;
       // case '프로필 수정':
@@ -125,19 +141,21 @@ const EditButton: React.FC<{
       // case '유저 검색':
       //   findUser();
       //   break;
-      case '공유하기':
+      case shareName:
         share();
         break;
-      case '프로필 만들기':
+      case newprofileName:
         addUserModalOpen();
         break;
       default:
         break;
     }
+    setIsShow(false);
   };
 
   useEffect(() => {
-    setHeight(userDrawerRef.current.clientHeight);
+    if (isShow) setHeight(userDrawerRef.current.clientHeight);
+    if (isShowEdit) setHeight(timePickerRef.current.clientHeight);
     if (!isShow && !isShowEdit) setHeight(0);
   }, [isShow, isShowEdit]);
 
@@ -172,11 +190,18 @@ const EditButton: React.FC<{
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
         sx={{
-          position: 'absolute',
-          bottom: isShow || isShowEdit ? height + 76 : 76,
-          right: 16,
-          zIndex: 200,
-          transition: 'all 0.5s ease-out 0s',
+          'position': 'absolute',
+          'bottom':
+            isShow || (isShowEdit && state.selectedDate) ? height + 76 : 76,
+          'right': 16,
+          'zIndex': 200,
+          'transition': 'all 0.5s ease-out 0s',
+          '& .MuiButtonBase-root': {
+            backgroundColor: theme.main.theme,
+          },
+          // '& .MuiSpeedDialAction-staticTooltipLabel': {
+          //   color: '#dddddd',
+          // },
         }}
         icon={state.selectedUser ? <CheckIcon /> : <SpeedDialIcon />}
         onClose={handleClose}

@@ -24,6 +24,7 @@ const Monthly: React.FC<{
   const location = useLocation();
   const touchRef = useRef(null);
   const userDrawerRef = useRef(null);
+  const timePickerRef = useRef(null);
   const [year, setYear] = useState<Year>(initialYear);
   const [selectedDay, setSelectedDay] = useState<Day | null>(null);
   const [dayUsers, setDayUsers] = useState<UserWithValid[]>([]);
@@ -116,15 +117,18 @@ const Monthly: React.FC<{
                 {location.pathname.includes('calendar') ? (
                   <EditButton
                     userDrawerRef={userDrawerRef}
+                    timePickerRef={timePickerRef}
                     isUserCreated={isUserCreated}
                     updateCalendar={updateCalendar}
                     isShowEdit={isShowEdit}
                     isShow={isShow}
+                    setIsShow={setIsShow}
                   />
                 ) : (
                   <Users />
                 )}
                 <TimePicker
+                  timePickerRef={timePickerRef}
                   isShowEdit={isShowEdit}
                   selectedUser={state.selectedUser}
                 />

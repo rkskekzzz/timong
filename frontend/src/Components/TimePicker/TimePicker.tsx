@@ -12,10 +12,11 @@ import { ScheduleService } from 'src/Network/ScheduleService';
 import { useLocation } from 'react-router-dom';
 import moment from 'moment';
 
-const TimePicker: React.FC<{ isShowEdit: boolean; selectedUser: User }> = ({
-  isShowEdit,
-  selectedUser,
-}) => {
+const TimePicker: React.FC<{
+  isShowEdit: boolean;
+  selectedUser: User;
+  timePickerRef: React.RefObject<HTMLDivElement>;
+}> = ({ isShowEdit, selectedUser, timePickerRef }) => {
   const { state, dispatch } = useContext(UserContext);
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -118,6 +119,7 @@ const TimePicker: React.FC<{ isShowEdit: boolean; selectedUser: User }> = ({
       bgcolor={theme.myPalette.backgroundModal}
       fgcolor={theme.myPalette.foreground}
       size={size}
+      ref={timePickerRef}
     >
       <div className="paddingbox">
         <DayLabel selectedDay={state.selectedDate} />
