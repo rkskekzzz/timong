@@ -70,7 +70,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/calendar" element={<SignedCalendar />} />
             </Route>
-            <Route path="/invite/:id" element={<Invite />} />
+            <Route path="/invite" element={<Invite />} />
             <Route path="/404" element={<Error />} />
             <Route path="*" element={<Navigate to="/404" />} />
           </Routes>

@@ -1,21 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Styled from './Invite.styled';
 import GlobalStyled from '../../Components/GlobalStyled/GlobalStyled.styled';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CalendarService } from 'src/Network/CalendarService';
+import CircularProgress from '@mui/material/CircularProgress';
 import { auth } from 'src/firebase';
 import { Button } from '@mui/material';
+import { useTheme } from '@mui/material';
+import { useAddCalendar } from 'src/Hooks/firebaseRelationHooks';
+import { User } from 'src/Interface/UserType';
+import { UserContext } from 'src/App';
 
 const Invite = () => {
+  const { state } = useContext(UserContext);
   const [isSigned, setIsSigned] = useState<boolean>(false);
   const [calendarName, setCalendarName] = useState<string>('');
   const location = useLocation();
-  const params = useParams();
-  const navi = useNavigate();
+  // const navi = useNavigate();
+  const theme = useTheme();
+  const database_id = location.search.split('=')[1];
+
+  const createCalendarRelation = () => {
+    const calendar = new User(calendarName, '', [], database_id);
+    useAddCalendar(calendar, state);
+  };
 
   useEffect(() => {
-    console.log(params.id);
     onAuthStateChanged(auth, (_user) => {
       if (_user) {
         setIsSigned(true);
@@ -27,9 +38,8 @@ const Invite = () => {
 
   useEffect(() => {
     const getCalendar = async () => {
-      const result = await CalendarService.getCalendar('/' + params.id);
-      console.log(result);
-
+      const result = await CalendarService.getCalendar('/' + database_id);
+      // if (!result) navi('/404');
       setCalendarName(result.name);
     };
     if (isSigned) getCalendar();
@@ -37,33 +47,17 @@ const Invite = () => {
 
   return (
     <Styled.InviteBox>
-      <span>
-        <b>T</b>
-        <i>T</i>
-        <b>i</b>
-        <i>i</i>
-        <b>m</b>
-        <i>m</i>
-        <b>o</b>
-        <i>o</i>
-        <b>n</b>
-        <i>n</i>
-        <b>g</b>
-        <i>g</i>
-        <b>!</b>
-        <i>!</i>
-      </span>
-      <div className="flex" onClick={() => alert('hi')}>
+      <div className="flex">
         {isSigned ? (
           <div>
             <h3>
-              {location.search}
+              {database_id}
               invited you to {calendarName}
             </h3>
-            <Button>Invite Accept</Button>
+            <Button onClick={createCalendarRelation}>Invite Accept</Button>
           </div>
         ) : (
-          <div>no..</div>
+          <CircularProgress sx={{ color: theme.main.theme }} />
         )}
       </div>
       <GlobalStyled.Cloud bgcolor="#ffd8fb">
