@@ -23,9 +23,6 @@ const SignedCalendar = () => {
   const [isCalendarLoad, setIsCalendarLoad] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [isUserCreated, setIsUserCreated] = useState<number>(-1);
-  const database_id = location.pathname.includes('calendar')
-    ? location.search.substring(4)
-    : location.pathname;
 
   const updateCalendarFirebase = async () => {
     const docRef = doc(dbService, 'TestUsers', state.isSigned);
@@ -39,9 +36,11 @@ const SignedCalendar = () => {
   };
 
   const updateCalendar = (name: string) => {
+    if (selectedIndex === -1) return;
     const calendarList = state.calendarList.map((calendar) => {
       const _calendar = calendar;
-      if (calendar._id === database_id) _calendar.user_name = name;
+      if (calendar._id === state.calendarList[selectedIndex]._id)
+        _calendar.user_name = name;
 
       return calendar;
     });
