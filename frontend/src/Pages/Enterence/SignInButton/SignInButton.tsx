@@ -6,7 +6,6 @@ import {
   // getRedirectResult,
   signOut,
 } from 'firebase/auth';
-import { auth } from 'src/firebase';
 import Styled from './SignInButton.styled';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as GoogleButtonLogo } from 'src/assets/btn_google_light_normal_ios.svg';
@@ -22,18 +21,22 @@ const SignInButton = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const navi = useNavigate();
-  const asdf = () => {
+
+  const signIn = () => {
     signInWithRedirect(auth, provider)
       .then((result: any) => {
+        console.log('here');
         setIsSignedIn(true);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   const zxcv = () => {
     signOut(auth);
   };
+
   useEffect(() => {
     if (user) navi('/calendar');
     onAuthStateChanged(auth, (user) => {
@@ -46,7 +49,7 @@ const SignInButton = () => {
 
   return (
     <>
-      <Styled.GoogleButton onClick={asdf}>
+      <Styled.GoogleButton onClick={signIn}>
         <GoogleButtonLogo>hi</GoogleButtonLogo>
         <p>Sign in with Google</p>
       </Styled.GoogleButton>

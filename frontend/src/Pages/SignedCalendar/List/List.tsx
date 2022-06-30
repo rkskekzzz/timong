@@ -1,16 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Styled from './List.styled';
-import { dbService } from 'src/firebase';
 import { UserContext } from 'src/App';
-import { doc, getDoc, setDoc } from '@firebase/firestore';
-import { CalendarService } from 'src/Network/CalendarService';
 import { Calendar } from 'src/Interface/CalendarType';
 import Card from './Card';
-import { useNavigate } from 'react-router-dom';
 import AddModal from 'src/Components/Modal';
-import { User } from 'src/Interface/UserType';
-
-//import는 필수이다.
+import { useFetchCalendarList } from 'src/Hooks/firebaseRelationHooks';
+import { useAddCalendar } from 'src/Hooks/firebaseRelationHooks';
 
 const List: React.FC<{
   calendarList: Calendar[];
@@ -22,58 +17,12 @@ const List: React.FC<{
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
 
-  const fetchData = async () => {
-    /**
-     * fetch calendar list with firebase (by user_id)
-     *
-     * if user already exist, fetch the list
-     * else, make new Document in User Collection with user_id
-     *
-     * user_id is made by firebase auth.
-     * you can get this id with getAuth() method
-     */
-    const docRef = doc(dbService, 'TestUsers', state.isSigned);
-    const docSnap = await getDoc(docRef);
-    if (!docSnap.exists()) {
-      await setDoc(docRef, {
-        user_id: state.isSigned,
-        user_schedules: [],
-        user_calendar_list: [],
-      });
-    } else {
-      const { user_calendar_list } = docSnap.data();
-      dispatch({
-        type: 'SIGNED_SET_CALENDARLIST',
-        calendarList: user_calendar_list,
-      });
-    }
-  };
-
-  const addCalendar = async (element: User) => {
-    const docRef = doc(dbService, 'TestUsers', state.isSigned);
-    const calendar = await CalendarService.create(element.name);
-    const user = await getDoc(docRef);
-    if (!calendar || !user) alert('fail to fetch data..!!');
-    const createCalendarRelation = setDoc(docRef, {
-      ...user.data(),
-      user_calendar_list: [
-        ...user.data().user_calendar_list,
-        {
-          _id: calendar._id,
-          user_name: '',
-          name: element.name,
-        },
-      ],
-    });
-    Promise.all([createCalendarRelation]).then(fetchData);
-  };
-
   const handleCardTabbed = (index: number) => {
     setSelectedIndex(index);
   };
 
   useEffect(() => {
-    if (state.isSigned) fetchData();
+    if (state.isSigned) useFetchCalendarList(state, dispatch);
   }, [state.isSigned]);
 
   useEffect(() => {
@@ -85,8 +34,8 @@ const List: React.FC<{
       <AddModal
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
-        addUser={addCalendar}
         placeholder="캘린더 이름을 입력해주세요..."
+        action={useAddCalendar}
       />
       <Styled.List>
         {calendarList.map((element, index) => {

@@ -6,10 +6,17 @@ const SignedCalendar = styled(Box)`
   height: 100vh;
 
   .container {
+    width: 100%;
     padding-top: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    .body-box {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
   }
 `;
 

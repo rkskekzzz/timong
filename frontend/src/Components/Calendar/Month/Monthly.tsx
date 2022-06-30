@@ -20,8 +20,7 @@ const initialYear: Year = buildDate(moment());
 const Monthly: React.FC<{
   selectedIndex: number;
   isUserCreated: number;
-  updateCalendar: (name: string) => void;
-}> = ({ selectedIndex, isUserCreated, updateCalendar }) => {
+}> = ({ selectedIndex, isUserCreated }) => {
   const location = useLocation();
   const touchRef = useRef(null);
   const userDrawerRef = useRef(null);
@@ -124,7 +123,6 @@ const Monthly: React.FC<{
                     userDrawerRef={userDrawerRef}
                     timePickerRef={timePickerRef}
                     isUserCreated={isUserCreated}
-                    updateCalendar={updateCalendar}
                     isShowEdit={isShowEdit}
                     isShow={isShow}
                     setIsShow={setIsShow}

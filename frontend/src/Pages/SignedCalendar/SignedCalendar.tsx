@@ -11,8 +11,6 @@ import Button from '@mui/material/Button';
 import List from './List';
 import Header from 'src/Components/Header';
 import Monthly from 'src/Components/Calendar/Month';
-import { doc, getDoc, setDoc } from '@firebase/firestore';
-import { dbService } from 'src/firebase';
 
 const SignedCalendar = () => {
   const theme = useTheme();
@@ -23,30 +21,6 @@ const SignedCalendar = () => {
   const [isCalendarLoad, setIsCalendarLoad] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [isUserCreated, setIsUserCreated] = useState<number>(-1);
-
-  const updateCalendarFirebase = async () => {
-    const docRef = doc(dbService, 'TestUsers', state.isSigned);
-    const calendar = await CalendarService.create('default');
-    const user = await getDoc(docRef);
-    if (!calendar || !user) alert('fail to fetch data..!!');
-    setDoc(docRef, {
-      ...user.data(),
-      user_calendar_list: [...state.calendarList],
-    });
-  };
-
-  const updateCalendar = (name: string) => {
-    if (selectedIndex === -1) return;
-    const calendarList = state.calendarList.map((calendar) => {
-      const _calendar = calendar;
-      if (calendar._id === state.calendarList[selectedIndex]._id)
-        _calendar.user_name = name;
-
-      return calendar;
-    });
-    dispatch({ type: 'SIGNED_SET_CALENDARLIST', calendarList: calendarList });
-    updateCalendarFirebase();
-  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (_user) => {
@@ -97,6 +71,10 @@ const SignedCalendar = () => {
   }, [state.users]);
 
   useEffect(() => {
+    console.log(state.calendarList);
+  }, [state.calendarList]);
+
+  useEffect(() => {
     if (isCalendarLoad) {
       setReLoad(false);
     }
@@ -113,53 +91,57 @@ const SignedCalendar = () => {
     <Styled.SignedCalendar bgcolor={theme.myPalette.background}>
       <div className="container">
         <Header calendarName="no" setSelectedIndex={setSelectedIndex} />
-        <Styled.Body bgcolor={theme.myPalette.background}>
-          <List
-            calendarList={state.calendarList}
-            selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex}
-          />
-          <div
-            className={'responsive ' + (location.search ? 'show' : 'hidden')}
-          >
-            {!isCalendarLoad ? (
-              <div
-                style={{
-                  width: '100%',
-                  height: '100vh',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                {reLoad ? (
-                  <Button size="large" onClick={() => window.location.reload()}>
-                    Refresh!
-                  </Button>
-                ) : (
-                  <CircularProgress sx={{ color: theme.main.theme }} />
-                )}
-              </div>
-            ) : (
-              <>
-                {selectedIndex === -1 ? (
-                  <span
-                    className="nocalendar"
-                    style={{ color: theme.main.theme }}
-                  >
-                    캘린더 선택하기
-                  </span>
-                ) : (
-                  <Monthly
-                    selectedIndex={selectedIndex}
-                    isUserCreated={isUserCreated}
-                    updateCalendar={updateCalendar}
-                  />
-                )}
-              </>
-            )}
-          </div>
-        </Styled.Body>
+        <div className="body-box">
+          <Styled.Body bgcolor={theme.myPalette.background}>
+            <List
+              calendarList={state.calendarList}
+              selectedIndex={selectedIndex}
+              setSelectedIndex={setSelectedIndex}
+            />
+            <div
+              className={'responsive ' + (location.search ? 'show' : 'hidden')}
+            >
+              {!isCalendarLoad ? (
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100vh',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {reLoad ? (
+                    <Button
+                      size="large"
+                      onClick={() => window.location.reload()}
+                    >
+                      Refresh!
+                    </Button>
+                  ) : (
+                    <CircularProgress sx={{ color: theme.main.theme }} />
+                  )}
+                </div>
+              ) : (
+                <>
+                  {selectedIndex === -1 ? (
+                    <span
+                      className="nocalendar"
+                      style={{ color: theme.main.theme }}
+                    >
+                      캘린더 선택하기
+                    </span>
+                  ) : (
+                    <Monthly
+                      selectedIndex={selectedIndex}
+                      isUserCreated={isUserCreated}
+                    />
+                  )}
+                </>
+              )}
+            </div>
+          </Styled.Body>
+        </div>
       </div>
     </Styled.SignedCalendar>
   );

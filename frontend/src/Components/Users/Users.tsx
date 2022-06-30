@@ -18,6 +18,7 @@ import { UserService } from 'src/Network/UserService';
 import arrow from 'src/assets/arrow.png';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '@mui/material';
+import { useAddUser } from 'src/Hooks/userController';
 
 const Users = () => {
   const location = useLocation();
@@ -181,24 +182,13 @@ const Users = () => {
   const handleAddUserButton = useCallback(() => {
     handleModalOpen();
   }, [handleModalOpen, users]);
-  const addUser = useCallback(
-    async (user: User) => {
-      if (!dispatch) throw new Error('no dispatch');
-      for (const _user of users) {
-        if (_user.name === user.name) {
-          alert('User name is aready exist');
-          return;
-        }
-      }
-      const result: User = await UserService.createUser(location.pathname, {
-        name: user.name,
-        color: user.color,
-      });
-      dispatch({ type: 'ANONY_ADD', user: result });
-      setIsAdd(true);
-    },
-    [dispatch, users]
-  );
+  const addUser = async (user: User) => {
+    if (!dispatch) throw new Error('no dispatch');
+    const result = await useAddUser(user, users, location.pathname);
+    dispatch({ type: 'ANONY_ADD', user: result });
+    setIsAdd(true);
+  };
+
   useEffect(() => {
     if (isShow) window.document.body.style.overflow = 'hidden';
     else {

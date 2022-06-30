@@ -7,17 +7,26 @@ import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import ShareIcon from '@mui/icons-material/Share';
 import { useTheme } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
-import { UserService } from 'src/Network/UserService';
 import { User } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 import AddModal from 'src/Components/Modal';
 import CheckIcon from '@mui/icons-material/Check';
-
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { useCalendarList } from 'src/Hooks/calendarController';
+import { useUpdateCalendarListByElement } from 'src/Hooks/firebaseRelationHooks';
+import { useAddUser } from 'src/Hooks/userController';
 
 const selectdateName = '날짜선택';
 const shareName = '공유하기';
 const newprofileName = '프로필만들기';
+
+const actionBeforeUserSettup = [{ icon: <ShareIcon />, name: newprofileName }];
+const actionAftereUserSettup = [
+  { icon: <FileCopyIcon />, name: selectdateName },
+  // { icon: <SaveIcon />, name: '프로필 수정' },
+  // { icon: <PrintIcon />, name: '유저 검색' },
+  { icon: <ShareIcon />, name: shareName },
+];
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -26,20 +35,10 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const actionAftereUserSettup = [
-  { icon: <FileCopyIcon />, name: selectdateName },
-  // { icon: <SaveIcon />, name: '프로필 수정' },
-  // { icon: <PrintIcon />, name: '유저 검색' },
-  { icon: <ShareIcon />, name: shareName },
-];
-
-const actionBeforeUserSettup = [{ icon: <ShareIcon />, name: newprofileName }];
-
 const EditButton: React.FC<{
   userDrawerRef: React.RefObject<HTMLDivElement>;
   timePickerRef: React.RefObject<HTMLDivElement>;
   isUserCreated: number;
-  updateCalendar: (name: string) => void;
   isShowEdit: boolean;
   isShow: boolean;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -48,7 +47,6 @@ const EditButton: React.FC<{
   userDrawerRef,
   timePickerRef,
   isUserCreated,
-  updateCalendar,
   isShowEdit,
   isShow,
   setIsShow,
@@ -71,18 +69,16 @@ const EditButton: React.FC<{
   const handleCopyFalse = () => setIsCopy(false);
 
   const addUser = async (user: User) => {
-    if (!dispatch) throw new Error('no dispatch');
-    for (const _user of state.users) {
-      if (_user.name === user.name) {
-        alert('User name is aready exist');
-        return;
-      }
-    }
-    await UserService.createUser('/' + state.calendarList[selectedIndex]._id, {
-      name: user.name,
-      color: user.color,
-    });
-    updateCalendar(user.name);
+    console.log(user.name);
+    await useAddUser(
+      user,
+      state.users,
+      '/' + state.calendarList[selectedIndex]._id
+    );
+    await useUpdateCalendarListByElement(
+      state,
+      useCalendarList(state, selectedIndex, user.name)
+    );
   };
 
   const actions = useMemo(() => {
@@ -94,8 +90,6 @@ const EditButton: React.FC<{
   }, [isUserCreated]);
 
   const editSchedule = () => {
-    console.log('edit');
-    console.log(state.users[isUserCreated]);
     dispatch({ type: 'SETSELECTEUSER', user: state.users[isUserCreated] });
   };
 
@@ -167,8 +161,8 @@ const EditButton: React.FC<{
       <AddModal
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
-        addUser={addUser}
         placeholder="유저 이름을 입력해주세요..."
+        action={addUser}
       />
       <div style={{ width: '100%' }}>
         <Snackbar
