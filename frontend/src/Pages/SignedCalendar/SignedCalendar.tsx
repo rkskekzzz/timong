@@ -4,8 +4,10 @@ import { useTheme } from '@mui/material';
 import { UserContext } from 'src/App';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate, useLocation } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 import { auth } from 'src/firebase';
 import { CalendarService } from 'src/Network/CalendarService';
+import Button from '@mui/material/Button';
 import List from './List';
 import Header from 'src/Components/Header';
 import Monthly from 'src/Components/Calendar/Month';
@@ -17,8 +19,9 @@ const SignedCalendar = () => {
   const navi = useNavigate();
   const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
+  const [reLoad, setReLoad] = useState<boolean>(false);
   const [isCalendarLoad, setIsCalendarLoad] = useState<boolean>(false);
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [isUserCreated, setIsUserCreated] = useState<number>(-1);
   const database_id = location.pathname.includes('calendar')
     ? location.search.substring(4)
@@ -92,6 +95,19 @@ const SignedCalendar = () => {
     setIsUserCreated(_isUserCreated);
   }, [state.users]);
 
+  useEffect(() => {
+    if (isCalendarLoad) {
+      setReLoad(false);
+    }
+    if (reLoad) return;
+    const timer = setTimeout(() => {
+      setReLoad(true);
+    }, 4000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [selectedIndex]);
+
   return (
     <Styled.SignedCalendar bgcolor={theme.myPalette.background}>
       <div className="container">
@@ -106,10 +122,33 @@ const SignedCalendar = () => {
             <div
               className={'responsive ' + (location.search ? 'show' : 'hidden')}
             >
-              <Monthly
-                isUserCreated={isUserCreated}
-                updateCalendar={updateCalendar}
-              />
+              {!isCalendarLoad ? (
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100vh',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {reLoad ? (
+                    <Button
+                      size="large"
+                      onClick={() => window.location.reload()}
+                    >
+                      Refresh!
+                    </Button>
+                  ) : (
+                    <CircularProgress sx={{ color: theme.main.theme }} />
+                  )}
+                </div>
+              ) : (
+                <Monthly
+                  isUserCreated={isUserCreated}
+                  updateCalendar={updateCalendar}
+                />
+              )}
             </div>
           </div>
         </Styled.Body>
