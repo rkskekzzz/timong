@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { auth } from 'src/firebase';
 import { Button } from '@mui/material';
 import { useTheme } from '@mui/material';
-import { useAddCalendar } from 'src/Hooks/firebaseRelationHooks';
+import { addSignedUserCalendar } from 'src/Hooks/firebaseRelationHooks';
 import { User } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 
@@ -17,13 +17,13 @@ const Invite = () => {
   const [isSigned, setIsSigned] = useState<boolean>(false);
   const [calendarName, setCalendarName] = useState<string>('');
   const location = useLocation();
-  // const navi = useNavigate();
+  const navi = useNavigate();
   const theme = useTheme();
   const database_id = location.search.split('=')[1];
 
   const createCalendarRelation = () => {
     const calendar = new User(calendarName, '', [], database_id);
-    useAddCalendar(calendar, state);
+    addSignedUserCalendar(calendar, state);
   };
 
   useEffect(() => {
@@ -55,6 +55,10 @@ const Invite = () => {
               invited you to {calendarName}
             </h3>
             <Button onClick={createCalendarRelation}>Invite Accept</Button>
+            <Button onClick={() => navi('/database_id')}>
+              {' '}
+              비회원으로 달력 보기
+            </Button>
           </div>
         ) : (
           <CircularProgress sx={{ color: theme.main.theme }} />

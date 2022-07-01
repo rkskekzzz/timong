@@ -7,7 +7,7 @@ import { CirclePicker } from 'react-color';
 import { validForm } from '../../Utils';
 import { useTheme } from '@mui/material';
 import { State } from 'src/Interface/ContextType';
-import { useFetchCalendarList } from 'src/Hooks/firebaseRelationHooks';
+import { fetchCalendarList } from 'src/Hooks/firebaseRelationHooks';
 import { UserContext } from 'src/App';
 
 type Color = object & {
@@ -53,7 +53,6 @@ function ModalBoxFormLogic({
     color: false,
     name: false,
   });
-
   const [clr, setClr] = useState<string>('#ffffff');
   const formik = useFormik({
     initialValues: {
@@ -63,6 +62,7 @@ function ModalBoxFormLogic({
       console.log('submit');
     },
   });
+
   const toggleError = (error: string) => {
     const initError = { color: false, name: false };
     const newError = { color: false, name: false };
@@ -75,6 +75,7 @@ function ModalBoxFormLogic({
     setIsError(newError);
     setTimeout(() => setIsError(initError), 1000);
   };
+
   const handleSubmitButton = async () => {
     if (isError.color || isError.name) return;
     if (clr === '#ffffff') {
@@ -91,7 +92,7 @@ function ModalBoxFormLogic({
     formik.resetForm();
     handleModalClose();
     await action(user, state);
-    await useFetchCalendarList(state, dispatch);
+    await fetchCalendarList(state, dispatch);
   };
 
   const handleColorPick = (e: object) => {

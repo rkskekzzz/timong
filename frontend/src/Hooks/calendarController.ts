@@ -1,6 +1,6 @@
 import { State } from 'src/Interface/ContextType';
 
-export function useCalendarList(
+export function updateCalendarList(
   state: State,
   selectedIndex: number,
   name: string

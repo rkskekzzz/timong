@@ -4,8 +4,8 @@ import { UserContext } from 'src/App';
 import { Calendar } from 'src/Interface/CalendarType';
 import Card from './Card';
 import AddModal from 'src/Components/Modal';
-import { useFetchCalendarList } from 'src/Hooks/firebaseRelationHooks';
-import { useAddCalendar } from 'src/Hooks/firebaseRelationHooks';
+import { fetchCalendarList } from 'src/Hooks/firebaseRelationHooks';
+import { addSignedUserCalendar } from 'src/Hooks/firebaseRelationHooks';
 
 const List: React.FC<{
   calendarList: Calendar[];
@@ -14,6 +14,7 @@ const List: React.FC<{
 }> = ({ calendarList, selectedIndex, setSelectedIndex }) => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const { state, dispatch } = useContext(UserContext);
+
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
 
@@ -22,7 +23,7 @@ const List: React.FC<{
   };
 
   useEffect(() => {
-    if (state.isSigned) useFetchCalendarList(state, dispatch);
+    if (state.isSigned) fetchCalendarList(state, dispatch);
   }, [state.isSigned]);
 
   useEffect(() => {
@@ -35,7 +36,7 @@ const List: React.FC<{
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
         placeholder="캘린더 이름을 입력해주세요..."
-        action={useAddCalendar}
+        action={addSignedUserCalendar}
       />
       <Styled.List>
         {calendarList.map((element, index) => {

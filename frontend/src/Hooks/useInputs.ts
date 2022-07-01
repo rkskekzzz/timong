@@ -4,7 +4,6 @@ type Form = { name: string };
 
 function useInputs(initialForm: Form) {
   const [form, setForm] = useState(initialForm);
-  // change
   const onChange = useCallback((e) => {
     const { name, value } = e.target;
 

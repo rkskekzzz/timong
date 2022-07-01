@@ -7,10 +7,7 @@ import { userDispatch } from 'src/Interface/ContextType';
 import { Calendar } from 'src/Interface/CalendarType';
 
 // 캘린더 리스트를 가져와서 클라이언트에 저장하는 hook
-export async function useFetchCalendarList(
-  state: State,
-  dispatch: userDispatch
-) {
+export async function fetchCalendarList(state: State, dispatch: userDispatch) {
   const docRef = doc(dbService, 'TestUsers', state.isSigned);
   const docSnap = await getDoc(docRef);
   if (!docSnap.exists()) {
@@ -30,7 +27,7 @@ export async function useFetchCalendarList(
 
 // 캘린더를 새로 만들어서 캘린더 리스트에 등록하거나
 // 기존의 캘린더를 캘린더 리스트에 등록하는 hook
-export async function useAddCalendar(element: User, state: State) {
+export async function addSignedUserCalendar(element: User, state: State) {
   const docRef = doc(dbService, 'TestUsers', state.isSigned);
   let calendar;
   let calendar_id;
@@ -61,7 +58,7 @@ export async function useAddCalendar(element: User, state: State) {
 }
 
 // 캘린더 리스트를 업데이트하는 hook
-export async function useUpdateCalendarList(state: State) {
+export async function updateSignedCalendarList(state: State) {
   const docRef = doc(dbService, 'TestUsers', state.isSigned);
   const user = await getDoc(docRef);
   if (!user) alert('fail to fetch data..!!');
@@ -72,7 +69,7 @@ export async function useUpdateCalendarList(state: State) {
 }
 
 // 캘린더 리스트를 업데이트하는 hook
-export async function useUpdateCalendarListByElement(
+export async function updateSignedCalendarListByElement(
   state: State,
   element: Calendar[]
 ) {
