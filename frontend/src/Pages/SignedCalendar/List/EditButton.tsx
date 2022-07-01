@@ -6,15 +6,14 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import ShareIcon from '@mui/icons-material/Share';
 import { useTheme } from '@mui/material';
-import Snackbar from '@mui/material/Snackbar';
 import { User } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 import AddModal from 'src/Components/Modal';
 import CheckIcon from '@mui/icons-material/Check';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import { useCalendarList } from 'src/Hooks/calendarController';
-import { useUpdateCalendarListByElement } from 'src/Hooks/firebaseRelationHooks';
-import { useAddUser } from 'src/Hooks/userController';
+import MySnackbar from './MySnackbar';
+import { updateCalendarList } from 'src/Hooks/calendarController';
+import { updateSignedCalendarListByElement } from 'src/Hooks/firebaseRelationHooks';
+import { addUserInCalendar } from 'src/Hooks/userController';
 
 const selectdateName = '날짜선택';
 const shareName = '공유하기';
@@ -27,13 +26,6 @@ const actionAftereUserSettup = [
   // { icon: <PrintIcon />, name: '유저 검색' },
   { icon: <ShareIcon />, name: shareName },
 ];
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
 const EditButton: React.FC<{
   userDrawerRef: React.RefObject<HTMLDivElement>;
@@ -70,14 +62,14 @@ const EditButton: React.FC<{
 
   const addUser = async (user: User) => {
     console.log(user.name);
-    await useAddUser(
+    await addUserInCalendar(
       user,
       state.users,
       '/' + state.calendarList[selectedIndex]._id
     );
-    await useUpdateCalendarListByElement(
+    await updateSignedCalendarListByElement(
       state,
-      useCalendarList(state, selectedIndex, user.name)
+      updateCalendarList(state, selectedIndex, user.name)
     );
   };
 
@@ -164,22 +156,8 @@ const EditButton: React.FC<{
         placeholder="유저 이름을 입력해주세요..."
         action={addUser}
       />
-      <div style={{ width: '100%' }}>
-        <Snackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          open={isCopy}
-          autoHideDuration={2000}
-          onClose={handleCopyFalse}
-        >
-          <Alert
-            onClose={handleCopyFalse}
-            severity="success"
-            sx={{ width: '100%' }}
-          >
-            복사되었습니다!
-          </Alert>
-        </Snackbar>
-      </div>
+      <MySnackbar isCopy={isCopy} handleCopyFalse={handleCopyFalse} />
+      {/* dial 컴포넌트 분리 */}
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
         sx={{
