@@ -92,7 +92,7 @@ const SignedCalendar = () => {
 
   useEffect(() => {
     if (isCalendarLoad || selectedIndex === -1) return;
-    navi('/calendar/?id=' + state.calendarList[selectedIndex]._id);
+    navi('/calendar?id=' + state.calendarList[selectedIndex]._id);
     console.log('3');
   }, [isCalendarLoad]);
 
