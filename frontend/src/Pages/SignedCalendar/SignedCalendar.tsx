@@ -24,6 +24,8 @@ const SignedCalendar = () => {
   const [isCalendarLoad, setIsCalendarLoad] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [isUserCreated, setIsUserCreated] = useState<number>(-1);
+  const [directUrl, setDirectUrl] = useState<boolean>(false);
+  const database_id = location.search.split('=')[1];
 
   useEffect(() => {
     onAuthStateChanged(auth, (_user) => {
@@ -33,6 +35,7 @@ const SignedCalendar = () => {
         navi('/');
       }
     });
+    if (database_id !== '') setDirectUrl(true);
   }, []);
 
   useEffect(() => {
@@ -41,7 +44,14 @@ const SignedCalendar = () => {
 
   useEffect(() => {
     console.log('-1');
+
     if (state.calendarList.length === 0) return;
+    if (directUrl) {
+      for (let i = 0; i < state.calendarList.length; i++) {
+        if (state.calendarList[i]._id === database_id) setSelectedIndex(i);
+      }
+      return;
+    }
     if (selectedIndex > -1 && prevIndex.current < state.calendarList.length) {
       setSelectedIndex(state.calendarList.length - 1);
       if (listRef && listRef.current) {
@@ -80,7 +90,6 @@ const SignedCalendar = () => {
   }, [selectedIndex]);
 
   useEffect(() => {
-    console.log('2');
     if (isCalendarLoad) setReLoad(false);
     if (reLoad) return;
     const timer = setTimeout(() => {

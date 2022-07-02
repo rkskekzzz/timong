@@ -31,16 +31,13 @@ export async function addSignedUserCalendar(element: User, state: State) {
   const docRef = doc(dbService, 'TestUsers', state.isSigned);
   let calendar;
   let calendar_id;
+  console.log(element._id);
   if (element._id === '') {
-    console.log('up');
     calendar = await CalendarService.create(element.name);
-    console.log(calendar);
     calendar_id = calendar._id;
   } else {
-    console.log('down');
     calendar_id = element._id;
   }
-
   const user = await getDoc(docRef);
   if (!user) alert('fail to fetch data..!!');
   if (!element._id && !calendar) alert('fail to fetch data..!!');

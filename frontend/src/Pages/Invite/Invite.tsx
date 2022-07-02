@@ -9,57 +9,81 @@ import { auth } from 'src/firebase';
 import { Button } from '@mui/material';
 import { useTheme } from '@mui/material';
 import { addSignedUserCalendar } from 'src/Hooks/firebaseRelation';
+import { fetchCalendarList } from 'src/Hooks/firebaseRelation';
 import { User } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 
 const Invite = () => {
-  const { state } = useContext(UserContext);
-  const [isSigned, setIsSigned] = useState<boolean>(false);
-  const [calendarName, setCalendarName] = useState<string>('');
+  const { state, dispatch } = useContext(UserContext);
   const location = useLocation();
   const navi = useNavigate();
   const theme = useTheme();
-  const database_id = location.search.split('=')[1];
+  const [done, setDone] = useState<boolean>(false);
+  const [calendarName, setCalendarName] = useState<string>('');
+  const database_id = location.search.split('&')[0].split('=')[1];
+  const invitor_name = location.search.split('&')[1].split('=')[1];
 
   const createCalendarRelation = () => {
+    for (let i = 0; i < state.calendarList.length; i++) {
+      if (state.calendarList[i]._id === database_id) {
+        alert('이미 초대된 캘린더입니다.');
+        navi('/calendar?id=' + database_id);
+        return;
+      }
+    }
     const calendar = new User(calendarName, '', [], database_id);
     addSignedUserCalendar(calendar, state);
+    navi('/calendar?id=' + database_id);
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (_user) => {
       if (_user) {
-        setIsSigned(true);
-      } else {
-        setIsSigned(false);
+        dispatch({ type: 'SIGNIN', uid: _user.uid });
       }
     });
   }, []);
 
   useEffect(() => {
+    if (state.isSigned) fetchCalendarList(state, dispatch);
+  }, [state.isSigned]);
+
+  useEffect(() => {
+    setDone(true);
+  }, [state.calendarList]);
+
+  useEffect(() => {
     const getCalendar = async () => {
       const result = await CalendarService.getCalendar('/' + database_id);
-      // if (!result) navi('/404');
+      if (!result) navi('/404');
       setCalendarName(result.name);
     };
-    if (isSigned) getCalendar();
-  }, [isSigned]);
+    if (state.isSigned) getCalendar();
+  }, [state.isSigned]);
+
+  useEffect(() => {
+    console.log(location.search);
+  }, []);
 
   return (
     <Styled.InviteBox>
       <div className="flex">
-        {isSigned ? (
-          <div>
-            <h3>
-              {database_id}
-              invited you to {calendarName}
-            </h3>
-            <Button onClick={createCalendarRelation}>Invite Accept</Button>
-            <Button onClick={() => navi('/database_id')}>
-              {' '}
-              비회원으로 달력 보기
-            </Button>
-          </div>
+        {done ? (
+          <>
+            <h3>{`${invitor_name} 님이 ${calendarName}에 초대하셨습니다!`}</h3>
+            <div className="buttons">
+              <button id="accept" onClick={createCalendarRelation}>
+                초대 수락하기
+              </button>
+              <Button
+                id="notAccept"
+                onClick={() => navi('/database_id')}
+                size="small"
+              >
+                비회원으로 볼래요
+              </Button>
+            </div>
+          </>
         ) : (
           <CircularProgress sx={{ color: theme.main.theme }} />
         )}
