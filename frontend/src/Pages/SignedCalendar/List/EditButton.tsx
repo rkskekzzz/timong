@@ -12,7 +12,7 @@ import AddModal from 'src/Components/Modal';
 import CheckIcon from '@mui/icons-material/Check';
 import MySnackbar from './MySnackbar';
 import { updateCalendarList } from 'src/Hooks/calendarController';
-import { updateSignedCalendarListByElement } from 'src/Hooks/firebaseRelationHooks';
+import { updateSignedCalendarListByElement } from 'src/Hooks/firebaseRelation';
 import { addUserInCalendar } from 'src/Hooks/userController';
 
 const selectdateName = '날짜선택';

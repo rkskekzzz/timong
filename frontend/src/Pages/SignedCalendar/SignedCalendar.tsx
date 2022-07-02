@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { auth } from 'src/firebase';
 import { CalendarService } from 'src/Network/CalendarService';
-import { fetchCalendarList } from 'src/Hooks/firebaseRelationHooks';
+import { fetchCalendarList } from 'src/Hooks/firebaseRelation';
 import Button from '@mui/material/Button';
 import List from './List';
 import Header from 'src/Components/Header';

@@ -3,7 +3,7 @@ import Styled from './List.styled';
 import { Calendar } from 'src/Interface/CalendarType';
 import Card from './Card';
 import AddModal from 'src/Components/Modal';
-import { addSignedUserCalendar } from 'src/Hooks/firebaseRelationHooks';
+import { addSignedUserCalendar } from 'src/Hooks/firebaseRelation';
 
 const List: React.FC<{
   listRef: React.RefObject<HTMLDivElement>;

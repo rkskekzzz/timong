@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { auth } from 'src/firebase';
 import { Button } from '@mui/material';
 import { useTheme } from '@mui/material';
-import { addSignedUserCalendar } from 'src/Hooks/firebaseRelationHooks';
+import { addSignedUserCalendar } from 'src/Hooks/firebaseRelation';
 import { User } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 
