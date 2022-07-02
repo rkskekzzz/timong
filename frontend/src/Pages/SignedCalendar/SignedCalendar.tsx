@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import Styled from './SignedCalendar.styled';
 import { useTheme } from '@mui/material';
 import { UserContext } from 'src/App';
@@ -7,12 +7,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { auth } from 'src/firebase';
 import { CalendarService } from 'src/Network/CalendarService';
+import { fetchCalendarList } from 'src/Hooks/firebaseRelationHooks';
 import Button from '@mui/material/Button';
 import List from './List';
 import Header from 'src/Components/Header';
 import Monthly from 'src/Components/Calendar/Month';
 
 const SignedCalendar = () => {
+  const prevIndex = useRef(0);
+  const listRef = useRef(null);
   const theme = useTheme();
   const navi = useNavigate();
   const location = useLocation();
@@ -33,6 +36,31 @@ const SignedCalendar = () => {
   }, []);
 
   useEffect(() => {
+    if (state.isSigned) fetchCalendarList(state, dispatch);
+  }, [state.isSigned]);
+
+  useEffect(() => {
+    console.log('-1');
+    if (state.calendarList.length === 0) return;
+    if (selectedIndex > -1 && prevIndex.current < state.calendarList.length) {
+      setSelectedIndex(state.calendarList.length - 1);
+      if (listRef && listRef.current) {
+        listRef.current.scrollTop = listRef.current.scrollHeight;
+      }
+    } else {
+      setSelectedIndex((prevState) =>
+        prevState === -1
+          ? 0
+          : state.calendarList.length <= prevState
+          ? prevState - 1
+          : prevState
+      );
+    }
+    prevIndex.current = state.calendarList.length;
+  }, [state.calendarList]);
+
+  useEffect(() => {
+    console.log('1');
     if (state.calendarList.length == 0) return;
     if (selectedIndex === -1) return;
     const getCalendar = async () => {
@@ -52,8 +80,20 @@ const SignedCalendar = () => {
   }, [selectedIndex]);
 
   useEffect(() => {
+    console.log('2');
+    if (isCalendarLoad) setReLoad(false);
+    if (reLoad) return;
+    const timer = setTimeout(() => {
+      setReLoad(true);
+    }, 4000);
+    dispatch({ type: 'SETSELECTEUSER', user: null });
+    return () => clearTimeout(timer);
+  }, [selectedIndex]);
+
+  useEffect(() => {
     if (isCalendarLoad || selectedIndex === -1) return;
     navi('/calendar/?id=' + state.calendarList[selectedIndex]._id);
+    console.log('3');
   }, [isCalendarLoad]);
 
   useEffect(() => {
@@ -68,24 +108,8 @@ const SignedCalendar = () => {
       }
     });
     setIsUserCreated(_isUserCreated);
+    console.log('4');
   }, [state.users]);
-
-  useEffect(() => {
-    console.log(state.calendarList);
-  }, [state.calendarList]);
-
-  useEffect(() => {
-    if (isCalendarLoad) {
-      setReLoad(false);
-    }
-    if (reLoad) return;
-    const timer = setTimeout(() => {
-      setReLoad(true);
-    }, 4000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [selectedIndex]);
 
   return (
     <Styled.SignedCalendar bgcolor={theme.myPalette.background}>
@@ -94,6 +118,7 @@ const SignedCalendar = () => {
         <div className="body-box">
           <Styled.Body bgcolor={theme.myPalette.background}>
             <List
+              listRef={listRef}
               calendarList={state.calendarList}
               selectedIndex={selectedIndex}
               setSelectedIndex={setSelectedIndex}

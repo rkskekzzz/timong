@@ -1,19 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Styled from './List.styled';
-import { UserContext } from 'src/App';
 import { Calendar } from 'src/Interface/CalendarType';
 import Card from './Card';
 import AddModal from 'src/Components/Modal';
-import { fetchCalendarList } from 'src/Hooks/firebaseRelationHooks';
 import { addSignedUserCalendar } from 'src/Hooks/firebaseRelationHooks';
 
 const List: React.FC<{
+  listRef: React.RefObject<HTMLDivElement>;
   calendarList: Calendar[];
   selectedIndex: number;
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
-}> = ({ calendarList, selectedIndex, setSelectedIndex }) => {
+}> = ({ listRef, calendarList, selectedIndex, setSelectedIndex }) => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const { state, dispatch } = useContext(UserContext);
 
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
@@ -21,14 +19,6 @@ const List: React.FC<{
   const handleCardTabbed = (index: number) => {
     setSelectedIndex(index);
   };
-
-  useEffect(() => {
-    if (state.isSigned) fetchCalendarList(state, dispatch);
-  }, [state.isSigned]);
-
-  useEffect(() => {
-    if (state.calendarList.length > 0) setSelectedIndex(0);
-  }, [state.calendarList]);
 
   return (
     <>
@@ -38,7 +28,7 @@ const List: React.FC<{
         placeholder="캘린더 이름을 입력해주세요..."
         action={addSignedUserCalendar}
       />
-      <Styled.List>
+      <Styled.List ref={listRef}>
         {calendarList.map((element, index) => {
           return (
             <Card
