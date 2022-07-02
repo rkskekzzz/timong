@@ -7,6 +7,7 @@ const List = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 25px;
+  overflow: scroll;
 `;
 
 const Styled = { List };
