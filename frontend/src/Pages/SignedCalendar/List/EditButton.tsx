@@ -14,18 +14,9 @@ import MySnackbar from './MySnackbar';
 import { updateCalendarList } from 'src/Hooks/calendarController';
 import { updateSignedCalendarListByElement } from 'src/Hooks/firebaseRelation';
 import { addUserInCalendar } from 'src/Hooks/userController';
-
-const selectdateName = '날짜선택';
-const shareName = '공유하기';
-const newprofileName = '프로필만들기';
-
-const actionBeforeUserSettup = [{ icon: <ShareIcon />, name: newprofileName }];
-const actionAftereUserSettup = [
-  { icon: <FileCopyIcon />, name: selectdateName },
-  // { icon: <SaveIcon />, name: '프로필 수정' },
-  // { icon: <PrintIcon />, name: '유저 검색' },
-  { icon: <ShareIcon />, name: shareName },
-];
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
+import SearchIcon from '@mui/icons-material/Search';
 
 const EditButton: React.FC<{
   userDrawerRef: React.RefObject<HTMLDivElement>;
@@ -33,7 +24,6 @@ const EditButton: React.FC<{
   isUserCreated: number;
   isShowEdit: boolean;
   isShow: boolean;
-  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
   selectedIndex: number;
 }> = ({
   userDrawerRef,
@@ -41,7 +31,6 @@ const EditButton: React.FC<{
   isUserCreated,
   isShowEdit,
   isShow,
-  setIsShow,
   selectedIndex,
 }) => {
   const { state, dispatch } = useContext(UserContext);
@@ -72,28 +61,15 @@ const EditButton: React.FC<{
       updateCalendarList(state, selectedIndex, user.name)
     );
   };
-
-  const actions = useMemo(() => {
-    if (isUserCreated !== -1) {
-      return actionAftereUserSettup;
-    } else {
-      return actionBeforeUserSettup;
-    }
-  }, [isUserCreated]);
-
-  const editSchedule = () => {
+  const actionAddModalOpen = () => {
+    handleModalOpen();
+  };
+  const actionEdit = () => {
     dispatch({ type: 'SETSELECTEUSER', user: state.users[isUserCreated] });
   };
-
-  // const editProfile = () => {
-  //   console.log('editProfile');
-  // };
-
-  // const findUser = () => {
-  //   console.log('findUser');
-  // };
-
-  const share = () => {
+  const actionEditProfile = () => alert('개발중입니다!');
+  const actionFindUser = () => alert('개발중입니다!');
+  const actionShare = () => {
     const url = window.location.href;
 
     navigator.clipboard.writeText(url).then(
@@ -107,35 +83,30 @@ const EditButton: React.FC<{
     handleCopyTrue();
   };
 
-  const addUserModalOpen = () => {
-    handleModalOpen();
-  };
+  const actionBeforeUserSettup = [
+    { icon: <ShareIcon />, name: '프로필만들기', action: actionAddModalOpen },
+  ];
+  const actionAftereUserSettup = [
+    { icon: <EventAvailableIcon />, name: '날짜선택', action: actionEdit },
+    {
+      icon: <ManageAccountsOutlinedIcon />,
+      name: '프로필수정',
+      action: actionEditProfile,
+    },
+    { icon: <SearchIcon />, name: '유저검색', action: actionFindUser },
+    { icon: <ShareIcon />, name: '공유하기', action: actionShare },
+  ];
+
+  const actions = useMemo(() => {
+    if (isUserCreated !== -1) {
+      return actionAftereUserSettup;
+    } else {
+      return actionBeforeUserSettup;
+    }
+  }, [isUserCreated]);
 
   const handleCloseEdit = () => {
     dispatch({ type: 'SETSELECTEUSER', user: null });
-  };
-
-  const handleActions = (name: string) => {
-    switch (name) {
-      case selectdateName:
-        editSchedule();
-        break;
-      // case '프로필 수정':
-      //   editProfile();
-      //   break;
-      // case '유저 검색':
-      //   findUser();
-      //   break;
-      case shareName:
-        share();
-        break;
-      case newprofileName:
-        addUserModalOpen();
-        break;
-      default:
-        break;
-    }
-    setIsShow(false);
   };
 
   useEffect(() => {
@@ -169,6 +140,7 @@ const EditButton: React.FC<{
           'transition': 'all 0.5s ease-out 0s',
           '& .MuiButtonBase-root': {
             backgroundColor: theme.main.theme,
+            color: theme.myPalette.foregroundAddButton,
           },
           // '& .MuiSpeedDialAction-staticTooltipLabel': {
           //   color: '#dddddd',
@@ -187,7 +159,7 @@ const EditButton: React.FC<{
             tooltipTitle={action.name}
             tooltipOpen
             onClick={() => {
-              handleActions(action.name);
+              action.action();
               handleClose();
             }}
           />

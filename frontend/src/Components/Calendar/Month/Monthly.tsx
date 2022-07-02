@@ -125,7 +125,6 @@ const Monthly: React.FC<{
                     isUserCreated={isUserCreated}
                     isShowEdit={isShowEdit}
                     isShow={isShow}
-                    setIsShow={setIsShow}
                     selectedIndex={selectedIndex}
                   />
                 ) : (
