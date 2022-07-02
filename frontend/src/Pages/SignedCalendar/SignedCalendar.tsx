@@ -22,12 +22,14 @@ const SignedCalendar = () => {
   const { state, dispatch } = useContext(UserContext);
   const [reLoad, setReLoad] = useState<boolean>(false);
   const [isCalendarLoad, setIsCalendarLoad] = useState<boolean>(false);
+  const [isDone, setIsDone] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [isUserCreated, setIsUserCreated] = useState<number>(-1);
   const [directUrl, setDirectUrl] = useState<boolean>(false);
   const database_id = location.search.split('=')[1];
 
   useEffect(() => {
+    console.log('preset');
     onAuthStateChanged(auth, (_user) => {
       if (_user) {
         dispatch({ type: 'SIGNIN', uid: _user.uid });
@@ -43,36 +45,48 @@ const SignedCalendar = () => {
   }, [state.isSigned]);
 
   useEffect(() => {
-    console.log('-1');
-
+    console.log('0');
     if (state.calendarList.length === 0) return;
     if (directUrl) {
+      let isFind = false;
       for (let i = 0; i < state.calendarList.length; i++) {
-        if (state.calendarList[i]._id === database_id) setSelectedIndex(i);
+        if (state.calendarList[i]._id === database_id) {
+          isFind = true;
+          setSelectedIndex((prevState) => (prevState === i ? prevState : i));
+          setDirectUrl(false);
+          break;
+        }
       }
-      return;
-    }
-    if (selectedIndex > -1 && prevIndex.current < state.calendarList.length) {
-      setSelectedIndex(state.calendarList.length - 1);
-      if (listRef && listRef.current) {
-        listRef.current.scrollTop = listRef.current.scrollHeight;
+      if (!isFind) {
+        setSelectedIndex(0);
+        alert('존재하지 않는 캘린더입니다.');
       }
     } else {
-      setSelectedIndex((prevState) =>
-        prevState === -1
-          ? 0
-          : state.calendarList.length <= prevState
-          ? prevState - 1
-          : prevState
-      );
+      if (selectedIndex > -1 && prevIndex.current < state.calendarList.length) {
+        setSelectedIndex(state.calendarList.length - 1);
+        if (listRef && listRef.current) {
+          listRef.current.scrollTop = listRef.current.scrollHeight;
+        }
+      } else {
+        setSelectedIndex((prevState) => {
+          const value =
+            prevState === -1
+              ? 0
+              : state.calendarList.length <= prevState
+              ? prevState - 1
+              : prevState;
+          return value;
+        });
+      }
+      prevIndex.current = state.calendarList.length;
     }
-    prevIndex.current = state.calendarList.length;
+    setIsDone(true);
   }, [state.calendarList]);
 
   useEffect(() => {
-    console.log('1');
     if (state.calendarList.length == 0) return;
     if (selectedIndex === -1) return;
+    console.log('1');
     const getCalendar = async () => {
       setIsCalendarLoad(false);
       const result = await CalendarService.getCalendar(
@@ -87,11 +101,13 @@ const SignedCalendar = () => {
       setIsCalendarLoad(true);
     };
     getCalendar();
-  }, [selectedIndex]);
+    setIsDone(false);
+  }, [selectedIndex, isDone]);
 
   useEffect(() => {
     if (isCalendarLoad) setReLoad(false);
     if (reLoad) return;
+    console.log('2');
     const timer = setTimeout(() => {
       setReLoad(true);
     }, 4000);
@@ -101,12 +117,13 @@ const SignedCalendar = () => {
 
   useEffect(() => {
     if (isCalendarLoad || selectedIndex === -1) return;
-    navi('/calendar?id=' + state.calendarList[selectedIndex]._id);
     console.log('3');
+    navi('/calendar?id=' + state.calendarList[selectedIndex]._id);
   }, [isCalendarLoad]);
 
   useEffect(() => {
     if (selectedIndex === -1) return;
+    console.log('4');
     let _isUserCreated = -1;
     const this_calendar = state.calendarList.find(
       (calendar) => calendar._id === state.calendarList[selectedIndex]._id
@@ -117,7 +134,6 @@ const SignedCalendar = () => {
       }
     });
     setIsUserCreated(_isUserCreated);
-    console.log('4');
   }, [state.users]);
 
   return (
