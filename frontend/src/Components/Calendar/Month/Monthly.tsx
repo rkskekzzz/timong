@@ -31,6 +31,7 @@ const Monthly: React.FC<{
   const [isShow, setIsShow] = useState<boolean>(false);
   const [isShowEdit, setIsShowEdit] = useState<boolean>(false);
   const { state } = useContext(UserContext);
+
   const handleDrawerOpen = () => setIsShow(!isShow);
   const handleDrawerClose = () => setIsShow(false);
 
@@ -126,6 +127,7 @@ const Monthly: React.FC<{
                     isShowEdit={isShowEdit}
                     isShow={isShow}
                     selectedIndex={selectedIndex}
+                    handleDrawerClose={handleDrawerClose}
                   />
                 ) : (
                   <Users />

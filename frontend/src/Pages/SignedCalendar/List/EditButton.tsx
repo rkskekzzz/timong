@@ -3,7 +3,6 @@ import Backdrop from '@mui/material/Backdrop';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import ShareIcon from '@mui/icons-material/Share';
 import { useTheme } from '@mui/material';
 import { User } from 'src/Interface/UserType';
@@ -25,6 +24,7 @@ const EditButton: React.FC<{
   isShowEdit: boolean;
   isShow: boolean;
   selectedIndex: number;
+  handleDrawerClose: () => void;
 }> = ({
   userDrawerRef,
   timePickerRef,
@@ -32,6 +32,7 @@ const EditButton: React.FC<{
   isShowEdit,
   isShow,
   selectedIndex,
+  handleDrawerClose,
 }) => {
   const { state, dispatch } = useContext(UserContext);
   const [height, setHeight] = useState<number>(0);
@@ -161,6 +162,7 @@ const EditButton: React.FC<{
             onClick={() => {
               action.action();
               handleClose();
+              handleDrawerClose();
             }}
           />
         ))}
