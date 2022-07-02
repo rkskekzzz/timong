@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Tooltip, Button, useTheme, Snackbar, Alert } from '@mui/material';
+import { Tooltip, Button, useTheme } from '@mui/material';
 import Styled from './Card.styled';
 import { Calendar } from 'src/Interface/CalendarType';
-import IosShareIcon from '@mui/icons-material/IosShare';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const Card = ({
   group,
@@ -14,10 +16,14 @@ const Card = ({
   selected: boolean;
 }) => {
   const theme = useTheme();
-  const [open, setOpen] = useState<boolean>(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Styled.Card
@@ -25,11 +31,6 @@ const Card = ({
       fgcolor={theme.myPalette.foreground}
       onClick={handleCardTabbed}
     >
-      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
-          <p style={{ width: '300px' }}>Copy To Clipboard!</p>
-        </Alert>
-      </Snackbar>
       {group ? (
         <div className="list">
           <Tooltip title="show calendar">
@@ -38,8 +39,8 @@ const Card = ({
             </Button>
           </Tooltip>
           <Tooltip title="share">
-            <Button onClick={handleOpen}>
-              <IosShareIcon />
+            <Button onClick={handleClick}>
+              <MoreHorizIcon />
             </Button>
           </Tooltip>
         </div>
@@ -50,6 +51,19 @@ const Card = ({
           </Button>
         </Tooltip>
       )}
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
     </Styled.Card>
   );
 };
