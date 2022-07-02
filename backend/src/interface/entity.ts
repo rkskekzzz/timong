@@ -15,6 +15,7 @@ export interface User {
   _id?: string;
   name: string;
   color: string;
+  isSigned: boolean;
   schedules: Schedule[];
 }
 
