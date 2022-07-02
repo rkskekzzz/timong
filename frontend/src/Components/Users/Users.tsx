@@ -18,7 +18,7 @@ import { UserService } from 'src/Network/UserService';
 import arrow from 'src/assets/arrow.png';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '@mui/material';
-import { useAddUser } from 'src/Hooks/userController';
+import { addUserInCalendar } from 'src/Hooks/userController';
 
 const Users = () => {
   const location = useLocation();
@@ -184,7 +184,7 @@ const Users = () => {
   }, [handleModalOpen, users]);
   const addUser = async (user: User) => {
     if (!dispatch) throw new Error('no dispatch');
-    const result = await useAddUser(user, users, location.pathname);
+    const result = await addUserInCalendar(user, users, location.pathname);
     dispatch({ type: 'ANONY_ADD', user: result });
     setIsAdd(true);
   };
