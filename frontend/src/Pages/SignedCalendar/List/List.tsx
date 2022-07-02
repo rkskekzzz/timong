@@ -32,8 +32,9 @@ const List: React.FC<{
         {calendarList.map((element, index) => {
           return (
             <Card
-              selected={selectedIndex === index ? true : false}
               key={element._id + index}
+              selected={selectedIndex === index ? true : false}
+              cardIndex={index}
               group={element}
               handleCardTabbed={() => handleCardTabbed(index)}
             />
@@ -41,6 +42,7 @@ const List: React.FC<{
         })}
         <Card
           selected={false}
+          cardIndex={-1}
           group={null}
           handleCardTabbed={handleModalOpen}
         />

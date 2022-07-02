@@ -81,3 +81,20 @@ export async function updateSignedCalendarListByElement(
     user_calendar_list: [...element],
   });
 }
+
+export async function deleteSignedCalendar(
+  state: State,
+  selectedIndex: number
+) {
+  console.log('here');
+  const docRef = doc(dbService, 'TestUsers', state.isSigned);
+  const user = await getDoc(docRef);
+  if (!user) alert('fail to fetch data..!!');
+  const newCalendarList = state.calendarList.filter(
+    (_, index) => index !== selectedIndex
+  );
+  setDoc(docRef, {
+    ...user.data(),
+    user_calendar_list: newCalendarList,
+  });
+}
