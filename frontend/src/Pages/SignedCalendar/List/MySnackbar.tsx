@@ -18,7 +18,7 @@ const MySnackbar: React.FC<{
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         open={isCopy}
-        autoHideDuration={2000}
+        autoHideDuration={3000}
         onClose={handleCopyFalse}
       >
         <Alert
@@ -26,7 +26,7 @@ const MySnackbar: React.FC<{
           severity="success"
           sx={{ width: '100%' }}
         >
-          복사되었습니다!
+          초대 링크가 복사되었습니다!
         </Alert>
       </Snackbar>
     </div>
