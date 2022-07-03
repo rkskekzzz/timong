@@ -22,6 +22,7 @@ export class User {
     public name: string,
     public color: string,
     public schedules: Schedule[],
+    public isSigned: boolean,
     public _id: string
   ) {}
 }

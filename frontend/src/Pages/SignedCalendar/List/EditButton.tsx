@@ -57,7 +57,8 @@ const EditButton: React.FC<{
     await addUserInCalendar(
       user,
       state.users,
-      '/' + state.calendarList[selectedIndex]._id
+      '/' + state.calendarList[selectedIndex]._id,
+      state.isSigned !== null
     );
     await updateSignedCalendarListByElement(
       state,
@@ -102,7 +103,7 @@ const EditButton: React.FC<{
       action: actionEditProfile,
     },
     { icon: <SearchIcon />, name: '유저검색', action: actionFindUser },
-    { icon: <ShareIcon />, name: '공유하기', action: actionShare },
+    { icon: <ShareIcon />, name: '초대하기', action: actionShare },
   ];
 
   const actions = useMemo(() => {
