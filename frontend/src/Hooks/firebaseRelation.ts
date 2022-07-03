@@ -41,7 +41,7 @@ export async function addSignedUserCalendar(element: User, state: State) {
   const user = await getDoc(docRef);
   if (!user) alert('fail to fetch data..!!');
   if (!element._id && !calendar) alert('fail to fetch data..!!');
-  setDoc(docRef, {
+  await setDoc(docRef, {
     ...user.data(),
     user_calendar_list: [
       ...user.data().user_calendar_list,
@@ -59,7 +59,7 @@ export async function updateSignedCalendarList(state: State) {
   const docRef = doc(dbService, 'TestUsers', state.isSigned);
   const user = await getDoc(docRef);
   if (!user) alert('fail to fetch data..!!');
-  setDoc(docRef, {
+  await setDoc(docRef, {
     ...user.data(),
     user_calendar_list: [...state.calendarList],
   });
@@ -73,7 +73,7 @@ export async function updateSignedCalendarListByElement(
   const docRef = doc(dbService, 'TestUsers', state.isSigned);
   const user = await getDoc(docRef);
   if (!user) alert('fail to fetch data..!!');
-  setDoc(docRef, {
+  await setDoc(docRef, {
     ...user.data(),
     user_calendar_list: [...element],
   });
@@ -83,14 +83,13 @@ export async function deleteSignedCalendar(
   state: State,
   selectedIndex: number
 ) {
-  console.log('here');
   const docRef = doc(dbService, 'TestUsers', state.isSigned);
   const user = await getDoc(docRef);
   if (!user) alert('fail to fetch data..!!');
   const newCalendarList = state.calendarList.filter(
     (_, index) => index !== selectedIndex
   );
-  setDoc(docRef, {
+  await setDoc(docRef, {
     ...user.data(),
     user_calendar_list: newCalendarList,
   });

@@ -92,7 +92,7 @@ function ModalBoxFormLogic({
     formik.resetForm();
     handleModalClose();
     await action(user, state);
-    await fetchCalendarList(state, dispatch);
+    fetchCalendarList(state, dispatch);
   };
 
   const handleColorPick = (e: object) => {

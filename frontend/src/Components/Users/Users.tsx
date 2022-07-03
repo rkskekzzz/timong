@@ -43,7 +43,7 @@ const Users = () => {
 
   const handleDialClose = useCallback(() => {
     setTimeout(() => {
-      dispatch({ type: 'SETSELECTEUSER', user: null });
+      dispatch({ type: 'SETSELECTEDUSER', user: null });
     }, 200);
   }, []);
   const handleClickAway = useCallback(() => {
@@ -66,7 +66,7 @@ const Users = () => {
     // if (isFirstOpen) showGuide(); // 가이드 제거
     else setIsSwipe(-1);
     setIsShow(!isShow);
-    dispatch({ type: 'SETSELECTEDATE', day: null });
+    dispatch({ type: 'SETSELECTEDDATE', day: null });
     setIsAnimationDone(false);
     setTimeout(() => {
       if (isShow && scrollRef && scrollRef.current) {
@@ -86,7 +86,7 @@ const Users = () => {
   ]);
   const handleUserTabbed = useCallback(
     (index: number) => {
-      dispatch({ type: 'SETSELECTEUSER', user: users[index] });
+      dispatch({ type: 'SETSELECTEDUSER', user: users[index] });
       handleDial();
     },
     [handleDial, users]
@@ -198,7 +198,7 @@ const Users = () => {
   }, [isShow]);
   useEffect(() => {
     if (!isAdd) return;
-    dispatch({ type: 'SETSELECTEUSER', user: users[users.length - 1] });
+    dispatch({ type: 'SETSELECTEDUSER', user: users[users.length - 1] });
     const timer = setTimeout(() => {
       setIsAdd(false);
     }, 0);
