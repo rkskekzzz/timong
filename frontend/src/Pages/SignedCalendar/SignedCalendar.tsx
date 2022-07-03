@@ -47,8 +47,8 @@ const SignedCalendar = () => {
   useEffect(() => {
     console.log('0');
     console.log('idx : ', selectedIndex);
-    if (state.calendarList.length === 0 || !database_id) return;
-    if (selectedIndex < 0 && directUrl) {
+    if (state.calendarList.length === 0) return;
+    if (selectedIndex < 0 && directUrl && database_id) {
       let isFind = false;
       for (let i = 0; i < state.calendarList.length; i++) {
         if (state.calendarList[i]._id === database_id) {
@@ -63,10 +63,7 @@ const SignedCalendar = () => {
         alert('존재하지 않는 캘린더입니다.');
       }
     } else {
-      if (
-        selectedIndex > -1 &&
-        prevLength.current < state.calendarList.length
-      ) {
+      if (prevLength.current < state.calendarList.length) {
         setSelectedIndex(state.calendarList.length - 1);
         if (listRef && listRef.current) {
           listRef.current.scrollTop = listRef.current.scrollHeight;
@@ -75,6 +72,7 @@ const SignedCalendar = () => {
         setSelectedIndex(-1);
         navi('/calendar');
       } else {
+        console.log('sadfs');
         setSelectedIndex((prevState) => {
           const value = prevState === -1 ? 0 : prevState;
           return value;
