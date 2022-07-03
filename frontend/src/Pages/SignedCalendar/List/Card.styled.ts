@@ -8,6 +8,9 @@ const Card = styled.span<{
   mode: string;
 }>`
   width: 80%;
+  @media (max-width: 768px) {
+    width: 87%;
+  }
   display: flex;
   /* align-items: center; */
   max-width: 400px;
@@ -15,8 +18,22 @@ const Card = styled.span<{
     `${
       props.bgcolor
         ? props.selected
-          ? props.bgcolor + (props.mode === 'dark' ? '80' : 'bb')
-          : props.bgcolor + (props.mode === 'dark' ? '22' : '33')
+          ? props.bgcolor +
+            (props.mode === 'dark'
+              ? props.bgcolor === '#ffffff'
+                ? '00'
+                : '80'
+              : props.bgcolor === '#000000'
+              ? '00'
+              : 'bb')
+          : props.bgcolor +
+            (props.mode === 'dark'
+              ? props.bgcolor === '#ffffff'
+                ? '14'
+                : '28'
+              : props.bgcolor === '#000000'
+              ? '07'
+              : '44')
         : '#ffffff11'
     }`};
   box-sizing: border-box;

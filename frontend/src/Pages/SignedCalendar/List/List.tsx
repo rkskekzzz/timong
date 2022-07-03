@@ -44,7 +44,7 @@ const List: React.FC<{
           );
         })}
         <Card
-          color={theme.myPalette.backgroundAddButton}
+          color={theme.myPalette.foregroundAddButton}
           selected={false}
           cardIndex={-1}
           group={null}

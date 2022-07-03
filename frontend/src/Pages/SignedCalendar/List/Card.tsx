@@ -64,8 +64,8 @@ const Card = ({
       selected={selected}
       fgcolor={theme.myPalette.foreground}
       bgcolor={
-        color === theme.myPalette.backgroundAddButton
-          ? theme.myPalette.foreground
+        color === theme.myPalette.foregroundAddButton
+          ? theme.myPalette.backgroundAddButton
           : color
       }
       bordercolor={theme.myPalette.border}

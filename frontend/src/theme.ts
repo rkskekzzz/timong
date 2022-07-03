@@ -63,7 +63,7 @@ export const themes = {
     backgroundAddButton: '#000000',
     backDrop: '#00000080',
     background: '#ffffff',
-    border: '#888888',
+    border: '#333333',
   },
   dark: {
     mode: 'dark',
@@ -80,7 +80,7 @@ export const themes = {
     backgroundAddButton: '#ffffff',
     backDrop: '#000000b0',
     background: '#131313',
-    border: '#888888',
+    border: '#cccccc',
   },
   main: {
     background: '#ffd8fb',
