@@ -30,7 +30,7 @@ const Monthly: React.FC<{
   const [dayUsers, setDayUsers] = useState<UserWithValid[]>([]);
   const [isShow, setIsShow] = useState<boolean>(false);
   const [isShowEdit, setIsShowEdit] = useState<boolean>(false);
-  const { state } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
 
   const handleDrawerOpen = () => setIsShow(!isShow);
   const handleDrawerClose = () => setIsShow(false);
@@ -83,6 +83,12 @@ const Monthly: React.FC<{
   useEffect(() => {
     setIsShowEdit(state.selectedUser !== null);
   }, [state.selectedUser]);
+
+  useEffect(() => {
+    dispatch({ type: 'SETSELECTEDUSER', user: null });
+    setIsShow(false);
+    setIsShowEdit(false);
+  }, [selectedIndex]);
 
   /**
    * react-vertualized (https://bvaughn.github.io/react-virtualized/#/components/AutoSizer)
