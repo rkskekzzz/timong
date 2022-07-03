@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC<{
   calendarName: string;
-  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedIndex: React.Dispatch<React.SetStateAction<number>> | null;
 }> = ({ calendarName, setSelectedIndex }) => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const theme = useTheme();
@@ -17,8 +17,10 @@ const Header: React.FC<{
   const handleModalOpen = () => setIsShowModal(true);
   const handleModalClose = () => setIsShowModal(false);
   const handleLogoTabbed = () => {
-    setSelectedIndex(-1);
-    navi('/calendar');
+    if (setSelectedIndex) {
+      setSelectedIndex(-1);
+      navi('/calendar');
+    }
   };
 
   return (

@@ -50,7 +50,7 @@ const AnonyCalendar = () => {
 
   return (
     <Styled.AnonyCalendar bgcolor={theme.myPalette.background}>
-      <Header calendarName={calendarName} />
+      <Header calendarName={calendarName} setSelectedIndex={null} />
       {!calendar ? (
         <div
           style={{
