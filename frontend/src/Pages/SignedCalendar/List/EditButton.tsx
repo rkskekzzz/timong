@@ -148,7 +148,10 @@ const EditButton: React.FC<{
           'transition': 'all 0.5s ease-out 0s',
           '& .MuiButtonBase-root': {
             backgroundColor: state.users[isUserCreated]
-              ? state.users[isUserCreated].color
+              ? state.users[isUserCreated].color ===
+                theme.myPalette.foregroundAddButton
+                ? theme.myPalette.backgroundAddButton
+                : state.users[isUserCreated].color
               : theme.main.theme,
             color: theme.myPalette.foregroundAddButton,
           },

@@ -3,6 +3,7 @@ import Styled from './DayBox.styled';
 import GlobalStyled from 'src/Components/GlobalStyled/GlobalStyled.styled';
 import { Day } from 'src/Interface/DateType';
 import { User, Valid } from 'src/Interface/UserType';
+import { useTheme } from '@mui/material';
 
 const DayBox: React.FC<{
   day: Day;
@@ -16,6 +17,7 @@ const DayBox: React.FC<{
   gridSize: number;
 }> = ({ day, users, handleClick, isThisMonth, isToday, gridSize }) => {
   const dayOfWeek = day.moment.day();
+  const theme = useTheme();
 
   return (
     <Styled.CalendarBox
@@ -40,18 +42,22 @@ const DayBox: React.FC<{
         <Styled.CalendarDateCircleBox isThisMonth={isThisMonth}>
           <Styled.GridWrap gridSize={gridSize}>
             {users.map((user, index) => {
+              const color =
+                user.info.color === theme.myPalette.foregroundAddButton
+                  ? theme.myPalette.backgroundAddButton
+                  : user.info.color;
               if (user.valid == 'POSIBLE') {
                 return (
                   <GlobalStyled.Circle
                     key={user.info.name + index.toString()}
-                    color={user.info.color}
+                    color={color}
                   />
                 );
               } else {
                 return (
                   <GlobalStyled.Xone
                     key={user.info.name + index.toString()}
-                    color={user.info.color}
+                    color={color}
                   />
                 );
               }
