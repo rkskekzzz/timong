@@ -89,7 +89,7 @@ function ModalBoxFormLogic({
       const _err = error as string;
       return toggleError(_err);
     }
-    const user = new User(formik.values.userName, clr, [], '');
+    const user = new User(formik.values.userName, clr, [], false, '');
     formik.resetForm();
     handleModalClose();
     await action(user, state);
