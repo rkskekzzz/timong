@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Tooltip, Button, useTheme } from '@mui/material';
 import Styled from './Card.styled';
 import { Calendar } from 'src/Interface/CalendarType';
@@ -58,26 +58,25 @@ const Card = ({
   };
 
   return (
-    <Styled.Card
-      selected={selected}
-      fgcolor={theme.myPalette.foreground}
-      onClick={handleCardTabbed}
-    >
+    <Styled.Card selected={selected} fgcolor={theme.myPalette.foreground}>
       {group ? (
         <div className="list">
-          <Tooltip title="show calendar">
-            <Button fullWidth style={{ justifyContent: 'start' }}>
+          <Tooltip title="show calendar" onClick={handleCardTabbed}>
+            <Button
+              fullWidth
+              style={{ justifyContent: 'start', textTransform: 'none' }}
+            >
               <p>{group.name}</p>
             </Button>
           </Tooltip>
-          <Tooltip title="share">
+          <Tooltip title="more">
             <Button onClick={handleClick}>
               <MoreHorizIcon />
             </Button>
           </Tooltip>
         </div>
       ) : (
-        <Tooltip title="add calendar">
+        <Tooltip title="add calendar" onClick={handleCardTabbed}>
           <Button className="add">
             <span>+</span>
           </Button>
