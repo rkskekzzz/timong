@@ -140,7 +140,9 @@ const EditButton: React.FC<{
           'zIndex': 200,
           'transition': 'all 0.5s ease-out 0s',
           '& .MuiButtonBase-root': {
-            backgroundColor: theme.main.theme,
+            backgroundColor: state.users[isUserCreated]
+              ? state.users[isUserCreated].color
+              : theme.main.theme,
             color: theme.myPalette.foregroundAddButton,
           },
           // '& .MuiSpeedDialAction-staticTooltipLabel': {
