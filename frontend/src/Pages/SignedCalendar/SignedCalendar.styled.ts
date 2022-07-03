@@ -33,8 +33,11 @@ const Body = styled.div<{ bgcolor: string }>`
   }
 
   .nocalendar {
-    height: 100%;
     color: #ffffff;
+    @media (max-width: 760px) {
+      color: transparent !important;
+    }
+    height: 100%;
     transition: none;
     display: flex;
     align-items: center;

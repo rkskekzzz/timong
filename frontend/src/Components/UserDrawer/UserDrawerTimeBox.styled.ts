@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 const UserDrawerTimeBox = styled.div<{ fgcolor: string }>`
+  height: 100%;
   display: flex;
-  flex: 1 1 0;
+  flex: 3 3 0;
   span {
     flex: 1 1 0;
   }
   .timebox-span {
-    height: 12px;
+    height: 18px;
     display: flex;
     align-items: center;
     justify-content: center;

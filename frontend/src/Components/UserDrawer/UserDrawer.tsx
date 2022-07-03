@@ -96,7 +96,8 @@ const UserDrawer: React.FC<{
             <b>{text}</b>
             <p>{userArr.length}명</p>
           </div>
-          <span>
+          <div></div>
+          <span id="list-box">
             {userArr.map((user) => {
               return (
                 <Styled.UserBox key={user.info.name}>

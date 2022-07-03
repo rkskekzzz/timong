@@ -25,10 +25,14 @@ const UserList = styled.div`
         font-weight: 300;
       }
     }
+    #list-box {
+      height: 100%;
+    }
   }
 `;
 
 const UserBox = styled.div`
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -37,7 +41,7 @@ const UserBox = styled.div`
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    flex: 1 1 0;
+    flex: 2 2 0;
   }
 `;
 

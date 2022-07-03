@@ -150,7 +150,7 @@ const SignedCalendar = () => {
             <div
               className={'responsive ' + (location.search ? 'show' : 'hidden')}
             >
-              {!isCalendarLoad && selectedIndex > 0 ? (
+              {!isCalendarLoad ? (
                 <div
                   style={{
                     width: '100%',
@@ -174,12 +174,17 @@ const SignedCalendar = () => {
               ) : (
                 <>
                   {selectedIndex === -1 ? (
-                    <span
+                    <div
                       className="nocalendar"
-                      style={{ color: theme.main.theme }}
+                      style={{
+                        color: theme.main.theme,
+                        background: theme.myPalette.background,
+                        width: '100%',
+                        height: '100vh',
+                      }}
                     >
                       캘린더 선택하기
-                    </span>
+                    </div>
                   ) : (
                     <Monthly
                       selectedIndex={selectedIndex}
