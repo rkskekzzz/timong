@@ -5,7 +5,7 @@ const Card = styled.span<{ fgcolor: string; selected: boolean }>`
   display: flex;
   /* align-items: center; */
   max-width: 400px;
-  background: ${(props) => `${props.selected ? '#00000011' : '#ffffff11'}`};
+  background: ${(props) => `${props.selected ? '#00000008' : '#ffffff11'}`};
   box-sizing: border-box;
   border-width: 1px;
   border-style: solid;
@@ -14,8 +14,8 @@ const Card = styled.span<{ fgcolor: string; selected: boolean }>`
   border-radius: 10px;
   cursor: pointer;
   color: ${(props) => `${props.fgcolor}`};
-  box-shadow: 0px 4px 2px -2px rgb(0, 0, 0, 0.2),
-    0px 2px 2px 0px rgb(0, 0, 0, 0.14), 0px 2px 6px 0px rgb(0, 0, 0, 0.12);
+  box-shadow: 0px 4px 2px -2px rgb(0, 0, 0, 0.1),
+    0px 2px 2px 0px rgb(0, 0, 0, 0.07), 0px 2px 6px 0px rgb(0, 0, 0, 0.06);
 
   h2,
   p {

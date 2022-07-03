@@ -53,11 +53,11 @@ function App() {
         myPalette: state.mode == 'dark' ? themes.dark : themes.light,
         main: themes.main,
       }),
-    [prefersDarkMode]
+    [state.mode]
   );
 
   useEffect(() => {
-    dispatch({ type: 'CHANGEMODE', mode: prefersDarkMode ? 'light' : 'dark' });
+    dispatch({ type: 'CHANGEMODE', mode: prefersDarkMode ? 'dark' : 'light' });
   }, [prefersDarkMode]);
 
   return (
