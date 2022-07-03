@@ -16,7 +16,8 @@ const TimePicker: React.FC<{
   isShowEdit: boolean;
   selectedUser: User;
   timePickerRef: React.RefObject<HTMLDivElement>;
-}> = ({ isShowEdit, selectedUser, timePickerRef }) => {
+  selectedIndex: number;
+}> = ({ isShowEdit, selectedUser, timePickerRef, selectedIndex }) => {
   const { state, dispatch } = useContext(UserContext);
 
   const [isChecked, setIsChecked] = useState<boolean>(true);
@@ -62,7 +63,14 @@ const TimePicker: React.FC<{
         date: state.selectedDate,
         time: index,
       });
-      await ScheduleService.updateSchedules(location.pathname, selectedUser);
+      if (state.isSigned) {
+        await ScheduleService.updateSchedules(
+          '/' + state.calendarList[selectedIndex]._id,
+          selectedUser
+        );
+      } else {
+        await ScheduleService.updateSchedules(location.pathname, selectedUser);
+      }
     },
     [selectedUser, state.selectedDate]
   );

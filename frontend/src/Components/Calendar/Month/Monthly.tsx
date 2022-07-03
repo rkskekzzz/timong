@@ -142,6 +142,7 @@ const Monthly: React.FC<{
                   timePickerRef={timePickerRef}
                   isShowEdit={isShowEdit}
                   selectedUser={state.selectedUser}
+                  selectedIndex={selectedIndex}
                 />
                 <UserDrawer
                   userDrawerRef={userDrawerRef}
