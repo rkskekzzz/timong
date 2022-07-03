@@ -64,7 +64,7 @@ const Users = () => {
   }, [setIsSwipe, setIsFirstOpen]);
   const handleDial = useCallback(() => {
     if (!isShow && !isAnimationDone) return;
-    // if (isFirstOpen) showGuide(); // 가이드 제거
+    if (isFirstOpen) showGuide(); // 가이드 제거
     else setIsSwipe(-1);
     setIsShow(!isShow);
     dispatch({ type: 'SETSELECTEDDATE', day: null });
@@ -95,6 +95,12 @@ const Users = () => {
   const handleRowDelButton = useCallback(
     (delIndex: number, user: User) => {
       if (!isShow || isAnimationDone || isSwipe < 0) return;
+      console.log('??');
+      if (user.isSigned) {
+        console.log('here');
+        alert('삭제할 수 없는 사용자입니다!');
+        return;
+      }
       setWillDelete(delIndex);
       setIsSwipe(-1);
       setTimeout(() => {
@@ -186,7 +192,12 @@ const Users = () => {
 
   const handleAddUser = async (user: User, state: State) => {
     if (!dispatch || !state) throw new Error('no dispatch');
-    const result = await addUserInCalendar(user, users, location.pathname);
+    const result = await addUserInCalendar(
+      user,
+      users,
+      location.pathname,
+      false
+    );
     dispatch({ type: 'ANONY_ADD', user: result });
     setIsAdd(true);
   };
