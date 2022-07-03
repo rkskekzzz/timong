@@ -20,8 +20,11 @@ const Invite = () => {
   const theme = useTheme();
   const [done, setDone] = useState<boolean>(false);
   const [calendarName, setCalendarName] = useState<string>('');
-  const database_id = location.search.split('&')[0].split('=')[1];
-  const invitor_name = location.search.split('&')[1].split('=')[1];
+  const split_location = location.search.split('&');
+  const database_id = split_location[0].split('=')[1];
+
+  const invitor_name =
+    split_location.length > 1 ?? split_location[1].split('=')[1];
 
   const createCalendarRelation = () => {
     for (let i = 0; i < state.calendarList.length; i++) {
@@ -70,7 +73,10 @@ const Invite = () => {
       <div className="flex">
         {done ? (
           <>
-            <h3>{`${invitor_name} 님이 ${calendarName}에 초대하셨습니다!`}</h3>
+            <h3>
+              {(invitor_name ? `${invitor_name} 님이` : '누군가') +
+                ` ${calendarName}에 초대하셨습니다!`}
+            </h3>
             <div className="buttons">
               <button id="accept" onClick={createCalendarRelation}>
                 초대 수락하기

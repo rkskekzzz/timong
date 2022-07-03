@@ -6,8 +6,13 @@ const InviteBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
   .flex {
     width: 50%;
+    @media (max-width: 768px) {
+      width: 80vw;
+    }
+    max-width: 500px;
     height: 40%;
     z-index: 1000;
     display: flex;
@@ -35,6 +40,9 @@ const InviteBox = styled.div`
         font-size: 1.3rem;
         font-weight: 900;
         width: 27vw;
+        @media (max-width: 768px) {
+          width: 50vw;
+        }
         height: 6vh;
         background: #f995f0;
         border: 1px solid #f995f0;
@@ -49,6 +57,7 @@ const InviteBox = styled.div`
       #notAccept {
       }
     }
+    backdrop-filter: blur(15px);
   }
 `;
 
