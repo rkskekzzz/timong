@@ -65,6 +65,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Routes>
+            <Route path="/anony" element={<Entrance />} />
             <Route path="/:id" element={<AnonyCalendar />} />
             <Route path="/" element={<Entrance />} />
             <Route element={<ProtectedRoute />}>

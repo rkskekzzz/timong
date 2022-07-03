@@ -76,10 +76,10 @@ function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
           {theme.myPalette.mode === 'light' ? 'Dark Mode   ' : 'Light Mode   '}
         </Styled.ModalTextButton>
         <Styled.ModalTextButton
-          onClick={() => navi('/')}
+          onClick={() => navi('/anony')}
           color={theme.myPalette.iconSmall}
         >
-          New Calendar
+          익명으로 사용하기
         </Styled.ModalTextButton>
         <Styled.ModalBoxButtons>
           <GitHubIcon onClick={() => handleClick(githubLink)} sx={style} />

@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Input } from '@mui/material';
 import { useFormik } from 'formik';
 import Styled from './Entrance.styled';
@@ -11,6 +12,7 @@ import GlobalStyled from 'src/Components/GlobalStyled/GlobalStyled.styled';
 
 const EntranceInputs = () => {
   const { dispatch } = useContext(UserContext);
+  const location = useLocation();
   const navi = useNavigate();
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
 
@@ -43,6 +45,10 @@ const EntranceInputs = () => {
     navi(result._id);
   }, [formik]);
 
+  useEffect(() => {
+    console.log(location.pathname);
+  }, []);
+
   return (
     <Styled.EntranceModalForm onSubmit={handleSubmit}>
       <Input
@@ -65,7 +71,7 @@ const EntranceInputs = () => {
         >
           Start
         </Styled.EntranceModalButton>
-        <SignInButton />
+        {location.pathname === '/' && <SignInButton />}
       </div>
     </Styled.EntranceModalForm>
   );
