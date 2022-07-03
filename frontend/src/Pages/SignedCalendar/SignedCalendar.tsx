@@ -131,7 +131,6 @@ const SignedCalendar = () => {
       }
     });
     setIsUserCreated(_isUserCreated);
-    console.log(this_calendar);
   }, [state.users]);
 
   return (
