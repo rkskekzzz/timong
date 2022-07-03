@@ -19,6 +19,7 @@ import arrow from 'src/assets/arrow.png';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import { addUserInCalendar } from 'src/Hooks/userController';
+import { State } from 'src/Interface/ContextType';
 
 const Users = () => {
   const location = useLocation();
@@ -182,8 +183,9 @@ const Users = () => {
   const handleAddUserButton = useCallback(() => {
     handleModalOpen();
   }, [handleModalOpen, users]);
-  const addUser = async (user: User) => {
-    if (!dispatch) throw new Error('no dispatch');
+
+  const handleAddUser = async (user: User, state: State) => {
+    if (!dispatch || !state) throw new Error('no dispatch');
     const result = await addUserInCalendar(user, users, location.pathname);
     dispatch({ type: 'ANONY_ADD', user: result });
     setIsAdd(true);
@@ -224,7 +226,7 @@ const Users = () => {
       <AddModal
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
-        addUser={addUser}
+        action={handleAddUser}
         placeholder="유저 이름을 입력해주세요..."
       />
       <ClickAwayListener onClickAway={handleClickAway}>
