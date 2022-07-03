@@ -37,7 +37,7 @@ const SignedCalendar = () => {
         navi('/');
       }
     });
-    if (database_id !== '') setDirectUrl(true);
+    if (location.search !== '') setDirectUrl(true);
   }, []);
 
   useEffect(() => {
@@ -63,7 +63,10 @@ const SignedCalendar = () => {
         alert('존재하지 않는 캘린더입니다.');
       }
     } else {
-      if (prevLength.current < state.calendarList.length) {
+      if (
+        selectedIndex !== -1 &&
+        prevLength.current < state.calendarList.length
+      ) {
         setSelectedIndex(state.calendarList.length - 1);
         if (listRef && listRef.current) {
           listRef.current.scrollTop = listRef.current.scrollHeight;
@@ -84,6 +87,8 @@ const SignedCalendar = () => {
   }, [state.calendarList]);
 
   useEffect(() => {
+    console.log('???', state.calendarList.length);
+    console.log('??', selectedIndex);
     if (state.calendarList.length == 0) setIsCalendarLoad(true);
     if (selectedIndex < 0) return;
     const getCalendar = async () => {
@@ -110,7 +115,7 @@ const SignedCalendar = () => {
       setReLoad(true);
     }, 4000);
     return () => clearTimeout(timer);
-  }, [selectedIndex, mustReload]);
+  }, [selectedIndex]);
 
   useEffect(() => {
     if (isCalendarLoad || selectedIndex < 0) return;
