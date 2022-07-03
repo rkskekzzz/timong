@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useContext } from 'react';
+import React, { useCallback, useState, useContext, useEffect } from 'react';
 import Styled from './TimePicker.styled';
 import { useTheme } from '@mui/material';
 import { Schedule, User } from 'src/Interface/UserType';
@@ -19,15 +19,25 @@ const TimePicker: React.FC<{
 }> = ({ isShowEdit, selectedUser, timePickerRef }) => {
   const { state, dispatch } = useContext(UserContext);
 
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>(true);
   const size = NumberEx.timeBoxSize;
   const theme = useTheme();
   const location = useLocation();
-  const handleToggleTabbed = () => setIsChecked((isChecked) => !isChecked);
+
+  const handleToggleTabbed = () => {
+    setIsChecked(!isChecked);
+  };
+
+  useEffect(() => {
+    dispatch({
+      type: 'SETSELECTEDVALID',
+      selectedValid: isChecked ? 'POSIBLE' : 'IMPOSIBLE',
+    });
+  }, [isChecked]);
 
   const SelectedUserState = useCallback(() => {
     if (!selectedUser)
-      return <GlobalStyled.Circle color="#000000" size={Size.Medium} />;
+      return <GlobalStyled.Circle color="#00000000" size={Size.Medium} />;
     if (isChecked) {
       return (
         <GlobalStyled.Circle color={selectedUser.color} size={Size.Medium} />
@@ -129,7 +139,7 @@ const TimePicker: React.FC<{
             <div className="user-info hflex">
               <SelectedUserState />
               <span className="user-info-name">
-                {selectedUser ? selectedUser.name : 'default'}
+                {selectedUser ? selectedUser.name : ''}
               </span>
             </div>
             <Switch
