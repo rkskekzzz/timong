@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Styled from './HeaderModal.styled';
 import Snackbar from '@mui/material/Snackbar';
@@ -9,12 +9,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material';
+import { UserContext } from 'src/App';
 
 const githubLink = 'https://github.com/rkskekzzz/blockcalendar.git';
 const emailLink = 'mailto:wkdlfflxh@naver.com';
 const articleLink = 'https://80000coding.oopy.io';
 
 function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
+  const { dispatch } = useContext(UserContext);
   const navi = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
 
@@ -35,7 +37,10 @@ function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
     window.open(link);
   }, []);
   const handleThemeChangeButton = () => {
-    console.log('click');
+    dispatch({
+      type: 'CHANGEMODE',
+      mode: theme.myPalette.mode === 'light' ? 'dark' : 'light',
+    });
   };
   const handleCloseButton = useCallback(() => {
     handleModalClose();
