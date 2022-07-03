@@ -66,7 +66,7 @@ const EditButton: React.FC<{
     handleModalOpen();
   };
   const actionEdit = () => {
-    dispatch({ type: 'SETSELECTEUSER', user: state.users[isUserCreated] });
+    dispatch({ type: 'SETSELECTEDUSER', user: state.users[isUserCreated] });
   };
   const actionEditProfile = () => alert('개발중입니다!');
   const actionFindUser = () => alert('개발중입니다!');
@@ -107,7 +107,7 @@ const EditButton: React.FC<{
   }, [isUserCreated]);
 
   const handleCloseEdit = () => {
-    dispatch({ type: 'SETSELECTEUSER', user: null });
+    dispatch({ type: 'SETSELECTEDUSER', user: null });
   };
 
   useEffect(() => {

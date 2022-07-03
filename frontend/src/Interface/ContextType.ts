@@ -13,8 +13,8 @@ export type State = {
   selectedCalendar: string;
   selectedDate: Day;
   selectedUser: User;
+  selectedValid: Valid;
   signedUser: User;
-  valid: Valid;
   mode: PaletteMode;
 };
 
@@ -27,8 +27,9 @@ export type Action =
   | { type: 'ANONY_DELETE'; index: number; user: User }
   | { type: 'ANONY_UPDATEDATE'; user: User; day: moment.Moment; valid: Valid }
   | { type: 'TEST'; user: User; day: moment.Moment }
-  | { type: 'SETSELECTEDATE'; day: moment.Moment }
-  | { type: 'SETSELECTEUSER'; user: User }
+  | { type: 'SETSELECTEDDATE'; day: moment.Moment }
+  | { type: 'SETSELECTEDUSER'; user: User }
+  | { type: 'SETSELECTEDVALID'; selectedValid: Valid }
   | { type: 'ANONY_UPDATETIMETABLE'; user: User; date: Day; time: number }
   | { type: 'CHANGEMODE'; mode: PaletteMode }
   | { type: 'DEFAULT' };

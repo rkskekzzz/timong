@@ -49,16 +49,16 @@ function DayBoxLogic({
     drawerHandler.setSelectedDay(day);
     drawerHandler.handleDrawerOpen();
     drawerHandler.setDayUsers(reducedUser);
-    dispatch({ type: 'SETSELECTEDATE', day: day.moment });
+    dispatch({ type: 'SETSELECTEDDATE', day: day.moment });
   };
   const updateUser = async () => {
     dispatch({
       type: 'ANONY_UPDATEDATE',
       user: state.selectedUser,
       day: day.moment,
-      valid: state.valid ? 'POSIBLE' : 'IMPOSIBLE',
+      valid: state.selectedValid,
     });
-    dispatch({ type: 'SETSELECTEDATE', day: day.moment });
+    dispatch({ type: 'SETSELECTEDDATE', day: day.moment });
 
     if (state.isSigned) {
       await ScheduleService.updateSchedules(
@@ -75,7 +75,7 @@ function DayBoxLogic({
   const handleClick = useCallback(() => {
     if (!state.selectedUser) showUsers();
     else updateUser();
-  }, [updateUser, day, showUsers]);
+  }, [day, showUsers]);
   const isThisMonth = month.monthMoment.isSame(day.moment, 'month');
   const isToday = day.moment.isSame(moment(), 'day');
   const gridSize = useMemo(() => {

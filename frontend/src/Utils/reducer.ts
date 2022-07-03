@@ -101,12 +101,18 @@ export default function reducer(state: State, action: Action): State {
           return user;
         }),
       };
-    case 'SETSELECTEDATE':
+
+    case 'SETSELECTEDVALID':
+      return {
+        ...state,
+        selectedValid: action.selectedValid,
+      };
+    case 'SETSELECTEDDATE':
       return {
         ...state,
         selectedDate: action.day ? new Day(action.day) : null,
       };
-    case 'SETSELECTEUSER':
+    case 'SETSELECTEDUSER':
       return {
         ...state,
         selectedUser: action.user,
