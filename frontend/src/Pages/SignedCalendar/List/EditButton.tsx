@@ -9,6 +9,7 @@ import { User } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 import AddModal from 'src/Components/Modal';
 import CheckIcon from '@mui/icons-material/Check';
+import { useLocation } from 'react-router-dom';
 import MySnackbar from './MySnackbar';
 import { updateCalendarList } from 'src/Hooks/calendarController';
 import { updateSignedCalendarListByElement } from 'src/Hooks/firebaseRelation';
@@ -34,6 +35,7 @@ const EditButton: React.FC<{
   selectedIndex,
   handleDrawerClose,
 }) => {
+  const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
   const [height, setHeight] = useState<number>(0);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
@@ -71,8 +73,13 @@ const EditButton: React.FC<{
   const actionEditProfile = () => alert('개발중입니다!');
   const actionFindUser = () => alert('개발중입니다!');
   const actionShare = () => {
-    const url = window.location.href;
-
+    const id = location.search.split('=')[1];
+    const url =
+      window.location.hostname +
+      '/invite?id=' +
+      id +
+      '&?by=' +
+      state.calendarList[selectedIndex].user_name;
     navigator.clipboard.writeText(url).then(
       function () {
         console.log('Async: Copying to clipboard was successful!');
@@ -145,9 +152,6 @@ const EditButton: React.FC<{
               : theme.main.theme,
             color: theme.myPalette.foregroundAddButton,
           },
-          // '& .MuiSpeedDialAction-staticTooltipLabel': {
-          //   color: '#dddddd',
-          // },
         }}
         icon={state.selectedUser ? <CheckIcon /> : <SpeedDialIcon />}
         onClose={handleClose}
