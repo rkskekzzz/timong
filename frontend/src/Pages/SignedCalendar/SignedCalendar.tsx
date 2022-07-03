@@ -14,15 +14,15 @@ import Header from 'src/Components/Header';
 import Monthly from 'src/Components/Calendar/Month';
 
 const SignedCalendar = () => {
-  const prevIndex = useRef(0);
+  const prevLength = useRef(0);
   const listRef = useRef(null);
   const theme = useTheme();
   const navi = useNavigate();
   const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
   const [reLoad, setReLoad] = useState<boolean>(false);
+  const [mustReload, setMustReload] = useState<boolean>(false);
   const [isCalendarLoad, setIsCalendarLoad] = useState<boolean>(false);
-  const [isDone, setIsDone] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [isUserCreated, setIsUserCreated] = useState<number>(-1);
   const [directUrl, setDirectUrl] = useState<boolean>(false);
@@ -46,8 +46,9 @@ const SignedCalendar = () => {
 
   useEffect(() => {
     console.log('0');
-    if (state.calendarList.length === 0) return;
-    if (directUrl) {
+    console.log('idx : ', selectedIndex);
+    if (state.calendarList.length === 0 || !database_id) return;
+    if (selectedIndex < 0 && directUrl) {
       let isFind = false;
       for (let i = 0; i < state.calendarList.length; i++) {
         if (state.calendarList[i]._id === database_id) {
@@ -62,31 +63,31 @@ const SignedCalendar = () => {
         alert('존재하지 않는 캘린더입니다.');
       }
     } else {
-      if (selectedIndex > -1 && prevIndex.current < state.calendarList.length) {
+      if (
+        selectedIndex > -1 &&
+        prevLength.current < state.calendarList.length
+      ) {
         setSelectedIndex(state.calendarList.length - 1);
         if (listRef && listRef.current) {
           listRef.current.scrollTop = listRef.current.scrollHeight;
         }
+      } else if (prevLength.current > state.calendarList.length) {
+        setSelectedIndex(-1);
+        navi('/calendar');
       } else {
         setSelectedIndex((prevState) => {
-          const value =
-            prevState === -1
-              ? 0
-              : state.calendarList.length <= prevState
-              ? prevState - 1
-              : prevState;
+          const value = prevState === -1 ? 0 : prevState;
           return value;
         });
+        setMustReload((prevState) => !prevState);
       }
-      prevIndex.current = state.calendarList.length;
+      prevLength.current = state.calendarList.length;
     }
-    setIsDone(true);
   }, [state.calendarList]);
 
   useEffect(() => {
     if (state.calendarList.length == 0) return;
-    if (selectedIndex === -1) return;
-    console.log('1');
+    if (selectedIndex < 0) return;
     const getCalendar = async () => {
       setIsCalendarLoad(false);
       const result = await CalendarService.getCalendar(
@@ -101,8 +102,7 @@ const SignedCalendar = () => {
       setIsCalendarLoad(true);
     };
     getCalendar();
-    setIsDone(false);
-  }, [selectedIndex, isDone]);
+  }, [selectedIndex, mustReload]);
 
   useEffect(() => {
     if (isCalendarLoad) setReLoad(false);
@@ -111,18 +111,17 @@ const SignedCalendar = () => {
     const timer = setTimeout(() => {
       setReLoad(true);
     }, 4000);
-    dispatch({ type: 'SETSELECTEUSER', user: null });
     return () => clearTimeout(timer);
-  }, [selectedIndex]);
+  }, [selectedIndex, mustReload]);
 
   useEffect(() => {
-    if (isCalendarLoad || selectedIndex === -1) return;
+    if (isCalendarLoad || selectedIndex < 0) return;
     console.log('3');
     navi('/calendar?id=' + state.calendarList[selectedIndex]._id);
-  }, [isCalendarLoad]);
+  }, [isCalendarLoad, selectedIndex]);
 
   useEffect(() => {
-    if (selectedIndex === -1) return;
+    if (selectedIndex < 0) return;
     console.log('4');
     let _isUserCreated = -1;
     const this_calendar = state.calendarList.find(
@@ -151,7 +150,7 @@ const SignedCalendar = () => {
             <div
               className={'responsive ' + (location.search ? 'show' : 'hidden')}
             >
-              {!isCalendarLoad ? (
+              {!isCalendarLoad && selectedIndex > 0 ? (
                 <div
                   style={{
                     width: '100%',
