@@ -84,7 +84,7 @@ const SignedCalendar = () => {
   }, [state.calendarList]);
 
   useEffect(() => {
-    if (state.calendarList.length == 0) return;
+    if (state.calendarList.length == 0) setIsCalendarLoad(true);
     if (selectedIndex < 0) return;
     const getCalendar = async () => {
       setIsCalendarLoad(false);
@@ -131,6 +131,7 @@ const SignedCalendar = () => {
       }
     });
     setIsUserCreated(_isUserCreated);
+    console.log(this_calendar);
   }, [state.users]);
 
   return (
