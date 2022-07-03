@@ -47,14 +47,7 @@ const UserDrawer: React.FC<{
     },
     [setTouchStart]
   );
-  const handleMouseStart = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      console.log('here');
 
-      setTouchStart(e.clientX);
-    },
-    [setTouchStart]
-  );
   const handleTouchMove = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {
       if (!isShow) return;
@@ -64,22 +57,8 @@ const UserDrawer: React.FC<{
     },
     [touchStart, isShow]
   );
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!isShow || touchStart === 0) return;
-      if (touchStart - e.clientX < 200) {
-        console.log(touchStart);
-        console.log(e.clientX);
 
-        handleDrawerClose();
-      }
-    },
-    [touchStart, isShow]
-  );
   const handleTouchEnd = useCallback(() => {
-    setTouchStart(0);
-  }, [setTouchStart]);
-  const handleMouseEnd = useCallback(() => {
     setTouchStart(0);
   }, [setTouchStart]);
 
@@ -131,9 +110,6 @@ const UserDrawer: React.FC<{
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseStart}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseEnd}
       >
         <Styled.Puller />
         <Styled.UserList ref={touchRef}>
