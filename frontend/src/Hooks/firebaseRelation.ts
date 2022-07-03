@@ -49,6 +49,7 @@ export async function addSignedUserCalendar(element: User, state: State) {
         _id: calendar_id,
         user_name: '',
         name: element.name,
+        color: element.color,
       },
     ],
   });

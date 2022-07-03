@@ -15,6 +15,7 @@ declare module '@mui/material/styles' {
       backgroundAddButton: string;
       backDrop: string;
       background: string;
+      border: string;
     };
     main: {
       background: string;
@@ -37,6 +38,7 @@ declare module '@mui/material/styles' {
       backgroundAddButton?: string;
       backDrop?: string;
       background?: string;
+      border?: string;
     };
     main: {
       background?: string;
@@ -61,6 +63,7 @@ export const themes = {
     backgroundAddButton: '#000000',
     backDrop: '#00000080',
     background: '#ffffff',
+    border: '#888888',
   },
   dark: {
     mode: 'dark',
@@ -77,6 +80,7 @@ export const themes = {
     backgroundAddButton: '#ffffff',
     backDrop: '#000000b0',
     background: '#131313',
+    border: '#888888',
   },
   main: {
     background: '#ffd8fb',

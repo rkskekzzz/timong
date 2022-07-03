@@ -19,25 +19,25 @@ type Color = object & {
   source: string;
 };
 
-// const colors = [
-//   '#A93226',
-//   '#CB4335',
-//   '#884EA0',
-//   '#7D3C98',
-//   '#2471A3',
-//   '#2E86C1',
-//   '#17A589',
-//   '#138D75',
-//   '#229954',
-//   '#28B463',
-//   '#D4AC0D',
-//   '#D68910',
-//   '#CA6F1E',
-//   '#BA4A00',
-//   '#A6ACAF',
-//   '#707B7C',
-//   '#2E4053',
-// ];
+const colors = [
+  '#A93226',
+  '#CB4335',
+  '#884EA0',
+  '#7D3C98',
+  '#2471A3',
+  '#2E86C1',
+  '#17A589',
+  '#138D75',
+  '#229954',
+  '#28B463',
+  '#D4AC0D',
+  '#D68910',
+  '#CA6F1E',
+  '#BA4A00',
+  '#460000',
+  '#0c0046',
+  '#2E4053',
+];
 
 function ModalBoxFormLogic({
   handleModalClose,
@@ -53,7 +53,8 @@ function ModalBoxFormLogic({
     color: false,
     name: false,
   });
-  const [clr, setClr] = useState<string>('#ffffff');
+
+  const [clr, setClr] = useState<string>('#868686');
   const formik = useFormik({
     initialValues: {
       userName: '',
@@ -78,7 +79,7 @@ function ModalBoxFormLogic({
 
   const handleSubmitButton = async () => {
     if (isError.color || isError.name) return;
-    if (clr === '#ffffff') {
+    if (clr === '#868686') {
       alert('Pick the Color!');
       return;
     }
@@ -110,7 +111,7 @@ function ModalBoxFormLogic({
       <CirclePicker
         width=""
         color={clr}
-        // colors={colors}
+        colors={[...colors, state.mode == 'dark' ? '#ffffff' : '#000000']}
         onChangeComplete={handleColorPick}
       />
       <Input
@@ -136,10 +137,10 @@ function ModalBoxFormLogic({
 }
 
 const AddModal: React.FC<{
+  action: (user: User, state: State) => Promise<void>;
   handleModalClose: () => void;
   isShowModal: boolean;
   placeholder: string;
-  action: (user: User, state: State) => Promise<void>;
 }> = ({ handleModalClose, isShowModal, placeholder, action }) => {
   const theme = useTheme();
   return (

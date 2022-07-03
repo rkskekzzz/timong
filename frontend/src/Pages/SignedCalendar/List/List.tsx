@@ -4,6 +4,7 @@ import { Calendar } from 'src/Interface/CalendarType';
 import Card from './Card';
 import AddModal from 'src/Components/Modal';
 import { addSignedUserCalendar } from 'src/Hooks/firebaseRelation';
+import { useTheme } from '@mui/material';
 
 const List: React.FC<{
   listRef: React.RefObject<HTMLDivElement>;
@@ -11,6 +12,7 @@ const List: React.FC<{
   selectedIndex: number;
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
 }> = ({ listRef, calendarList, selectedIndex, setSelectedIndex }) => {
+  const theme = useTheme();
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
 
   const handleModalOpen = () => setIsShowModal(true);
@@ -32,6 +34,7 @@ const List: React.FC<{
         {calendarList.map((element, index) => {
           return (
             <Card
+              color={element.color}
               key={element._id + index}
               selected={selectedIndex === index ? true : false}
               cardIndex={index}
@@ -41,6 +44,7 @@ const List: React.FC<{
           );
         })}
         <Card
+          color={theme.myPalette.backgroundAddButton}
           selected={false}
           cardIndex={-1}
           group={null}

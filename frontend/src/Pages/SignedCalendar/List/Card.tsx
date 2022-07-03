@@ -14,11 +14,13 @@ const Card = ({
   cardIndex,
   group,
   handleCardTabbed,
+  color,
 }: {
   selected: boolean;
   cardIndex: number;
   group: Calendar;
   handleCardTabbed: () => void;
+  color: string;
 }) => {
   const theme = useTheme();
   const { state, dispatch } = useContext(UserContext);
@@ -58,7 +60,17 @@ const Card = ({
   };
 
   return (
-    <Styled.Card selected={selected} fgcolor={theme.myPalette.foreground}>
+    <Styled.Card
+      selected={selected}
+      fgcolor={theme.myPalette.foreground}
+      bgcolor={
+        color === theme.myPalette.backgroundAddButton
+          ? theme.myPalette.foreground
+          : color
+      }
+      bordercolor={theme.myPalette.border}
+      mode={theme.myPalette.mode}
+    >
       {group ? (
         <div className="list">
           <Tooltip title="show calendar" onClick={handleCardTabbed}>

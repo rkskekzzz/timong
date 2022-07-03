@@ -1,15 +1,29 @@
 import styled from 'styled-components';
 
-const Card = styled.span<{ fgcolor: string; selected: boolean }>`
+const Card = styled.span<{
+  fgcolor: string;
+  selected: boolean;
+  bgcolor: string;
+  bordercolor: string;
+  mode: string;
+}>`
   width: 80%;
   display: flex;
   /* align-items: center; */
   max-width: 400px;
-  background: ${(props) => `${props.selected ? '#00000008' : '#ffffff11'}`};
+  background: ${(props) =>
+    `${
+      props.bgcolor
+        ? props.selected
+          ? props.bgcolor + (props.mode === 'dark' ? '80' : 'bb')
+          : props.bgcolor + (props.mode === 'dark' ? '22' : '33')
+        : '#ffffff11'
+    }`};
   box-sizing: border-box;
   border-width: 1px;
   border-style: solid;
-  border-color: ${(props) => `${props.selected ? '#f995f0' : '#ffffff00'}`};
+  border-color: ${(props) =>
+    `${props.selected ? props.bordercolor : '#ffffff00'}`};
 
   border-radius: 10px;
   cursor: pointer;
