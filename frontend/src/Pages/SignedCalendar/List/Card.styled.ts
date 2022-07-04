@@ -25,12 +25,12 @@ const Card = styled.span<{
                 : '80'
               : props.bgcolor === '#000000'
               ? '00'
-              : 'bb')
+              : '90')
           : props.bgcolor +
             (props.mode === 'dark'
               ? props.bgcolor === '#ffffff'
                 ? '14'
-                : '28'
+                : '33'
               : props.bgcolor === '#000000'
               ? '07'
               : '44')
@@ -40,7 +40,7 @@ const Card = styled.span<{
   border-width: 1px;
   border-style: solid;
   border-color: ${(props) =>
-    `${props.selected ? props.bordercolor : '#ffffff00'}`};
+    `${props.selected ? props.bordercolor + 66 : '#ffffff00'}`};
 
   border-radius: 10px;
   cursor: pointer;
