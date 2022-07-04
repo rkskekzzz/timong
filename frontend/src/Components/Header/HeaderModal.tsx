@@ -66,14 +66,14 @@ function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
             color={theme.myPalette.iconSmall}
             onClick={handleOpen}
           >
-            Share Link
+            공유하기
           </Styled.ModalTextButton>
         </CopyToClipboard>
         <Styled.ModalTextButton
           color={theme.myPalette.iconSmall}
           onClick={handleThemeChangeButton}
         >
-          {theme.myPalette.mode === 'light' ? 'Dark Mode   ' : 'Light Mode   '}
+          {theme.myPalette.mode === 'light' ? '어두운 테마' : '밝은 테마'}
         </Styled.ModalTextButton>
         <Styled.ModalTextButton
           onClick={() => navi('/anony')}
