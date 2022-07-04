@@ -87,6 +87,10 @@ const Users = () => {
   ]);
   const handleUserTabbed = useCallback(
     (index: number) => {
+      if (users[index].isSigned === true) {
+        alert('선택할 수 없는 사용자 입니다!');
+        return;
+      }
       dispatch({ type: 'SETSELECTEDUSER', user: users[index] });
       handleDial();
     },
