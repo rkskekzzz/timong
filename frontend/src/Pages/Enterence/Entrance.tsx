@@ -42,7 +42,8 @@ const EntranceInputs = () => {
       users: result.users,
       meetingDays: result.meetingDays,
     });
-    navi(result._id);
+    console.log(result);
+    navi('/' + result._id);
   }, [formik]);
 
   useEffect(() => {
