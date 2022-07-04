@@ -34,7 +34,7 @@ const Invite = () => {
         return;
       }
     }
-    const calendar = new User(calendarName, '', [], database_id);
+    const calendar = new User(calendarName, '', [], false, database_id);
     addSignedUserCalendar(calendar, state);
     navi('/calendar?id=' + database_id);
   };
@@ -83,7 +83,7 @@ const Invite = () => {
               </button>
               <Button
                 id="notAccept"
-                onClick={() => navi('/database_id')}
+                onClick={() => navi(`/${database_id}`)}
                 size="small"
               >
                 비회원으로 볼래요
