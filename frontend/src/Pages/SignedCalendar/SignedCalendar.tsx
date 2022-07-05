@@ -28,7 +28,8 @@ const SignedCalendar = () => {
   const [directUrl, setDirectUrl] = useState<boolean>(false);
   const database_id = location.search.split('=')[1];
 
-  useEffect(() => {    onAuthStateChanged(auth, (_user) => {
+  useEffect(() => {
+    onAuthStateChanged(auth, (_user) => {
       if (_user) {
         dispatch({ type: 'SIGNIN', uid: _user.uid });
       } else {
@@ -42,7 +43,7 @@ const SignedCalendar = () => {
     if (state.isSigned) fetchCalendarList(state, dispatch);
   }, [state.isSigned]);
 
-  useEffect(() =>
+  useEffect(() => {
     if (state.calendarList.length === 0) return;
     if (selectedIndex < 0 && directUrl && database_id) {
       let isFind = false;
@@ -97,6 +98,7 @@ const SignedCalendar = () => {
   useEffect(() => {
     if (isCalendarLoad) setReLoad(false);
     if (reLoad) return;
+
     const timer = setTimeout(() => {
       setReLoad(true);
     }, 4000);
@@ -105,11 +107,13 @@ const SignedCalendar = () => {
 
   useEffect(() => {
     if (isCalendarLoad || selectedIndex < 0) return;
+
     navi('/calendar?id=' + state.calendarList[selectedIndex]._id);
   }, [isCalendarLoad, selectedIndex]);
 
   useEffect(() => {
     if (selectedIndex < 0) return;
+
     let _isUserCreated = -1;
     const this_calendar = state.calendarList.find(
       (calendar) => calendar._id === state.calendarList[selectedIndex]._id
