@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Tooltip, Button, useTheme } from '@mui/material';
 import Styled from './Card.styled';
 import { Calendar } from 'src/Interface/CalendarType';
