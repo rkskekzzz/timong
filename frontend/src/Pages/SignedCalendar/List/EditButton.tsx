@@ -77,17 +77,21 @@ const EditButton: React.FC<{
   };
 
   const actionEditProfile = () => {
-    UserService.deleteUser(
-      '/' + state.calendarList[selectedIndex]._id,
-      state.users[isUserCreated]._id
-    );
-    const newList = state.calendarList.map((calendar: Calendar) => {
-      if (calendar.user_name === state.users[isUserCreated].name) {
-        calendar.user_name = '';
-      }
-      return calendar;
-    });
-    dispatch({ type: 'SIGNED_SET_CALENDARLIST', calendarList: newList });
+    if (confirm('유저를 삭제하시겠습니까?')) {
+      UserService.deleteUser(
+        '/' + state.calendarList[selectedIndex]._id,
+        state.users[isUserCreated]._id
+      );
+      const newList = state.calendarList.map((calendar: Calendar) => {
+        if (calendar.user_name === state.users[isUserCreated].name) {
+          calendar.user_name = '';
+        }
+        return calendar;
+      });
+      dispatch({ type: 'SIGNED_SET_CALENDARLIST', calendarList: newList });
+    } else {
+      return;
+    }
   };
 
   const actionFindUser = () => alert('개발중입니다!');
