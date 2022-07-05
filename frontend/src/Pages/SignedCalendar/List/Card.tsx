@@ -53,7 +53,7 @@ const Card = ({
     },
   ];
 
-  const action = async (itemaction: any) => {
+  const action = async (itemaction: (cardIndex: number) => Promise<void>) => {
     handleClose();
     await itemaction(cardIndex);
     await fetchCalendarList(state, dispatch);
