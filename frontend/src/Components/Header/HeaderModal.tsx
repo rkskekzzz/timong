@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext, useEffect } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Styled from './HeaderModal.styled';
 import Snackbar from '@mui/material/Snackbar';
@@ -11,6 +11,9 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import { UserContext } from 'src/App';
 import { useSign } from 'src/Utils/firebaseAuth';
+import { UserService } from 'src/Network/UserService';
+import { Calendar } from 'src/Interface/CalendarType';
+import { deleteSignedUser } from 'src/Hooks/firebaseRelation';
 
 const githubLink = 'https://github.com/rkskekzzz/blockcalendar.git';
 const emailLink = 'mailto:wkdlfflxh@naver.com';
@@ -21,9 +24,9 @@ const HeaderModal: React.FC<{
   handleModalClose: () => void;
 }> = ({ isShowModal, handleModalClose }) => {
   const theme = useTheme();
-  const { dispatch } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
   const [open, setOpen] = useState<boolean>(false);
-  const { handleSignOut } = useSign();
+  const { handleSignOut, handleDeleteUser } = useSign();
   const navi = useNavigate();
 
   const handleOpen = useCallback(() => {
@@ -54,6 +57,21 @@ const HeaderModal: React.FC<{
   const handleCloseButton = useCallback(() => {
     handleModalClose();
   }, [handleModalClose]);
+
+  const unregister = () => {
+    state.calendarList.forEach((calendar: Calendar) => {
+      let userid: string;
+      for (let i = 0; i < state.users.length; i++) {
+        if (state.users[i].name === calendar.user_name) {
+          userid = state.users[i]._id;
+          break;
+        }
+      }
+      if (userid) UserService.deleteUser('/' + calendar._id, userid);
+    });
+    deleteSignedUser(state);
+    handleDeleteUser();
+  };
 
   const style = {
     color: theme.myPalette.iconSmall,
@@ -107,6 +125,13 @@ const HeaderModal: React.FC<{
             <EmailIcon onClick={() => handleClick(emailLink)} sx={style} />
             <ArticleIcon onClick={() => handleClick(articleLink)} sx={style} />
           </Styled.ModalBoxButtons>
+          <Styled.ModalTextButton
+            onClick={unregister}
+            color={theme.myPalette.iconSmall + 'aa'}
+            style={{ fontSize: '0.80rem' }}
+          >
+            탈퇴하기
+          </Styled.ModalTextButton>
         </Styled.ModalBox>
       </Styled.ColoredModal>
     </>

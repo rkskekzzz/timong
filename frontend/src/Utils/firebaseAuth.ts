@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import {
+  reauthenticateWithPopup,
   signInWithRedirect,
   GoogleAuthProvider,
-  // getRedirectResult,
+  deleteUser,
   signOut,
 } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
@@ -30,11 +31,21 @@ export function useSign() {
     }
   };
 
+  const handleDeleteUser = async () => {
+    try {
+      await reauthenticateWithPopup(auth.currentUser, new GoogleAuthProvider());
+      await deleteUser(auth.currentUser);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     auth,
     isSignedIn,
     isSignedOut,
     handleSignIn,
     handleSignOut,
+    handleDeleteUser,
   };
 }

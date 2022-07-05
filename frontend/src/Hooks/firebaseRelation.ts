@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc } from '@firebase/firestore';
+import { doc, getDoc, setDoc, deleteDoc } from '@firebase/firestore';
 import { dbService } from 'src/firebase';
 import { CalendarService } from 'src/Network/CalendarService';
 import { User } from 'src/Interface/UserType';
@@ -94,4 +94,12 @@ export async function deleteSignedCalendar(
     ...user.data(),
     user_calendar_list: newCalendarList,
   });
+}
+
+export async function deleteSignedUser(state: State) {
+  const docRef = doc(dbService, 'TestUsers', state.isSigned);
+  const docSnap = await getDoc(docRef);
+  const { user_id } = docSnap.data();
+  if (!user_id) alert('fail to fetch data..!!');
+  await deleteDoc(doc(dbService, 'TestUsers', user_id));
 }
