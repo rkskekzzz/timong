@@ -52,6 +52,7 @@ const Card = styled.span<{
   p {
     padding: 0;
     margin: 0;
+    font-size: 1.1rem;
   }
   .list {
     width: 100%;

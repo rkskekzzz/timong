@@ -120,7 +120,7 @@ function ModalBoxFormLogic({
         placeholder={placeholder}
         value={formik.values.userName}
         onChange={formik.handleChange}
-        inputProps={{ maxLength: 10 }}
+        inputProps={{ maxLength: 15 }}
       />
       <Styled.ModalBoxButton
         // type="submit"
