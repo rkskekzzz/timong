@@ -63,7 +63,7 @@ const SignedCalendar = () => {
       }
     } else {
       if (prevLength.current < state.calendarList.length) {
-        setSelectedIndex(state.calendarList.length - 1);
+        if (selectedIndex >= 0) setSelectedIndex(state.calendarList.length - 1);
         if (listRef && listRef.current) {
           listRef.current.scrollTop = listRef.current.scrollHeight;
         }
@@ -71,10 +71,7 @@ const SignedCalendar = () => {
         setSelectedIndex(-1);
         navi('/calendar');
       } else {
-        setSelectedIndex((prevState) => {
-          const value = prevState === -1 ? 0 : prevState;
-          return value;
-        });
+        setSelectedIndex((prevState) => prevState);
         setMustReload((prevState) => !prevState);
       }
       prevLength.current = state.calendarList.length;
