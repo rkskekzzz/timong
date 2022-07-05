@@ -23,6 +23,8 @@ const ModalBox = styled.div`
   font-size: 1.6rem;
   border-radius: 15px;
   padding: 15px;
+  border: 0px;
+  outline: none;
 `;
 
 const ModalBoxButtons = styled.div`
