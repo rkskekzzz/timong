@@ -46,10 +46,6 @@ const EntranceInputs = () => {
     navi('/' + result._id);
   }, [formik]);
 
-  useEffect(() => {
-    console.log(location.pathname);
-  }, []);
-
   return (
     <Styled.EntranceModalForm onSubmit={handleSubmit}>
       <Input
