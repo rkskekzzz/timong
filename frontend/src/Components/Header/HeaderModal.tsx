@@ -16,12 +16,15 @@ const githubLink = 'https://github.com/rkskekzzz/blockcalendar.git';
 const emailLink = 'mailto:wkdlfflxh@naver.com';
 const articleLink = 'https://80000coding.oopy.io';
 
-function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
+const HeaderModal: React.FC<{
+  isShowModal: boolean;
+  handleModalClose: () => void;
+}> = ({ isShowModal, handleModalClose }) => {
+  const theme = useTheme();
   const { dispatch } = useContext(UserContext);
   const [open, setOpen] = useState<boolean>(false);
-  const { auth, handleSignOut } = useSign();
+  const { handleSignOut } = useSign();
   const navi = useNavigate();
-  const theme = useTheme();
 
   const handleOpen = useCallback(() => {
     setOpen(true);
@@ -57,11 +60,6 @@ function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
     transition: 'color 500ms ease-in-out 0ms',
   };
 
-  useEffect(() => {
-    const user = auth.currentUser;
-    if (!user) navi('/');
-  }, [auth]);
-
   return (
     <>
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
@@ -69,75 +67,49 @@ function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
           Copy To Clipboard!
         </Alert>
       </Snackbar>
-      <Styled.ModalBox>
-        <CloseIcon onClick={handleCloseButton} fontSize="medium" sx={style} />
-        <CopyToClipboard text={window.location.href}>
+      <Styled.ColoredModal
+        open={isShowModal}
+        onClose={handleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        color={theme.myPalette.backDropHeader}
+      >
+        <Styled.ModalBox>
+          <CloseIcon onClick={handleCloseButton} fontSize="medium" sx={style} />
+          <CopyToClipboard text={window.location.href}>
+            <Styled.ModalTextButton
+              color={theme.myPalette.iconSmall}
+              onClick={handleOpen}
+            >
+              공유하기
+            </Styled.ModalTextButton>
+          </CopyToClipboard>
           <Styled.ModalTextButton
             color={theme.myPalette.iconSmall}
-            onClick={handleOpen}
+            onClick={handleThemeChangeButton}
           >
-            공유하기
+            {theme.myPalette.mode === 'light' ? '어두운 테마' : '밝은 테마'}
           </Styled.ModalTextButton>
-        </CopyToClipboard>
-        <Styled.ModalTextButton
-          color={theme.myPalette.iconSmall}
-          onClick={handleThemeChangeButton}
-        >
-          {theme.myPalette.mode === 'light' ? '어두운 테마' : '밝은 테마'}
-        </Styled.ModalTextButton>
-        <Styled.ModalTextButton
-          onClick={() => navi('/anony')}
-          color={theme.myPalette.iconSmall}
-        >
-          익명으로 사용하기
-        </Styled.ModalTextButton>
-        <Styled.ModalTextButton
-          onClick={handleSignOut}
-          color={theme.myPalette.iconSmall}
-        >
-          로그아웃
-        </Styled.ModalTextButton>
-        <Styled.ModalBoxButtons>
-          <GitHubIcon onClick={() => handleClick(githubLink)} sx={style} />
-          <EmailIcon onClick={() => handleClick(emailLink)} sx={style} />
-          <ArticleIcon onClick={() => handleClick(articleLink)} sx={style} />
-        </Styled.ModalBoxButtons>
-      </Styled.ModalBox>
+          <Styled.ModalTextButton
+            onClick={() => navi('/anony')}
+            color={theme.myPalette.iconSmall}
+          >
+            익명으로 사용하기
+          </Styled.ModalTextButton>
+          <Styled.ModalTextButton
+            onClick={handleSignOut}
+            color={theme.myPalette.iconSmall}
+          >
+            로그아웃
+          </Styled.ModalTextButton>
+          <Styled.ModalBoxButtons>
+            <GitHubIcon onClick={() => handleClick(githubLink)} sx={style} />
+            <EmailIcon onClick={() => handleClick(emailLink)} sx={style} />
+            <ArticleIcon onClick={() => handleClick(articleLink)} sx={style} />
+          </Styled.ModalBoxButtons>
+        </Styled.ModalBox>
+      </Styled.ColoredModal>
     </>
-  );
-}
-
-const HeaderModal: React.FC<{
-  isShowModal: boolean;
-  handleModalClose: () => void;
-}> = ({ isShowModal, handleModalClose }) => {
-  const theme = useTheme();
-
-  const ForwardFC = React.forwardRef(function ForwardFCCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    props: any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ref: any
-  ) {
-    return (
-      <span {...props} ref={ref}>
-        {props.children}
-      </span>
-    );
-  });
-
-  return (
-    <Styled.ColoredModal
-      open={isShowModal}
-      onClose={handleModalClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      color={theme.myPalette.backDropHeader}
-    >
-      <ForwardFC>
-        <ModalBoxForm handleModalClose={handleModalClose} />
-      </ForwardFC>
-    </Styled.ColoredModal>
   );
 };
 
