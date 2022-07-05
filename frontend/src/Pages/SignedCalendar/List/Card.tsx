@@ -34,26 +34,32 @@ const Card = ({
     setAnchorEl(null);
   };
 
-  const deleteAction = (index: number) => deleteSignedCalendar(state, index);
-  const editAction = () => alert('개발중입니다!');
-  const moveAction = () => alert('개발중입니다!');
+  const deleteAction = (index: number) => {
+    if (confirm('캘린더를 삭제하시겠습니까?')) {
+      deleteSignedCalendar(state, index);
+    }
+  };
+  // const editAction = () => alert('개발중입니다!');
+  // const moveAction = () => alert('개발중입니다!');
 
   const menuItems = [
     {
       name: '삭제하기',
       action: deleteAction,
     },
-    {
-      name: '수정하기',
-      action: editAction,
-    },
-    {
-      name: '순서변경',
-      action: moveAction,
-    },
+    // {
+    //   name: '수정하기',
+    //   action: editAction,
+    // },
+    // {
+    //   name: '순서변경',
+    //   action: moveAction,
+    // },
   ];
 
-  const action = async (itemaction: (cardIndex: number) => Promise<void>) => {
+  const action = async (
+    itemaction: (cardIndex: number) => Promise<void> | void
+  ) => {
     handleClose();
     await itemaction(cardIndex);
     await fetchCalendarList(state, dispatch);
