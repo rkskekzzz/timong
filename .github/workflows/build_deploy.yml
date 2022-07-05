@@ -28,6 +28,17 @@ jobs:
       - name: Front 노드 모듈 설치
         if: steps.node-module-cache.outputs.cache-hit != 'true'
         run: cd frontend && npm install
+        
+      - name: 환경변수 설정
+        run: |
+          echo REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} >> /frontend/.env.production
+          echo REACT_APP_APIKEY=${{ secrets.REACT_APP_APIKEY }} >> /frontend/.env.production
+          echo REACT_APP_AUTHDOMAIN=${{ secrets.REACT_APP_AUTHDOMAIN }} >> /frontend/.env.production
+          echo REACT_APP_PROJECTID=${{ secrets.REACT_APP_PROJECTID }} >> /frontend/.env.production
+          echo REACT_APP_STORAGEBUCKET=${{ secrets.REACT_APP_STORAGEBUCKET }} >> /frontend/.env.production
+          echo REACT_APP_MESSAGINGSENDERID=${{ secrets.REACT_APP_MESSAGINGSENDERID }} >> /frontend/.env.production
+          echo REACT_APP_APPID=${{ secrets.REACT_APP_APPID }} >> /frontend/.env.production
+          echo REACT_APP_MEASUREMENTID=${{ secrets.REACT_APP_MEASUREMENTID }} >> /frontend/.env.production
 
       - name: Front 빌드하기
         run: cd frontend && npm run build
