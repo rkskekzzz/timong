@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Styled from './HeaderModal.styled';
 import Snackbar from '@mui/material/Snackbar';
@@ -10,6 +10,7 @@ import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import { UserContext } from 'src/App';
+import { useSign } from 'src/Utils/firebaseAuth';
 
 const githubLink = 'https://github.com/rkskekzzz/blockcalendar.git';
 const emailLink = 'mailto:wkdlfflxh@naver.com';
@@ -17,8 +18,10 @@ const articleLink = 'https://80000coding.oopy.io';
 
 function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
   const { dispatch } = useContext(UserContext);
-  const navi = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
+  const { auth, handleSignOut } = useSign();
+  const navi = useNavigate();
+  const theme = useTheme();
 
   const handleOpen = useCallback(() => {
     setOpen(true);
@@ -33,24 +36,31 @@ function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
     }
     setOpen(false);
   };
+
   const handleClick = useCallback((link: string) => {
     window.open(link);
   }, []);
+
   const handleThemeChangeButton = () => {
     dispatch({
       type: 'CHANGEMODE',
       mode: theme.myPalette.mode === 'light' ? 'dark' : 'light',
     });
   };
+
   const handleCloseButton = useCallback(() => {
     handleModalClose();
   }, [handleModalClose]);
-  const theme = useTheme();
 
   const style = {
     color: theme.myPalette.iconSmall,
     transition: 'color 500ms ease-in-out 0ms',
   };
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (!user) navi('/');
+  }, [auth]);
 
   return (
     <>
@@ -80,6 +90,12 @@ function ModalBoxForm({ handleModalClose }: { handleModalClose: () => void }) {
           color={theme.myPalette.iconSmall}
         >
           익명으로 사용하기
+        </Styled.ModalTextButton>
+        <Styled.ModalTextButton
+          onClick={handleSignOut}
+          color={theme.myPalette.iconSmall}
+        >
+          로그아웃
         </Styled.ModalTextButton>
         <Styled.ModalBoxButtons>
           <GitHubIcon onClick={() => handleClick(githubLink)} sx={style} />

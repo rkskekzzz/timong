@@ -1,43 +1,19 @@
-import React, { useState, useContext, useEffect } from 'react';
-import {
-  onAuthStateChanged,
-  signInWithRedirect,
-  GoogleAuthProvider,
-  // getRedirectResult,
-  signOut,
-} from 'firebase/auth';
+import React, { useContext, useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
 import Styled from './SignInButton.styled';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as GoogleButtonLogo } from 'src/assets/btn_google_light_normal_ios.svg';
 import { UserContext } from 'src/App';
-import { getAuth } from 'firebase/auth';
-
-const provider = new GoogleAuthProvider();
+import { useSign } from 'src/Utils/firebaseAuth';
 
 const SignInButton = () => {
-  const { state, dispatch } = useContext(UserContext);
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const { dispatch } = useContext(UserContext);
+  const { auth, isSignedIn, handleSignIn } = useSign();
 
-  const auth = getAuth();
-  const user = auth.currentUser;
   const navi = useNavigate();
 
-  const signIn = () => {
-    signInWithRedirect(auth, provider)
-      .then((result: any) => {
-        console.log('here');
-        setIsSignedIn(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const zxcv = () => {
-    signOut(auth);
-  };
-
   useEffect(() => {
+    const user = auth.currentUser;
     if (user) navi('/calendar');
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -49,14 +25,10 @@ const SignInButton = () => {
 
   return (
     <>
-      <Styled.GoogleButton onClick={signIn}>
+      <Styled.GoogleButton onClick={handleSignIn}>
         <GoogleButtonLogo>hi</GoogleButtonLogo>
         <p>Sign in with Google</p>
       </Styled.GoogleButton>
-      {/* <Styled.GoogleButton onClick={zxcv}>
-        <GoogleButtonLogo>hi</GoogleButtonLogo>
-        <p>Sign in with Google</p>
-      </Styled.GoogleButton> */}
     </>
   );
 };
