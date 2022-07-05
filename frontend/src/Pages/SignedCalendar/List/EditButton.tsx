@@ -17,6 +17,8 @@ import { addUserInCalendar } from 'src/Hooks/userController';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import SearchIcon from '@mui/icons-material/Search';
+import { UserService } from 'src/Network/UserService';
+import { Calendar } from 'src/Interface/CalendarType';
 
 const EditButton: React.FC<{
   userDrawerRef: React.RefObject<HTMLDivElement>;
@@ -65,14 +67,31 @@ const EditButton: React.FC<{
       updateCalendarList(state, selectedIndex, user.name)
     );
   };
+
   const actionAddModalOpen = () => {
     handleModalOpen();
   };
+
   const actionEdit = () => {
     dispatch({ type: 'SETSELECTEDUSER', user: state.users[isUserCreated] });
   };
-  const actionEditProfile = () => alert('개발중입니다!');
+
+  const actionEditProfile = () => {
+    UserService.deleteUser(
+      '/' + state.calendarList[selectedIndex]._id,
+      state.users[isUserCreated]._id
+    );
+    const newList = state.calendarList.map((calendar: Calendar) => {
+      if (calendar.user_name === state.users[isUserCreated].name) {
+        calendar.user_name = '';
+      }
+      return calendar;
+    });
+    dispatch({ type: 'SIGNED_SET_CALENDARLIST', calendarList: newList });
+  };
+
   const actionFindUser = () => alert('개발중입니다!');
+
   const actionShare = () => {
     const id = location.search.split('=')[1];
     const url =
@@ -99,7 +118,7 @@ const EditButton: React.FC<{
     { icon: <EventAvailableIcon />, name: '날짜선택', action: actionEdit },
     {
       icon: <ManageAccountsOutlinedIcon />,
-      name: '프로필수정',
+      name: '프로필삭제',
       action: actionEditProfile,
     },
     { icon: <SearchIcon />, name: '유저검색', action: actionFindUser },
