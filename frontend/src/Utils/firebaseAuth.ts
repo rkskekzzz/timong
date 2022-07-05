@@ -9,6 +9,7 @@ import { getAuth } from 'firebase/auth';
 
 export function useSign() {
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [isSignedOut] = useState<boolean>(true);
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
@@ -20,17 +21,19 @@ export function useSign() {
       console.log(error);
     }
   };
+
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      setIsSignedIn(false);
     } catch (error) {
       console.log(error);
     }
   };
+
   return {
     auth,
     isSignedIn,
+    isSignedOut,
     handleSignIn,
     handleSignOut,
   };
