@@ -34,9 +34,9 @@ const Card = ({
     setAnchorEl(null);
   };
 
-  const deleteAction = (index: number) => {
+  const deleteAction = async (index: number) => {
     if (confirm('캘린더를 삭제하시겠습니까?')) {
-      deleteSignedCalendar(state, index);
+      await deleteSignedCalendar(state, index);
     }
   };
   // const editAction = () => alert('개발중입니다!');
