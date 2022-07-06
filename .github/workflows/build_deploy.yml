@@ -27,7 +27,11 @@ jobs:
             ${{ runner.os }}-node-module-cache
       - name: Front 노드 모듈 설치
         if: steps.node-module-cache.outputs.cache-hit != 'true'
-        run: cd frontend && npm install
+        run: |
+          cd frontend
+          npm install react-virtualized --legacy-peer-deps
+          npm install
+          
         
       - name: 환경변수 설정
         run: |
