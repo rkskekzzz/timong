@@ -55,7 +55,6 @@ const EditButton: React.FC<{
   const handleCopyFalse = () => setIsCopy(false);
 
   const addUser = async (user: User) => {
-    console.log(user.name);
     await addUserInCalendar(
       user,
       state.users,

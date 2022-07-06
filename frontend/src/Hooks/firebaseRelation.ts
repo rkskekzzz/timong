@@ -31,7 +31,6 @@ export async function addSignedUserCalendar(element: User, state: State) {
   const docRef = doc(dbService, 'Users', state.isSigned);
   let calendar;
   let calendar_id;
-  console.log(element._id);
   if (element._id === '') {
     calendar = await CalendarService.create(element.name);
     calendar_id = calendar._id;

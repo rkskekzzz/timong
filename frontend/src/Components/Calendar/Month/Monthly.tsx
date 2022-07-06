@@ -35,7 +35,6 @@ const Monthly: React.FC<{
 
   const obsHandler = (entries) => {
     const target = entries[0];
-    console.log(year);
     if (target.isIntersecting && preventRef.current) {
       preventRef.current = false;
       setYear((year) => [
@@ -47,7 +46,6 @@ const Monthly: React.FC<{
   };
 
   useEffect(() => {
-    console.log(year);
     const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
     if (obsRef.current) observer.observe(obsRef.current);
     return () => {
