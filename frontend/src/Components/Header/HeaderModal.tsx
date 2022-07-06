@@ -114,20 +114,22 @@ const HeaderModal: React.FC<{
           >
             익명으로 사용하기
           </Styled.ModalTextButton>
-          {state.isSigned ?? (
+          {state.isSigned ? (
             <Styled.ModalTextButton
               onClick={handleSignOut}
               color={theme.myPalette.iconSmall}
             >
               로그아웃
             </Styled.ModalTextButton>
+          ) : (
+            <></>
           )}
           <Styled.ModalBoxButtons>
             <GitHubIcon onClick={() => handleClick(githubLink)} sx={style} />
             <EmailIcon onClick={() => handleClick(emailLink)} sx={style} />
             <ArticleIcon onClick={() => handleClick(articleLink)} sx={style} />
           </Styled.ModalBoxButtons>
-          {state.isSigned ?? (
+          {state.isSigned ? (
             <Styled.ModalTextButton
               onClick={unregister}
               color={theme.myPalette.iconSmall + 'aa'}
@@ -135,6 +137,8 @@ const HeaderModal: React.FC<{
             >
               탈퇴하기
             </Styled.ModalTextButton>
+          ) : (
+            <></>
           )}
         </Styled.ModalBox>
       </Styled.ColoredModal>
