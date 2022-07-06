@@ -28,7 +28,7 @@ const Invite = () => {
   const invitor_name =
     split_location.length > 1 ? split_location[1].split('=')[1] : '';
 
-  const createCalendarRelation = () => {
+  const createCalendarRelation = async () => {
     for (let i = 0; i < state.calendarList.length; i++) {
       if (state.calendarList[i]._id === database_id) {
         alert('이미 초대된 캘린더입니다.');
@@ -37,7 +37,7 @@ const Invite = () => {
       }
     }
     const calendar = new User(calendarName, '', [], false, database_id);
-    addSignedUserCalendar(calendar, state);
+    await addSignedUserCalendar(calendar, state);
     navi('/calendar?id=' + database_id);
   };
 
@@ -97,6 +97,11 @@ const Invite = () => {
                 비회원으로 볼래요
               </Button>
             </div>
+            <p id="notice">
+              웹뷰(카카오톡 브라우저 등)에서는 로그인기능이 동작하지 않습니다!
+              <br />
+              사파리 or 크롬으로 열어주세요
+            </p>
           </>
         ) : (
           <CircularProgress sx={{ color: theme.main.theme }} />

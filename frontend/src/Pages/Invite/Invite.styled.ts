@@ -58,6 +58,10 @@ const InviteBox = styled.div`
       #notAccept {
       }
     }
+    #notice {
+      color: gray;
+      text-align: center;
+    }
     backdrop-filter: blur(15px);
   }
 `;
