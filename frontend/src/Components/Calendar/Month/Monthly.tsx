@@ -6,9 +6,7 @@ import { UserWithValid } from 'src/Interface/UserType';
 import { buildDate } from 'src/Utils';
 import { Box } from '@mui/material';
 import Styled from './Monthly.styled';
-import { AutoSizer, List } from 'react-virtualized';
 import UserDrawer from 'src/Components/UserDrawer/UserDrawer';
-import NumberEx from 'src/Common/NumberEx';
 import EditButton from 'src/Pages/SignedCalendar/List/EditButton';
 import Users from 'src/Components/Users';
 import { useLocation } from 'react-router-dom';
@@ -32,6 +30,31 @@ const Monthly: React.FC<{
   const [isShowEdit, setIsShowEdit] = useState<boolean>(false);
   const { state, dispatch } = useContext(UserContext);
 
+  const obsRef = useRef(null);
+  const preventRef = useRef(true);
+
+  const obsHandler = (entries) => {
+    const target = entries[0];
+    console.log(year);
+    if (target.isIntersecting && preventRef.current) {
+      preventRef.current = false;
+      setYear((year) => [
+        ...year,
+        ...buildDate(year[year.length - 1].monthMoment.clone().add(1, 'M')),
+      ]);
+      preventRef.current = true;
+    }
+  };
+
+  useEffect(() => {
+    console.log(year);
+    const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
+    if (obsRef.current) observer.observe(obsRef.current);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   const handleDrawerOpen = () => setIsShow(!isShow);
   const handleDrawerClose = () => setIsShow(false);
 
@@ -40,32 +63,6 @@ const Monthly: React.FC<{
     setDayUsers,
     isShow,
     setSelectedDay,
-  };
-
-  const scrollListener = (params) => {
-    if (params.scrollTop + params.clientHeight >= params.scrollHeight - 100) {
-      setYear((year) => [
-        ...year,
-        ...buildDate(year[year.length - 1].monthMoment.clone().add(1, 'M')),
-      ]);
-    }
-  };
-
-  const rowRenderer = ({ index, key, style }) => {
-    const month = year[index];
-    return (
-      <div style={style} key={key}>
-        <MonthBox
-          month={month}
-          drawerHandler={drawerHandler}
-          selectedIndex={selectedIndex}
-        />
-      </div>
-    );
-  };
-
-  const getRowHeight = ({ index }: { index: number }) => {
-    return 60 + year[index].week.length * 80 + 30;
   };
 
   useEffect(() => {
@@ -90,72 +87,56 @@ const Monthly: React.FC<{
     setIsShowEdit(false);
   }, [selectedIndex]);
 
-  /**
-   * react-vertualized (https://bvaughn.github.io/react-virtualized/#/components/AutoSizer)
-   *
-   * WindowScroller props 의미
-   * @param width : 너비
-   * @param height: 높이
-   * ㄴ 그려줄 data grid의 전체 사이즈라고 생각하면 편하다
-   * @param isScrolling : 스크롤을 감지하는 상태값이다.
-   * @param scrollTop : scrollTop을 바꿀 수 있는 변수 해당 값을 바꾸면 원하는 위치로 이동할 수 있다.
-   * @param registerChild : registerChild를 활용해서 windowscroller의 자식 컴포넌트로 ref를 전달할 수 있다.
-   * ref를 사용하지 않으면 windowscroller가 findDOMNode()를 호출하는데 이는 strict mode에서는 권장하지 않는 방식이기 때문에 ref를 사용하는 것이 적합하다.
-   * 문제인지
-   * @see https://github.com/bvaughn/react-virtualized/issues/1572
-   * 해결책
-   * @see https://github.com/bvaughn/react-virtualized/blob/master/docs/WindowScroller.md#render-props
-   */
   return (
     <Box position="relative">
       <Styled.AutoSizerWrapper>
-        <AutoSizer>
-          {({ height, width }) => (
-            <>
-              <List
-                className="list"
-                height={height}
-                rowHeight={getRowHeight}
-                onScroll={scrollListener}
-                rowCount={year.length}
-                rowRenderer={rowRenderer}
-                width={width}
-                style={{
-                  maxWidth: NumberEx.calendarMaxWidth,
-                }} // 리스트 내부 너비의 최대값을 지정함 (grid를 정사각형으로 유도)
+        {year.map((month, index) => {
+          return (
+            <div
+              key={index}
+              style={{ height: 60 + year[index].week.length * 80 + 30 }}
+            >
+              hi
+              <MonthBox
+                month={month}
+                drawerHandler={drawerHandler}
+                selectedIndex={selectedIndex}
               />
-              <div className="movebox" style={{ width: width }}>
-                {location.pathname.includes('calendar') ? (
-                  <EditButton
-                    userDrawerRef={userDrawerRef}
-                    timePickerRef={timePickerRef}
-                    isUserCreated={isUserCreated}
-                    isShowEdit={isShowEdit}
-                    isShow={isShow}
-                    selectedIndex={selectedIndex}
-                    handleDrawerClose={handleDrawerClose}
-                  />
-                ) : (
-                  <Users />
-                )}
-                <TimePicker
-                  timePickerRef={timePickerRef}
-                  isShowEdit={isShowEdit}
-                  selectedUser={state.selectedUser}
-                  selectedIndex={selectedIndex}
-                />
-                <UserDrawer
-                  userDrawerRef={userDrawerRef}
-                  isShow={isShow}
-                  touchRef={touchRef}
-                  selectedDay={selectedDay}
-                  dayUsers={dayUsers}
-                  handleDrawerClose={handleDrawerClose}
-                />
-              </div>
-            </>
-          )}
-        </AutoSizer>
+            </div>
+          );
+        })}
+        <div ref={obsRef}>옵저버</div>
+        <>
+          <div className="movebox">
+            {location.pathname.includes('calendar') ? (
+              <EditButton
+                userDrawerRef={userDrawerRef}
+                timePickerRef={timePickerRef}
+                isUserCreated={isUserCreated}
+                isShowEdit={isShowEdit}
+                isShow={isShow}
+                selectedIndex={selectedIndex}
+                handleDrawerClose={handleDrawerClose}
+              />
+            ) : (
+              <Users />
+            )}
+            <TimePicker
+              timePickerRef={timePickerRef}
+              isShowEdit={isShowEdit}
+              selectedUser={state.selectedUser}
+              selectedIndex={selectedIndex}
+            />
+            <UserDrawer
+              userDrawerRef={userDrawerRef}
+              isShow={isShow}
+              touchRef={touchRef}
+              selectedDay={selectedDay}
+              dayUsers={dayUsers}
+              handleDrawerClose={handleDrawerClose}
+            />
+          </div>
+        </>
       </Styled.AutoSizerWrapper>
     </Box>
   );
