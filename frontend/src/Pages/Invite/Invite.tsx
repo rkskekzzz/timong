@@ -12,9 +12,11 @@ import { addSignedUserCalendar } from 'src/Hooks/firebaseRelation';
 import { fetchCalendarList } from 'src/Hooks/firebaseRelation';
 import { User } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
+import { useSign } from 'src/Utils/firebaseAuth';
 
 const Invite = () => {
   const { state, dispatch } = useContext(UserContext);
+  const { isSignedIn, handleSignIn } = useSign();
   const location = useLocation();
   const navi = useNavigate();
   const theme = useTheme();
@@ -24,7 +26,7 @@ const Invite = () => {
   const database_id = split_location[0].split('=')[1];
 
   const invitor_name =
-    split_location.length > 1 ?? split_location[1].split('=')[1];
+    split_location.length > 1 ? split_location[1].split('=')[1] : '';
 
   const createCalendarRelation = () => {
     for (let i = 0; i < state.calendarList.length; i++) {
@@ -78,9 +80,15 @@ const Invite = () => {
                 ` ${calendarName}에 초대하셨습니다!`}
             </h3>
             <div className="buttons">
-              <button id="accept" onClick={createCalendarRelation}>
-                초대 수락하기
-              </button>
+              {state.isSigned || isSignedIn ? (
+                <button id="accept" onClick={createCalendarRelation}>
+                  초대 수락하기
+                </button>
+              ) : (
+                <button id="accept" onClick={handleSignIn}>
+                  로그인하고 초대 받기
+                </button>
+              )}
               <Button
                 id="notAccept"
                 onClick={() => navi(`/${database_id}`)}
