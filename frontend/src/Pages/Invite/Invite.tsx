@@ -24,6 +24,7 @@ const Invite = () => {
   const [calendarName, setCalendarName] = useState<string>('');
   const split_location = location.search.split('&');
   const database_id = split_location[0].split('=')[1];
+  const [isLoad, setIsLoad] = useState<boolean>(false);
 
   const invitor_name =
     split_location.length > 1 ? split_location[1].split('=')[1] : '';
@@ -42,11 +43,17 @@ const Invite = () => {
   };
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoad(true);
+    }, 2000);
     onAuthStateChanged(auth, (_user) => {
       if (_user) {
         dispatch({ type: 'SIGNIN', uid: _user.uid });
       }
     });
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   useEffect(() => {
@@ -63,8 +70,8 @@ const Invite = () => {
       if (!result) navi('/404');
       setCalendarName(result.name);
     };
-    if (state.isSigned) getCalendar();
-  }, [state.isSigned]);
+    getCalendar();
+  }, []);
 
   useEffect(() => {
     console.log(location.search);
@@ -79,24 +86,30 @@ const Invite = () => {
               {(invitor_name ? `${invitor_name} 님이` : '누군가') +
                 ` ${calendarName}에 초대하셨습니다!`}
             </h3>
-            <div className="buttons">
-              {state.isSigned || isSignedIn ? (
-                <button id="accept" onClick={createCalendarRelation}>
-                  초대 수락하기
-                </button>
-              ) : (
-                <button id="accept" onClick={handleSignIn}>
-                  로그인하고 초대 받기
-                </button>
-              )}
-              <Button
-                id="notAccept"
-                onClick={() => navi(`/${database_id}`)}
-                size="small"
-              >
-                비회원으로 볼래요
-              </Button>
-            </div>
+            {isLoad ? (
+              <>
+                <div className="buttons">
+                  {state.isSigned || isSignedIn ? (
+                    <button id="accept" onClick={createCalendarRelation}>
+                      초대 수락하기
+                    </button>
+                  ) : (
+                    <button id="accept" onClick={handleSignIn}>
+                      로그인하고 초대 받기
+                    </button>
+                  )}
+                  <Button
+                    id="notAccept"
+                    onClick={() => navi(`/${database_id}`)}
+                    size="small"
+                  >
+                    비회원으로 볼래요
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <CircularProgress sx={{ color: theme.main.theme }} />
+            )}
             <p id="notice">
               웹뷰(카카오톡 브라우저 등)에서는 로그인기능이 동작하지 않습니다!
               <br />
