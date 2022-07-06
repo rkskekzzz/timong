@@ -35,8 +35,9 @@ const shake = keyframes`
 `;
 
 const Entrance = styled.div`
+  position: fixed;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

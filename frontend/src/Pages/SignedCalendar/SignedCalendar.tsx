@@ -84,7 +84,7 @@ const SignedCalendar = () => {
       const result = await CalendarService.getCalendar(
         '/' + state.calendarList[selectedIndex]._id
       );
-      if (!result) navi('/404');
+      if (!result) setIsCalendarLoad(false);
       dispatch({
         type: 'INIT',
         users: result.users,
