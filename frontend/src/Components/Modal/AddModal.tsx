@@ -48,7 +48,6 @@ function ModalBoxFormLogic({
   });
 
   const selectedColors = useMemo(() => {
-    console.log(alignment);
     switch (alignment) {
       case '메탈릭':
         return colorsNeon;

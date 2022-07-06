@@ -13,6 +13,7 @@ const ModalBox = styled.div`
   padding: 20px;
   outline: none;
   border: 0px;
+  transition: all 0.5s ease-in-out;
 `;
 
 const ModalBoxForm = styled.form`
