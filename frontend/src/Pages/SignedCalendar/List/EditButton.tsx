@@ -166,7 +166,7 @@ const EditButton: React.FC<{
         sx={{
           'position': 'absolute',
           'bottom':
-            isShow || (isShowEdit && state.selectedDate) ? height + 76 : 76,
+            isShow || (isShowEdit && state.selectedDate) ? height + 16 : 16,
           'right': 16,
           'zIndex': 200,
           'transition': 'all 0.5s ease-out 0s',

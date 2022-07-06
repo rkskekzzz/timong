@@ -88,55 +88,60 @@ const Monthly: React.FC<{
   }, [selectedIndex]);
 
   return (
-    <Box position="relative">
+    <Box
+      position="relative"
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
       <Styled.AutoSizerWrapper>
-        {year.map((month, index) => {
-          return (
-            <div
-              key={index}
-              style={{ height: 60 + year[index].week.length * 80 + 30 }}
-            >
-              hi
-              <MonthBox
-                month={month}
-                drawerHandler={drawerHandler}
-                selectedIndex={selectedIndex}
-              />
-            </div>
-          );
-        })}
-        <div ref={obsRef}>옵저버</div>
-        <>
-          <div className="movebox">
-            {location.pathname.includes('calendar') ? (
-              <EditButton
-                userDrawerRef={userDrawerRef}
-                timePickerRef={timePickerRef}
-                isUserCreated={isUserCreated}
-                isShowEdit={isShowEdit}
-                isShow={isShow}
-                selectedIndex={selectedIndex}
-                handleDrawerClose={handleDrawerClose}
-              />
-            ) : (
-              <Users />
-            )}
-            <TimePicker
-              timePickerRef={timePickerRef}
-              isShowEdit={isShowEdit}
-              selectedUser={state.selectedUser}
-              selectedIndex={selectedIndex}
-            />
-            <UserDrawer
-              userDrawerRef={userDrawerRef}
-              isShow={isShow}
-              touchRef={touchRef}
-              selectedDay={selectedDay}
-              dayUsers={dayUsers}
-              handleDrawerClose={handleDrawerClose}
-            />
-          </div>
-        </>
+        <div
+          style={{ height: '100%', position: 'relative', overflow: 'scroll' }}
+        >
+          {year.map((month, index) => {
+            return (
+              <div
+                key={index}
+                style={{ height: 60 + year[index].week.length * 80 + 30 }}
+              >
+                <MonthBox
+                  month={month}
+                  drawerHandler={drawerHandler}
+                  selectedIndex={selectedIndex}
+                />
+              </div>
+            );
+          })}
+          <div ref={obsRef}>옵저버</div>
+        </div>
+        {location.pathname.includes('calendar') ? (
+          <EditButton
+            userDrawerRef={userDrawerRef}
+            timePickerRef={timePickerRef}
+            isUserCreated={isUserCreated}
+            isShowEdit={isShowEdit}
+            isShow={isShow}
+            selectedIndex={selectedIndex}
+            handleDrawerClose={handleDrawerClose}
+          />
+        ) : (
+          <Users />
+        )}
+        <TimePicker
+          timePickerRef={timePickerRef}
+          isShowEdit={isShowEdit}
+          selectedUser={state.selectedUser}
+          selectedIndex={selectedIndex}
+        />
+        <UserDrawer
+          userDrawerRef={userDrawerRef}
+          isShow={isShow}
+          touchRef={touchRef}
+          selectedDay={selectedDay}
+          dayUsers={dayUsers}
+          handleDrawerClose={handleDrawerClose}
+        />
       </Styled.AutoSizerWrapper>
     </Box>
   );
