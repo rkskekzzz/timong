@@ -11,16 +11,36 @@ export default function reducer(state: State, action: Action): State {
         users: action.users,
         meetingDays: action.meetingDays,
       };
-    case 'ADD':
+    case 'SIGNIN':
+      return {
+        ...state,
+        isSigned: action.uid,
+      };
+    case 'CHANGEMODE':
+      return {
+        ...state,
+        mode: action.mode,
+      };
+    case 'SIGNED_SET_USER':
+      return {
+        ...state,
+        calendarList: { ...state.calendarList, ...action.calendar },
+      };
+    case 'SIGNED_SET_CALENDARLIST':
+      return {
+        ...state,
+        calendarList: action.calendarList,
+      };
+    case 'ANONY_ADD':
       return { ...state, users: state.users.concat(action.user) };
-    case 'DELETE':
+    case 'ANONY_DELETE':
       return {
         ...state,
         users: state.users.filter((_, index) => {
           return index !== action.index;
         }),
       };
-    case 'UPDATEDATE':
+    case 'ANONY_UPDATEDATE':
       return {
         ...state,
         users: state.users.map((user: User): User => {
@@ -50,7 +70,7 @@ export default function reducer(state: State, action: Action): State {
           return user;
         }),
       };
-    case 'UPDATETIMETABLE':
+    case 'ANONY_UPDATETIMETABLE':
       return {
         ...state,
         users: state.users.map((user: User): User => {
@@ -81,10 +101,21 @@ export default function reducer(state: State, action: Action): State {
           return user;
         }),
       };
-    case 'SETSELECTEDATE':
+
+    case 'SETSELECTEDVALID':
+      return {
+        ...state,
+        selectedValid: action.selectedValid,
+      };
+    case 'SETSELECTEDDATE':
       return {
         ...state,
         selectedDate: action.day ? new Day(action.day) : null,
+      };
+    case 'SETSELECTEDUSER':
+      return {
+        ...state,
+        selectedUser: action.user,
       };
     default:
       return state;

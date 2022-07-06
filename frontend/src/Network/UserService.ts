@@ -17,6 +17,7 @@ export const UserService = {
     } catch (error) {
       console.log(error);
     }
+
     return response.data;
   },
   deleteUser: async (calendar_id, user_id) => {

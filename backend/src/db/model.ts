@@ -13,6 +13,7 @@ const schema = new Schema<Calendar>(
       {
         name: { type: String, required: true },
         color: { type: String, required: true },
+        isSigned: { type: Boolean, required: false },
         schedules: [
           {
             valid: {

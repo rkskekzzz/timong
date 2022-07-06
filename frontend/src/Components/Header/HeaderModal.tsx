@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Styled from './HeaderModal.styled';
 import Snackbar from '@mui/material/Snackbar';
@@ -9,20 +9,25 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material';
+import { UserContext } from 'src/App';
+import { useSign } from 'src/Utils/firebaseAuth';
+import { UserService } from 'src/Network/UserService';
+import { Calendar } from 'src/Interface/CalendarType';
+import { deleteSignedUser } from 'src/Hooks/firebaseRelation';
 
 const githubLink = 'https://github.com/rkskekzzz/blockcalendar.git';
 const emailLink = 'mailto:wkdlfflxh@naver.com';
 const articleLink = 'https://80000coding.oopy.io';
 
-function ModalBoxForm({
-  handleModalClose,
-  toggleMode,
-}: {
+const HeaderModal: React.FC<{
+  isShowModal: boolean;
   handleModalClose: () => void;
-  toggleMode: () => void;
-}) {
-  const navi = useNavigate();
+}> = ({ isShowModal, handleModalClose }) => {
+  const theme = useTheme();
+  const { state, dispatch } = useContext(UserContext);
   const [open, setOpen] = useState<boolean>(false);
+  const { handleSignOut, handleDeleteUser } = useSign();
+  const navi = useNavigate();
 
   const handleOpen = useCallback(() => {
     setOpen(true);
@@ -37,14 +42,36 @@ function ModalBoxForm({
     }
     setOpen(false);
   };
+
   const handleClick = useCallback((link: string) => {
     window.open(link);
   }, []);
+
+  const handleThemeChangeButton = () => {
+    dispatch({
+      type: 'CHANGEMODE',
+      mode: theme.myPalette.mode === 'light' ? 'dark' : 'light',
+    });
+  };
+
   const handleCloseButton = useCallback(() => {
     handleModalClose();
   }, [handleModalClose]);
-  const theme = useTheme();
-  const handleThemeChangeButton = toggleMode;
+
+  const unregister = () => {
+    state.calendarList.forEach((calendar: Calendar) => {
+      let userid: string;
+      for (let i = 0; i < state.users.length; i++) {
+        if (state.users[i].name === calendar.user_name) {
+          userid = state.users[i]._id;
+          break;
+        }
+      }
+      if (userid) UserService.deleteUser('/' + calendar._id, userid);
+    });
+    deleteSignedUser(state);
+    handleDeleteUser();
+  };
 
   const style = {
     color: theme.myPalette.iconSmall,
@@ -58,73 +85,56 @@ function ModalBoxForm({
           Copy To Clipboard!
         </Alert>
       </Snackbar>
-      <Styled.ModalBox>
-        <CloseIcon onClick={handleCloseButton} fontSize="medium" sx={style} />
-        <CopyToClipboard text={window.location.href}>
+      <Styled.ColoredModal
+        open={isShowModal}
+        onClose={handleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        color={theme.myPalette.backDropHeader}
+      >
+        <Styled.ModalBox>
+          <CloseIcon onClick={handleCloseButton} fontSize="medium" sx={style} />
+          <CopyToClipboard text={window.location.href}>
+            <Styled.ModalTextButton
+              color={theme.myPalette.iconSmall}
+              onClick={handleOpen}
+            >
+              공유하기
+            </Styled.ModalTextButton>
+          </CopyToClipboard>
           <Styled.ModalTextButton
             color={theme.myPalette.iconSmall}
-            onClick={handleOpen}
+            onClick={handleThemeChangeButton}
           >
-            Share Link
+            {theme.myPalette.mode === 'light' ? '어두운 테마' : '밝은 테마'}
           </Styled.ModalTextButton>
-        </CopyToClipboard>
-        <Styled.ModalTextButton
-          color={theme.myPalette.iconSmall}
-          onClick={handleThemeChangeButton}
-        >
-          {theme.myPalette.mode === 'light' ? 'Dark Mode   ' : 'Light Mode   '}
-        </Styled.ModalTextButton>
-        <Styled.ModalTextButton
-          onClick={() => navi('/')}
-          color={theme.myPalette.iconSmall}
-        >
-          New Calendar
-        </Styled.ModalTextButton>
-        <Styled.ModalBoxButtons>
-          <GitHubIcon onClick={() => handleClick(githubLink)} sx={style} />
-          <EmailIcon onClick={() => handleClick(emailLink)} sx={style} />
-          <ArticleIcon onClick={() => handleClick(articleLink)} sx={style} />
-        </Styled.ModalBoxButtons>
-      </Styled.ModalBox>
+          <Styled.ModalTextButton
+            onClick={() => navi('/anony')}
+            color={theme.myPalette.iconSmall}
+          >
+            익명으로 사용하기
+          </Styled.ModalTextButton>
+          <Styled.ModalTextButton
+            onClick={handleSignOut}
+            color={theme.myPalette.iconSmall}
+          >
+            로그아웃
+          </Styled.ModalTextButton>
+          <Styled.ModalBoxButtons>
+            <GitHubIcon onClick={() => handleClick(githubLink)} sx={style} />
+            <EmailIcon onClick={() => handleClick(emailLink)} sx={style} />
+            <ArticleIcon onClick={() => handleClick(articleLink)} sx={style} />
+          </Styled.ModalBoxButtons>
+          <Styled.ModalTextButton
+            onClick={unregister}
+            color={theme.myPalette.iconSmall + 'aa'}
+            style={{ fontSize: '0.80rem' }}
+          >
+            탈퇴하기
+          </Styled.ModalTextButton>
+        </Styled.ModalBox>
+      </Styled.ColoredModal>
     </>
-  );
-}
-
-const HeaderModal: React.FC<{
-  isShowModal: boolean;
-  handleModalClose: () => void;
-  toggleMode: () => void;
-}> = ({ isShowModal, handleModalClose, toggleMode }) => {
-  const theme = useTheme();
-
-  const ForwardFC = React.forwardRef(function ForwardFCCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    props: any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ref: any
-  ) {
-    return (
-      <span {...props} ref={ref}>
-        {props.children}
-      </span>
-    );
-  });
-
-  return (
-    <Styled.ColoredModal
-      open={isShowModal}
-      onClose={handleModalClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      color={theme.myPalette.backDropHeader}
-    >
-      <ForwardFC>
-        <ModalBoxForm
-          handleModalClose={handleModalClose}
-          toggleMode={toggleMode}
-        />
-      </ForwardFC>
-    </Styled.ColoredModal>
   );
 };
 

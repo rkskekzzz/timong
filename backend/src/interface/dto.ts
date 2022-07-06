@@ -1,4 +1,4 @@
-import { Schedule } from "./entity";
+import { Schedule } from './entity';
 
 export class CreateCalendarDTO {
   name!: string;
@@ -9,6 +9,7 @@ export class CreateCalendarDTO {
 export class CreateUserDTO {
   name!: string;
   color!: string;
+  isSigned: boolean = false;
   schedules: Schedule[] = [];
 }
 

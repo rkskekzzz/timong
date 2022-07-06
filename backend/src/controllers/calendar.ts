@@ -8,9 +8,9 @@ async function create(req: Request, res: Response): Promise<Response> {
   const createCalendarDTO: CreateCalendarDTO = req.body;
   let calendar = await CalendarService.create(createCalendarDTO);
 
-  if (calendar && calendar._id) {
-    calendar = await UserService.create(calendar._id!, sampleUser);
-  }
+  // if (calendar && calendar._id) {
+  //   calendar = await UserService.create(calendar._id!, sampleUser);
+  // }
 
   return res.status(200).json(calendar);
 }

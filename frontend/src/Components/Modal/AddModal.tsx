@@ -1,12 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import Styled from './AddModal.styled';
 import { useFormik } from 'formik';
 import { User } from 'src/Interface/UserType';
-
 import { Input, Modal } from '@mui/material';
 import { CirclePicker } from 'react-color';
 import { validForm } from '../../Utils';
 import { useTheme } from '@mui/material';
+import { State } from 'src/Interface/ContextType';
+import { fetchCalendarList } from 'src/Hooks/firebaseRelation';
+import { UserContext } from 'src/App';
 
 type Color = object & {
   hex: string;
@@ -17,39 +19,41 @@ type Color = object & {
   source: string;
 };
 
-// const colors = [
-//   '#A93226',
-//   '#CB4335',
-//   '#884EA0',
-//   '#7D3C98',
-//   '#2471A3',
-//   '#2E86C1',
-//   '#17A589',
-//   '#138D75',
-//   '#229954',
-//   '#28B463',
-//   '#D4AC0D',
-//   '#D68910',
-//   '#CA6F1E',
-//   '#BA4A00',
-//   '#A6ACAF',
-//   '#707B7C',
-//   '#2E4053',
-// ];
-
 function ModalBoxFormLogic({
   handleModalClose,
-  addUser,
+  placeholder,
+  action,
 }: {
   handleModalClose: () => void;
-  addUser: (user: User) => void;
+  placeholder: string;
+  action: (user: User, state: State) => Promise<void>;
 }) {
+  const colors = [
+    '#A93226',
+    '#CB4335',
+    '#884EA0',
+    '#7D3C98',
+    '#2471A3',
+    '#2E86C1',
+    '#17A589',
+    '#138D75',
+    '#229954',
+    '#28B463',
+    '#D4AC0D',
+    '#D68910',
+    '#CA6F1E',
+    '#BA4A00',
+    '#460000',
+    '#0c0046',
+    '#2E4053',
+  ];
+  const { state, dispatch } = useContext(UserContext);
   const [isError, setIsError] = useState<{ color: boolean; name: boolean }>({
     color: false,
     name: false,
   });
 
-  const [clr, setClr] = useState<string>('#ffffff');
+  const [clr, setClr] = useState<string>('#868686');
   const formik = useFormik({
     initialValues: {
       userName: '',
@@ -58,6 +62,7 @@ function ModalBoxFormLogic({
       console.log('submit');
     },
   });
+
   const toggleError = (error: string) => {
     const initError = { color: false, name: false };
     const newError = { color: false, name: false };
@@ -70,9 +75,10 @@ function ModalBoxFormLogic({
     setIsError(newError);
     setTimeout(() => setIsError(initError), 1000);
   };
-  const handleSubmitButton = () => {
+
+  const handleSubmitButton = async () => {
     if (isError.color || isError.name) return;
-    if (clr === '#ffffff') {
+    if (clr === '#868686') {
       alert('Pick the Color!');
       return;
     }
@@ -82,10 +88,11 @@ function ModalBoxFormLogic({
       const _err = error as string;
       return toggleError(_err);
     }
-    const user = new User(formik.values.userName, clr, [], '');
+    const user = new User(formik.values.userName, clr, [], false, '');
     formik.resetForm();
     handleModalClose();
-    addUser(user);
+    await action(user, state);
+    await fetchCalendarList(state, dispatch);
   };
 
   const handleColorPick = (e: object) => {
@@ -103,17 +110,17 @@ function ModalBoxFormLogic({
       <CirclePicker
         width=""
         color={clr}
-        // colors={colors}
+        colors={[...colors, state.mode == 'dark' ? '#ffffff' : '#000000']}
         onChangeComplete={handleColorPick}
       />
       <Input
         error={isError.name ? true : false}
         autoComplete="false"
         id="userName"
-        placeholder="닉네임을 입력하세요..."
+        placeholder={placeholder}
         value={formik.values.userName}
         onChange={formik.handleChange}
-        inputProps={{ maxLength: 10 }}
+        inputProps={{ maxLength: 15 }}
       />
       <Styled.ModalBoxButton
         // type="submit"
@@ -129,10 +136,11 @@ function ModalBoxFormLogic({
 }
 
 const AddModal: React.FC<{
+  action: (user: User, state: State) => Promise<void>;
   handleModalClose: () => void;
-  addUser: (user: User) => void;
   isShowModal: boolean;
-}> = ({ handleModalClose, addUser, isShowModal }) => {
+  placeholder: string;
+}> = ({ handleModalClose, isShowModal, placeholder, action }) => {
   const theme = useTheme();
   return (
     <Modal
@@ -144,7 +152,8 @@ const AddModal: React.FC<{
       <Styled.ModalBox style={{ background: theme.myPalette.backgroundModal }}>
         <ModalBoxFormLogic
           handleModalClose={handleModalClose}
-          addUser={addUser}
+          placeholder={placeholder}
+          action={action}
         />
       </Styled.ModalBox>
     </Modal>

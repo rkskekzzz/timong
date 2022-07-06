@@ -1,3 +1,52 @@
+declare module '@mui/material/styles' {
+  interface Theme {
+    myPalette: {
+      mode: string;
+      foregroundHeader: string;
+      backgroundHeader: string;
+      backgroundModal: string;
+      backDropHeader: string;
+      foreground: string;
+      iconSmall: string;
+      icon: string;
+      foregroundSwitch: string;
+      backgroundSwitch: string;
+      foregroundAddButton: string;
+      backgroundAddButton: string;
+      backDrop: string;
+      background: string;
+      border: string;
+    };
+    main: {
+      background: string;
+      theme: string;
+    };
+  }
+  interface ThemeOptions {
+    myPalette?: {
+      mode?: string;
+      foregroundHeader?: string;
+      backgroundHeader?: string;
+      backgroundModal?: string;
+      backDropHeader?: string;
+      foreground?: string;
+      iconSmall?: string;
+      icon?: string;
+      foregroundSwitch?: string;
+      backgroundSwitch?: string;
+      foregroundAddButton?: string;
+      backgroundAddButton?: string;
+      backDrop?: string;
+      background?: string;
+      border?: string;
+    };
+    main: {
+      background?: string;
+      theme?: string;
+    };
+  }
+}
+
 export const themes = {
   light: {
     mode: 'light',
@@ -14,6 +63,7 @@ export const themes = {
     backgroundAddButton: '#000000',
     backDrop: '#00000080',
     background: '#ffffff',
+    border: '#333333',
   },
   dark: {
     mode: 'dark',
@@ -30,6 +80,7 @@ export const themes = {
     backgroundAddButton: '#ffffff',
     backDrop: '#000000b0',
     background: '#131313',
+    border: '#cccccc',
   },
   main: {
     background: '#ffd8fb',

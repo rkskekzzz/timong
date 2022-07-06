@@ -8,23 +8,22 @@ import React, {
 import { User } from 'src/Interface/UserType';
 import AddModal from '../Modal';
 import Styled from './Users.styled';
-import { globalSelectedUser } from 'src/Interface/UserType';
 import Backdrop from '@mui/material/Backdrop';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
-import TimePicker from '../TimePicker/TimePicker';
 import FaceIcon from '@mui/icons-material/Face';
 import { UserContext } from 'src/App';
 import { UserService } from 'src/Network/UserService';
 import arrow from 'src/assets/arrow.png';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '@mui/material';
+import { addUserInCalendar } from 'src/Hooks/userController';
+import { State } from 'src/Interface/ContextType';
 
 const Users = () => {
   const location = useLocation();
   const [isAnimationDone, setIsAnimationDone] = useState<boolean>(true);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isAdd, setIsAdd] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
   const [touchStart, setTouchStart] = useState<number>(0);
@@ -32,21 +31,22 @@ const Users = () => {
   const [isSwipeMore, setIsSwipeMore] = useState<boolean>(false);
   const [willDelete, setWillDelete] = useState<number>(-1);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const [isChecked, setIsChecked] = useState<boolean>(true);
   const [isButtonGuideShow, setIsButtonGuideShow] = useState<boolean>(true);
   const [isFirstOpen, setIsFirstOpen] = useState<boolean>(true);
   const { state, dispatch } = useContext(UserContext);
   const theme = useTheme();
   const users = state.users;
+  const database_id = location.pathname.includes('calendar')
+    ? location.search.substring(4)
+    : location.pathname;
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleDialClose = useCallback(() => {
     setTimeout(() => {
-      setSelectedUser(null);
-      setIsChecked(true);
+      dispatch({ type: 'SETSELECTEDUSER', user: null });
     }, 200);
-  }, [setSelectedUser]);
+  }, []);
   const handleClickAway = useCallback(() => {
     if (isShowModal) return;
     setIsShow(false);
@@ -64,10 +64,10 @@ const Users = () => {
   }, [setIsSwipe, setIsFirstOpen]);
   const handleDial = useCallback(() => {
     if (!isShow && !isAnimationDone) return;
-    // if (isFirstOpen) showGuide();
+    if (isFirstOpen) showGuide(); // 가이드 제거
     else setIsSwipe(-1);
     setIsShow(!isShow);
-    dispatch({ type: 'SETSELECTEDATE', day: null });
+    dispatch({ type: 'SETSELECTEDDATE', day: null });
     setIsAnimationDone(false);
     setTimeout(() => {
       if (isShow && scrollRef && scrollRef.current) {
@@ -87,21 +87,31 @@ const Users = () => {
   ]);
   const handleUserTabbed = useCallback(
     (index: number) => {
-      setSelectedUser(users[index]);
+      if (users[index].isSigned === true) {
+        alert('선택할 수 없는 사용자 입니다!');
+        return;
+      }
+      dispatch({ type: 'SETSELECTEDUSER', user: users[index] });
       handleDial();
     },
-    [setSelectedUser, handleDial, users]
+    [handleDial, users]
   );
   const handleRowDelButton = useCallback(
     (delIndex: number, user: User) => {
       if (!isShow || isAnimationDone || isSwipe < 0) return;
+      console.log('??');
+      if (user.isSigned) {
+        console.log('here');
+        alert('삭제할 수 없는 사용자입니다!');
+        return;
+      }
       setWillDelete(delIndex);
       setIsSwipe(-1);
       setTimeout(() => {
         if (!dispatch) throw new Error('no dispatch');
         // TODO: del 에러나면 alert띄우기
-        UserService.deleteUser(window.location.pathname, user._id);
-        dispatch({ type: 'DELETE', index: delIndex, user });
+        UserService.deleteUser(database_id, user._id);
+        dispatch({ type: 'ANONY_DELETE', index: delIndex, user });
         setWillDelete(-1);
       }, 800);
     },
@@ -175,10 +185,6 @@ const Users = () => {
     },
     [isSwipeMore, handleRowDelButton, setIsSwipeMore]
   );
-  const handleToggle = useCallback(
-    () => setIsChecked(!isChecked),
-    [setIsChecked, isChecked]
-  );
   const handleModalOpen = () => {
     setIsShowModal(true);
   };
@@ -188,24 +194,19 @@ const Users = () => {
   const handleAddUserButton = useCallback(() => {
     handleModalOpen();
   }, [handleModalOpen, users]);
-  const addUser = useCallback(
-    async (user: User) => {
-      if (!dispatch) throw new Error('no dispatch');
-      for (const _user of users) {
-        if (_user.name === user.name) {
-          alert('User name is aready exist');
-          return;
-        }
-      }
-      const result: User = await UserService.createUser(location.pathname, {
-        name: user.name,
-        color: user.color,
-      });
-      dispatch({ type: 'ADD', user: result });
-      setIsAdd(true);
-    },
-    [dispatch, users]
-  );
+
+  const handleAddUser = async (user: User, state: State) => {
+    if (!dispatch || !state) throw new Error('no dispatch');
+    const result = await addUserInCalendar(
+      user,
+      users,
+      location.pathname,
+      false
+    );
+    dispatch({ type: 'ANONY_ADD', user: result });
+    setIsAdd(true);
+  };
+
   useEffect(() => {
     if (isShow) window.document.body.style.overflow = 'hidden';
     else {
@@ -214,12 +215,8 @@ const Users = () => {
     }
   }, [isShow]);
   useEffect(() => {
-    globalSelectedUser.user = selectedUser;
-    globalSelectedUser.valid = isChecked;
-  }, [selectedUser, isChecked]);
-  useEffect(() => {
     if (!isAdd) return;
-    setSelectedUser(users[users.length - 1]);
+    dispatch({ type: 'SETSELECTEDUSER', user: users[users.length - 1] });
     const timer = setTimeout(() => {
       setIsAdd(false);
     }, 0);
@@ -238,11 +235,6 @@ const Users = () => {
 
   return (
     <>
-      <TimePicker
-        isChecked={isChecked}
-        selectedUser={selectedUser}
-        handleToggle={handleToggle}
-      />
       <Backdrop
         open={isShow}
         sx={{ bgcolor: theme.myPalette.backDrop, zIndex: 200 }}
@@ -250,13 +242,14 @@ const Users = () => {
       <AddModal
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
-        addUser={addUser}
+        action={handleAddUser}
+        placeholder="유저 이름을 입력해주세요..."
       />
       <ClickAwayListener onClickAway={handleClickAway}>
         <div>
-          {selectedUser && (
+          {state.selectedUser && (
             <Styled.DialButton
-              isShow={selectedUser ? true : false}
+              isShow={state.selectedUser ? true : false}
               selectedDate={state.selectedDate}
               onClick={handleDialClose}
             >
@@ -266,9 +259,9 @@ const Users = () => {
               />
             </Styled.DialButton>
           )}
-          {!selectedUser && (
+          {!state.selectedUser && (
             <Styled.DialButton
-              isShow={selectedUser ? true : false}
+              isShow={state.selectedUser ? true : false}
               selectedDate={state.selectedDate}
               onClick={handleDial}
             >

@@ -2,7 +2,6 @@ import React, { useContext, useCallback, useMemo } from 'react';
 import DayBox from './DayBox';
 import Styled from './MonthBox.styled';
 import { Month, Day } from 'src/Interface/DateType';
-import { globalSelectedUser } from 'src/Interface/UserType';
 import { UserContext } from 'src/App';
 import { useTheme } from '@mui/material';
 import { ScheduleService } from 'src/Network/ScheduleService';
@@ -25,10 +24,12 @@ function DayBoxLogic({
   day,
   month,
   drawerHandler,
+  selectedIndex,
 }: {
   day: Day;
   month: Month;
   drawerHandler: DrawerHandler;
+  selectedIndex: number;
 }) {
   const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
@@ -48,25 +49,33 @@ function DayBoxLogic({
     drawerHandler.setSelectedDay(day);
     drawerHandler.handleDrawerOpen();
     drawerHandler.setDayUsers(reducedUser);
-    dispatch({ type: 'SETSELECTEDATE', day: day.moment });
+    dispatch({ type: 'SETSELECTEDDATE', day: day.moment });
   };
   const updateUser = async () => {
     dispatch({
-      type: 'UPDATEDATE',
-      user: globalSelectedUser.user,
+      type: 'ANONY_UPDATEDATE',
+      user: state.selectedUser,
       day: day.moment,
-      valid: globalSelectedUser.valid ? 'POSIBLE' : 'IMPOSIBLE',
+      valid: state.selectedValid,
     });
-    dispatch({ type: 'SETSELECTEDATE', day: day.moment });
-    await ScheduleService.updateSchedules(
-      location.pathname,
-      globalSelectedUser.user
-    );
+    dispatch({ type: 'SETSELECTEDDATE', day: day.moment });
+
+    if (state.isSigned) {
+      await ScheduleService.updateSchedules(
+        '/' + state.calendarList[selectedIndex]._id,
+        state.selectedUser
+      );
+    } else {
+      await ScheduleService.updateSchedules(
+        location.pathname,
+        state.selectedUser
+      );
+    }
   };
   const handleClick = useCallback(() => {
-    if (!globalSelectedUser.user) showUsers();
+    if (!state.selectedUser) showUsers();
     else updateUser();
-  }, [updateUser, day, showUsers]);
+  }, [day, showUsers]);
   const isThisMonth = month.monthMoment.isSame(day.moment, 'month');
   const isToday = day.moment.isSame(moment(), 'day');
   const gridSize = useMemo(() => {
@@ -85,10 +94,11 @@ function DayBoxLogic({
   );
 }
 
-const MonthBox: React.FC<{ month: Month; drawerHandler: DrawerHandler }> = ({
-  month,
-  drawerHandler,
-}) => {
+const MonthBox: React.FC<{
+  month: Month;
+  drawerHandler: DrawerHandler;
+  selectedIndex: number;
+}> = ({ month, drawerHandler, selectedIndex }) => {
   const theme = useTheme();
   return (
     <Styled.MonthBox color={theme.myPalette.foreground}>
@@ -109,6 +119,7 @@ const MonthBox: React.FC<{ month: Month; drawerHandler: DrawerHandler }> = ({
                     day={day}
                     month={month}
                     drawerHandler={drawerHandler}
+                    selectedIndex={selectedIndex}
                   />
                 );
               })}

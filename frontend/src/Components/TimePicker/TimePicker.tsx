@@ -1,12 +1,11 @@
-import React, { useCallback, useMemo, useContext } from 'react';
+import React, { useCallback, useState, useContext, useEffect } from 'react';
 import Styled from './TimePicker.styled';
 import { useTheme } from '@mui/material';
 import { Schedule, User } from 'src/Interface/UserType';
 import Size from 'src/Common/Size';
-import { Switch } from '@mui/material';
+import { Divider, Switch } from '@mui/material';
 import GlobalStyled from '../GlobalStyled/GlobalStyled.styled';
 import { UserContext } from 'src/App';
-import { Divider } from '@mui/material';
 import DayLabel from 'src/Components/DayLabel';
 import NumberEx from 'src/Common/NumberEx';
 import { ScheduleService } from 'src/Network/ScheduleService';
@@ -14,23 +13,32 @@ import { useLocation } from 'react-router-dom';
 import moment from 'moment';
 
 const TimePicker: React.FC<{
+  isShowEdit: boolean;
   selectedUser: User;
-  handleToggle: () => void;
-  isChecked: boolean;
-}> = ({ selectedUser, handleToggle, isChecked }) => {
+  timePickerRef: React.RefObject<HTMLDivElement>;
+  selectedIndex: number;
+}> = ({ isShowEdit, selectedUser, timePickerRef, selectedIndex }) => {
   const { state, dispatch } = useContext(UserContext);
-  // const [size, setSize] = useState<number>(12);
+
+  const [isChecked, setIsChecked] = useState<boolean>(true);
   const size = NumberEx.timeBoxSize;
   const theme = useTheme();
   const location = useLocation();
 
-  const isShowTimePicker = useMemo(() => {
-    if (!selectedUser) return false;
-    return true;
-  }, [selectedUser]);
+  const handleToggleTabbed = () => {
+    setIsChecked(!isChecked);
+  };
+
+  useEffect(() => {
+    dispatch({
+      type: 'SETSELECTEDVALID',
+      selectedValid: isChecked ? 'POSIBLE' : 'IMPOSIBLE',
+    });
+  }, [isChecked]);
 
   const SelectedUserState = useCallback(() => {
-    if (!selectedUser) return <GlobalStyled.Circle color="#000000" />;
+    if (!selectedUser)
+      return <GlobalStyled.Circle color="#00000000" size={Size.Medium} />;
     if (isChecked) {
       return (
         <GlobalStyled.Circle color={selectedUser.color} size={Size.Medium} />
@@ -50,12 +58,19 @@ const TimePicker: React.FC<{
         return;
       }
       dispatch({
-        type: 'UPDATETIMETABLE',
+        type: 'ANONY_UPDATETIMETABLE',
         user: selectedUser,
         date: state.selectedDate,
         time: index,
       });
-      await ScheduleService.updateSchedules(location.pathname, selectedUser);
+      if (state.isSigned) {
+        await ScheduleService.updateSchedules(
+          '/' + state.calendarList[selectedIndex]._id,
+          selectedUser
+        );
+      } else {
+        await ScheduleService.updateSchedules(location.pathname, selectedUser);
+      }
     },
     [selectedUser, state.selectedDate]
   );
@@ -118,10 +133,11 @@ const TimePicker: React.FC<{
 
   return (
     <Styled.TimePickerBox
-      isShowTimePicker={isShowTimePicker && state.selectedDate !== null}
+      isShowTimePicker={isShowEdit && state.selectedDate !== null}
       bgcolor={theme.myPalette.backgroundModal}
       fgcolor={theme.myPalette.foreground}
       size={size}
+      ref={timePickerRef}
     >
       <div className="paddingbox">
         <DayLabel selectedDay={state.selectedDate} />
@@ -131,12 +147,12 @@ const TimePicker: React.FC<{
             <div className="user-info hflex">
               <SelectedUserState />
               <span className="user-info-name">
-                {selectedUser ? selectedUser.name : 'default'}
+                {selectedUser ? selectedUser.name : ''}
               </span>
             </div>
             <Switch
               checked={isChecked}
-              onChange={handleToggle}
+              onChange={handleToggleTabbed}
               inputProps={{ 'aria-label': 'controlled' }}
             />
           </Styled.TimePickerHeader>

@@ -25,10 +25,14 @@ const UserList = styled.div`
         font-weight: 300;
       }
     }
+    #list-box {
+      height: 100%;
+    }
   }
 `;
 
 const UserBox = styled.div`
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -37,7 +41,7 @@ const UserBox = styled.div`
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    flex: 1 1 0;
+    flex: 2 2 0;
   }
 `;
 
@@ -61,8 +65,6 @@ const UserDrawer = styled.div<{
 }>`
   z-index: 1000;
   position: fixed;
-  box-sizing: border-box;
-  left: 50%;
   bottom: 0;
   width: 100%;
   max-width: ${NumberEx.calendarMaxWidth};
@@ -78,11 +80,11 @@ const UserDrawer = styled.div<{
   ${(props) => {
     if (props.isShow) {
       return `
-        transform: translate(-50%, 0);
+        transform: translate(0, 0);
       `;
     } else {
       return `
-        transform: translate(-50%, 100%);
+        transform: translate(0, 100%);
       `;
     }
   }}

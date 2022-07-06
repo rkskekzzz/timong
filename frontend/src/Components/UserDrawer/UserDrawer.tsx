@@ -10,12 +10,20 @@ import Size from 'src/Common/Size';
 import UserDrawerTimeBox from './UserDrawerTimeBox';
 
 const UserDrawer: React.FC<{
-  touchRef: React.MutableRefObject<any>;
+  userDrawerRef: React.RefObject<HTMLDivElement>;
+  touchRef: React.MutableRefObject<HTMLDivElement>;
   selectedDay: Day | null;
   dayUsers: UserWithValid[];
   isShow: boolean;
   handleDrawerClose: () => void;
-}> = ({ touchRef, selectedDay, dayUsers, isShow, handleDrawerClose }) => {
+}> = ({
+  userDrawerRef,
+  touchRef,
+  selectedDay,
+  dayUsers,
+  isShow,
+  handleDrawerClose,
+}) => {
   const theme = useTheme();
   const [touchStart, setTouchStart] = useState<number>(0);
   const posibleDayUsers = useMemo(() => {
@@ -39,14 +47,7 @@ const UserDrawer: React.FC<{
     },
     [setTouchStart]
   );
-  const handleMouseStart = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      console.log('here');
 
-      setTouchStart(e.clientX);
-    },
-    [setTouchStart]
-  );
   const handleTouchMove = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {
       if (!isShow) return;
@@ -56,22 +57,8 @@ const UserDrawer: React.FC<{
     },
     [touchStart, isShow]
   );
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!isShow || touchStart === 0) return;
-      if (touchStart - e.clientX < 200) {
-        console.log(touchStart);
-        console.log(e.clientX);
 
-        handleDrawerClose();
-      }
-    },
-    [touchStart, isShow]
-  );
   const handleTouchEnd = useCallback(() => {
-    setTouchStart(0);
-  }, [setTouchStart]);
-  const handleMouseEnd = useCallback(() => {
     setTouchStart(0);
   }, [setTouchStart]);
 
@@ -88,7 +75,8 @@ const UserDrawer: React.FC<{
             <b>{text}</b>
             <p>{userArr.length}명</p>
           </div>
-          <span>
+          <div></div>
+          <span id="list-box">
             {userArr.map((user) => {
               return (
                 <Styled.UserBox key={user.info.name}>
@@ -114,6 +102,7 @@ const UserDrawer: React.FC<{
     <>
       <Backdrop open={isShow} onClick={handleDrawerClose} />
       <Styled.UserDrawer
+        ref={userDrawerRef}
         isShow={isShow}
         fgcolor={theme.myPalette.foreground}
         bgcolor={theme.myPalette.background}
@@ -121,9 +110,6 @@ const UserDrawer: React.FC<{
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseStart}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseEnd}
       >
         <Styled.Puller />
         <Styled.UserList ref={touchRef}>

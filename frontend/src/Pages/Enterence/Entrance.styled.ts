@@ -34,7 +34,7 @@ const shake = keyframes`
   }
 `;
 
-const Starter = styled.div`
+const Entrance = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
@@ -45,7 +45,7 @@ const Starter = styled.div`
   gap: 30px;
 `;
 
-const StarterModalForm = styled.form`
+const EntranceModalForm = styled.form`
   width: 200px;
   display: flex;
   flex-direction: column;
@@ -59,16 +59,17 @@ const StarterModalForm = styled.form`
   }
 `;
 
-const StarterModalButton = styled(Button)`
+const EntranceModalButton = styled(Button)`
   && {
     width: 100%;
+    height: 46px;
     background: #f995f0;
     :hover {
       background: #f995f0;
     }
   }
 `;
-const StarterModalTitle = styled.span`
+const EntranceModalTitle = styled.span`
   font-size: 3rem;
   font-weight: bold;
   .t {
@@ -86,7 +87,7 @@ const StarterModalTitle = styled.span`
   }
 `;
 
-const StarterModalMaxText = styled.span`
+const EntranceModalMaxText = styled.span`
   font-size: 1.5rem;
   font-weight: bold;
   position: absolute;
@@ -95,7 +96,7 @@ const StarterModalMaxText = styled.span`
   transform: translateX(-50%) translateY(50%);
 `;
 
-const StarterModalNumberBox = styled.span`
+const EntranceModalNumberBox = styled.span`
   display: flex;
   width: 200px;
   left: 50%;
@@ -119,12 +120,12 @@ const StarterModalNumberBox = styled.span`
   }
 `;
 const Styled = {
-  Starter,
-  StarterModalForm,
-  StarterModalButton,
-  StarterModalMaxText,
-  StarterModalTitle,
-  StarterModalNumberBox,
+  Entrance,
+  EntranceModalForm,
+  EntranceModalButton,
+  EntranceModalMaxText,
+  EntranceModalTitle,
+  EntranceModalNumberBox,
 };
 
 export default Styled;

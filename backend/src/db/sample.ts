@@ -1,15 +1,21 @@
-import { ScheduleValidType, User } from "../interface/entity";
+import { ScheduleValidType, User } from '../interface/entity';
 
 function getDay(offsetFromToday: number): string {
   const curr = new Date();
-  const day = new Date(curr.getFullYear(), curr.getMonth(), curr.getDate() + offsetFromToday, 24);
+  const day = new Date(
+    curr.getFullYear(),
+    curr.getMonth(),
+    curr.getDate() + offsetFromToday,
+    24
+  );
 
   return day.toISOString();
 }
 
 export const sampleUser: User = {
-  name: "sample",
-  color: "#ff0000",
+  name: 'sample',
+  color: '#ff0000',
+  isSigned: false,
   schedules: [
     {
       valid: ScheduleValidType.POSIBLE,
