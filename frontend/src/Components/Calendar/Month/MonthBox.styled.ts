@@ -32,7 +32,6 @@ const CalendarTitle = styled.span`
   align-items: center;
   justify-content: center;
   h6 {
-    position: absolute;
     transform: translateX(-30px);
     font-size: 0.4rem;
 
