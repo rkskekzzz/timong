@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useMemo } from 'react';
 import Styled from './AddModal.styled';
 import { useFormik } from 'formik';
 import { User } from 'src/Interface/UserType';
@@ -8,6 +8,9 @@ import { validForm } from '../../Utils';
 import { useTheme } from '@mui/material';
 import { State } from 'src/Interface/ContextType';
 import { fetchCalendarList } from 'src/Hooks/firebaseRelation';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { colorsDefault, colorsPastel, colorsNeon } from 'src/theme';
 import { UserContext } from 'src/App';
 
 type Color = object & {
@@ -28,31 +31,12 @@ function ModalBoxFormLogic({
   placeholder: string;
   action: (user: User, state: State) => Promise<void>;
 }) {
-  const colors = [
-    '#A93226',
-    '#CB4335',
-    '#884EA0',
-    '#7D3C98',
-    '#2471A3',
-    '#2E86C1',
-    '#17A589',
-    '#138D75',
-    '#229954',
-    '#28B463',
-    '#D4AC0D',
-    '#D68910',
-    '#CA6F1E',
-    '#BA4A00',
-    '#460000',
-    '#0c0046',
-    '#2E4053',
-  ];
   const { state, dispatch } = useContext(UserContext);
   const [isError, setIsError] = useState<{ color: boolean; name: boolean }>({
     color: false,
     name: false,
   });
-
+  const [alignment, setAlignment] = useState<string>('기본');
   const [clr, setClr] = useState<string>('#868686');
   const formik = useFormik({
     initialValues: {
@@ -63,6 +47,24 @@ function ModalBoxFormLogic({
     },
   });
 
+  const selectedColors = useMemo(() => {
+    console.log(alignment);
+    switch (alignment) {
+      case '메탈릭':
+        return colorsNeon;
+      case '파스텔':
+        return colorsPastel;
+      default:
+        return colorsDefault;
+    }
+  }, [alignment]);
+
+  const handleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    setAlignment(newAlignment);
+  };
   const toggleError = (error: string) => {
     const initError = { color: false, name: false };
     const newError = { color: false, name: false };
@@ -107,13 +109,28 @@ function ModalBoxFormLogic({
 
   return (
     <Styled.ModalBoxForm onSubmit={handleSubmit}>
+      <ToggleButtonGroup
+        color="primary"
+        size="small"
+        value={alignment}
+        fullWidth
+        exclusive
+        onChange={handleChange}
+      >
+        <ToggleButton value="기본">기본</ToggleButton>
+        <ToggleButton value="파스텔">파스텔</ToggleButton>
+        <ToggleButton value="메탈릭">메탈릭</ToggleButton>
+      </ToggleButtonGroup>
       <CirclePicker
-        width=""
         color={clr}
-        colors={[...colors, state.mode == 'dark' ? '#ffffff' : '#000000']}
+        colors={[
+          ...selectedColors,
+          state.mode == 'dark' ? '#ffffff' : '#000000',
+        ]}
         onChangeComplete={handleColorPick}
       />
       <Input
+        style={{ width: '100%' }}
         error={isError.name ? true : false}
         autoComplete="false"
         id="userName"
