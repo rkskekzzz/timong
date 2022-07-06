@@ -38,7 +38,7 @@ const InviteBox = styled.div`
       gap: 10px;
 
       #accept {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         font-weight: 900;
         width: 27vw;
         @media (max-width: 768px) {
