@@ -8,7 +8,7 @@ import { Calendar } from 'src/Interface/CalendarType';
 
 // 캘린더 리스트를 가져와서 클라이언트에 저장하는 hook
 export async function fetchCalendarList(state: State, dispatch: userDispatch) {
-  const docRef = doc(dbService, 'TestUsers', state.isSigned);
+  const docRef = doc(dbService, 'Users', state.isSigned);
   const docSnap = await getDoc(docRef);
   if (!docSnap.exists()) {
     await setDoc(docRef, {
@@ -28,7 +28,7 @@ export async function fetchCalendarList(state: State, dispatch: userDispatch) {
 // 캘린더를 새로 만들어서 캘린더 리스트에 등록하거나
 // 기존의 캘린더를 캘린더 리스트에 등록하는 hook
 export async function addSignedUserCalendar(element: User, state: State) {
-  const docRef = doc(dbService, 'TestUsers', state.isSigned);
+  const docRef = doc(dbService, 'Users', state.isSigned);
   let calendar;
   let calendar_id;
   console.log(element._id);
@@ -57,7 +57,7 @@ export async function addSignedUserCalendar(element: User, state: State) {
 
 // 캘린더 리스트를 업데이트하는 hook
 export async function updateSignedCalendarList(state: State) {
-  const docRef = doc(dbService, 'TestUsers', state.isSigned);
+  const docRef = doc(dbService, 'Users', state.isSigned);
   const user = await getDoc(docRef);
   if (!user) alert('fail to fetch data..!!');
   await setDoc(docRef, {
@@ -71,7 +71,7 @@ export async function updateSignedCalendarListByElement(
   state: State,
   element: Calendar[]
 ) {
-  const docRef = doc(dbService, 'TestUsers', state.isSigned);
+  const docRef = doc(dbService, 'Users', state.isSigned);
   const user = await getDoc(docRef);
   if (!user) alert('fail to fetch data..!!');
   await setDoc(docRef, {
@@ -84,7 +84,7 @@ export async function deleteSignedCalendar(
   state: State,
   selectedIndex: number
 ) {
-  const docRef = doc(dbService, 'TestUsers', state.isSigned);
+  const docRef = doc(dbService, 'Users', state.isSigned);
   const user = await getDoc(docRef);
   if (!user) alert('fail to fetch data..!!');
   const newCalendarList = state.calendarList.filter(
@@ -97,9 +97,9 @@ export async function deleteSignedCalendar(
 }
 
 export async function deleteSignedUser(state: State) {
-  const docRef = doc(dbService, 'TestUsers', state.isSigned);
+  const docRef = doc(dbService, 'Users', state.isSigned);
   const docSnap = await getDoc(docRef);
   const { user_id } = docSnap.data();
   if (!user_id) alert('fail to fetch data..!!');
-  await deleteDoc(doc(dbService, 'TestUsers', user_id));
+  await deleteDoc(doc(dbService, 'Users', user_id));
 }
