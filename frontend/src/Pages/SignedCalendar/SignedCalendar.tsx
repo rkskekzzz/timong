@@ -145,7 +145,7 @@ const SignedCalendar = () => {
                 <div
                   style={{
                     width: '100%',
-                    height: '100vh',
+                    height: '100%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -171,7 +171,7 @@ const SignedCalendar = () => {
                         color: theme.main.theme,
                         background: theme.myPalette.background,
                         width: '100%',
-                        height: '100vh',
+                        height: '100%',
                       }}
                     >
                       캘린더 선택하기

@@ -4,7 +4,7 @@ const AutoSizerWrapper = styled.div`
   flex: 1 1 0;
   max-width: 400px;
   position: relative;
-  height: calc(100vh - 60px);
+  height: calc(100% - 60px);
   .list::-webkit-scrollbar {
     display: none;
   }
