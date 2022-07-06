@@ -20,6 +20,8 @@ const Header: React.FC<{
     if (setSelectedIndex) {
       setSelectedIndex(-1);
       navi('/calendar');
+    } else {
+      navi('/');
     }
   };
 
@@ -33,7 +35,7 @@ const Header: React.FC<{
         <div onClick={handleLogoTabbed}>
           <img src={logo} alt="timong logo" />
           <Styled.HeaderAnonyCalendarTitle>
-            Timong
+            {setSelectedIndex ? 'Timong' : 'Timong Anony'}
           </Styled.HeaderAnonyCalendarTitle>
         </div>
         {calendarName !== 'no' ?? (
