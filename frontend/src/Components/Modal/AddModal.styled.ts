@@ -11,7 +11,7 @@ const ModalBox = styled.div`
   background: white;
   border: '2px solid #000';
   border-radius: 15px;
-  padding: 5%;
+  padding: 15px;
 `;
 
 const ModalBoxForm = styled.form`
