@@ -94,9 +94,7 @@ const Monthly: React.FC<{
       }}
     >
       <Styled.AutoSizerWrapper>
-        <div
-          style={{ height: '100%', position: 'relative', overflow: 'scroll' }}
-        >
+        <div className="calendar-box" style={{ height: window.innerHeight - 60 }}>
           {year.map((month, index) => {
             return (
               <div

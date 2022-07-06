@@ -127,7 +127,10 @@ const SignedCalendar = () => {
   }, [state.users]);
 
   return (
-    <Styled.SignedCalendar bgcolor={theme.myPalette.background}>
+    <Styled.SignedCalendar
+      bgcolor={theme.myPalette.background}
+      height={window.innerHeight}
+    >
       <div className="container">
         <Header calendarName="no" setSelectedIndex={setSelectedIndex} />
         <div className="body-box">

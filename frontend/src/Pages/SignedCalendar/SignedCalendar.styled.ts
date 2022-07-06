@@ -2,10 +2,8 @@ import styled from 'styled-components';
 import { Box } from '@mui/material';
 
 const SignedCalendar = styled(Box)`
-  position: fixed;
   width: 100%;
-  height: 100%;
-
+  height: auto;
   .container {
     width: 100%;
     padding-top: 60px;
@@ -24,8 +22,7 @@ const SignedCalendar = styled(Box)`
 const Body = styled.div<{ bgcolor: string }>`
   width: 100%;
   max-width: 1024px;
-  height: calc(100% - 60px);
-  overflow: hidden;
+  height: 100%;
   display: flex;
 
   .responsive {

@@ -4,9 +4,14 @@ const AutoSizerWrapper = styled.div`
   flex: 1 1 0;
   max-width: 400px;
   position: relative;
-  height: calc(100% - 60px);
+  overflow: hidden;
   .list::-webkit-scrollbar {
     display: none;
+  }
+  .calendar-box {
+    height: 100%;
+    position: relative;
+    overflow: scroll;
   }
 `;
 const Styled = { AutoSizerWrapper };
