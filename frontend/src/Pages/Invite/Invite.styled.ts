@@ -13,17 +13,18 @@ const InviteBox = styled.div`
     @media (max-width: 768px) {
       width: 80vw;
     }
+    min-height: 350px;
     max-width: 500px;
     height: 40%;
     z-index: 1000;
     display: flex;
-    gap: 50px;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     background: #fafafa55;
     border-radius: 30px;
     box-shadow: 2px 4px 5px -1px rgb(0, 0, 0, 0.2);
+    padding: 15px;
     h3 {
       text-align: center;
       margin: 0;
