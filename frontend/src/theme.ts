@@ -89,27 +89,24 @@ export const themes = {
 };
 
 export const colorsDefault = [
-  '#A93226',
-  '#CB4335',
-  '#884EA0',
-  '#7D3C98',
-  '#2471A3',
-  '#2E86C1',
-  '#17A589',
-  '#138D75',
-  '#229954',
-  '#28B463',
-  '#D4AC0D',
-  '#D68910',
-  '#CA6F1E',
-  '#BA4A00',
-  '#460000',
-  '#0c0046',
-  '#2E4053',
+  '#e71f19',
+  '#e55927',
+  '#fff67c',
+  '#fed400',
+  '#6ab82d',
+  '#006536',
+  '#71c7d5',
+  '#17499d',
+  '#ab539b',
+  '#602c88',
+  '#988574',
+  '#5e3819',
+  '#e62889',
+  '#ffade1',
 ];
 
 export const colorsPastel = [
-  '#FFCDD2',
+  '#ffcdd2',
   '#c0ade7',
   '#ffa9e6',
   '#ffb5d8',
@@ -128,7 +125,6 @@ export const colorsPastel = [
   '#ddd2e3',
 ];
 export const colorsNeon = [
-  '#FFCDD2',
   '#a5a8a9',
   '#bc8422',
   '#cd5228',
