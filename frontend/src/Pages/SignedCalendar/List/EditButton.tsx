@@ -76,7 +76,9 @@ const EditButton: React.FC<{
   };
 
   const actionEditProfile = () => {
-    if (confirm('유저를 삭제하시겠습니까?')) {
+    if (
+      confirm(`프로필(${state.users[isUserCreated].name})을 삭제하시겠습니까?`)
+    ) {
       UserService.deleteUser(
         '/' + state.calendarList[selectedIndex]._id,
         state.users[isUserCreated]._id
