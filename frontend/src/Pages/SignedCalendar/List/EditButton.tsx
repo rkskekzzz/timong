@@ -15,10 +15,11 @@ import { updateCalendarList } from 'src/Hooks/calendarController';
 import { updateSignedCalendarListByElement } from 'src/Hooks/firebaseRelation';
 import { addUserInCalendar } from 'src/Hooks/userController';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import { UserService } from 'src/Network/UserService';
 import { Calendar } from 'src/Interface/CalendarType';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const EditButton: React.FC<{
   userDrawerRef: React.RefObject<HTMLDivElement>;
@@ -75,7 +76,7 @@ const EditButton: React.FC<{
     dispatch({ type: 'SETSELECTEDUSER', user: state.users[isUserCreated] });
   };
 
-  const actionEditProfile = () => {
+  const actionDeleteProfile = () => {
     if (
       confirm(`프로필(${state.users[isUserCreated].name})을 삭제하시겠습니까?`)
     ) {
@@ -93,6 +94,10 @@ const EditButton: React.FC<{
     } else {
       return;
     }
+  };
+
+  const actionEditProfile = () => {
+    console.log('hi');
   };
 
   const actionFindUser = () => alert('개발중입니다!');
@@ -122,8 +127,13 @@ const EditButton: React.FC<{
   const actionAftereUserSettup = [
     { icon: <EventAvailableIcon />, name: '날짜선택', action: actionEdit },
     {
-      icon: <ManageAccountsOutlinedIcon />,
+      icon: <DeleteForeverIcon />,
       name: '프로필삭제',
+      action: actionDeleteProfile,
+    },
+    {
+      icon: <EditIcon />,
+      name: '프로필수정',
       action: actionEditProfile,
     },
     { icon: <SearchIcon />, name: '유저검색', action: actionFindUser },
@@ -170,7 +180,7 @@ const EditButton: React.FC<{
             isShow || (isShowEdit && state.selectedDate) ? height + 16 : 16,
           'right': 16,
           'zIndex': 200,
-          'transition': 'all 0.5s ease-out 0s',
+          'transition': 'all 0.5s ease-in-out 0s',
           '& .MuiButtonBase-root': {
             backgroundColor: state.users[isUserCreated]
               ? state.users[isUserCreated].color ===

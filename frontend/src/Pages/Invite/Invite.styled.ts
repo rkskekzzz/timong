@@ -37,6 +37,7 @@ const InviteBox = styled.div`
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
 
       #accept {
         font-size: 1.2rem;
