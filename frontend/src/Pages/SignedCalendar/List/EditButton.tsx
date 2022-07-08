@@ -100,7 +100,6 @@ const EditButton: React.FC<{
   };
 
   const handleModal = useMemo(() => {
-    console.log(state.users);
     if (type) {
       return addUser;
     } else {
@@ -196,7 +195,6 @@ const EditButton: React.FC<{
   };
 
   useEffect(() => {
-    if (state.selectedUser) console.log(state.selectedUser._id);
     if (isShow) setHeight(userDrawerRef.current.clientHeight);
     if (isShowEdit) setHeight(timePickerRef.current.clientHeight);
     if (!isShow && !isShowEdit) setHeight(0);

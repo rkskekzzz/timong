@@ -9,7 +9,11 @@ async function create(
   createUserDTO: CreateUserDTO
 ): Promise<Calendar> {
   const calendar = await CalendarService.getOneDocument(calendar_id);
-
+  calendar.users.forEach((user) => {
+    if (user.name === createUserDTO.name) {
+      throw new ApiError(400, `User ${createUserDTO.name} already exists`);
+    }
+  });
   calendar.users.push(createUserDTO);
 
   return calendar.save();
