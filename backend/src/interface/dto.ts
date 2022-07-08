@@ -13,6 +13,12 @@ export class CreateUserDTO {
   schedules: Schedule[] = [];
 }
 
+export class UpdateUserDto {
+  _id!: string;
+  name!: string;
+  color!: string;
+}
+
 export class UpdateSchduleDTO {
   schedules!: Schedule[];
 }

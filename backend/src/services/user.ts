@@ -1,4 +1,4 @@
-import { CreateUserDTO } from '../interface/dto';
+import { CreateUserDTO, UpdateUserDto } from '../interface/dto';
 import ApiError from '../modules/error';
 import { Calendar } from '../interface/entity';
 import { Document } from 'mongoose';
@@ -11,6 +11,25 @@ async function create(
   const calendar = await CalendarService.getOneDocument(calendar_id);
 
   calendar.users.push(createUserDTO);
+
+  return calendar.save();
+}
+
+async function update(
+  calendar_id: string,
+  updateUserDto: UpdateUserDto
+): Promise<Calendar> {
+  const calendar = await CalendarService.getOneDocument(calendar_id);
+
+  const newUsers = calendar.users.map((user) => {
+    if (user._id?.toString() === updateUserDto._id) {
+      user.name = updateUserDto.name;
+      user.color = updateUserDto.color;
+    }
+    return user;
+  });
+
+  calendar.users = [...newUsers];
 
   return calendar.save();
 }
@@ -40,6 +59,7 @@ async function remove(calendar_id: string, user_id: string): Promise<Calendar> {
 
 export const UserService = {
   create,
+  update,
   findIndexOrFail,
   remove,
 };

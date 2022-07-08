@@ -15,6 +15,7 @@ router.put('/:calendar_id', CalendarController.updateMeetingDays);
 
 // 🙍‍♂️ 유저 라우터
 router.post('/:calendar_id/users', UserController.create);
+router.put('/:calendar_id/users', UserController.update);
 router.delete('/:calendar_id/users/:user_id', UserController.remove);
 
 // 🎏 스케쥴 라우터
