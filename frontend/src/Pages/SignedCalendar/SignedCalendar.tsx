@@ -70,8 +70,8 @@ const SignedCalendar = () => {
         navi('/calendar');
       } else {
         setSelectedIndex((prevState) => prevState);
-        setMustReload((prevState) => !prevState);
       }
+      setMustReload((prevState) => !prevState);
       prevLength.current = state.calendarList.length;
     }
   }, [state.calendarList]);

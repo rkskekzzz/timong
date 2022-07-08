@@ -62,6 +62,29 @@ export async function addSignedUserCalendar(element: User, state: State) {
   });
 }
 
+export async function updateSignedCalendarProfile(
+  calendar_id: string,
+  user: User,
+  state: State
+) {
+  const docRef = doc(
+    dbService,
+    process.env.REACT_APP_FIREBASE_COLLECTION_NAME,
+    state.isSigned
+  );
+  const _user = await getDoc(docRef);
+  const newCalendarList = _user.data().user_calendar_list.map((element) => {
+    if (element._id === calendar_id) {
+      element.user_name = user.name;
+    }
+    return element;
+  });
+  await setDoc(docRef, {
+    ..._user.data(),
+    user_calendar_list: [...newCalendarList],
+  });
+}
+
 // 캘린더 리스트를 업데이트하는 hook
 export async function updateSignedCalendarList(state: State) {
   const docRef = doc(

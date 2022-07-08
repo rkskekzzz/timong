@@ -12,8 +12,14 @@ import CheckIcon from '@mui/icons-material/Check';
 import { useLocation } from 'react-router-dom';
 import MySnackbar from './MySnackbar';
 import { updateCalendarList } from 'src/Hooks/calendarController';
-import { updateSignedCalendarListByElement } from 'src/Hooks/firebaseRelation';
-import { addUserInCalendar } from 'src/Hooks/userController';
+import {
+  updateSignedCalendarListByElement,
+  updateSignedCalendarProfile,
+} from 'src/Hooks/firebaseRelation';
+import {
+  addUserInCalendar,
+  updateUserInCalendar,
+} from 'src/Hooks/userController';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import SearchIcon from '@mui/icons-material/Search';
 import { UserService } from 'src/Network/UserService';
@@ -44,6 +50,7 @@ const EditButton: React.FC<{
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [isCopy, setIsCopy] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const [type, setType] = useState<boolean>(false);
   const theme = useTheme();
 
   const handleOpen = () => setOpen(true);
@@ -56,9 +63,14 @@ const EditButton: React.FC<{
   const handleCopyFalse = () => setIsCopy(false);
 
   const addUser = async (user: User) => {
+    for (const _user of state.users) {
+      if (_user.name === user.name) {
+        alert('User name is aready exist');
+        return;
+      }
+    }
     await addUserInCalendar(
       user,
-      state.users,
       '/' + state.calendarList[selectedIndex]._id,
       state.isSigned !== null
     );
@@ -68,7 +80,42 @@ const EditButton: React.FC<{
     );
   };
 
-  const actionAddModalOpen = () => {
+  const editUser = async (user: User) => {
+    for (const _user of state.users) {
+      if (_user.name === user.name) {
+        alert('User name is aready exist');
+        return;
+      }
+    }
+    await updateUserInCalendar(
+      user,
+      state.users[isUserCreated]._id,
+      '/' + state.calendarList[selectedIndex]._id
+    );
+    await updateSignedCalendarProfile(
+      state.calendarList[selectedIndex]._id,
+      user,
+      state
+    );
+  };
+
+  const handleModal = useMemo(() => {
+    console.log(state.users);
+    if (type) {
+      return addUser;
+    } else {
+      return editUser;
+    }
+  }, [type]);
+
+  /*  Action Function */
+  const actionAddProfile = () => {
+    setType(true);
+    handleModalOpen();
+  };
+
+  const actionEditProfile = () => {
+    setType(false);
     handleModalOpen();
   };
 
@@ -96,11 +143,7 @@ const EditButton: React.FC<{
     }
   };
 
-  const actionEditProfile = () => {
-    console.log('hi');
-  };
-
-  const actionFindUser = () => alert('개발중입니다!');
+  const actionFindProfile = () => alert('개발중입니다!');
 
   const actionShare = () => {
     const id = location.search.split('=')[1];
@@ -122,7 +165,7 @@ const EditButton: React.FC<{
   };
 
   const actionBeforeUserSettup = [
-    { icon: <ShareIcon />, name: '프로필만들기', action: actionAddModalOpen },
+    { icon: <ShareIcon />, name: '프로필만들기', action: actionAddProfile },
   ];
   const actionAftereUserSettup = [
     { icon: <EventAvailableIcon />, name: '날짜선택', action: actionEdit },
@@ -136,7 +179,7 @@ const EditButton: React.FC<{
       name: '프로필수정',
       action: actionEditProfile,
     },
-    { icon: <SearchIcon />, name: '유저검색', action: actionFindUser },
+    { icon: <SearchIcon />, name: '유저검색', action: actionFindProfile },
     { icon: <ShareIcon />, name: '초대하기', action: actionShare },
   ];
 
@@ -153,6 +196,7 @@ const EditButton: React.FC<{
   };
 
   useEffect(() => {
+    if (state.selectedUser) console.log(state.selectedUser._id);
     if (isShow) setHeight(userDrawerRef.current.clientHeight);
     if (isShowEdit) setHeight(timePickerRef.current.clientHeight);
     if (!isShow && !isShowEdit) setHeight(0);
@@ -167,8 +211,10 @@ const EditButton: React.FC<{
       <AddModal
         isShowModal={isShowModal}
         handleModalClose={handleModalClose}
-        placeholder="유저 이름을 입력해주세요..."
-        action={addUser}
+        placeholder={
+          type ? '유저 이름을 입력해주세요...' : '수정할 이름을 입력해주세요...'
+        }
+        action={handleModal}
       />
       <MySnackbar isCopy={isCopy} handleCopyFalse={handleCopyFalse} />
       {/* dial 컴포넌트 분리 */}

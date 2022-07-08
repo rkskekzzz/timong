@@ -20,6 +20,24 @@ export const UserService = {
 
     return response.data;
   },
+  updateUser: async (calendar_id, user) => {
+    const method = 'PUT';
+    const url = API.url(`${calendar_id}/users`);
+    const body = user;
+
+    let response;
+    try {
+      response = await API.AXIOS({
+        method,
+        data: body,
+        url,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    return response.data;
+  },
   deleteUser: async (calendar_id, user_id) => {
     const method = 'DELETE';
     const url = API.url(`${calendar_id}/users/${user_id}`);
