@@ -100,7 +100,11 @@ const UserDrawer: React.FC<{
 
   return (
     <>
-      <Backdrop open={isShow} onClick={handleDrawerClose} />
+      <Backdrop
+        open={isShow}
+        onClick={handleDrawerClose}
+        sx={{ zIndex: 100 }}
+      />
       <Styled.UserDrawer
         ref={userDrawerRef}
         isShow={isShow}
