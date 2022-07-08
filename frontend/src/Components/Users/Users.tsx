@@ -197,12 +197,7 @@ const Users = () => {
 
   const handleAddUser = async (user: User, state: State) => {
     if (!dispatch || !state) throw new Error('no dispatch');
-    const result = await addUserInCalendar(
-      user,
-      users,
-      location.pathname,
-      false
-    );
+    const result = await addUserInCalendar(user, location.pathname, false);
     dispatch({ type: 'ANONY_ADD', user: result });
     setIsAdd(true);
   };
