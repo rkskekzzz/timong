@@ -81,12 +81,6 @@ const EditButton: React.FC<{
   };
 
   const editUser = async (user: User) => {
-    for (const _user of state.users) {
-      if (_user.name === user.name) {
-        alert('User name is aready exist');
-        return;
-      }
-    }
     await updateUserInCalendar(
       user,
       state.users[isUserCreated]._id,
