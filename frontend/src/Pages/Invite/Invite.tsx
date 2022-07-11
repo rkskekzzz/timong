@@ -30,7 +30,7 @@ const Invite = () => {
     split_location.length > 1 ? split_location[1].split('=')[1] : '';
 
   const createCalendarRelation = async () => {
-    if (!isSignedIn) return;
+    if (!isSignedIn && state.isSigned === '') return;
     for (let i = 0; i < state.calendarList.length; i++) {
       if (state.calendarList[i]._id === database_id) {
         alert('이미 초대된 캘린더입니다.');
