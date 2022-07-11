@@ -29,7 +29,7 @@ export default function reducer(state: State, action: Action): State {
     case 'SIGNED_SET_CALENDARLIST':
       return {
         ...state,
-        calendarList: action.calendarList,
+        calendarList: [...action.calendarList],
       };
     case 'ANONY_ADD':
       return { ...state, users: state.users.concat(action.user) };
