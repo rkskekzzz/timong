@@ -92,6 +92,7 @@ const SignedCalendar = () => {
       });
       setIsCalendarLoad(true);
     };
+    setIsUserCreated(-1);
     getCalendar();
   }, [selectedIndex, mustReload]);
 
@@ -132,7 +133,11 @@ const SignedCalendar = () => {
       height={window.innerHeight}
     >
       <div className="container">
-        <Header calendarName="no" setSelectedIndex={setSelectedIndex} />
+        <Header
+          calendarName="no"
+          setSelectedIndex={setSelectedIndex}
+          isUserCreated={isUserCreated}
+        />
         <div className="body-box">
           <Styled.Body bgcolor={theme.myPalette.background}>
             <List

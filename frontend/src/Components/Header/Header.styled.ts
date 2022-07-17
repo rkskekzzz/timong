@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Header = styled.div<{ bgcolor: string }>`
+const Header = styled.div<{ bgcolor: string; fgcolor: string | null }>`
   position: fixed;
   top: 0;
   z-index: 1;
@@ -19,12 +19,17 @@ const Header = styled.div<{ bgcolor: string }>`
   div:first-child {
     cursor: pointer;
   }
-  div {
+  .logo-box {
     display: flex;
     align-items: center;
     gap: 10px;
     img {
       width: 30px;
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: ${(props) => (props.fgcolor ? props.fgcolor : '#ff6ff2')};
     }
   }
 `;
@@ -38,11 +43,6 @@ const HeaderFlexDiv = styled.div`
   justify-content: space-between;
 `;
 
-const HeaderAnonyCalendarTitle = styled.span`
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #ff6ff2;
-`;
 const HeaderCalendarTitle = styled.div<{ color: string }>`
   font-size: 0.7rem;
   font-weight: bold;
@@ -55,7 +55,6 @@ const Styled = {
   Header,
   HeaderFlexDiv,
   HeaderCalendarTitle,
-  HeaderAnonyCalendarTitle,
 };
 
 export default Styled;
