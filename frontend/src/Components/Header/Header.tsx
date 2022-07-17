@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import Styled from './Header.styled';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import HeaderModal from './HeaderModal';
