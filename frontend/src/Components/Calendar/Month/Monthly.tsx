@@ -94,7 +94,10 @@ const Monthly: React.FC<{
       }}
     >
       <Styled.AutoSizerWrapper>
-        <div className="calendar-box" style={{ height: window.innerHeight - 60 }}>
+        <div
+          className="calendar-box"
+          style={{ height: window.innerHeight - 60 }}
+        >
           {year.map((month, index) => {
             return (
               <div
@@ -109,7 +112,9 @@ const Monthly: React.FC<{
               </div>
             );
           })}
-          <div ref={obsRef}>옵저버</div>
+          <div id="observer" ref={obsRef}>
+            옵저버
+          </div>
         </div>
         {location.pathname.includes('calendar') ? (
           <EditButton

@@ -12,6 +12,10 @@ const AutoSizerWrapper = styled.div`
     height: 100%;
     position: relative;
     overflow: scroll;
+
+    #observer {
+      color: transparent;
+    }
   }
 `;
 const Styled = { AutoSizerWrapper };
