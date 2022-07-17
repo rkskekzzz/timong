@@ -84,8 +84,9 @@ const Invite = () => {
         {done ? (
           <>
             <h3>
-              {(invitor_name ? `${decodeURI(invitor_name)} 님이` : '누군가') +
-                ` ${calendarName}에 초대하셨습니다!`}
+              {invitor_name ? `${decodeURI(invitor_name)} 님이 ` : '누군가 '}
+              <u>{calendarName}</u>
+              {' 캘린더에 초대하셨습니다!'}
             </h3>
             {isLoad ? (
               <>

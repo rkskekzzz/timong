@@ -29,6 +29,11 @@ const InviteBox = styled.div`
       text-align: center;
       margin: 0;
       padding: 0;
+
+      u {
+        text-underline-offset: 3px;
+        text-decoration-color: #f995f0;
+      }
     }
 
     .buttons {
