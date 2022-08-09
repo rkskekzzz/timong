@@ -1,22 +1,20 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Styled from './AnonyCalendar.styled';
-import { Calendar } from 'src/Components/Calendar';
 import Header from 'src/Components/Header';
 import { CalendarService } from 'src/Network/CalendarService';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import { UserContext } from 'src/App';
 import { useLocation } from 'react-router-dom';
-import { CalendarType } from 'src/Interface/CalendarType';
 import { useTheme } from '@mui/material';
+import Monthly from 'src/Components/Calendar/Month';
 
 const AnonyCalendar = () => {
   const location = useLocation();
   const navi = useNavigate();
   const theme = useTheme();
   const { dispatch } = useContext(UserContext);
-  const calendarType: CalendarType = 'Monthly';
   const [reLoad, setReLoad] = useState<boolean>(false);
   const [calendarName, setCalendarName] = useState<string>('');
   const [calendar, setCalendar] = useState<boolean>(false);
@@ -50,7 +48,11 @@ const AnonyCalendar = () => {
 
   return (
     <Styled.AnonyCalendar bgcolor={theme.myPalette.background}>
-      <Header calendarName={calendarName} setSelectedIndex={null} />
+      <Header
+        calendarName={calendarName}
+        setSelectedIndex={null}
+        isUserCreated={-1}
+      />
       {!calendar ? (
         <div
           style={{
@@ -72,7 +74,7 @@ const AnonyCalendar = () => {
       ) : (
         <>
           <Styled.Body>
-            <Calendar calendarType={calendarType} />
+            <Monthly selectedIndex={0} isUserCreated={-1} />
           </Styled.Body>
         </>
       )}
