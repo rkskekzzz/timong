@@ -19,7 +19,7 @@
     /* Type Checking */
     "strict": false /* Enable all strict type-checking options. */,
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
-    "typeRoots": ["./node_modules/@types", "@types"],
-    "include": ["src", "src/custom.d.ts"]
-  }
+    "typeRoots": ["./node_modules/@types", "@types"]
+  },
+  "include": ["src", "src/custom.d.ts"]
 }
