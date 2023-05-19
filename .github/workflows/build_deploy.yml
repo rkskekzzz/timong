@@ -41,7 +41,10 @@ jobs:
           echo REACT_APP_MEASUREMENTID=${{ secrets.REACT_APP_MEASUREMENTID }} >> ./frontend/.env.production
 
       - name: Front 빌드하기
-        run: cd frontend && npm run build
+        run: |
+          cd frontend && npm run build
+          git config --global http.version HTTP/1.1
+        
 
       - name: Blockcalendar_build 레포지토리로 frontend/build 배포
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
@@ -75,6 +78,7 @@ jobs:
           user_email: "wkdlfflxh@naver.com"
           user_name: "rkskekzzz"
           commit_message: "Build: 백엔드"
+  
 
       - name: Blockcalendar_build 레포지토리로 backend/node_modules 배포
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
