@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
 import {
-  CalendarController,
-  UserController,
-  ScheduleController,
+    CalendarController,
+    UserController,
+    ScheduleController,
 } from '../controllers';
 
 const router: Router = Router();

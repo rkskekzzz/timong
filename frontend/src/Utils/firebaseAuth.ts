@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   reauthenticateWithPopup,
-  signInWithRedirect,
+  signInWithPopup,
   GoogleAuthProvider,
   deleteUser,
   signOut,
@@ -16,7 +16,7 @@ export function useSign() {
 
   const handleSignIn = async () => {
     try {
-      await signInWithRedirect(auth, provider);
+      await signInWithPopup(auth, provider);
       setIsSignedIn(true);
     } catch (error) {
       console.log(error);
