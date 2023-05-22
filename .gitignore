@@ -6,8 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-.env.development
-
 
 .vscode
 db/data_dev
@@ -115,3 +113,4 @@ mongo/
 */build
 backend/src/**/*.js
 *.pem
+frontend/.env.development
