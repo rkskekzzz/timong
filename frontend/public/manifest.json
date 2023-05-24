@@ -1,6 +1,8 @@
 {
   "short_name": "Timong",
   "name": "Timong",
+  "scope": "/",
+  "description": "친구들과 간편하게 일정 잡을 때! Timong!",
   "icons": [
     {
       "src": "favicon.ico",
