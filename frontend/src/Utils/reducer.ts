@@ -52,7 +52,8 @@ export default function reducer(state: State, action: Action): State {
             imposibleTime: [],
           };
           let flag: boolean;
-          if (user === action.user) {
+          let schedules = [];
+          if (user._id === action.user._id) {
             const filteredSchedule = user.schedules.filter(
               (schedule: Schedule) => {
                 const _sche = moment(schedule.start);
@@ -64,10 +65,16 @@ export default function reducer(state: State, action: Action): State {
                 return true;
               }
             );
-            if (flag) user.schedules = [...filteredSchedule];
-            else user.schedules = [...filteredSchedule, newSchedule];
+            if (flag) {
+              schedules = [...filteredSchedule];
+            } else {
+              schedules = [...filteredSchedule, newSchedule];
+            }
+          } else {
+            schedules = [...user.schedules];
           }
-          return user;
+          // console.log(schedules);
+          return { ...user, schedules: [...schedules] };
         }),
       };
     case 'ANONY_UPDATETIMETABLE':

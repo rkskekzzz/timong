@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import List from './List';
 import Header from 'src/Components/Header';
 import Monthly from 'src/Components/Calendar/Month';
+import { ScheduleService } from 'src/Network/ScheduleService';
 
 const SignedCalendar = () => {
   const prevLength = useRef(0);
@@ -27,10 +28,6 @@ const SignedCalendar = () => {
   const [isUserCreated, setIsUserCreated] = useState<number>(-1);
   const [directUrl, setDirectUrl] = useState<boolean>(false);
   const database_id = location.search.split('=')[1];
-
-  useEffect(() => {
-    console.log(state.users);
-  }, [state.users]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (_user) => {
@@ -130,6 +127,27 @@ const SignedCalendar = () => {
     });
     setIsUserCreated(_isUserCreated);
   }, [state.users]);
+
+  useEffect(() => {
+    async function updateData() {
+      const userIndex = state.users.findIndex(
+        (u) => u._id === state.selectedUser._id
+      );
+      console.log(state.users[userIndex].schedules);
+      if (state.isSigned) {
+        await ScheduleService.updateSchedules(
+          '/' + state.calendarList[selectedIndex]._id,
+          state.users[userIndex]
+        );
+      } else {
+        await ScheduleService.updateSchedules(
+          location.pathname,
+          state.users[userIndex]
+        );
+      }
+    }
+    if (state.users.length > 0 && state.selectedUser) updateData();
+  }, [state.users, state.selectedUser]);
 
   return (
     <Styled.SignedCalendar

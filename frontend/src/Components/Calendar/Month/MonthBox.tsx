@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useMemo } from 'react';
+import React, { useContext, useCallback, useMemo, useEffect } from 'react';
 import DayBox from './DayBox';
 import Styled from './MonthBox.styled';
 import { Month, Day } from 'src/Interface/DateType';
@@ -31,7 +31,6 @@ function DayBoxLogic({
   drawerHandler: DrawerHandler;
   selectedIndex: number;
 }) {
-  const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
 
   const reducedUser = state.users.reduce((user: UserWithValid[], cur: User) => {
@@ -51,7 +50,7 @@ function DayBoxLogic({
     drawerHandler.setDayUsers(reducedUser);
     dispatch({ type: 'SETSELECTEDDATE', day: day.moment });
   };
-  const updateUser = async () => {
+  const updateUser = () => {
     dispatch({
       type: 'ANONY_UPDATEDATE',
       user: state.selectedUser,
@@ -59,18 +58,6 @@ function DayBoxLogic({
       valid: state.selectedValid,
     });
     dispatch({ type: 'SETSELECTEDDATE', day: day.moment });
-
-    if (state.isSigned) {
-      await ScheduleService.updateSchedules(
-        '/' + state.calendarList[selectedIndex]._id,
-        state.selectedUser
-      );
-    } else {
-      await ScheduleService.updateSchedules(
-        location.pathname,
-        state.selectedUser
-      );
-    }
   };
   const handleClick = useCallback(() => {
     if (!state.selectedUser) showUsers();
@@ -81,6 +68,7 @@ function DayBoxLogic({
   const gridSize = useMemo(() => {
     return Math.max(Math.floor(Math.sqrt(state.users.length)), 4);
   }, [state.users]);
+
   return (
     <DayBox
       key={day.moment.format('X')}
@@ -100,6 +88,7 @@ const MonthBox: React.FC<{
   selectedIndex: number;
 }> = ({ month, drawerHandler, selectedIndex }) => {
   const theme = useTheme();
+
   return (
     <Styled.MonthBox color={theme.myPalette.foreground}>
       <Styled.CalendarTitle>
