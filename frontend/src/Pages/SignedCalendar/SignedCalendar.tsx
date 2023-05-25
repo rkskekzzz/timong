@@ -29,6 +29,10 @@ const SignedCalendar = () => {
   const database_id = location.search.split('=')[1];
 
   useEffect(() => {
+    console.log(state.users);
+  }, [state.users]);
+
+  useEffect(() => {
     onAuthStateChanged(auth, (_user) => {
       if (_user) {
         dispatch({ type: 'SIGNIN', uid: _user.uid });

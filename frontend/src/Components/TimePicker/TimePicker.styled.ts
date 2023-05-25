@@ -10,13 +10,13 @@ const TimePickerBox = styled.div<{
   box-sizing: border-box;
   width: 100%;
   max-width: ${NumberEx.calendarMaxWidth};
-  height: ${NumberEx.timePickerHeight};
+  height: calc(${NumberEx.timePickerHeight} + env(safe-area-inset-bottom));
   position: fixed;
   bottom: 0px;
   z-index: 300;
   border-radius: 15px 15px 0px 0px;
   background-color: ${(props) => `${props.bgcolor ?? '#ffffff'}`};
-  padding: 3vh 3vh 0 3vh;
+  padding: 3vh 3vh calc(env(safe-area-inset-bottom) + 3vh) 3vh;
   ${(props) => {
     if (props.isShowTimePicker)
       return `

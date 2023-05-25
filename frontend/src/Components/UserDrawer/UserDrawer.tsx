@@ -77,6 +77,31 @@ const UserDrawer: React.FC<{
           </div>
           <div></div>
           <span id="list-box">
+            {userArr.length !== 0 && (
+              <Styled.UserBox>
+                <div className="userinfo"></div>
+                <div style={{ display: 'flex', gap: '0px' }}>
+                  {[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24].map(
+                    (num, index) => {
+                      return (
+                        <div
+                          key={'label-' + index}
+                          style={{
+                            width: '17px',
+                            fontSize: '7px',
+                            textAlign: 'center',
+                            letterSpacing: '-1px',
+                            transform: 'translate(8px, 0px)',
+                          }}
+                        >
+                          {num}
+                        </div>
+                      );
+                    }
+                  )}
+                </div>
+              </Styled.UserBox>
+            )}
             {userArr.map((user) => {
               return (
                 <Styled.UserBox key={user.info.name}>

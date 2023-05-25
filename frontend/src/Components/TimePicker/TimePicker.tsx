@@ -83,7 +83,7 @@ const TimePicker: React.FC<{
           .map((_, index) => {
             return (
               <span className="timebox-label" key={index}>
-                {index * (24 / size)}
+                {index * (24 / size) + 2}
               </span>
             );
           })}
