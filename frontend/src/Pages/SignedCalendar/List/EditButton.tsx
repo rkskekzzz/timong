@@ -216,7 +216,7 @@ const EditButton: React.FC<{
           'position': 'absolute',
           'bottom':
             isShow || (isShowEdit && state.selectedDate)
-              ? `calc(${height}px + 16px + env(safe-area-inset-bottom))`
+              ? `calc(${height}px + 16px)`
               : 16,
           'right': 16,
           'zIndex': 200,
