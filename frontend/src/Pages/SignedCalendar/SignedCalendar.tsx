@@ -133,7 +133,6 @@ const SignedCalendar = () => {
       const userIndex = state.users.findIndex(
         (u) => u._id === state.selectedUser._id
       );
-      console.log(state.users[userIndex].schedules);
       if (state.isSigned) {
         await ScheduleService.updateSchedules(
           '/' + state.calendarList[selectedIndex]._id,

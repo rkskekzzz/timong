@@ -94,14 +94,19 @@ const TimePicker: React.FC<{
   const DividedTimeSpan = useCallback(() => {
     const check = () => {
       if (!selectedUser || !state.selectedDate) return [];
-      const arr = selectedUser.schedules.filter((schedule: Schedule) => {
-        const _schedule = moment(schedule.start);
-        if (_schedule.isSame(state.selectedDate.moment, 'D')) {
-          return true;
+      const userIndex = state.users.findIndex(
+        (u) => u._id === state.selectedUser._id
+      );
+      const arr = state.users[userIndex].schedules.filter(
+        (schedule: Schedule) => {
+          const _schedule = moment(schedule.start);
+          if (_schedule.isSame(state.selectedDate.moment, 'D')) {
+            return true;
+          }
+          return false;
         }
-        return false;
-      });
-      if (arr[0]) return arr[0].posibleTime;
+      );
+      if (arr[0]) return [...arr[0].posibleTime];
       else return [];
     };
 
@@ -129,7 +134,7 @@ const TimePicker: React.FC<{
           })}
       </>
     );
-  }, [size, selectedUser, state.selectedDate]);
+  }, [size, selectedUser, state.selectedDate, state.users]);
 
   return (
     <Styled.TimePickerBox

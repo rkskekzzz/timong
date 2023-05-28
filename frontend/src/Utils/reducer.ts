@@ -81,31 +81,44 @@ export default function reducer(state: State, action: Action): State {
       return {
         ...state,
         users: state.users.map((user: User): User => {
-          if (user === action.user) {
-            for (const [index, schedule] of user.schedules.entries()) {
-              const _sche = moment(schedule.start);
-              if (_sche.isSame(action.date.moment)) {
-                const filteredPosibleTime = schedule.posibleTime.filter(
-                  (time: number) => {
-                    if (action.time === time) {
-                      return false;
-                    } else return true;
+          if (user._id === action.user._id) {
+            const updatedSchedules = user.schedules.map(
+              (schedule: Schedule) => {
+                const _sche = moment(schedule.start);
+                if (_sche.isSame(action.date.moment)) {
+                  const { time } = action;
+
+                  // Check if the time already exists in the posibleTime array
+                  const index = schedule.posibleTime.indexOf(time);
+
+                  if (index === -1) {
+                    // Add the time to the posibleTime array
+                    return {
+                      ...schedule,
+                      posibleTime: [...schedule.posibleTime, time],
+                    };
+                  } else {
+                    // Remove the time from the posibleTime array
+                    return {
+                      ...schedule,
+                      posibleTime: schedule.posibleTime.filter(
+                        (t: number) => t !== time
+                      ),
+                    };
                   }
-                );
-                if (
-                  filteredPosibleTime.length ===
-                  user.schedules[index].posibleTime.length
-                )
-                  user.schedules[index].posibleTime = [
-                    ...filteredPosibleTime,
-                    action.time,
-                  ];
-                else
-                  user.schedules[index].posibleTime = [...filteredPosibleTime];
+                } else {
+                  return schedule;
+                }
               }
-            }
+            );
+
+            return {
+              ...user,
+              schedules: [...updatedSchedules],
+            };
+          } else {
+            return user;
           }
-          return user;
         }),
       };
 
