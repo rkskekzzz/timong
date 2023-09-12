@@ -41,35 +41,35 @@ jobs:
                   docker image tag $REPO:${{ github.sha }} $REPO
                   docker push $REPO
 
-            - name: Back 노드 모듈 설치
-              if: steps.node-module-cache.outputs.cache-hit != 'true'
-              run: cd backend && npm install
+            # - name: Back 노드 모듈 설치
+            #   if: steps.node-module-cache.outputs.cache-hit != 'true'
+            #   run: cd backend && npm install
 
-            - name: Back 빌드하기
-              run: cd backend && npm run build
+            # - name: Back 빌드하기
+            #   run: cd backend && npm run build
 
-            - name: Blockcalendar_build 레포지토리로 backend/build 배포
-              uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
-              env:
-                  API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN_FOR_REPO }}
-              with:
-                  source_file: './backend/build'
-                  destination_repo: 'rkskekzzz/blockcalendar_build'
-                  destination_branch: 'master'
-                  destination_folder: './backend'
-                  user_email: 'wkdlfflxh@naver.com'
-                  user_name: 'rkskekzzz'
-                  commit_message: 'Build: 백엔드'
+            # - name: Blockcalendar_build 레포지토리로 backend/build 배포
+            #   uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+            #   env:
+            #       API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN_FOR_REPO }}
+            #   with:
+            #       source_file: './backend/build'
+            #       destination_repo: 'rkskekzzz/blockcalendar_build'
+            #       destination_branch: 'master'
+            #       destination_folder: './backend'
+            #       user_email: 'wkdlfflxh@naver.com'
+            #       user_name: 'rkskekzzz'
+            #       commit_message: 'Build: 백엔드'
 
-            - name: Blockcalendar_build 레포지토리로 backend/node_modules 배포
-              uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
-              env:
-                  API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN_FOR_REPO }}
-              with:
-                  source_file: './backend/node_modules'
-                  destination_repo: 'rkskekzzz/blockcalendar_build'
-                  destination_branch: 'master'
-                  destination_folder: './backend'
-                  user_email: 'wkdlfflxh@naver.com'
-                  user_name: 'rkskekzzz'
-                  commit_message: 'Build: 백엔드'
+            # - name: Blockcalendar_build 레포지토리로 backend/node_modules 배포
+            #   uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+            #   env:
+            #       API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN_FOR_REPO }}
+            #   with:
+            #       source_file: './backend/node_modules'
+            #       destination_repo: 'rkskekzzz/blockcalendar_build'
+            #       destination_branch: 'master'
+            #       destination_folder: './backend'
+            #       user_email: 'wkdlfflxh@naver.com'
+            #       user_name: 'rkskekzzz'
+            #       commit_message: 'Build: 백엔드'
