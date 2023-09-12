@@ -76,23 +76,18 @@ const UserDrawer: React.FC<{
             <p>{userArr.length}명</p>
           </div>
           <div></div>
-          <span id="list-box">
+          <div id="list-box">
             {userArr.length !== 0 && (
-              <Styled.UserBox>
-                <div className="userinfo"></div>
-                <div style={{ display: 'flex', gap: '0px' }}>
-                  {[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24].map(
+              <>
+                <div></div>
+                <div className="time-label">
+                  <div className="time-label-number first">2</div>
+                  {[4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24].map(
                     (num, index) => {
                       return (
                         <div
                           key={'label-' + index}
-                          style={{
-                            width: '17px',
-                            fontSize: '7px',
-                            textAlign: 'center',
-                            letterSpacing: '-1px',
-                            transform: 'translate(8px, 0px)',
-                          }}
+                          className="time-label-number"
                         >
                           {num}
                         </div>
@@ -100,12 +95,12 @@ const UserDrawer: React.FC<{
                     }
                   )}
                 </div>
-              </Styled.UserBox>
+              </>
             )}
             {userArr.map((user) => {
               return (
-                <Styled.UserBox key={user.info.name}>
-                  <div className="userinfo">
+                <React.Fragment key={user.info.name}>
+                  <div className="with-circle">
                     <GlobalStyled.Circle
                       size={Size.Small}
                       color={user.info.color}
@@ -113,10 +108,10 @@ const UserDrawer: React.FC<{
                     <div>{user.info.name}</div>
                   </div>
                   <UserDrawerTimeBox user={user} />
-                </Styled.UserBox>
+                </React.Fragment>
               );
             })}
-          </span>
+          </div>
         </>
       );
     },

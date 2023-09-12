@@ -27,6 +27,37 @@ const UserList = styled.div`
     }
     #list-box {
       height: 100%;
+      display: grid;
+      /* 2 colounms for 1 row */
+      grid-template-columns: repeat(2, 1fr);
+      justify-content: center;
+      .time-label {
+        display: flex;
+        flex: 1 1 0;
+
+        .time-label-number {
+          width: 17px;
+          font-size: 7px;
+          text-align: center;
+          letter-spacing: -1px;
+          transform: translate(8px, 0px);
+        }
+        .first::after {
+          content: '0';
+          position: absolute;
+          width: 17px;
+          left: 0;
+          font-size: 7px;
+          text-align: center;
+          letter-spacing: -1px;
+          transform: translate(-100%, 0);
+        }
+      }
+      .with-circle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
     }
   }
 `;
