@@ -76,7 +76,10 @@ const UserDrawer: React.FC<{
             <p>{userArr.length}명</p>
           </div>
           <div></div>
-          <div id="list-box">
+          <div
+            id="list-box"
+            style={{ gridTemplateRows: `repeat(${userArr.length}, 1fr)` }}
+          >
             {userArr.length !== 0 && (
               <>
                 <div></div>
@@ -105,7 +108,7 @@ const UserDrawer: React.FC<{
                       size={Size.Small}
                       color={user.info.color}
                     />
-                    <div>{user.info.name}</div>
+                    <span>{user.info.name}</span>
                   </div>
                   <UserDrawerTimeBox user={user} />
                 </React.Fragment>

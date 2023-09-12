@@ -27,9 +27,9 @@ const UserList = styled.div`
     }
     #list-box {
       height: 100%;
+
       display: grid;
-      /* 2 colounms for 1 row */
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 2fr 3fr;
       justify-content: center;
       .time-label {
         display: flex;
@@ -40,7 +40,7 @@ const UserList = styled.div`
           font-size: 7px;
           text-align: center;
           letter-spacing: -1px;
-          transform: translate(8px, 0px);
+          transform: translate(8px, 10px);
         }
         .first::after {
           content: '0';
@@ -56,7 +56,14 @@ const UserList = styled.div`
       .with-circle {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 5px;
+
+        span {
+          // if text is too long, it will be ... (ellipsis)
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
     }
   }
